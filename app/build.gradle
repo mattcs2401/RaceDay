@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.mcssoft.raceday"
-        minSdkVersion 27                         // Notes: OPPO API ver.
+        minSdkVersion 27                    // Notes: OPPO API ver.
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -68,6 +68,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_ver"
 
     // Hilt.
-    implementation "com.google.dagger:hilt-android:$hilt_ver"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_ver"
-}
+    def hilt_version = "2.28-alpha"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    def hilt_viewmodels = "1.0.0-alpha01"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
+    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"}

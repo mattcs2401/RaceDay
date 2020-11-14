@@ -8,8 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 
-@InstallIn(ActivityComponent::class)
 @Module
+@InstallIn(ActivityComponent::class)
 class ConnectivityModule {
 
     @Provides

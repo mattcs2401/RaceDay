@@ -21,6 +21,9 @@ interface IFileDataDAO {
     @Delete()
     fun deleteFile(file: FileMetaData): Int
 
+    @Query("delete from file_meta_data")
+    fun deleteAll()
+
     @Query("select count(*) from file_meta_data")
     fun getCount(): Int
 }

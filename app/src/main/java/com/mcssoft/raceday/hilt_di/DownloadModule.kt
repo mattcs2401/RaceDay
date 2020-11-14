@@ -6,17 +6,24 @@ import com.mcssoft.raceday.utility.RaceDownloadReceiver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
-@InstallIn(ActivityComponent::class)
 @Module
-class DownloadModule {
+@InstallIn(ApplicationComponent::class)
+object DownloadModule {
+
+    @Singleton
+    @Provides
+    fun provideDownloadManager(@ApplicationContext context: Context): RaceDownloadManager {
+        return RaceDownloadManager(context)
+    }
 
     @Provides
-    fun provideDownloadManager(@ActivityContext context: Context): RaceDownloadManager = RaceDownloadManager(context)
-
-    @Provides
-    fun provideDownloadReceiver(): RaceDownloadReceiver = RaceDownloadReceiver()
+    fun provideDownloadReceiver(): RaceDownloadReceiver {
+        return RaceDownloadReceiver()
+    }
 
 }

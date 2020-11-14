@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/id_navigation"
-    app:startDestination="@id/id_main_fragment">
+    app:startDestination="@id/id_splash_fragment">
 
     <fragment
-        android:id="@+id/id_main_fragment"
-        android:name="com.mcssoft.raceday.ui.fragment.MainFragment"
-        android:label="Home"
-        tools:layout="@layout/main_fragment">
+        android:id="@+id/id_splash_fragment"
+        android:name="com.mcssoft.raceday.ui.fragment.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/splash_fragment">
         <!--        <action-->
         <!--            android:id="@+id/mainFragment_to_editFragment"-->
         <!--            app:destination="@id/id_edit_fragment" />-->

@@ -35,7 +35,7 @@ class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO
 
     fun getFile(id: Long) = iFileDataDAO.getFileData(id)
 
-    fun getCount(): Int {
+    fun getCountFileData(): Int {
         var count = -1
         coroutineScope.launch {
             count = iFileDataDAO.getCount()
@@ -45,10 +45,16 @@ class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO
 
     fun hasFileData(): Boolean {
         var value = false
-        if(getCount() > 0) {
+        if(getCountFileData() > 0) {
             value = true
         }
         return value
+    }
+
+    fun deleteAllFileData() {
+        coroutineScope.launch {
+            iFileDataDAO.deleteAll()
+        }
     }
     //</editor-fold>
 

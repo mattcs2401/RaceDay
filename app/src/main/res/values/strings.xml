@@ -15,4 +15,7 @@
 
     <string name="action_download_complete">ACTION_DOWNLOAD_COMPLETE</string>
 
+    <!-- Notification. -->
+    <string name="raceday_downloading">RaceDay Downloading</string>
+    <string name="downloading_details_for_raceday">Downloading Details For RaceDay</string>
 </resources>

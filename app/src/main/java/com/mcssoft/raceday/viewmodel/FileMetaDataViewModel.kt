@@ -2,11 +2,8 @@ package com.mcssoft.raceday.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.database.entity.FileMetaData
 import com.mcssoft.raceday.repository.RaceDayRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FileMetaDataViewModel @Inject constructor() : ViewModel() {
@@ -20,4 +17,6 @@ class FileMetaDataViewModel @Inject constructor() : ViewModel() {
     fun getFile(id: Long) = raceDayRepo.getFile(id)
 
     fun getAllFile() = raceDayRepo.getAllFile()
+
+    fun getCountFileMeta() = raceDayRepo.getCountFileData()
 }

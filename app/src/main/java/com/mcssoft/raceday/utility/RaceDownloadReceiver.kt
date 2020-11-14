@@ -7,20 +7,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.mcssoft.raceday.R
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ActivityComponent
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class RaceDownloadReceiver : BroadcastReceiver() {
 
-    // TODO - inject candidate ?
-    lateinit var raceDownloadManager: RaceDownloadManager
+    @Inject lateinit var raceDownloadManager: RaceDownloadManager
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG","RaceDownloadReceiver.onReceive()")
-        raceDownloadManager = RaceDownloadManager(context)
         when(intent.action) {
             DownloadManager.ACTION_DOWNLOAD_COMPLETE -> {
                 Log.d("TAG","DownloadManager.ACTION_DOWNLOAD_COMPLETE")
@@ -97,3 +93,4 @@ class RaceDownloadReceiver : BroadcastReceiver() {
     }
 
 }
+
