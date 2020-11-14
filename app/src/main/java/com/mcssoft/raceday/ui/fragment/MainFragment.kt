@@ -9,13 +9,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.mcssoft.raceday.database.entity.FileMetaData
 import com.mcssoft.raceday.databinding.MainFragmentBinding
-import com.mcssoft.raceday.interfaces.IDownloadReceiver
 import com.mcssoft.raceday.viewmodel.FileMetaDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), IDownloadReceiver {
+class MainFragment : Fragment() {
 
     @Inject lateinit var viewModel: FileMetaDataViewModel
 

@@ -13,15 +13,26 @@ class RaceConnectivityManager @Inject constructor (private val context: Context)
     private val connMgr: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+//    /**
+//     * TBA - deprecated in API 29, but this app targets API 27 as min (Oppo phone ver).
+//     */
+//    fun isNetworkConnected(): Boolean {
+//        return if(connMgr.activeNetworkInfo != null) {
+//            connMgr.activeNetworkInfo!!.isConnected
+//        } else {
+//            false
+//        }
+//    }
+
     /**
-     * TBA - deprecated in API 29, but this app targets API 27 as min (Oppo phone ver).
+     * Simple check that there is a network connection.
      */
-    fun isNetworkConnected(): Boolean {
-        return if(connMgr.activeNetworkInfo != null) {
-            connMgr.activeNetworkInfo!!.isConnected
-        } else {
-            false
-        }
+    private fun isNetworkConnected(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+        return networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     /**
