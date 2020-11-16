@@ -11,7 +11,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
-import com.mcssoft.raceday.repository.RaceDayRepository
+import com.mcssoft.raceday.repository.FileMetaRepo
+import com.mcssoft.raceday.repository.RaceDayRepo
 import com.mcssoft.raceday.utility.RaceDayUtil
 import com.mcssoft.raceday.utility.RaceDownloadManager
 import com.mcssoft.raceday.utility.RaceDownloadReceiver
@@ -27,7 +28,8 @@ class SplashFragment: Fragment() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
-    @Inject lateinit var raceDayRepo: RaceDayRepository
+    @Inject lateinit var raceDayRepo: RaceDayRepo
+    @Inject lateinit var fileMetaRepo: FileMetaRepo
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,22 +82,17 @@ class SplashFragment: Fragment() {
 
         if(primaryPath != "") {
             val dir = File(primaryPath)
-            if (filesExist(dir)) {
-                if (isFileToday(dir.listFiles()[0])) {
-                    // ATT, only care about any file with today's date. Get the file meta data.
-                    // TODO - database access here.
-
-                } else {
-                    // Delete all (the old) files.
-                    deleteFromStorage(dir)
-                    // Check file meta data.
-                    val hasFiles = raceDayRepo.hasFileData()
-                    if(hasFiles) {
-                        raceDayRepo.deleteAllFileData()
-                    }
-                    // Download the new (today's) file.
-                    raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
-                }
+            val filesExist = filesExist(dir)
+            val isFileToday = isFileToday(dir.listFiles()[0])
+            if (filesExist && !isFileToday){
+                // Delete all (the old) files.
+                deleteFromStorage(dir)
+                // Delete all (the old) associated file meta data.
+                deleteFromMetaData()
+                // Download the new (today's) file.
+                raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
+            } else if (filesExist && isFileToday) {
+                //
             }
         } else {
             // TBA - primary storage path not there. Maybe a dialog about checking a card is there ?
@@ -104,6 +101,17 @@ class SplashFragment: Fragment() {
     }
 
     //<editor-fold default state="collapsed" desc="Region: Utility - File">
+    /**
+     * Delete all the associated file meta data.
+     */
+    private fun deleteFromMetaData() {
+        // Check file meta data.
+        val hasFiles = fileMetaRepo.hasFileData()
+        if(hasFiles) {
+            fileMetaRepo.deleteAllFileData()
+        }
+    }
+
     /**
      * Delete all the files from the storage.
      * @param file: A File object representing the directory.

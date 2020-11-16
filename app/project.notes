@@ -1,0 +1,8 @@
+------------------------
+In  no particular order.
+------------------------
+
+-> Look at which field type injections can be moved to inject via constructor.
+   Note: best practice appears to be inject via constructor (various Hilt articles).
+
+-> xxx

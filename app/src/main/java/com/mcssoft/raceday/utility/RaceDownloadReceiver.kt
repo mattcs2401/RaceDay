@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.repository.RaceDayRepo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class RaceDownloadReceiver : BroadcastReceiver() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
+    @Inject lateinit var raceDayRepository: RaceDayRepo
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG","RaceDownloadReceiver.onReceive()")

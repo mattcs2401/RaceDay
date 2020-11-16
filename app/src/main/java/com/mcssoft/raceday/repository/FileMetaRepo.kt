@@ -3,21 +3,20 @@ package com.mcssoft.raceday.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mcssoft.raceday.database.dao.IFileDataDAO
-import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import com.mcssoft.raceday.database.entity.FileMetaData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO,
-                                            private val iFileDataDAO: IFileDataDAO) {
+class FileMetaRepo @Inject constructor(private val iFileDataDAO: IFileDataDAO) {
 
     //<editor-fold default state="collapsed" desc="Region: Coroutine">
     val completableJob = Job()
 
     private val coroutineScope =
-        CoroutineScope(Dispatchers.IO + completableJob)
+            CoroutineScope(Dispatchers.IO + completableJob)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: File data">
@@ -26,7 +25,7 @@ class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO
         val ldList = MutableLiveData<List<FileMetaData>>()
 
         coroutineScope.launch {
-            fmdList =  iFileDataDAO.getFileData()
+            fmdList = iFileDataDAO.getFileData()
         }
 
         ldList.value = fmdList
@@ -45,7 +44,7 @@ class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO
 
     fun hasFileData(): Boolean {
         var value = false
-        if(getCountFileData() > 0) {
+        if (getCountFileData() > 0) {
             value = true
         }
         return value
@@ -56,16 +55,5 @@ class RaceDayRepository @Inject constructor(private val iRaceDayDAO: IRaceDayDAO
             iFileDataDAO.deleteAll()
         }
     }
-    //</editor-fold>
-
-
-
 }
-/*
-    val errorHandler = CoroutineExceptionHandler { _, exception ->
-      AlertDialog.Builder(this).setTitle("Error")
-              .setMessage(exception.message)
-              .setPositiveButton(android.R.string.ok) { _, _ -> }
-              .setIcon(android.R.drawable.ic_dialog_alert).show()
-    }
- */
+//</editor-fold>

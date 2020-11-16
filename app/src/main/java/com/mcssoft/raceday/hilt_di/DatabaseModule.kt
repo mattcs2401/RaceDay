@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IFileDataDAO
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
+import com.mcssoft.raceday.repository.FileMetaRepo
+import com.mcssoft.raceday.repository.RaceDayRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +36,18 @@ object DatabaseModule {
     @Provides
     fun provideRaceDayDetailsDao(database: RaceDay): IRaceDayDAO {
         return database.raceDayDetailsDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepoFileData(iFileDataDAO: IFileDataDAO): FileMetaRepo {
+        return FileMetaRepo(iFileDataDAO)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepoRaceDay(iRaceDayDAO: IRaceDayDAO): RaceDayRepo {
+        return RaceDayRepo(iRaceDayDAO)
     }
 
 }

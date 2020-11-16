@@ -3,20 +3,20 @@ package com.mcssoft.raceday.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mcssoft.raceday.database.entity.FileMetaData
-import com.mcssoft.raceday.repository.RaceDayRepository
+import com.mcssoft.raceday.repository.FileMetaRepo
 import javax.inject.Inject
 
-class FileMetaDataViewModel @Inject constructor() : ViewModel() {
+class FileMetaDataViewModel @Inject constructor(val fileMetaRepo: FileMetaRepo) : ViewModel() {
 
-    @Inject lateinit var raceDayRepo: RaceDayRepository
+//    @Inject lateinit var fileMetaRepo: FileMetaRepo
 
     private lateinit var fileMetaDataCache: FileMetaData
 
     private lateinit var allFileMetaDataCache: LiveData<List<FileMetaData>>
 
-    fun getFile(id: Long) = raceDayRepo.getFile(id)
+    fun getFile(id: Long) = fileMetaRepo.getFile(id)
 
-    fun getAllFile() = raceDayRepo.getAllFile()
+    fun getAllFile() = fileMetaRepo.getAllFile()
 
-    fun getCountFileMeta() = raceDayRepo.getCountFileData()
+    fun getCountFileMeta() = fileMetaRepo.getCountFileData()
 }

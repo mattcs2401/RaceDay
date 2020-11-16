@@ -7,7 +7,6 @@ import android.net.NetworkInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class RaceConnectivityManager @Inject constructor (private val context: Context) {
 
     private val connMgr: ConnectivityManager =
