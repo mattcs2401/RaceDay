@@ -1,14 +1,8 @@
 package com.mcssoft.raceday.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.mcssoft.raceday.database.dao.IFileDataDAO
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
-import com.mcssoft.raceday.database.entity.FileMetaData
-import com.mcssoft.raceday.hilt_di.DatabaseModule
 import kotlinx.coroutines.*
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class RaceDayRepo @Inject constructor(private val iRaceDayDAO: IRaceDayDAO) {
 

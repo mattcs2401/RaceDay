@@ -3,17 +3,14 @@ package com.mcssoft.raceday.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
-import com.mcssoft.raceday.database.dao.IFileDataDAO
 import com.mcssoft.raceday.database.entity.RaceDayDetails
-import com.mcssoft.raceday.database.entity.FileMetaData
 
 
-@Database(entities = [RaceDayDetails::class, FileMetaData::class],
+@Database(entities = [RaceDayDetails::class],
     version = 1, exportSchema = false)
 abstract class RaceDay : RoomDatabase() {
 
     internal abstract fun raceDayDetailsDao(): IRaceDayDAO
-    internal abstract fun fileMetaDataDao(): IFileDataDAO
 
 //    companion object {
 //        @Volatile

@@ -7,16 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.mcssoft.raceday.database.entity.FileMetaData
 import com.mcssoft.raceday.databinding.MainFragmentBinding
-import com.mcssoft.raceday.viewmodel.FileMetaDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-
-    @Inject lateinit var viewModel: FileMetaDataViewModel
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -36,9 +32,9 @@ class MainFragment : Fragment() {
 
         initialise()
 
-        viewModel.getAllFile().observe(viewLifecycleOwner, Observer { file ->
-            // TBA
-        })
+//        viewModel.getAllFile().observe(viewLifecycleOwner, Observer { file ->
+//            // TBA
+//        })
     }
 
 //    override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -56,10 +52,10 @@ class MainFragment : Fragment() {
 //    }
 
     private fun initialise() {
-        var cache = listOf<FileMetaData>()
-        if (viewModel.getCountFileMeta() > 0) {
-            cache = viewModel.getAllFile() as List<FileMetaData>
-        }
+//        var cache = listOf<FileMetaData>()
+//        if (viewModel.getCountFileMeta() > 0) {
+//            cache = viewModel.getAllFile() as List<FileMetaData>
+//        }
 
         val bp = ""
     }

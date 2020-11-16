@@ -3,9 +3,7 @@ package com.mcssoft.raceday.hilt_di
 import android.content.Context
 import androidx.room.Room
 import com.mcssoft.raceday.database.RaceDay
-import com.mcssoft.raceday.database.dao.IFileDataDAO
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
-import com.mcssoft.raceday.repository.FileMetaRepo
 import com.mcssoft.raceday.repository.RaceDayRepo
 import dagger.Module
 import dagger.Provides
@@ -29,19 +27,8 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideFileMetaDataDao(database: RaceDay): IFileDataDAO {
-        return database.fileMetaDataDao()
-    }
-
-    @Provides
     fun provideRaceDayDetailsDao(database: RaceDay): IRaceDayDAO {
         return database.raceDayDetailsDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRepoFileData(iFileDataDAO: IFileDataDAO): FileMetaRepo {
-        return FileMetaRepo(iFileDataDAO)
     }
 
     @Singleton
