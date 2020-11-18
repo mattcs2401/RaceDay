@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
-import com.mcssoft.raceday.repository.RaceDayRepo
+import com.mcssoft.raceday.repository.RaceDayRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,12 +29,6 @@ object DatabaseModule {
     @Provides
     fun provideRaceDayDetailsDao(database: RaceDay): IRaceDayDAO {
         return database.raceDayDetailsDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRepoRaceDay(iRaceDayDAO: IRaceDayDAO): RaceDayRepo {
-        return RaceDayRepo(iRaceDayDAO)
     }
 
 }

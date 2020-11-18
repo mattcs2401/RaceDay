@@ -1,17 +1,18 @@
 package com.mcssoft.raceday.repository
 
+import android.content.Context
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class RaceDayRepo @Inject constructor(private val iRaceDayDAO: IRaceDayDAO) {
+class RaceDayRepository @Inject constructor(private val context: Context) {
 
-    //<editor-fold default state="collapsed" desc="Region: Coroutine">
-    val completableJob = Job()
+    companion object {
+        val completableJob = Job()
 
-    private val coroutineScope =
-        CoroutineScope(Dispatchers.IO + completableJob)
-    //</editor-fold>
+        private val coroutineScope =
+                CoroutineScope(Dispatchers.IO + completableJob)
+    }
 
     //<editor-fold default state="collapsed" desc="Region: File data">
 //    fun getAllFile(): LiveData<List<FileMetaData>> {

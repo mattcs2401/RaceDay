@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class RaceDayViewModel @Inject constructor() : ViewModel() {
 
-//    @Inject lateinit var raceDayRepo: RaceDayRepo
+//    @Inject lateinit var raceDayRepository: RaceDayRepository
 
 }

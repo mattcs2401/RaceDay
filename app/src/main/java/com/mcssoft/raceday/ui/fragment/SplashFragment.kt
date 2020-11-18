@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
-import com.mcssoft.raceday.repository.RaceDayRepo
+import com.mcssoft.raceday.repository.RaceDayRepository
 import com.mcssoft.raceday.utility.RaceDayUtil
 import com.mcssoft.raceday.utility.RaceDownloadManager
 import com.mcssoft.raceday.utility.RaceDownloadReceiver
@@ -27,7 +27,7 @@ class SplashFragment: Fragment() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
-    @Inject lateinit var raceDayRepo: RaceDayRepo
+    @Inject lateinit var raceDayRepository: RaceDayRepository
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreate(savedInstanceState: Bundle?) {
