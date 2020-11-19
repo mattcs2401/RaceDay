@@ -80,19 +80,22 @@ class SplashFragment: Fragment() {
 
         if(primaryPath != "") {
             val dir = File(primaryPath)
-            val filesExist = filesExist(dir)
-            val isFileToday = isFileToday(dir.listFiles()[0])
-            if (filesExist && !isFileToday){
-                // Delete all (the old) files.
-                deleteFromStorage(dir)
-                // Download the new (today's) file.
+
+            if(filesExist(dir)) {
+                // File/s exist, check if today's.
+                if(!isFileToday(dir.listFiles()[0])) {
+                    // File is not today's so remove.
+                    deleteFromStorage(dir)
+                    // Download the new (today's) file.
+                    raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
+                }
+            } else {
+                // No files exist so download today's.
                 raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
-            } else if (filesExist && isFileToday) {
-                //
             }
         } else {
             // TBA - primary storage path not there. Maybe a dialog about checking a card is there ?
-
+            val bp = "bp"
         }
     }
 
@@ -131,7 +134,7 @@ class SplashFragment: Fragment() {
 
     /**
      * Get the path from the primary storage.
-     * @return The path value (end point represents a directory).
+     * @return The path value (end point represents a directory), else a blank string "".
      */
     private fun primaryStoragePath(): String {
         var path = ""

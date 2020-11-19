@@ -9,11 +9,12 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import com.mcssoft.raceday.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
-class RaceDownloadManager @Inject constructor(val context: Context) {
+class RaceDownloadManager @Inject constructor(private val context: Context) {
 
     private var downloadManager: DownloadManager =
         context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager

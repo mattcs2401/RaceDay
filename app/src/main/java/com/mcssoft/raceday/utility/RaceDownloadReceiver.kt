@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.repository.RaceDayRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +19,9 @@ class RaceDownloadReceiver : BroadcastReceiver() {
     @Inject lateinit var raceDayRepository: RaceDayRepository
 
     override fun onReceive(context: Context, intent: Intent) {
+//        super.onReceive(context, intent)
         Log.d("TAG","RaceDownloadReceiver.onReceive()")
+//        raceDownloadManager = RaceDownloadManager(context)
         when(intent.action) {
             DownloadManager.ACTION_DOWNLOAD_COMPLETE -> {
                 Log.d("TAG","DownloadManager.ACTION_DOWNLOAD_COMPLETE")
@@ -27,7 +30,8 @@ class RaceDownloadReceiver : BroadcastReceiver() {
                     Constants.MINUS_ONE)
 
                 if (getDownloadStatus(fileId)) {//context, fileId)) {
-//                    iFileData.setFileData(fileId, RaceDayUtil.getDateToday(RaceDayUtil.DateFormat.SLASH))
+                    // Testing.
+                    Toast.makeText(context, "Download successful. File id=$fileId", Toast.LENGTH_SHORT).show()
 
                     // TODO - can this be replaced with coroutine ?
 //                    toBackgroundService(context, fileId)
