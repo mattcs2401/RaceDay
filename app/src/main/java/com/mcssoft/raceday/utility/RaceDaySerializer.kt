@@ -9,7 +9,7 @@ import java.io.OutputStream
 
 class RaceDaySerializer() : Serializer<FileMetaData> {
     override val defaultValue: FileMetaData
-        get() = TODO("Not yet implemented")
+        get() = FileMetaData.getDefaultInstance()
 
     override fun readFrom(input: InputStream): FileMetaData {
         try {

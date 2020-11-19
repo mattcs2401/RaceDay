@@ -7,8 +7,13 @@ import androidx.datastore.createDataStore
 import androidx.datastore.preferences.createDataStore
 import com.mcssoft.raceday.FileMetaData
 import com.mcssoft.raceday.utility.RaceDaySerializer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
@@ -29,9 +34,13 @@ class ProtoRepository @Inject constructor (private val context: Context) {
             }
         }
 
-    suspend fun updateFileId(fileId: Long) {
+    suspend fun setFileId(fileId: Long) {
         dataStore.updateData { pref ->
             pref.toBuilder().setFileId(fileId).build()
         }
+    }
+
+    suspend fun getFileId(): Long {
+        return dataStore.data.first().fileId
     }
 }

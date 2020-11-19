@@ -14,6 +14,10 @@ import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
+/**
+ * Wrapper for the DownloadManager.
+ * @param context: Basically just used to get the Download and Connectivity services.
+ */
 class RaceDownloadManager @Inject constructor(private val context: Context) {
 
     private var downloadManager: DownloadManager =

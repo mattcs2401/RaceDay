@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
 import com.mcssoft.raceday.repository.RaceDayRepository
-import com.mcssoft.raceday.utility.RaceDayUtil
 import com.mcssoft.raceday.utility.RaceDownloadManager
 import com.mcssoft.raceday.utility.RaceDownloadReceiver
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,29 +72,16 @@ class SplashFragment: Fragment() {
     }
     //</editor-fold>
 
+    @Suppress("ControlFlowWithEmptyBody")
     private fun initialise() {
-
-        val vols: Array<out File>
-        val primaryPath = primaryStoragePath()
-
-        if(primaryPath != "") {
-            val dir = File(primaryPath)
-
-            if(filesExist(dir)) {
-                // File/s exist, check if today's.
-                if(!isFileToday(dir.listFiles()[0])) {
-                    // File is not today's so remove.
-                    deleteFromStorage(dir)
-                    // Download the new (today's) file.
-                    raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
-                }
-            } else {
-                // No files exist so download today's.
-                raceDownloadManager.downloadPage(primaryPath, "RaceDay.xml")
-            }
+        val path = primaryStoragePath()
+        if(path != "") {
+            // delete whatever is there.
+            deleteFromStorage(File(path))
+            // download today's data.
+            raceDownloadManager.downloadPage(path, "RaceDay.xml")
         } else {
-            // TBA - primary storage path not there. Maybe a dialog about checking a card is there ?
-            val bp = "bp"
+            /* TODO - primary storage path doesn't exist. */
         }
     }
 
@@ -105,20 +91,22 @@ class SplashFragment: Fragment() {
      * @param file: A File object representing the directory.
      */
     private fun deleteFromStorage(file: File) {
-        val listing = file.listFiles()
-        for(file in listing) {
-            file.delete()
+        if(filesExist(file)) {
+            val listing = file.listFiles()
+            for (file in listing) {
+                file.delete()
+            }
         }
     }
 
-    /**
-     * Check if the downloaded file has today's date (day and month).
-     * @param file: The downloaded file.
-     * @return True if the file day/month detail is the same as today.
-     */
-    private fun isFileToday(file: File): Boolean {
-        return RaceDayUtil.compareDateToToday(file.lastModified())
-    }
+//    /**
+//     * Check if the downloaded file has today's date (day and month).
+//     * @param file: The downloaded file.
+//     * @return True if the file day/month detail is the same as today.
+//     */
+//    private fun isFileToday(file: File): Boolean {
+//        return RaceDayUtil.compareDateToToday(file.lastModified())
+//    }
 
     /**
      * Check if there are any files in the download directory.

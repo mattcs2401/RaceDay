@@ -8,15 +8,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.repository.RaceDayRepository
+import com.mcssoft.raceday.repository.ProtoRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RaceDownloadReceiver : BroadcastReceiver() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
-    @Inject lateinit var raceDayRepository: RaceDayRepository
+    @Inject lateinit var protoRepository: ProtoRepository
 
     override fun onReceive(context: Context, intent: Intent) {
 //        super.onReceive(context, intent)
@@ -29,9 +32,14 @@ class RaceDownloadReceiver : BroadcastReceiver() {
                 val fileId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID,
                     Constants.MINUS_ONE)
 
-                if (getDownloadStatus(fileId)) {//context, fileId)) {
+                if (getDownloadStatus(fileId)) {
                     // Testing.
                     Toast.makeText(context, "Download successful. File id=$fileId", Toast.LENGTH_SHORT).show()
+
+                    GlobalScope.launch(Dispatchers.Default) {
+                        protoRepository.setFileId(fileId)
+                    }
+                    val bp="bp"
 
                     // TODO - can this be replaced with coroutine ?
 //                    toBackgroundService(context, fileId)
