@@ -88,7 +88,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_ver"
 
     // Hilt.
-    def hilt_version = "2.29-alpha"
+    def hilt_version = "2.29.1-alpha"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "com.google.dagger:hilt-core:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"

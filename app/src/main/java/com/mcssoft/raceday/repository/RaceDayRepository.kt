@@ -7,12 +7,10 @@ import javax.inject.Inject
 
 class RaceDayRepository @Inject constructor(private val context: Context) {
 
-    companion object {
-        val completableJob = Job()
+    val completableJob = Job()
 
-        private val coroutineScope =
-                CoroutineScope(Dispatchers.IO + completableJob)
-    }
+    private val coroutineScope =
+            CoroutineScope(Dispatchers.IO + completableJob)
 
     //<editor-fold default state="collapsed" desc="Region: File data">
 //    fun getAllFile(): LiveData<List<FileMetaData>> {
