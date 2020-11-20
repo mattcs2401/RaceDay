@@ -4,7 +4,7 @@ import android.content.Context
 import com.mcssoft.raceday.R
 import java.util.*
 
-object RaceDayUtil {
+object RaceDayUtilities {
 
     enum class DateFormat {
         SLASH,

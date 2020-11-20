@@ -24,14 +24,11 @@ class RaceDayPreferences @Inject constructor (private val context: Context) {
 
     private val FILE_ID_KEY = preferencesKey<Long>("FILE_ID")
 
-    var fileId = Constants.MINUS_ONE_L
-
     val fileIdFlow: Flow<Long> = dataStore.data.map {
         val value = it[FILE_ID_KEY] ?: 0
         value
     }
 
-    @JvmName("setFileId1")
     fun setFileId(id: Long) {
         coroutineScope.launch {
             storeFileId(id)
@@ -43,7 +40,6 @@ class RaceDayPreferences @Inject constructor (private val context: Context) {
         dataStore.edit {
             it[FILE_ID_KEY] = id
         }
-        this.fileId = id
     }
 
 }

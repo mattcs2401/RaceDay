@@ -15,5 +15,7 @@ object ConnectivityModule {
 
     @Singleton
     @Provides
-    fun provideConnectivity(@ActivityContext context: Context): RaceConnectivityManager = RaceConnectivityManager(context)
+    fun provideConnectivity(@ActivityContext context: Context): RaceConnectivityManager {
+        return RaceConnectivityManager(context)
+    }
 }

@@ -9,14 +9,13 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import com.mcssoft.raceday.R
-import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
 /**
- * Wrapper for the DownloadManager.
- * @param context: Basically just used to get the Download and Connectivity services.
+ * Simple wrapper for the DownloadManager.
+ * @param context: Basically just used to get the Download service.
  */
 class RaceDownloadManager @Inject constructor(private val context: Context) {
 
@@ -31,7 +30,7 @@ class RaceDownloadManager @Inject constructor(private val context: Context) {
     fun downloadPage(path: String, fileName: String) {
         Log.d("TAG","RaceDownloadManager.downloadPage")
 
-        val url = RaceDayUtil.createRaceDayUrl(context)
+        val url = RaceDayUtilities.createRaceDayUrl(context)
         val file = File(path, fileName)
 
         val dlRequest = DownloadManager.Request(Uri.parse(url))
@@ -49,22 +48,12 @@ class RaceDownloadManager @Inject constructor(private val context: Context) {
     fun getFile(fileId: Long): InputStream =
         ParcelFileDescriptor.AutoCloseInputStream(downloadManager.openDownloadedFile(fileId))
 
-    /**
-     * Returns the cursor associated with the RaceDownloadManager.Query [query].
-     * @Note: Basically only used by the receiver to query the download status.
-     */
-    fun getCursor(query: DownloadManager.Query): Cursor = downloadManager.query(query)
+//    /**
+//     * Returns the cursor associated with the RaceDownloadManager.Query [query].
+//     * @Note: Basically only used by the receiver to query the download status.
+//     */
+//    fun getCursor(query: DownloadManager.Query): Cursor = downloadManager.query(query)
 
-    /**
-     * Simple check that there is a network connection.
-     */
-    private fun isNetworkConnected(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
-        return networkCapabilities != null &&
-                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
 }
 /*
   Download file location:

@@ -7,21 +7,14 @@ import android.net.NetworkInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Simple wrapper for the ConnectivityManager.
+ * @param context: Basically just used to get the Connectivity service.
+ */
 class RaceConnectivityManager @Inject constructor (private val context: Context) {
 
     private val connMgr: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-//    /**
-//     * TBA - deprecated in API 29, but this app targets API 27 as min (Oppo phone ver).
-//     */
-//    fun isNetworkConnected(): Boolean {
-//        return if(connMgr.activeNetworkInfo != null) {
-//            connMgr.activeNetworkInfo!!.isConnected
-//        } else {
-//            false
-//        }
-//    }
 
     /**
      * Simple check that there is a network connection.

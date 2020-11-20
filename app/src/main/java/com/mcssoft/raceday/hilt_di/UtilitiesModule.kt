@@ -1,0 +1,21 @@
+package com.mcssoft.raceday.hilt_di
+
+import android.content.Context
+import com.mcssoft.raceday.utility.RaceDayFileUtilities
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
+
+@Module
+@InstallIn(ApplicationComponent::class)
+object UtilitiesModule {
+
+    @Singleton
+    @Provides
+    fun provideFileUtilities(@ApplicationContext context: Context): RaceDayFileUtilities {
+        return RaceDayFileUtilities(context)
+    }
+}
