@@ -12,44 +12,9 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
     private val coroutineScope =
             CoroutineScope(Dispatchers.IO + completableJob)
 
-    //<editor-fold default state="collapsed" desc="Region: File data">
-//    fun getAllFile(): LiveData<List<FileMetaData>> {
-//        var fmdList = listOf<FileMetaData>()
-//        val ldList = MutableLiveData<List<FileMetaData>>()
-//
-//        coroutineScope.launch {
-//            fmdList =  iFileDataDAO.getFileData()
-//        }
-//
-//        ldList.value = fmdList
-//        return ldList
-//    }
+    //<editor-fold default state="collapsed" desc="Region: XXX">
 
-//    fun getFile(id: Long) = iFileDataDAO.getFileData(id)
-
-//    fun getCountFileData(): Int {
-//        var count = -1
-//        coroutineScope.launch {
-//            count = iFileDataDAO.getCount()
-//        }
-//        return count
-//    }
-
-//    fun hasFileData(): Boolean {
-//        var value = false
-//        if(getCountFileData() > 0) {
-//            value = true
-//        }
-//        return value
-//    }
-
-//    fun deleteAllFileData() {
-//        coroutineScope.launch {
-//            iFileDataDAO.deleteAll()
-//        }
-//    }
     //</editor-fold>
-
 
 
 }

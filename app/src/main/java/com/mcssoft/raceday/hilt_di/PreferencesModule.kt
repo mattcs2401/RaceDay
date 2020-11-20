@@ -2,7 +2,6 @@ package com.mcssoft.raceday.hilt_di
 
 import android.content.Context
 import com.mcssoft.raceday.repository.RaceDayPreferences
-import com.mcssoft.raceday.repository.RaceDayRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,11 +11,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object RepositoryModule {
+object PreferencesModule {
 
     @Singleton
     @Provides
-    fun provideRaceDayRepo(@ApplicationContext context: Context): RaceDayRepository {
-        return RaceDayRepository(context)
+    fun providePreferences(@ApplicationContext context: Context): RaceDayPreferences {
+        return RaceDayPreferences(context)
     }
+
 }
