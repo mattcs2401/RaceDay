@@ -69,19 +69,18 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_ver"
 
     // Hilt.
-    def hilt_version = "2.29.1-alpha"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "com.google.dagger:hilt-core:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    def hilt_ver = "2.29.1-alpha"
+    implementation "com.google.dagger:hilt-android:$hilt_ver"
+    implementation "com.google.dagger:hilt-core:$hilt_ver"
+    kapt "com.google.dagger:hilt-compiler:$hilt_ver"
 
-    def hilt_viewmodels = "1.0.0-alpha01"
+    def hilt_models_ver = "1.0.0-alpha01"
     //noinspection GradleDependency
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
-    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_models_ver"
+    kapt "androidx.hilt:hilt-compiler:$hilt_models_ver"
 
     // Preferences DataStore
-    def ds_ver = "1.0.0-alpha03"
+    def ds_ver = "1.0.0-alpha04"
     implementation "androidx.datastore:datastore-preferences:$ds_ver"
-    implementation "androidx.datastore:datastore-core:$ds_ver"
-    implementation "com.google.protobuf:protobuf-javalite:3.11.0"
+
 }
