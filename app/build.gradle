@@ -83,4 +83,8 @@ dependencies {
     def ds_ver = "1.0.0-alpha04"
     implementation "androidx.datastore:datastore-preferences:$ds_ver"
 
+    // WorkManager Worker
+    def work_ver = "2.4.0"
+    implementation "androidx.work:work-runtime-ktx:$work_ver"
+
 }

@@ -7,15 +7,12 @@
     <string name="main_page">RaceDay.xml</string>
 
     <!-- Action name spaces. -->
-    <string name="file_action">com.mcssoft.raceday.receiver.EXTRAS_ACTION</string>
-<!--    <string name="extras_action_complete">com.mcssoft.raceday.receiver.EXTRAS_ACTION_COMPLETE</string>-->
-    <string name="file_bundle">com.mcssoft.raceday.receiver.EXTRAS_BUNDLE</string>
-<!--    <string name="key_extras_details">key_extras_details</string>-->
-    <string name="key_extras_file_id">key_extras_file_id</string>
-
     <string name="action_download_complete">ACTION_DOWNLOAD_COMPLETE</string>
 
     <!-- Notification. -->
     <string name="raceday_downloading">RaceDay Downloading</string>
     <string name="downloading_details_for_raceday">Downloading Details For RaceDay</string>
+
+    <!-- Keys. -->
+    <string name="key_file_id">KEY_FILE_ID</string>
 </resources>

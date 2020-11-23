@@ -3,7 +3,6 @@ package com.mcssoft.raceday.utility
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 

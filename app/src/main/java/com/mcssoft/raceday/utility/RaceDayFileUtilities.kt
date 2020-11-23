@@ -16,8 +16,8 @@ class RaceDayFileUtilities @Inject constructor(private val context: Context) {
     fun deleteFromStorage(file: File) {
         if(filesExist(file)) {
             val listing = file.listFiles()
-            for (file in listing) {
-                file.delete()
+            listing?.forEach { f ->
+                f.delete()
             }
         }
     }
