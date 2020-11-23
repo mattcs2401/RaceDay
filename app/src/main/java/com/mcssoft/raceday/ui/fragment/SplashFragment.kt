@@ -27,7 +27,7 @@ class SplashFragment: Fragment() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
-    @Inject lateinit var raceDayRepository: RaceDayRepository
+//    @Inject lateinit var raceDayRepository: RaceDayRepository
     @Inject lateinit var raceDayFileUtils: RaceDayFileUtilities
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">

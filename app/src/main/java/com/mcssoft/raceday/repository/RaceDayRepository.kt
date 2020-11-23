@@ -1,6 +1,8 @@
 package com.mcssoft.raceday.repository
 
+import android.app.Application
 import android.content.Context
+import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -11,6 +13,8 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
 
     private val coroutineScope =
             CoroutineScope(Dispatchers.IO + completableJob)
+
+    val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
 
     //<editor-fold default state="collapsed" desc="Region: XXX">
 
