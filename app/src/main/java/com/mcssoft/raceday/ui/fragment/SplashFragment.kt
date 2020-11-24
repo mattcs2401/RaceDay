@@ -78,9 +78,10 @@ class SplashFragment: Fragment() {
     private fun initialise() {
         val path = raceDayFileUtils.primaryStoragePath()
         if(path != "") {
-            // delete whatever is there.
+            // Delete whatever file is there.
             raceDayFileUtils.deleteFromStorage(File(path))
-            // download today's data.
+
+            // Download, parse and write today's data (this is where it kicks off).
             raceDownloadManager.downloadPage(path, "RaceDay.xml")
         } else {
             /* TODO - primary storage path doesn't exist. */

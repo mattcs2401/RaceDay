@@ -16,6 +16,10 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
 
     val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
 
+    // Must be called on a background thread.
+    fun deleteAll() = raceDetailsDAO.deleteAll()
+
+
     //<editor-fold default state="collapsed" desc="Region: XXX">
 
     //</editor-fold>

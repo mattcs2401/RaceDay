@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.database.entity.RaceMeeting
 import com.mcssoft.raceday.repository.RaceDayRepository
 import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.RaceDayParser
@@ -19,21 +20,44 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
     private lateinit var raceDayRepository: RaceDayRepository
 
     // Result list of the Xml parsing.
-    private lateinit var meetingsListing: ArrayList<MutableMap<String, String>>
+    private var meetingsListing = ArrayList<MutableMap<String, String>>()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         return@withContext try {
 
-            val fileId = params.inputData.getLong(context.resources.getString(R.string.key_file_id), Constants.MINUS_ONE_L)
+            val fileId = params.inputData.getLong(
+                context.resources.getString(R.string.key_file_id),
+                Constants.MINUS_ONE_L
+            )
 
+            // Initialise parser.
             raceDayParser = RaceDayParser(context)
             raceDayParser.setInputStream(fileId)
 
+            // Get the list of meetings.
             meetingsListing = raceDayParser.parseForMeeting()
 
+            // Instantiate repository (for database access).
             raceDayRepository = RaceDayRepository(context)
+            // Delete anything previously there.
+            raceDayRepository.raceDetailsDAO.deleteAll()
 
-            // TODO - write to database.
+            // Write the new details.
+            for (item in meetingsListing) {
+                val meeting = RaceMeeting(item["MtgId"]!!)
+
+                meeting.weatherChanged = item["WeatherChanged"]!!
+                meeting.meetingCode = item["MeetingCode"]!!
+                meeting.venueName = item["VenueName"]!!
+                meeting.hiRaceNo = item["HiRaceNo"]!!
+                meeting.meetingType = item["MeetingType"]!!
+                meeting.trackChanged = item["TrackChanged"]!!
+                meeting.nextRaceNo = item["NextRaceNo"]!!
+                meeting.sortOrder = item["SortOrder"]!!
+                meeting.abandoned = item["Abandoned"]!!
+
+                raceDayRepository.raceDetailsDAO.insertMeeting(meeting)
+            }
             // TODO - notify ? stop spinner in SplashFragment, navigate to MainFragment.
 
             Result.success()
