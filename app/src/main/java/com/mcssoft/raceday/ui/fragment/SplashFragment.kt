@@ -16,6 +16,7 @@ import com.mcssoft.raceday.utility.RaceDayFileUtilities
 import com.mcssoft.raceday.utility.RaceDownloadManager
 import com.mcssoft.raceday.utility.RaceDownloadReceiver
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 import javax.inject.Inject
 
@@ -62,14 +63,14 @@ class SplashFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+//        EventBus.getDefault().register(this)
         initialise()
     }
 
     override fun onStop() {
         super.onStop()
         Log.d("TAG","SplashFragment.onStop")
-
+//        EventBus.getDefault().unregister(this)
         requireContext().unregisterReceiver(raceDownloadReceiver)
     }
     //</editor-fold>

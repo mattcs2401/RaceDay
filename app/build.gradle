@@ -33,6 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    kapt {
+        arguments {
+            arg('eventBusIndex', 'com.mcssoft.raceday.MyEventBusIndex')
+        }
+    }
 }
 
 dependencies {
@@ -86,4 +91,8 @@ dependencies {
     def work_ver = "2.4.0"
     implementation "androidx.work:work-runtime-ktx:$work_ver"
 
+    // Event Bus (for communication back to Fragment or lifecycle components).
+    def eventbus_ver = "3.2.0"
+    implementation "org.greenrobot:eventbus:$eventbus_ver"
+    kapt "org.greenrobot:eventbus-annotation-processor:$eventbus_ver"
 }
