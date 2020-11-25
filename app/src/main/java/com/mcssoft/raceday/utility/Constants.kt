@@ -9,4 +9,6 @@ object Constants {
     const val NETWORK_MOB = 0          // Network by mobile data.
     const val NETWORK_NONE = -1        // No network.
 
+    const val RESULT_SUCCESS = 1
+    const val RESULT_FAILURE = -1
 }

@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.mcssoft.raceday.databinding.MainFragmentBinding
+import com.mcssoft.raceday.utility.callback.BackPressCB
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
+//@AndroidEntryPoint
 class MainFragment : Fragment() {
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class MainFragment : Fragment() {
 
         binding = MainFragmentBinding.bind(view)
 
-        initialise()
+//        initialise()
 
 //        viewModel.getAllFile().observe(viewLifecycleOwner, Observer { file ->
 //            // TBA
@@ -42,14 +43,20 @@ class MainFragment : Fragment() {
 //        Log.d("TAG","MainFragment.onActivityCreated")
 //    }
 
-//    override fun onStart() {
-//        super.onStart()
-//    }
+    override fun onStart() {
+        super.onStart()
+//        // Add on back pressed handler.
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressCallback)
+        Log.d("TAG","MainFragment.onStart")
+    }
 
-//    override fun onStop() {
-//        super.onStop()
-//        Log.d("TAG","MainFragment.onStop")
-//    }
+    override fun onStop() {
+//        // Remove back press handler callback.
+//        backPressCallback.removeCallback()
+        // Super.
+        super.onStop()
+        Log.d("TAG","MainFragment.onStop")
+    }
 
     private fun initialise() {
 //        var cache = listOf<FileMetaData>()
@@ -61,4 +68,5 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var binding: MainFragmentBinding
+//    private var backPressCallback = BackPressCB(requireActivity(), true)
 }
