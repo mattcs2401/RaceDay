@@ -2,7 +2,7 @@ package com.mcssoft.raceday.events
 
 import com.mcssoft.raceday.utility.Constants
 
-class MessageEvent(private val res: Int) {
+class ResultMessageEvent(private val res: Int) {
 
     val result: Int
         get() = res

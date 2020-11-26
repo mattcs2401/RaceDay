@@ -7,13 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
-import com.mcssoft.raceday.events.MessageEvent
+import com.mcssoft.raceday.events.ResultMessageEvent
 import com.mcssoft.raceday.utility.Constants.RESULT_FAILURE
 import com.mcssoft.raceday.utility.Constants.RESULT_SUCCESS
 import com.mcssoft.raceday.utility.RaceDayFileUtilities
@@ -35,7 +33,6 @@ class SplashFragment : Fragment() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
-//    @Inject lateinit var raceDayRepository: RaceDayRepository
     @Inject lateinit var raceDayFileUtils: RaceDayFileUtilities
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
@@ -51,15 +48,13 @@ class SplashFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         Log.d("TAG", "SplashFragment.onCreateView")
-
         return SplashFragmentBinding.inflate(inflater, container, false).root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("TAG", "MainFragment.onViewCreated")
-
-        binding = SplashFragmentBinding.bind(view)
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        Log.d("TAG", "MainFragment.onViewCreated")
+//        binding = SplashFragmentBinding.bind(view)
+//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -70,19 +65,28 @@ class SplashFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         EventBus.getDefault().register(this)
+        // Kick it all off.
         initialise()
     }
 
     override fun onStop() {
         super.onStop()
         Log.d("TAG", "SplashFragment.onStop")
+
         EventBus.getDefault().unregister(this)
         requireContext().unregisterReceiver(raceDownloadReceiver)
     }
     //</editor-fold>
 
     @Suppress("ControlFlowWithEmptyBody")
+    /**
+     * Kick it all off.
+     * Delete anything in local file storage, then hand over to the RaceDownloadManager to get the
+     * new file, and from there, hand over to the RaceDownloadReceiver to parse the file data
+     * and write to database (all previous database entries are deleted).
+     */
     private fun initialise() {
         val path = raceDayFileUtils.primaryStoragePath()
         if(path != "") {
@@ -97,37 +101,27 @@ class SplashFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent) {
+    fun onMessageEvent(event: ResultMessageEvent) {
         when(event.result) {
             RESULT_SUCCESS -> {
 
-                // Notes: This is the end point of the file download and parse. The RaceDay.xml file
-                // has been downloaded by the DownLoadManager and saved to local storage. A broadcast
-                // has sent and picked up by the DownloadReceiver. The receiver has spawned a Worker
-                // to parse and write the file data in the background.
+            /* Notes:
+               This is the end point of the file download and parse. The RaceDay.xml file has been
+               downloaded by the DownLoadManager and saved to local storage. A broadcast has also
+               been sent by the DownloadManager and picked up by the DownloadReceiver. The receiver
+               has spawned a (Coroutine) Worker to parse and write the file data in the background.
+            */
+               Log.d("TAG", "SplashFragment: Result success")
 
-                // TODO - notify and stop spinner in SplashFragment, navigate to MainFragment.
-                Toast.makeText(requireContext(), "SplashFragment: Result success", Toast.LENGTH_SHORT).show()
-
-                binding.progressBar.visibility = View.GONE
-
-                try {
-                    val controller = Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
-                    //requireActivity().findNavController(R.id.id_nav_host_fragment)
-                    controller.navigate(R.id.action_id_splash_fragment_to_id_main_fragment)//R.id.id_main_fragment)
-                } catch(ex: Exception) {
-                    val msg = ex.message
-                    val bp = "bp"
-                }
+                Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
+                        .navigate(R.id.action_splash_fragment_to_main_fragment)
             }
             RESULT_FAILURE -> {
-                Toast.makeText(requireContext(), "SplashFragment: Result failure", Toast.LENGTH_SHORT).show()
+                Log.d("TAG", "SplashFragment: Result failure")
             }
         }
-
-        /* Do something */
     }
 
-    private lateinit var binding: SplashFragmentBinding
+//    private lateinit var binding: SplashFragmentBinding
     private lateinit var downloadFilter: IntentFilter
 }

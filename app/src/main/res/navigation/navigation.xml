@@ -10,14 +10,8 @@
         android:name="com.mcssoft.raceday.ui.fragment.SplashFragment"
         android:label="Splash"
         tools:layout="@layout/splash_fragment">
-        <!--        <action-->
-        <!--            android:id="@+id/mainFragment_to_editFragment"-->
-        <!--            app:destination="@id/id_edit_fragment" />-->
-        <!--        <action-->
-        <!--            android:id="@+id/mainFragment_to_preferencesFragment"-->
-        <!--            app:destination="@id/id_preferences_fragment" />-->
         <action
-            android:id="@+id/action_id_splash_fragment_to_id_main_fragment"
+            android:id="@+id/action_splash_fragment_to_main_fragment"
             app:destination="@id/id_main_fragment" />
     </fragment>
     <fragment

@@ -6,23 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.mcssoft.raceday.databinding.MainFragmentBinding
-import com.mcssoft.raceday.utility.callback.BackPressCB
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.mcssoft.raceday.utility.RaceDayBackPressCB
 
 //@AndroidEntryPoint
 class MainFragment : Fragment() {
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        Log.d("TAG","MainFragment.onCreate")
-//    }
-
+    //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         Log.d("TAG","MainFragment.onCreateView")
+
         return MainFragmentBinding.inflate(inflater, container, false).root
     }
 
@@ -31,32 +25,40 @@ class MainFragment : Fragment() {
 
         binding = MainFragmentBinding.bind(view)
 
-//        initialise()
+        // Setup the UI and related components.
+        initialise()
 
 //        viewModel.getAllFile().observe(viewLifecycleOwner, Observer { file ->
 //            // TBA
 //        })
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        Log.d("TAG","MainFragment.onActivityCreated")
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("TAG","MainFragment.onActivityCreated")
+
+        // Init back press handler callback.
+        raceDayBackPressCallback = RaceDayBackPressCB(true )
+    }
 
     override fun onStart() {
         super.onStart()
-//        // Add on back pressed handler.
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressCallback)
         Log.d("TAG","MainFragment.onStart")
+
+        // Add on back pressed handler.
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, raceDayBackPressCallback)
     }
 
     override fun onStop() {
-//        // Remove back press handler callback.
-//        backPressCallback.removeCallback()
+        Log.d("TAG","MainFragment.onStop")
+
+        // Remove back press handler callback.
+        raceDayBackPressCallback.removeCallback()
+
         // Super.
         super.onStop()
-        Log.d("TAG","MainFragment.onStop")
     }
+    //</editor-fold>
 
     private fun initialise() {
 //        var cache = listOf<FileMetaData>()
@@ -67,6 +69,8 @@ class MainFragment : Fragment() {
         val bp = ""
     }
 
-    private lateinit var binding: MainFragmentBinding
-//    private var backPressCallback = BackPressCB(requireActivity(), true)
+    private lateinit var binding : MainFragmentBinding
+
+    // Callback to block the user from pressing back (otherwise will reload the SplashFragment).
+    private lateinit var raceDayBackPressCallback : RaceDayBackPressCB
 }

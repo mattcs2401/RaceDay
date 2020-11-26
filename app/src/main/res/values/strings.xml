@@ -15,4 +15,8 @@
 
     <!-- Keys. -->
     <string name="key_file_id">KEY_FILE_ID</string>
+
+    <!-- Splash message. -->
+    <string name="splash_message">Downloading and processing. Please wait.</string>
+
 </resources>

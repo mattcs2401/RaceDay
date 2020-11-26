@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mcssoft.raceday.R
@@ -32,13 +33,20 @@ class MainActivity : AppCompatActivity() {
         // Navigation.
         navController = Navigation.findNavController(this, R.id.id_nav_host_fragment)
 
+        // Note:
+        // This makes these top level destinations. App starts with SplashFragment and when done,
+        // navigation moves to MainFragment. We don't want a back arrow from MainFragment.
+        val appBarConfig = AppBarConfiguration(
+                setOf(R.id.id_splash_fragment, R.id.id_main_fragment)
+        )
 
+        // TODO - implement bottom navigation view ?
 //        bottomNavView = binding.idBottomNavView
 //        NavigationUI.setupWithNavController(bottomNavView, navController)
 //        bottomNavView.setOnNavigationItemSelectedListener(this)
 
-        // Back Navigation.
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        // Back navigation is basically restricted by the AppBarConfiguration.
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
     }
 
     override fun onStart() {
