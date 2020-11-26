@@ -41,7 +41,7 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
             raceDayRepository = RaceDayRepository(context)
 
             // Delete anything previously there.
-            raceDayRepository.raceDetailsDAO.deleteAll()
+            raceDayRepository.deleteAll()
 
             // Write the new details.
             for (item in meetingsListing) {
@@ -57,7 +57,7 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
                 meeting.sortOrder = item["SortOrder"]!!
                 meeting.abandoned = item["Abandoned"]!!
 
-                raceDayRepository.raceDetailsDAO.insertMeeting(meeting)
+                raceDayRepository.insertMeeting(meeting)
             }
 
             Log.d("TAG", "ParseWorker - Result.success")

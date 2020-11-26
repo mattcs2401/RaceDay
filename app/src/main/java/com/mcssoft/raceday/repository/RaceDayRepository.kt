@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
+import com.mcssoft.raceday.database.entity.RaceMeeting
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -14,16 +15,25 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
     private val coroutineScope =
             CoroutineScope(Dispatchers.IO + completableJob)
 
-    val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
+    private val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
 
-    // Must be called on a background thread.
+    /**
+     * Delete all from the race_day_details table.
+     * @note: Must be called on a background thread.
+     */
     fun deleteAll() = raceDetailsDAO.deleteAll()
+
+    /**
+     * Insert a RaceDetails (entity) meeting.
+     * @param meeting: The meeting to insert.
+     * @note: Must be called on a background thread.
+     */
+    fun insertMeeting(meeting: RaceMeeting) = raceDetailsDAO.insertMeeting(meeting)
 
 
     //<editor-fold default state="collapsed" desc="Region: XXX">
 
     //</editor-fold>
-
 
 }
 /*
