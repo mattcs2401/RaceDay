@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.mcssoft.raceday.databinding.MainFragmentBinding
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
+import com.mcssoft.raceday.viewmodel.RaceDayViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
@@ -58,6 +61,11 @@ class MainFragment : Fragment() {
         // Super.
         super.onStop()
     }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
     //</editor-fold>
 
     private fun initialise() {
@@ -69,7 +77,9 @@ class MainFragment : Fragment() {
         val bp = ""
     }
 
-    private lateinit var binding : MainFragmentBinding
+    private var binding : MainFragmentBinding? = null
+
+    private val mainViewModel: RaceDayViewModel by viewModels()
 
     // Callback to block the user from pressing back (otherwise will reload the SplashFragment).
     private lateinit var raceDayBackPressCallback : RaceDayBackPressCB

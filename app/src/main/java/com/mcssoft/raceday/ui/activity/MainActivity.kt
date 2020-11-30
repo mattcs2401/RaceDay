@@ -3,6 +3,8 @@ package com.mcssoft.raceday.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,8 +25,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("TAG","MainActivity.onCreate")
 
-        binding = MainActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val content = findViewById<ViewGroup>(android.R.id.content)
+        AsyncLayoutInflater(this)
+            .inflate(R.layout.main_activity, content) { view, _, _ ->
+                binding = MainActivityBinding.inflate(layoutInflater)
+                setContentView(view)
+            }
 
         // Toolbar.
         setSupportActionBar(binding.idToolbar)
