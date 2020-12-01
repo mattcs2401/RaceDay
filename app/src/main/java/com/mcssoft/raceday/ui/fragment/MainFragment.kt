@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import com.mcssoft.raceday.databinding.MainFragmentBinding
+import com.mcssoft.raceday.ui.observer.RaceDayObserver
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
 import com.mcssoft.raceday.viewmodel.RaceDayViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,9 +34,7 @@ class MainFragment : Fragment() {
         // Setup the UI and related components.
         initialise()
 
-//        viewModel.getAllFile().observe(viewLifecycleOwner, Observer { file ->
-//            // TBA
-//        })
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -69,16 +70,18 @@ class MainFragment : Fragment() {
     //</editor-fold>
 
     private fun initialise() {
-//        var cache = listOf<FileMetaData>()
-//        if (viewModel.getCountFileMeta() > 0) {
-//            cache = viewModel.getAllFile() as List<FileMetaData>
-//        }
+        // Set view model.
+        mainViewModel.getCache().asLiveData()
+                .observe(viewLifecycleOwner, RaceDayObserver(mainViewModel))
+        // Set the recycler view.
+        // TBA
 
         val bp = ""
     }
 
+    // UI components.
     private var binding : MainFragmentBinding? = null
-
+    // Main view model.
     private val mainViewModel: RaceDayViewModel by viewModels()
 
     // Callback to block the user from pressing back (otherwise will reload the SplashFragment).

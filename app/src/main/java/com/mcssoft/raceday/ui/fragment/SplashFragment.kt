@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
 import com.mcssoft.raceday.events.ResultMessageEvent
+import com.mcssoft.raceday.repository.RaceDayRepository
 import com.mcssoft.raceday.utility.Constants.RESULT_FAILURE
 import com.mcssoft.raceday.utility.Constants.RESULT_SUCCESS
 import com.mcssoft.raceday.utility.RaceDayFileUtilities
@@ -34,6 +35,7 @@ class SplashFragment : Fragment() {
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
     @Inject lateinit var raceDayFileUtils: RaceDayFileUtilities
+    @Inject lateinit var raceDayRepository: RaceDayRepository
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +115,10 @@ class SplashFragment : Fragment() {
             */
                Log.d("TAG", "SplashFragment: Result success")
 
+                // Create repository cache.
+                raceDayRepository.createCache()
+
+                // Navigate to MainFragment.
                 Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
                         .navigate(R.id.action_splash_fragment_to_main_fragment)
             }

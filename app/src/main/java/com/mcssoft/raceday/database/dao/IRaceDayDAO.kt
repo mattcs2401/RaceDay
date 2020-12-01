@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mcssoft.raceday.database.entity.RaceMeeting
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IRaceDayDAO {
@@ -15,4 +16,6 @@ interface IRaceDayDAO {
     @Query("delete from race_day_details")
     fun deleteAll(): Int
 
+    @Query("select * from race_day_details")
+    fun getMeetings(): Flow<RaceMeeting>
 }
