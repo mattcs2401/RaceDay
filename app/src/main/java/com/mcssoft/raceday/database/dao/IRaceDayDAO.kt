@@ -17,5 +17,5 @@ interface IRaceDayDAO {
     fun deleteAll(): Int
 
     @Query("select * from race_day_details")
-    fun getMeetings(): Flow<RaceMeeting>
+    fun getMeetings(): Flow<List<RaceMeeting>>
 }

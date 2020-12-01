@@ -7,6 +7,7 @@ import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import com.mcssoft.raceday.database.entity.RaceMeeting
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
 import javax.inject.Inject
 
 class RaceDayRepository @Inject constructor(private val context: Context) {
@@ -18,13 +19,13 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
 
     private val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
 
-    private var _raceDayCache: Flow<RaceMeeting>? = null
-    val raceDayCache: Flow<RaceMeeting>
+    private var _raceDayCache: Flow<List<RaceMeeting>>? = null
+    val raceDayCache: Flow<List<RaceMeeting>>
         get() {
             if(_raceDayCache == null) {
                 _raceDayCache = raceDetailsDAO.getMeetings()
             }
-            return _raceDayCache as Flow<RaceMeeting>
+            return _raceDayCache as Flow<List<RaceMeeting>>
     }
 
     /**
@@ -45,6 +46,14 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
      */
     fun createCache() {
         _raceDayCache = raceDetailsDAO.getMeetings()
+    }
+
+    fun getCacheCount(): Int {
+        var count = -1;
+        coroutineScope.launch {
+            count = _raceDayCache?.count()!!
+        }
+        return count
     }
 
     //<editor-fold default state="collapsed" desc="Region: XXX">
