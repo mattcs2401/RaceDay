@@ -16,4 +16,8 @@ class RaceDayViewModel @ViewModelInject constructor(@ApplicationContext private 
     fun getCache(): Flow<List<RaceMeeting>> = repository.raceDayCache
 
     fun getCacheCount(): Int = repository.getCacheCount()
+
+    fun getAt(ndx: Int): RaceMeeting {
+        TODO("Not yet implemented")
+    }
 }

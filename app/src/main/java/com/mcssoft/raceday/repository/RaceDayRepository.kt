@@ -7,7 +7,9 @@ import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import com.mcssoft.raceday.database.entity.RaceMeeting
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 class RaceDayRepository @Inject constructor(private val context: Context) {
@@ -56,10 +58,20 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
         return count
     }
 
+    fun getAt(ndx: Int): RaceMeeting {
+        var raceMeeting = RaceMeeting("")
+        coroutineScope.launch {
+            raceMeeting = raceDayCache.toList()[0][ndx]// .get(ndx)
+        }
+        return raceMeeting
+    }
+
+
     //<editor-fold default state="collapsed" desc="Region: XXX">
     //</editor-fold>
 
 }
+
 /*
 FYI
 https://vladsonkin.com/android-coroutine-scopes-how-to-handle-a-coroutine/?utm_source=feedly&utm_medium=rss&utm_campaign=android-coroutine-scopes-how-to-handle-a-coroutine

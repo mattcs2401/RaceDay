@@ -9,14 +9,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mcssoft.raceday.database.entity.RaceMeeting
 import com.mcssoft.raceday.databinding.MainFragmentBinding
+import com.mcssoft.raceday.interfaces.IMain
+import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.ui.observer.RaceDayObserver
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
 import com.mcssoft.raceday.viewmodel.RaceDayViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), IMain {
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -73,11 +78,45 @@ class MainFragment : Fragment() {
         // Set view model.
         mainViewModel.getCache().asLiveData()
                 .observe(viewLifecycleOwner, RaceDayObserver(mainViewModel))
+        // Adapter.
+        raceAdapter = RaceMeetingAdapter(this)
         // Set the recycler view.
-        // TBA
+        recyclerView = binding?.idRecyclerView
+        recyclerView!!.layoutManager = LinearLayoutManager(context)
+        recyclerView!!.adapter = raceAdapter
 
         val bp = ""
     }
+
+    //<editor-fold default state="collapsed" desc="Region: Interface-IMain">
+    override fun getRaceMeetingCount(): Int {
+        return mainViewModel.getCacheCount()
+    }
+
+    override fun getAt(ndx: Int): RaceMeeting {
+        return mainViewModel.getAt(ndx)
+    }
+
+//    override fun insert(raceDetails: RaceMeeting): Long {
+//        TODO("Not yet implemented")
+//    }
+
+//    override fun deleteAt(ndx: Int) {
+//        TODO("Not yet implemented")
+//    }
+
+//    override fun notifyItemRemoved(position: Int) {
+//        TODO("Not yet implemented")
+//    }
+
+//    override fun onTypeSelect(selType: Int, position: Int) {
+//        TODO("Not yet implemented")
+//    }
+
+//    override fun getMeetingCode(ndx: Int): String {
+//        TODO("Not yet implemented")
+//    }
+    //</editor-fold>
 
     // UI components.
     private var binding : MainFragmentBinding? = null
@@ -86,4 +125,7 @@ class MainFragment : Fragment() {
 
     // Callback to block the user from pressing back (otherwise will reload the SplashFragment).
     private lateinit var raceDayBackPressCallback : RaceDayBackPressCB
+
+    private var raceAdapter: RaceMeetingAdapter? = null
+    private var recyclerView: RecyclerView? = null
 }
