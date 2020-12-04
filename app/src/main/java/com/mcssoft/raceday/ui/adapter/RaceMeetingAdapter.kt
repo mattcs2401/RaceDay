@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mcssoft.raceday.database.entity.RaceMeeting
 import com.mcssoft.raceday.databinding.ListItemMeetingBinding
+import javax.inject.Inject
 
 /**
  * Class implements the RaceDMeeting recycler view adapter.
  */
-class RaceMeetingAdapter : ListAdapter<RaceMeeting, RaceMeetingViewHolder>(RaceMeetingDiffCallback()) {
+class RaceMeetingAdapter @Inject constructor()
+    : ListAdapter<RaceMeeting, RaceMeetingViewHolder>(RaceMeetingDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RaceMeetingViewHolder {
 //        Log.d("TAG","RaceMeetingAdapter.onCreateViewHolder")

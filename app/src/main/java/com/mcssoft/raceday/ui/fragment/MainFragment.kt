@@ -13,9 +13,12 @@ import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
 import com.mcssoft.raceday.viewmodel.RaceDayViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
+
+    @Inject lateinit var raceAdapter: RaceMeetingAdapter
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -75,7 +78,7 @@ class MainFragment : Fragment() {
 
         // Set view model.
         mainViewModel.meetings?.observe(viewLifecycleOwner) { mtgs ->
-            raceAdapter!!.submitList(mtgs)
+            raceAdapter.submitList(mtgs)
         }
 //        val bp = "bp"
     }
@@ -87,6 +90,4 @@ class MainFragment : Fragment() {
 
     // Callback to block the user from pressing back (otherwise will reload the SplashFragment).
     private lateinit var raceDayBackPressCallback : RaceDayBackPressCB
-
-    private var raceAdapter: RaceMeetingAdapter? = null
 }
