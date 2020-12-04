@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.mcssoft.raceday.R
@@ -53,10 +54,10 @@ class SplashFragment : Fragment() {
         return SplashFragmentBinding.inflate(inflater, container, false).root
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        Log.d("TAG", "MainFragment.onViewCreated")
-//        binding = SplashFragmentBinding.bind(view)
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("TAG", "MainFragment.onViewCreated")
+        binding = SplashFragmentBinding.bind(view)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -116,6 +117,7 @@ class SplashFragment : Fragment() {
                Log.d("TAG", "SplashFragment: Result success")
 
                 // Create repository cache.
+                binding.textView.text = "Creating Meetings cache."
                 raceDayRepository.createCache()
 
                 // Navigate to MainFragment.
@@ -123,11 +125,15 @@ class SplashFragment : Fragment() {
                         .navigate(R.id.action_splash_fragment_to_main_fragment)
             }
             RESULT_FAILURE -> {
+                binding.progressBar.visibility = View.GONE
+                binding.textView.text = "SplashFragment: Processing result failure"
                 Log.d("TAG", "SplashFragment: Result failure")
+
+                // TODO - some sort of retry mechanism ?
             }
         }
     }
 
-//    private lateinit var binding: SplashFragmentBinding
+    private lateinit var binding: SplashFragmentBinding
     private lateinit var downloadFilter: IntentFilter
 }

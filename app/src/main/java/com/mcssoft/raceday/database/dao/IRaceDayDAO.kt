@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,5 +18,5 @@ interface IRaceDayDAO {
     fun deleteAll(): Int
 
     @Query("select * from race_day_details")
-    fun getMeetings(): Flow<List<RaceMeeting>>
+    fun getMeetings(): LiveData<List<RaceMeeting>>
 }

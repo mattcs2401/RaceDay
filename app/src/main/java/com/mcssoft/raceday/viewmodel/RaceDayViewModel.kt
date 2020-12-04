@@ -2,6 +2,8 @@ package com.mcssoft.raceday.viewmodel
 
 import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.mcssoft.raceday.database.entity.RaceMeeting
 import com.mcssoft.raceday.repository.RaceDayRepository
@@ -13,11 +15,5 @@ import kotlinx.coroutines.flow.Flow
 class RaceDayViewModel @ViewModelInject constructor(@ApplicationContext private val context: Context,
                                                     private val repository: RaceDayRepository) : ViewModel() {
 
-    fun getCache(): Flow<List<RaceMeeting>> = repository.raceDayCache
-
-    fun getCacheCount(): Int = repository.getCacheCount()
-
-    fun getAt(ndx: Int): RaceMeeting {
-        TODO("Not yet implemented")
-    }
+    val meetings: LiveData<List<RaceMeeting>>? = repository.raceDayCache
 }

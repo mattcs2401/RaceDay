@@ -2,6 +2,9 @@ package com.mcssoft.raceday.repository
 
 import android.app.Application
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import com.mcssoft.raceday.database.entity.RaceMeeting
@@ -21,14 +24,10 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
 
     private val raceDetailsDAO = RaceDay.getDatabase(context.applicationContext as Application).raceDayDetailsDao()
 
-    private var _raceDayCache: Flow<List<RaceMeeting>>? = null
-    val raceDayCache: Flow<List<RaceMeeting>>
-        get() {
-            if(_raceDayCache == null) {
-                _raceDayCache = raceDetailsDAO.getMeetings()
-            }
-            return _raceDayCache as Flow<List<RaceMeeting>>
-    }
+    var raceDayCache: LiveData<List<RaceMeeting>>? = null
+    //= liveData {
+    //    emitSource(raceDetailsDAO.getMeetings())
+    //}
 
     /**
      * Delete all from the race_day_details table.
@@ -47,26 +46,10 @@ class RaceDayRepository @Inject constructor(private val context: Context) {
      * Create the cache that will be used by the ViewModel.
      */
     fun createCache() {
-        _raceDayCache = raceDetailsDAO.getMeetings()
-    }
-
-    fun getCacheCount(): Int {
-        var count = -1;
-        coroutineScope.launch {
-            count = _raceDayCache?.count()!!
+        coroutineScope.launch(Dispatchers.IO) {
+            raceDayCache = raceDetailsDAO.getMeetings()
         }
-        return count
     }
-
-    fun getAt(ndx: Int): RaceMeeting {
-        var raceMeeting = RaceMeeting("")
-        coroutineScope.launch {
-            raceMeeting = raceDayCache.toList()[0][ndx]// .get(ndx)
-        }
-        return raceMeeting
-    }
-
-
     //<editor-fold default state="collapsed" desc="Region: XXX">
     //</editor-fold>
 

@@ -1,41 +1,41 @@
 package com.mcssoft.raceday.ui.adapter
 
 import android.util.Log
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mcssoft.raceday.interfaces.IAdapter
-import com.mcssoft.raceday.interfaces.IMain
+import com.mcssoft.raceday.database.entity.RaceMeeting
+import com.mcssoft.raceday.databinding.ListItemMeetingBinding
 
 /**
  * Class implements the RaceDMeeting recycler view adapter.
- * @param iMain: Interface with the MainFragment.
  */
-class RaceMeetingAdapter(private val iMain: IMain) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), IAdapter {
+class RaceMeetingAdapter : ListAdapter<RaceMeeting, RaceMeetingViewHolder>(RaceMeetingDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.d("TAG","RaceMeetingAdapter.onCreateViewHolder")
-        val view: View = View(parent.context)  // <<-- temporary
-//                LayoutInflater.from(parent.context).inflate(R.layout.row_race_reveal, parent, false)
-        return RaceMeetingViewHolder(view, this)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RaceMeetingViewHolder {
+//        Log.d("TAG","RaceMeetingAdapter.onCreateViewHolder")
+        val view = ListItemMeetingBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        return RaceMeetingViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as RaceMeetingViewHolder).bind(iMain.getAt(position))
-        Log.d("TAG","RaceDetailsAdapter.onBindViewHolder")    }
-
-    override fun getItemCount(): Int {
-        return iMain.getRaceMeetingCount()
+    override fun onBindViewHolder(holder: RaceMeetingViewHolder, position: Int) {
+        val meeting = getItem(position)
+        holder.bind(meeting)
+        Log.d("TAG", """RaceDetailsAdapter.onBindViewHolder:meetingId=${meeting.mtgId}""")
     }
 
-    //<editor-fold default state="collapsed" desc="Region: IAdapter">
-    override fun delete(position: Int) {
-//        iMain.deleteAt(position)
-        notifyItemRemoved(position)
+}
+
+private class RaceMeetingDiffCallback : DiffUtil.ItemCallback<RaceMeeting>() {
+
+    override fun areItemsTheSame(oldItem: RaceMeeting, newItem: RaceMeeting): Boolean {
+        return oldItem.mtgId == newItem.mtgId
     }
 
-    override fun onTypeSelect(selType: Int, position: Int) {
-//        iMain.onTypeSelect(selType, position)
+    override fun areContentsTheSame(oldItem: RaceMeeting, newItem: RaceMeeting): Boolean {
+        return oldItem == newItem
     }
-    //</editor-fold>
 }
