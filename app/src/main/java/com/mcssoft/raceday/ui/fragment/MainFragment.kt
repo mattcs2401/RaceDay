@@ -7,18 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
-import com.mcssoft.raceday.databinding.MainFragmentBinding
 import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
 import com.mcssoft.raceday.viewmodel.RaceDayViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.mcssoft.raceday.databinding.MainFragmentBinding
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
     @Inject lateinit var raceAdapter: RaceMeetingAdapter
+    @Inject lateinit var mainViewModel: RaceDayViewModel
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -70,9 +70,6 @@ class MainFragment : Fragment() {
     //</editor-fold>
 
     private fun initialise() {
-        // Adapter.
-        raceAdapter = RaceMeetingAdapter()
-
         // Set the recycler view.
         binding?.idRecyclerView?.adapter = raceAdapter
 
@@ -85,8 +82,6 @@ class MainFragment : Fragment() {
 
     // UI components.
     private var binding : MainFragmentBinding? = null
-    // Main view model.
-    private val mainViewModel: RaceDayViewModel by viewModels()
 
     // Callback to block the user from pressing back (otherwise will reload the SplashFragment).
     private lateinit var raceDayBackPressCallback : RaceDayBackPressCB

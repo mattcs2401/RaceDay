@@ -9,7 +9,7 @@
     tools:context=".ui.fragment.MainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/id_recyclerView"
+        android:id="@+id/id_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
@@ -25,18 +25,3 @@
         tools:context="com.mcssoft.raceday.ui.activity.MainActivity"
         tools:listitem="@layout/list_item_meeting"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/plant_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingEnd="@dimen/card_side_margin"
-                android:paddingStart="@dimen/card_side_margin"
-                android:paddingTop="@dimen/header_margin"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="@integer/grid_columns"
-                tools:context="com.google.samples.apps.sunflower.GardenActivity"
-                tools:listitem="@layout/list_item_plant"/>
--->

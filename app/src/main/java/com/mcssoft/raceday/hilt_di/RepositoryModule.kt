@@ -1,8 +1,8 @@
 package com.mcssoft.raceday.hilt_di
 
 import android.content.Context
-import com.mcssoft.raceday.repository.RaceDayPreferences
 import com.mcssoft.raceday.repository.RaceDayRepository
+import com.mcssoft.raceday.viewmodel.RaceDayViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +18,10 @@ object RepositoryModule {
     @Provides
     fun provideRaceDayRepo(@ApplicationContext context: Context): RaceDayRepository {
         return RaceDayRepository(context)
+    }
+
+    @Provides
+    fun provideMainViewModel(@ApplicationContext context: Context, repository: RaceDayRepository): RaceDayViewModel {
+        return RaceDayViewModel(context, repository)
     }
 }

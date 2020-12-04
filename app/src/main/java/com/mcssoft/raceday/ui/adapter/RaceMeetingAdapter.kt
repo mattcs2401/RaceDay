@@ -18,15 +18,19 @@ class RaceMeetingAdapter @Inject constructor()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RaceMeetingViewHolder {
 //        Log.d("TAG","RaceMeetingAdapter.onCreateViewHolder")
-        val view = ListItemMeetingBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
-        return RaceMeetingViewHolder(view)
+//        val view = ListItemMeetingBinding.inflate(
+//            LayoutInflater.from(parent.context), parent, false)
+//        return RaceMeetingViewHolder(view)
+        return RaceMeetingViewHolder(
+            ListItemMeetingBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: RaceMeetingViewHolder, position: Int) {
-        val meeting = getItem(position)
-        holder.bind(meeting)
-        Log.d("TAG", """RaceDetailsAdapter.onBindViewHolder:meetingId=${meeting.mtgId}""")
+//        val meeting = getItem(position)
+//        holder.bind(meeting)
+        holder.bind(getItem(position))
+        Log.d("TAG", "RaceDetailsAdapter.onBindViewHolder")
     }
 
 }
