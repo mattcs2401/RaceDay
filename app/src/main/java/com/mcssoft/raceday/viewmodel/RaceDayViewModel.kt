@@ -10,8 +10,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 
 @ActivityScoped
-class RaceDayViewModel @ViewModelInject constructor(@ApplicationContext private val context: Context,
-                                                    private val repository: RaceDayRepository
+class RaceDayViewModel @ViewModelInject constructor(/*@ApplicationContext private val context: Context,*/
+                                                    repository: RaceDayRepository
 ) : ViewModel() {
 
     val meetings: LiveData<List<RaceMeeting>>? = repository.raceDayCache

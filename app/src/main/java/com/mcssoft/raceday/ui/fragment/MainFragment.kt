@@ -2,11 +2,11 @@ package com.mcssoft.raceday.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.Navigation
+import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
 import com.mcssoft.raceday.viewmodel.RaceDayViewModel
@@ -64,12 +64,40 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.d("TAG","MainFragment.onDestroyView")
         binding = null
         super.onDestroyView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu, menu)
+
+//        refreshMenuItem = menu.findItem(R.id.id_mnu_refresh_interval)
+
+        Log.d("TAG","MainFragment.onCreateOptionsMenu")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.id_menu_item_settings -> {
+                // Navigate to MainFragment.
+                Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
+                    .navigate(R.id.action_mainFragment_to_preferencesFragment)
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
     }
     //</editor-fold>
 
     private fun initialise() {
+        // Fragment title in action/tool bar.
+        setTitle("Race Day")
+
+        // Set for menu.
+        setHasOptionsMenu(true)
+
         // Set the recycler view.
         binding?.idRecyclerView?.adapter = raceAdapter
 
@@ -78,6 +106,12 @@ class MainFragment : Fragment() {
             raceAdapter.submitList(mtgs)
         }
 //        val bp = "bp"
+    }
+
+    private fun setTitle(title: String) {
+        requireActivity()
+            .findViewById<Toolbar>(R.id.id_toolbar)
+            ?.title = title
     }
 
     // UI components.

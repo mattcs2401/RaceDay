@@ -2,9 +2,6 @@ package com.mcssoft.raceday.utility
 
 import android.app.DownloadManager
 import android.content.Context
-import android.database.Cursor
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log

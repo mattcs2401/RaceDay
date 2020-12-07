@@ -22,14 +22,14 @@ class RaceDayFileUtilities @Inject constructor(private val context: Context) {
         }
     }
 
-//    /**
-//     * Check if the downloaded file has today's date (day and month).
-//     * @param file: The downloaded file.
-//     * @return True if the file day/month detail is the same as today.
-//     */
-//    private fun isFileToday(file: File): Boolean {
-//        return RaceDayUtilities.compareDateToToday(file.lastModified())
-//    }
+    /**
+     * Check if the downloaded file has today's date (day and month).
+     * @param file: The downloaded file.
+     * @return True if the file day/month detail is the same as today.
+     */
+    private fun isFileToday(file: File): Boolean {
+        return RaceDayUtilities.compareDateToToday(file.lastModified())
+    }
 
     /**
      * Check if there are any files in the download directory.

@@ -7,13 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.databinding.SplashFragmentBinding
 import com.mcssoft.raceday.events.ResultMessageEvent
+import com.mcssoft.raceday.repository.RaceDayPreferences
 import com.mcssoft.raceday.repository.RaceDayRepository
+import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.RESULT_FAILURE
 import com.mcssoft.raceday.utility.Constants.RESULT_SUCCESS
 import com.mcssoft.raceday.utility.RaceDayFileUtilities
@@ -37,6 +38,7 @@ class SplashFragment : Fragment() {
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
     @Inject lateinit var raceDayFileUtils: RaceDayFileUtilities
     @Inject lateinit var raceDayRepository: RaceDayRepository
+    @Inject lateinit var raceDayPreferences: RaceDayPreferences
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,13 +95,23 @@ class SplashFragment : Fragment() {
     private fun initialise() {
         val path = raceDayFileUtils.primaryStoragePath()
         if(path != "") {
-            // Delete whatever file is there.
-            raceDayFileUtils.deleteFromStorage(File(path))
+            if(!raceDayPreferences.fileUse) {
+                /* Even if the preference was set and then unset from an earlier time. */
 
-            // Download, parse and write today's data (this is where it kicks off).
-            raceDownloadManager.downloadPage(path, "RaceDay.xml")
+                // Delete whatever file is there.
+                raceDayFileUtils.deleteFromStorage(File(path))
+
+                // Delete (any previous) file reference in Preferences.
+                raceDayPreferences.setFileId(Constants.MINUS_ONE_L)
+                raceDayPreferences.setFileDate("")
+
+                // Download, parse and write today's data (this is where it kicks off).
+                raceDownloadManager.downloadPage(path, "RaceDay.xml")
+            } else {
+                val bp = "bp"
+            }
         } else {
-            /* TODO - primary storage path doesn't exist. */
+            /* TODO - Primary storage path doesn't exist. Maybe some sort of dialog ?*/
         }
     }
 
@@ -122,7 +134,7 @@ class SplashFragment : Fragment() {
 
                 // Navigate to MainFragment.
                 Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
-                        .navigate(R.id.action_splash_fragment_to_main_fragment)
+                        .navigate(R.id.action_splashFragment_to_mainFragment)
             }
             RESULT_FAILURE -> {
                 binding.progressBar.visibility = View.GONE

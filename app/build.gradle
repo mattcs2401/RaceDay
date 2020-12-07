@@ -83,11 +83,15 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_models_ver"
     kapt "androidx.hilt:hilt-compiler:$hilt_models_ver"
 
-    // Preferences DataStore
+    // Preferences (mainly for PreferencesFragment).
+    def pref_ver = "1.1.1"
+    implementation "androidx.preference:preference:$pref_ver"
+
+    // Preferences DataStore (backing data for preferences).
     def ds_ver = "1.0.0-alpha04"
     implementation "androidx.datastore:datastore-preferences:$ds_ver"
 
-    // WorkManager Worker
+    // WorkManager Worker.
     def work_ver = "2.4.0"
     implementation "androidx.work:work-runtime-ktx:$work_ver"
 

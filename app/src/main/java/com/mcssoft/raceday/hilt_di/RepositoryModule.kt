@@ -21,7 +21,7 @@ object RepositoryModule {
     }
 
     @Provides
-    fun provideMainViewModel(@ApplicationContext context: Context, repository: RaceDayRepository): RaceDayViewModel {
-        return RaceDayViewModel(context, repository)
+    fun provideMainViewModel(/*@ApplicationContext context: Context,*/ repository: RaceDayRepository): RaceDayViewModel {
+        return RaceDayViewModel(/*context,*/ repository)
     }
 }

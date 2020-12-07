@@ -7,13 +7,17 @@ import java.io.InputStream
 import javax.xml.xpath.XPathConstants
 import javax.xml.xpath.XPathFactory
 
+/**
+ * Parse the xml within the downloaded RaceDay.xml file.
+ * @param context: Only for system resources.
+ */
 class RaceDayParser(private var context: Context) {
 
     private lateinit var inStream: InputStream
 
     /**
      * Set the current input stream based upon a file id.
-     * @param The file id.
+     * @param fileId: The file id.
      */
     fun setInputStream(fileId: Long) {
         inStream = RaceDownloadManager(context).getFile(fileId)

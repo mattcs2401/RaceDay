@@ -22,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RaceDownloadReceiver : BroadcastReceiver() {
 
-//    @Inject lateinit var raceDayPreferences: RaceDayPreferences
+    @Inject lateinit var raceDayPreferences: RaceDayPreferences
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG","RaceDownloadReceiver.onReceive()")
@@ -38,8 +38,8 @@ class RaceDownloadReceiver : BroadcastReceiver() {
                     // Download was successful (ATT testing ?).
                     Toast.makeText(context, "Download successful. File id=$fileId", Toast.LENGTH_SHORT).show()
 
-//                    // Save the file id to preferences.
-//                    raceDayPreferences.setFileId(fileId)
+                    // Save the file id to preferences.
+                    raceDayPreferences.setFileId(fileId)
 
                     // Parse the file data.
                     parseFileData(context, fileId)
