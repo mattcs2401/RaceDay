@@ -1,7 +1,7 @@
 package com.mcssoft.raceday.hilt_di
 
 import android.content.Context
-import com.mcssoft.raceday.utility.RaceDayFileUtilities
+import com.mcssoft.raceday.utility.RaceDayUtilities
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ object UtilitiesModule {
 
     @Singleton
     @Provides
-    fun provideFileUtilities(@ApplicationContext context: Context): RaceDayFileUtilities {
-        return RaceDayFileUtilities(context)
+    fun provideRaceDayUtilities(@ApplicationContext context: Context): RaceDayUtilities {
+        return RaceDayUtilities(context)
     }
 }

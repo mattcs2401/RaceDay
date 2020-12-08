@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
@@ -71,11 +72,9 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.options_menu, menu)
-
-//        refreshMenuItem = menu.findItem(R.id.id_mnu_refresh_interval)
-
         Log.d("TAG","MainFragment.onCreateOptionsMenu")
+
+        inflater.inflate(R.menu.options_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,28 +90,40 @@ class MainFragment : Fragment() {
     }
     //</editor-fold>
 
+    //<editor-fold default state="collapsed" desc="Region: Utility">
     private fun initialise() {
         // Fragment title in action/tool bar.
-        setTitle("Race Day")
+        setTitle()
 
-        // Set for menu.
         setHasOptionsMenu(true)
 
-        // Set the recycler view.
-        binding?.idRecyclerView?.adapter = raceAdapter
+        setRecyclerView()
 
-        // Set view model.
-        mainViewModel.meetings?.observe(viewLifecycleOwner) { mtgs ->
-            raceAdapter.submitList(mtgs)
-        }
+        setViewModel()
 //        val bp = "bp"
     }
 
-    private fun setTitle(title: String) {
+    private fun setViewModel() {
+        mainViewModel.meetings?.observe(viewLifecycleOwner) { mtgs ->
+            raceAdapter.submitList(mtgs)
+        }
+    }
+
+    private fun setRecyclerView() {
+        // Add dividers between row items.
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding?.idRecyclerView?.addItemDecoration(decoration)
+
+        // Set the recycler view.
+        binding?.idRecyclerView?.adapter = raceAdapter
+    }
+
+    private fun setTitle() {
         requireActivity()
             .findViewById<Toolbar>(R.id.id_toolbar)
-            ?.title = title
+            ?.title = "Race Day"
     }
+    //</editor-fold>
 
     // UI components.
     private var binding : MainFragmentBinding? = null

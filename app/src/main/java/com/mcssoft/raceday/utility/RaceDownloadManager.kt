@@ -21,13 +21,13 @@ class RaceDownloadManager @Inject constructor(private val context: Context) {
 
     /**
      * Basically a simple wrapper for the DownloadManager.enqueue()
+     * @param url: The network url to download from.
      * @param path: The path to the directory in the storage.
      * @param fileName: The name of the file.
      */
-    fun downloadPage(path: String, fileName: String) {
+    fun downloadPage(url: String, path: String, fileName: String) {
         Log.d("TAG","RaceDownloadManager.downloadPage")
 
-        val url = RaceDayUtilities.createRaceDayUrl(context)
         val file = File(path, fileName)
 
         val dlRequest = DownloadManager.Request(Uri.parse(url))

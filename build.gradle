@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_ver = '1.4.20'
+    ext.kotlin_ver = '1.4.21'
     ext.hilt_ver = '2.29.1-alpha'
     ext.build_ver = '4.2.0-alpha15'
 
@@ -24,6 +24,9 @@ allprojects {
         google()
         jcenter()
     }
+//    tasks.withType(JavaCompile) {
+//        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+//    }
 }
 
 task clean(type: Delete) {

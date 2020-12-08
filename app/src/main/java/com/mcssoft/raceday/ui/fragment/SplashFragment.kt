@@ -14,12 +14,9 @@ import com.mcssoft.raceday.databinding.SplashFragmentBinding
 import com.mcssoft.raceday.events.ResultMessageEvent
 import com.mcssoft.raceday.repository.RaceDayPreferences
 import com.mcssoft.raceday.repository.RaceDayRepository
-import com.mcssoft.raceday.utility.Constants
+import com.mcssoft.raceday.utility.*
 import com.mcssoft.raceday.utility.Constants.RESULT_FAILURE
 import com.mcssoft.raceday.utility.Constants.RESULT_SUCCESS
-import com.mcssoft.raceday.utility.RaceDayFileUtilities
-import com.mcssoft.raceday.utility.RaceDownloadManager
-import com.mcssoft.raceday.utility.RaceDownloadReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -36,7 +33,7 @@ class SplashFragment : Fragment() {
 
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
-    @Inject lateinit var raceDayFileUtils: RaceDayFileUtilities
+    @Inject lateinit var raceDayUtilities: RaceDayUtilities
     @Inject lateinit var raceDayRepository: RaceDayRepository
     @Inject lateinit var raceDayPreferences: RaceDayPreferences
 
@@ -93,20 +90,27 @@ class SplashFragment : Fragment() {
      * and write to database (all previous database entries are deleted).
      */
     private fun initialise() {
-        val path = raceDayFileUtils.primaryStoragePath()
+        val path = raceDayUtilities.primaryStoragePath()
         if(path != "") {
             if(!raceDayPreferences.fileUse) {
                 /* Even if the preference was set and then unset from an earlier time. */
 
                 // Delete whatever file is there.
-                raceDayFileUtils.deleteFromStorage(File(path))
+                raceDayUtilities.deleteFromStorage(File(path))
 
                 // Delete (any previous) file reference in Preferences.
-                raceDayPreferences.setFileId(Constants.MINUS_ONE_L)
-                raceDayPreferences.setFileDate("")
+                raceDayPreferences.setFileId(Constants.MINUS_ONE_L)  // set by download Receiver.
+                raceDayPreferences.setFileDate("")                   // set by - TBA.
 
-                // Download, parse and write today's data (this is where it kicks off).
-                raceDownloadManager.downloadPage(path, "RaceDay.xml")
+                // Set the "file date" in the preferences.
+                val date = raceDayUtilities.getDateToday(RaceDayUtilities.DateFormat.SLASH)
+                raceDayPreferences.setFileDate(date)
+
+                // Get the network (path) url.
+                val url = raceDayUtilities.createRaceDayUrl(requireContext())
+
+                // Download, parse and write today's data (this is where it kicks off for new).
+                raceDownloadManager.downloadPage(url, path, "RaceDay.xml")
             } else {
                 val bp = "bp"
             }

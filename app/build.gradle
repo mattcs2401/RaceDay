@@ -57,7 +57,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_ver"
 
     // Navigation
-    def nav_ver = '2.3.1'
+    def nav_ver = '2.3.2'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_ver"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_ver"
 
