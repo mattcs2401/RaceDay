@@ -5,6 +5,8 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.repository.RaceDayPreferences
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +23,18 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // Set toolbar title.
         requireActivity().findViewById<Toolbar>(R.id.id_toolbar)?.title = "Preferences"
+
+        // Initialise.
+        spFileUse = findPreference("key_file_use")!!
+
+        if(spFileUse.isChecked) {
+            raceDayPreferences.setFileUse(true)
+        } else {
+            raceDayPreferences.setFileUse(false)
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -41,4 +53,6 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 //        }
 //        return true
 //    }
+
+    private lateinit var spFileUse: SwitchPreferenceCompat
 }

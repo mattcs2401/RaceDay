@@ -31,11 +31,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
 
+    @Inject lateinit var raceDayPreferences: RaceDayPreferences
     @Inject lateinit var raceDownloadManager: RaceDownloadManager
     @Inject lateinit var raceDownloadReceiver: RaceDownloadReceiver
     @Inject lateinit var raceDayUtilities: RaceDayUtilities
     @Inject lateinit var raceDayRepository: RaceDayRepository
-    @Inject lateinit var raceDayPreferences: RaceDayPreferences
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +67,7 @@ class SplashFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Log.d("TAG", "SplashFragment.onStart")
 
         EventBus.getDefault().register(this)
         // Kick it all off.
@@ -91,28 +92,27 @@ class SplashFragment : Fragment() {
      */
     private fun initialise() {
         val path = raceDayUtilities.primaryStoragePath()
+
         if(path != "") {
-            if(!raceDayPreferences.fileUse) {
-                /* Even if the preference was set and then unset from an earlier time. */
-
-                // Delete whatever file is there.
-                raceDayUtilities.deleteFromStorage(File(path))
-
-                // Delete (any previous) file reference in Preferences.
-                raceDayPreferences.setFileId(Constants.MINUS_ONE_L)  // set by download Receiver.
-                raceDayPreferences.setFileDate("")                   // set by - TBA.
-
-                // Set the "file date" in the preferences.
-                val date = raceDayUtilities.getDateToday(RaceDayUtilities.DateFormat.SLASH)
-                raceDayPreferences.setFileDate(date)
-
-                // Get the network (path) url.
-                val url = raceDayUtilities.createRaceDayUrl(requireContext())
-
-                // Download, parse and write today's data (this is where it kicks off for new).
-                raceDownloadManager.downloadPage(url, path, "RaceDay.xml")
+            if(!raceDayPreferences.getFileUse()) {
+                /* Basically delete everything and recreate. This will be the default when the app
+                   first runs.
+                */
+                defaultStart(path)
             } else {
-                val bp = "bp"
+                if(raceDayUtilities.fileExists(File(path))) {
+
+                    if(raceDayUtilities.isFileToday(File(path))) {
+                        // Use the file.
+                        reStart()
+                    } else {
+                        // A file exists but is not today.
+                        defaultStart(path)
+                    }
+                } else {
+                    // No file exists.
+                    defaultStart(path)
+                }
             }
         } else {
             /* TODO - Primary storage path doesn't exist. Maybe some sort of dialog ?*/
@@ -133,12 +133,10 @@ class SplashFragment : Fragment() {
                Log.d("TAG", "SplashFragment: Result success")
 
                 // Create repository cache.
-                binding.textView.text = "Creating Meetings cache."
-                raceDayRepository.createCache()
+                raceDayRepository.createOrRefreshCache()
 
                 // Navigate to MainFragment.
-                Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
-                        .navigate(R.id.action_splashFragment_to_mainFragment)
+                navigateToMain()
             }
             RESULT_FAILURE -> {
                 binding.progressBar.visibility = View.GONE
@@ -150,6 +148,57 @@ class SplashFragment : Fragment() {
         }
     }
 
+    /**
+     * Start again utilising the previously saved data.
+     */
+    private fun reStart() {
+        Log.d("TAG", "SplashFragment: Restart")
+
+        // Create repository cache.
+        raceDayRepository.createOrRefreshCache()
+
+        // Navigate to MainFragment.
+        navigateToMain()
+    }
+
+    /**
+     * The default starting point for file download (and then onto processing via the download
+     * receiver).
+     */
+    private fun defaultStart(path: String) {
+        Log.d("TAG", "SplashFragment: Default start")
+        // Delete whatever file is there.
+        raceDayUtilities.deleteFromStorage(File(path))
+
+        // Clear cache and underlying data. Is recreated on successful download processing.
+        raceDayRepository.clearCache()
+
+        // Delete (any previous) file reference in Preferences.
+        raceDayPreferences.setFileId(Constants.MINUS_ONE_L)  // set by download Receiver.
+        raceDayPreferences.setFileDate("")                   // set by - TBA.
+
+        // Set the "file date" in the preferences.
+        val date = raceDayUtilities.getDateToday(RaceDayUtilities.DateFormat.SLASH)
+        raceDayPreferences.setFileDate(date)
+
+        // Get the network (path) url.
+        val url = raceDayUtilities.createRaceDayUrl(requireContext())
+
+        // Download, parse and write today's data (this is where it kicks off for new).
+        raceDownloadManager.downloadPage(url, path, "RaceDay.xml")
+
+//        /** Testing **/
+//        EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS))
+    }
+
+    private fun navigateToMain() {
+        // Navigate to MainFragment.
+        Navigation.findNavController(requireActivity(), R.id.id_nav_host_fragment)
+                .navigate(R.id.action_splashFragment_to_mainFragment)
+    }
+
     private lateinit var binding: SplashFragmentBinding
     private lateinit var downloadFilter: IntentFilter
+
+    private var fileUse: Boolean? = null// = false
 }

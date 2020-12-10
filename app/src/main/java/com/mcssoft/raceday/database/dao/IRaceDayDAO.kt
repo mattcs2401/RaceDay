@@ -19,4 +19,5 @@ interface IRaceDayDAO {
 
     @Query("select * from race_day_details")
     fun getMeetings(): LiveData<List<RaceMeeting>>
+
 }

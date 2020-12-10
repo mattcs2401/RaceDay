@@ -14,5 +14,5 @@ class RaceDayViewModel @ViewModelInject constructor(/*@ApplicationContext privat
                                                     repository: RaceDayRepository
 ) : ViewModel() {
 
-    val meetings: LiveData<List<RaceMeeting>>? = repository.raceDayCache
+    val meetings: LiveData<List<RaceMeeting>>? = repository.getRaceDayCache()
 }

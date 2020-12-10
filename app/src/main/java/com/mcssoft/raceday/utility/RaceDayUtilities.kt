@@ -55,12 +55,12 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
     fun compareDateToToday(timeVal: Long): Boolean {
         val calendarToday = Calendar.getInstance(Locale.getDefault())
         val dayToday = calendarToday.get(Calendar.DAY_OF_MONTH).toString()
-        val monthToday = calendarToday.get(Calendar.MONTH).toString()
+        val monthToday = ((calendarToday.get(Calendar.MONTH)) + 1).toString()  // Note (1) below.
 
         val calendar = Calendar.getInstance(Locale.getDefault())
         calendar.timeInMillis = timeVal
         val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
-        val month = calendar.get(Calendar.MONTH).toString()
+        val month = ((calendar.get(Calendar.MONTH)) + 1).toString()  // Note (1) below.
 
         if((day == dayToday) && (month == monthToday)) {
             return true
@@ -104,7 +104,7 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
      * @param file: A File object representing the directory.
      */
     fun deleteFromStorage(file: File) {
-        if(filesExist(file)) {
+        if(fileExists(file)) {
             val listing = file.listFiles()
             listing?.forEach { f ->
                 f.delete()
@@ -117,7 +117,7 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
      * @param file: The downloaded file.
      * @return True if the file day/month detail is the same as today.
      */
-    private fun isFileToday(file: File): Boolean {
+    fun isFileToday(file: File): Boolean {
         return RaceDayUtilities(context).compareDateToToday(file.lastModified())
     }
 
@@ -126,7 +126,7 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
      * @param file: A file object pre-set with a path (the download directory).
      * @return True if files exist in the path.
      */
-    fun filesExist(file: File): Boolean {
+    fun fileExists(file: File): Boolean {
         if (file.listFiles()!!.isNotEmpty()) {
             return true
         }
@@ -144,6 +144,7 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
         }
         return path
     }
+
     //</editor-fold>
 }
 

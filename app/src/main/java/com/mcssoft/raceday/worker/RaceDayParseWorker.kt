@@ -41,7 +41,7 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
             raceDayRepository = RaceDayRepository(context)
 
             // Delete anything previously there.
-            raceDayRepository.deleteAll()
+            raceDayRepository.clearCache()
 
             // Write the new details.
             for (item in meetingsListing) {

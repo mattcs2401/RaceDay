@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
-        app:key="key_use_file"
+        app:key="key_file_use"
         app:title="Use saved file."
         app:defaultValue="false"
-        app:summary="Reload values using saved file."/>
+        app:summary="Reload application data using saved file."/>
 
 <!--    <Preference-->
 <!--        app:key="feedback"-->
