@@ -1,8 +1,26 @@
-------------------------
-In  no particular order.
-------------------------
 
--> Look at which field type injections can be moved to inject via constructor.
-   Note: best practice appears to be inject via constructor (various Hilt articles).
+---------------------
+Project shows use of:
+---------------------
+- EventBus.
+- All Kotlin.
+- Room database.
+- SharedPreferences.
+- View and Data binding.
+- Hilt dependency injection.
+- Coroutines and CoroutineWorker.
+- Repository, ViewModel, RecyclerView.
+- DownloadManager and BroadcastReceiver.
+- Parsing downloaded xml based file into objects:
+- Navigation (single Activity multiple Fragments).
 
--> xxx
+-----------------------
+In no particular order.
+-----------------------
+
+-> [To Do] Look at which field type injections can be moved to inject via constructor.
+   Note: Best practice appears to be inject via constructor (various Hilt articles).
+
+-> [To Do] Recycler view headers ?
+
+->

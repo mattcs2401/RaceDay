@@ -18,5 +18,6 @@
 
     <!-- Splash message. -->
     <string name="splash_message">Downloading and processing. Please wait.</string>
+    <string name="splash_failure">SplashFragment: Processing result failure</string>
 
 </resources>

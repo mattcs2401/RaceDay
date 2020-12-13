@@ -14,7 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 
-class RaceDayParseWorker(private val context: Context, private val params: WorkerParameters): CoroutineWorker(context, params) {
+class RaceDayParseWorker(private val context: Context, private val params: WorkerParameters):
+        CoroutineWorker(context, params) {
 
     private lateinit var raceDayParser: RaceDayParser
     private lateinit var raceDayRepository: RaceDayRepository
@@ -25,10 +26,7 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         return@withContext try {
 
-            val fileId = params.inputData.getLong(
-                context.resources.getString(R.string.key_file_id),
-                Constants.MINUS_ONE_L
-            )
+            val fileId = params.inputData.getLong(context.resources.getString(R.string.key_file_id), Constants.MINUS_ONE_L)
 
             // Initialise parser.
             raceDayParser = RaceDayParser(context)
@@ -53,7 +51,7 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
                 meeting.hiRaceNo = item["HiRaceNo"]!!
                 meeting.meetingType = item["MeetingType"]!!
                 meeting.trackChanged = item["TrackChanged"]!!
-                meeting.nextRaceNo = item["NextRaceNo"].toString()   // if null.
+                meeting.nextRaceNo = item["NextRaceNo"].toString()   // may not exist.
                 meeting.sortOrder = item["SortOrder"]!!
                 meeting.abandoned = item["Abandoned"]!!
 

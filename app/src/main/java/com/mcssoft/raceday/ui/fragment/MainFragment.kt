@@ -100,7 +100,6 @@ class MainFragment : Fragment() {
         setRecyclerView()
 
         setViewModel()
-//        val bp = "bp"
     }
 
     private fun setViewModel() {

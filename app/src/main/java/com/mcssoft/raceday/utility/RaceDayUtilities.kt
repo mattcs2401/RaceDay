@@ -68,34 +68,34 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
         return false
     }
 
-    /**
-     * Create the filename for the downloaded RaceDay xml data.
-     * @param context: Used to access system string resources.
-     * @return The file name as "YYYY-MM-DD_RaceDay.xml".
-     */
-    fun createRaceDayFilename(context: Context): String {
-        val datePart = getDateToday(DateFormat.DASH)
-        val under = "_"
-        val mainPage = context.resources.getString(R.string.main_page)
-        return "$datePart$under$mainPage"
-    }
+//    /**
+//     * Create the filename for the downloaded RaceDay xml data.
+//     * @param context: Used to access system string resources.
+//     * @return The file name as "YYYY-MM-DD_RaceDay.xml".
+//     */
+//    fun createRaceDayFilename(context: Context): String {
+//        val datePart = getDateToday(DateFormat.DASH)
+//        val under = "_"
+//        val mainPage = context.resources.getString(R.string.main_page)
+//        return "$datePart$under$mainPage"
+//    }
 
-    /**
-     * Get the time from the parameter.
-     * @param timeInMillis: The time value in mSec.
-     * @return The time as HH:MM.
-     */
-    fun timeFromMillis(timeInMillis: Long): String {
-        val calendar = Calendar.getInstance(Locale.getDefault())
-        calendar.timeInMillis = timeInMillis
-        var hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
-        var minute = calendar.get(Calendar.MINUTE).toString()
-
-        if(hour.length < 2) hour = "0$hour"
-        if(minute.length < 2) minute = "0$minute"
-
-        return "$hour:$minute"
-    }
+//    /**
+//     * Get the time from the parameter.
+//     * @param timeInMillis: The time value in mSec.
+//     * @return The time as HH:MM.
+//     */
+//    fun timeFromMillis(timeInMillis: Long): String {
+//        val calendar = Calendar.getInstance(Locale.getDefault())
+//        calendar.timeInMillis = timeInMillis
+//        var hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
+//        var minute = calendar.get(Calendar.MINUTE).toString()
+//
+//        if(hour.length < 2) hour = "0$hour"
+//        if(minute.length < 2) minute = "0$minute"
+//
+//        return "$hour:$minute"
+//    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: File Utils">
@@ -137,7 +137,7 @@ class RaceDayUtilities @Inject constructor(private val context: Context) {
      * Get the path from the primary storage.
      * @return The path value (end point represents a directory), else a blank string "".
      */
-    fun primaryStoragePath(): String {
+    fun getPrimaryStoragePath(): String {
         var path = ""
         if(Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             path = ContextCompat.getExternalFilesDirs(context.applicationContext, null)[0].toString()

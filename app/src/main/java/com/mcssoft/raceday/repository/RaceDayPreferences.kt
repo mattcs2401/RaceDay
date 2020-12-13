@@ -24,7 +24,7 @@ class RaceDayPreferences @Inject constructor (private val context: Context) {
         preferences.edit().putBoolean("key_file_use", value).apply()
     }
 
-    fun getFileUse(): Boolean {
+    fun getUseFile(): Boolean {
         return preferences.getBoolean("key_file_use", false)
     }
 

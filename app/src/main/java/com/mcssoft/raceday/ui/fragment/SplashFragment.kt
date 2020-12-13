@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.fragment
 
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.IntentFilter
 import android.os.Bundle
@@ -86,35 +87,37 @@ class SplashFragment : Fragment() {
     @Suppress("ControlFlowWithEmptyBody")
     /**
      * Kick it all off.
+     *
+     * For "defaultStart":
      * Delete anything in local file storage, then hand over to the RaceDownloadManager to get the
-     * new file, and from there, hand over to the RaceDownloadReceiver to parse the file data
-     * and write to database (all previous database entries are deleted).
+     * new file, and from there, hand over to the RaceDownloadReceiver to parse the file data and
+     * write to database (all previous database entries are deleted).
+     *
+     * For "reStart":
+     * Simply use the previously saved database entries (and recreate repository cache). Also is an
+     * attempt to reduce background processing if the app is closed and reopened (same day).
      */
     private fun initialise() {
-        val path = raceDayUtilities.primaryStoragePath()
+        val path = raceDayUtilities.getPrimaryStoragePath()
 
         if(path != "") {
-            if(!raceDayPreferences.getFileUse()) {
-                /* Basically delete everything and recreate. This will be the default when the app
-                   first runs.
-                */
-                defaultStart(path)
-            } else {
-                if(raceDayUtilities.fileExists(File(path))) {
+            if(raceDayPreferences.getUseFile()) {
 
-                    if(raceDayUtilities.isFileToday(File(path))) {
-                        // Use the file.
-                        reStart()
-                    } else {
-                        // A file exists but is not today.
-                        defaultStart(path)
-                    }
+                if(raceDayUtilities.fileExists(File(path)) && raceDayUtilities.isFileToday(File(path))) {
+
+                    // Use the information previously derived from the file.
+                    reStart()
+
                 } else {
-                    // No file exists.
+                    // Either the file doesn't exist, or the file exists, but is not today.
                     defaultStart(path)
                 }
+            } else {
+                // The use file preference is not set.
+                defaultStart(path)
             }
         } else {
+            // There is no primary storage.
             /* TODO - Primary storage path doesn't exist. Maybe some sort of dialog ?*/
         }
     }
@@ -140,7 +143,7 @@ class SplashFragment : Fragment() {
             }
             RESULT_FAILURE -> {
                 binding.progressBar.visibility = View.GONE
-                binding.textView.text = "SplashFragment: Processing result failure"
+                binding.textView.text = requireContext().resources.getText(R.string.splash_failure)
                 Log.d("TAG", "SplashFragment: Result failure")
 
                 // TODO - some sort of retry mechanism ?
@@ -173,6 +176,7 @@ class SplashFragment : Fragment() {
         // Clear cache and underlying data. Is recreated on successful download processing.
         raceDayRepository.clearCache()
 
+        /** TBA - prefs not actually being used ATT. **/
         // Delete (any previous) file reference in Preferences.
         raceDayPreferences.setFileId(Constants.MINUS_ONE_L)  // set by download Receiver.
         raceDayPreferences.setFileDate("")                   // set by - TBA.
@@ -180,16 +184,14 @@ class SplashFragment : Fragment() {
         // Set the "file date" in the preferences.
         val date = raceDayUtilities.getDateToday(RaceDayUtilities.DateFormat.SLASH)
         raceDayPreferences.setFileDate(date)
+        /**--------------------**/
 
         // Get the network (path) url.
         val url = raceDayUtilities.createRaceDayUrl(requireContext())
 
         // Download, parse and write today's data (this is where it kicks off for new).
         raceDownloadManager.downloadPage(url, path, "RaceDay.xml")
-
-//        /** Testing **/
-//        EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS))
-    }
+                                                                                                                                          }
 
     private fun navigateToMain() {
         // Navigate to MainFragment.
