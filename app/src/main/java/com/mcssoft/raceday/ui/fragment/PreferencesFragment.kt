@@ -39,7 +39,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         when(preference.key) {
-            "key_use_file" -> {
+            "key_file_use" -> {
                 raceDayPreferences.setFileUse(newValue as Boolean)
             }
         }

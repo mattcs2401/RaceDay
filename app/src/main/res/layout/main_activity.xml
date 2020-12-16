@@ -37,7 +37,6 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/navigation"
             tools:ignore="FragmentTagUsage" />
-
     </androidx.core.widget.NestedScrollView>
 
 <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
