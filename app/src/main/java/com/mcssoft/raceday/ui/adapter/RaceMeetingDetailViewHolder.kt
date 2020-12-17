@@ -8,24 +8,14 @@ import com.mcssoft.raceday.databinding.ListItemMeetingDetailBinding
 import com.mcssoft.raceday.databinding.ListItemMeetingHeaderBinding
 
 /**
- * ViewHolder for the RaceMeeting.
+ * ViewHolder for the RaceMeeting detail.
  * @param binding: The layout view.
  */
 class RaceMeetingDetailViewHolder(private val binding: ListItemMeetingDetailBinding)
-    : RecyclerView.ViewHolder(binding.root) { //}, View.OnClickListener {
+    : RecyclerView.ViewHolder(binding.root) {
 
     init {
-//        binding.idIvArrorw.setOnClickListener(this)
-//        {
-//            Toast.makeText(it.context, "Clicked on the arrow. Meeting code=" + binding.meeting?.meetingCode, Toast.LENGTH_SHORT).show()
-//        }
-
-//        binding.setClickListener {
-//            binding.meeting.let {meeting ->
-//                Toast.makeText(it.context, "Clicked Meeting code: " + meeting?.meetingCode +
-//                        " " + meeting?.venueName, Toast.LENGTH_SHORT).show()
-//            }
-//        }
+        // TBA.
     }
 
     internal fun bind(mtg: RaceMeeting) {
@@ -36,9 +26,4 @@ class RaceMeetingDetailViewHolder(private val binding: ListItemMeetingDetailBind
         }
     }
 
-//    override fun onClick(view: View) {
-//        Toast.makeText(view.context, "Clicked on the arrow. Meeting code=" +
-//                binding.meeting?.meetingCode, Toast.LENGTH_SHORT).show()
-//        //TODO("Not yet implemented")
-//    }
 }

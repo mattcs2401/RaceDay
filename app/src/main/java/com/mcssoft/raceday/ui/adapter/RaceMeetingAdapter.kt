@@ -5,54 +5,74 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mcssoft.raceday.interfaces.IAdapter
 import com.mcssoft.raceday.database.entity.RaceMeeting
+import com.mcssoft.raceday.databinding.ListItemMeetingDetailBinding
 import com.mcssoft.raceday.databinding.ListItemMeetingHeaderBinding
+import com.mcssoft.raceday.utility.Constants.VIEW_TYPE_DETAIL
+import com.mcssoft.raceday.utility.Constants.VIEW_TYPE_HEADER
 import javax.inject.Inject
 
 /**
  * Class implements the RaceMeeting list adapter.
- * @Note: Inject constructor simply denotes injectable class without having to use a Provides
- *        annotated method.
+ * @Note: Can't seem to put an interface implementation into the class description. Throws compile
+ *        errors. Could be Hilt/Dagger related.
  */
 class RaceMeetingAdapter @Inject constructor()
-    : ListAdapter<RaceMeeting, RecyclerView.ViewHolder>(RaceMeetingDiffCallback()) {
+    : ListAdapter<RaceMeeting, RecyclerView.ViewHolder>(RaceMeetingDiffCallback()) , IAdapter {
 
     //https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 //        Log.d("TAG","RaceMeetingAdapter.onCreateViewHolder")
         return when(viewType) {
-            ITEM_VIEW_TYPE_HEADER -> {
+            VIEW_TYPE_HEADER -> {
                 RaceMeetingHeaderViewHolder(
                     ListItemMeetingHeaderBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false))
+                        LayoutInflater.from(parent.context), parent, false), this)
             }
-            else -> throw ClassCastException("Unknown viewType ${viewType}")
+            VIEW_TYPE_DETAIL -> {
+                RaceMeetingDetailViewHolder(
+                    ListItemMeetingDetailBinding.inflate(
+                            LayoutInflater.from(parent.context), parent, false))
+            }
+            else -> throw ClassCastException("Unknown viewType: ${viewType}")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)) {
-            ITEM_VIEW_TYPE_HEADER -> {
+            VIEW_TYPE_HEADER -> {
                 holder as RaceMeetingHeaderViewHolder
+                holder.bind(getItem(position))
+            }
+            VIEW_TYPE_DETAIL -> {
+                holder as RaceMeetingDetailViewHolder
                 holder.bind(getItem(position))
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val bp = "bp"
-        // Testing.
-        return ITEM_VIEW_TYPE_HEADER
-        // This method uses a property of the item to determine which item it is,i.e. header or
-        // detail (for this project).
-        // Does this all come back to the model?
-
+        return when (getItem(position).meta) {
+            true -> VIEW_TYPE_DETAIL
+            false -> VIEW_TYPE_HEADER
+        }
         //return super.getItemViewType(position)
     }
 
-    private val ITEM_VIEW_TYPE_HEADER = 0
-    private val ITEM_VIEW_TYPE_ITEM = 1
+    override fun onTypeSelect(selType: Int, position: Int) {
+        when(selType) {
+            VIEW_TYPE_HEADER -> {
+                getItem(position).meta = false
+            }
+            VIEW_TYPE_DETAIL -> {
+                getItem(position).meta = true
+            }
+        }
+        notifyItemChanged(position)
+    }
+
 }
 
 private class RaceMeetingDiffCallback : DiffUtil.ItemCallback<RaceMeeting>() {
@@ -65,3 +85,20 @@ private class RaceMeetingDiffCallback : DiffUtil.ItemCallback<RaceMeeting>() {
         return oldItem == newItem
     }
 }
+/*
+  private void animateExpand() {
+    RotateAnimation rotate =
+        new RotateAnimation(360, 180, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
+    rotate.setDuration(300);
+    rotate.setFillAfter(true);
+    arrow.setAnimation(rotate);
+  }
+
+  private void animateCollapse() {
+    RotateAnimation rotate =
+        new RotateAnimation(180, 360, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
+    rotate.setDuration(300);
+    rotate.setFillAfter(true);
+    arrow.setAnimation(rotate);
+  }
+ */

@@ -97,6 +97,8 @@ class MainFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+//        raceAdapter = RaceMeetingAdapter()
+
         setRecyclerView()
 
         setViewModel()

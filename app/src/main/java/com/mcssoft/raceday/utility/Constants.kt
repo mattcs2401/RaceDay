@@ -11,4 +11,7 @@ object Constants {
 
     const val RESULT_SUCCESS = 1
     const val RESULT_FAILURE = -1
+
+    const val VIEW_TYPE_HEADER = 0
+    const val VIEW_TYPE_DETAIL = 1
 }

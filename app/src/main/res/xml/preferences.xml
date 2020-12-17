@@ -5,7 +5,7 @@
     <SwitchPreferenceCompat
         app:key="key_file_use"
         app:title="Use saved file."
-        app:defaultValue="false"
+        app:defaultValue="true"
         app:summary="Reload application data using saved file."/>
 
 <!--    <Preference-->

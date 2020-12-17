@@ -19,4 +19,5 @@ data class RaceMeeting(@ColumnInfo(name = "MtgId") var mtgId: String) {
     @ColumnInfo(name = "NextRaceNo") var nextRaceNo: String = ""     // may not always be there.
     @ColumnInfo(name = "SortOrder") var sortOrder: String = ""
     @ColumnInfo(name = "Abandoned") var abandoned: String = ""
+    @ColumnInfo(name = "meta") var meta: Boolean = false             // adapter flag.
 }
