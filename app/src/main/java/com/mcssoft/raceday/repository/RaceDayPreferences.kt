@@ -20,21 +20,33 @@ class RaceDayPreferences @Inject constructor (private val context: Context) {
     private val preferences =
             context.getSharedPreferences("raceday_preferences", Context.MODE_PRIVATE)
 
+    //<editor-fold default state="collapsed" desc="Region: User selectable preferences">
     fun setFileUse(value: Boolean) {
-        preferences.edit().putBoolean("key_file_use", value).apply()
+        with(preferences.edit()) {
+            putBoolean("key_file_use", value)
+            apply()
+        }
     }
 
     fun getUseFile(): Boolean {
         return preferences.getBoolean("key_file_use", false)
     }
+    //</editor-fold>
 
+    //<editor-fold default state="collapsed" desc="Region: Application preferences">
     fun setFileId(value: Long) {
-        preferences.edit().putLong("key_file_id", value).apply()
+        with(preferences.edit()) {
+            putLong("key_file_id", value)
+            apply()
+        }
     }
 
     fun setFileDate(value: String) {
-        preferences.edit().putString("key_file_date", value).apply()
+        with(preferences.edit()) {
+            putString("key_file_date", value)
+            apply()
+        }
     }
-
+    //</editor-fold>
 
 }

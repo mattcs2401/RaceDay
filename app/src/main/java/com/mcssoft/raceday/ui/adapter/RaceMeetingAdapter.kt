@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mcssoft.raceday.interfaces.IAdapter
+import com.mcssoft.raceday.interfaces.IViewHolder
 import com.mcssoft.raceday.database.entity.RaceMeeting
 import com.mcssoft.raceday.databinding.ListItemMeetingDetailBinding
 import com.mcssoft.raceday.databinding.ListItemMeetingHeaderBinding
@@ -15,11 +15,9 @@ import javax.inject.Inject
 
 /**
  * Class implements the RaceMeeting list adapter.
- * @Note: Can't seem to put an interface implementation into the class description. Throws compile
- *        errors. Could be Hilt/Dagger related.
  */
 class RaceMeetingAdapter @Inject constructor()
-    : ListAdapter<RaceMeeting, RecyclerView.ViewHolder>(RaceMeetingDiffCallback()) , IAdapter {
+    : ListAdapter<RaceMeeting, RecyclerView.ViewHolder>(RaceMeetingDiffCallback()) , IViewHolder {
 
     //https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 
@@ -34,7 +32,7 @@ class RaceMeetingAdapter @Inject constructor()
             VIEW_TYPE_DETAIL -> {
                 RaceMeetingDetailViewHolder(
                     ListItemMeetingDetailBinding.inflate(
-                            LayoutInflater.from(parent.context), parent, false))
+                            LayoutInflater.from(parent.context), parent, false), this)
             }
             else -> throw ClassCastException("Unknown viewType: ${viewType}")
         }
@@ -61,8 +59,8 @@ class RaceMeetingAdapter @Inject constructor()
         //return super.getItemViewType(position)
     }
 
-    override fun onTypeSelect(selType: Int, position: Int) {
-        when(selType) {
+    override fun onViewHolderSelect(vhType: Int, position: Int) {
+        when(vhType) {
             VIEW_TYPE_HEADER -> {
                 getItem(position).meta = false
             }
