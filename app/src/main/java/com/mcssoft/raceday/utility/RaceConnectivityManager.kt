@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Simple wrapper for the ConnectivityManager.

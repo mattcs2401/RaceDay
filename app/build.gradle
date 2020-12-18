@@ -84,7 +84,7 @@ dependencies {
 
     // Preferences (mainly for PreferencesFragment).
     def pref_ver = "1.1.1"
-    implementation "androidx.preference:preference:$pref_ver"
+    implementation "androidx.preference:preference-ktx:$pref_ver"
 
     // Preferences DataStore (backing data for preferences).
     def ds_ver = "1.0.0-alpha05"

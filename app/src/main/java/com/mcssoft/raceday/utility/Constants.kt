@@ -2,7 +2,6 @@ package com.mcssoft.raceday.utility
 
 object Constants {
 
-    const val MINUS_ONE_I: Int = -1    // General default value (as Int).
     const val MINUS_ONE_L: Long = -1   // General default value (as Long).
 
     const val NETWORK_WIFI = 1         // Network by WiFi.

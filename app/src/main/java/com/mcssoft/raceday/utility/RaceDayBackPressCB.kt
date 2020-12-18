@@ -1,7 +1,5 @@
 package com.mcssoft.raceday.utility
 
-import android.content.Context
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 
 /**

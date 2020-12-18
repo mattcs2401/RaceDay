@@ -34,7 +34,7 @@ class RaceMeetingAdapter @Inject constructor()
                     ListItemMeetingDetailBinding.inflate(
                             LayoutInflater.from(parent.context), parent, false), this)
             }
-            else -> throw ClassCastException("Unknown viewType: ${viewType}")
+            else -> throw ClassCastException("Unknown viewType: $viewType")
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.mcssoft.raceday.database.RaceDay
 import com.mcssoft.raceday.database.dao.IRaceDayDAO
-import com.mcssoft.raceday.repository.RaceDayRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

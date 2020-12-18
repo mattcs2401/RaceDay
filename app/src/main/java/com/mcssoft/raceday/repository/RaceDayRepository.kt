@@ -3,22 +3,17 @@ package com.mcssoft.raceday.repository
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.liveData
 import com.mcssoft.raceday.database.RaceDay
-import com.mcssoft.raceday.database.dao.IRaceDayDAO
 import com.mcssoft.raceday.database.entity.RaceMeeting
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectIndexed
-import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RaceDayRepository @Inject constructor(private val context: Context) {
+class RaceDayRepository @Inject constructor(context: Context) {
 
-    val completableJob = Job()
+    private val completableJob = Job()
 
     private val coroutineScope =
             CoroutineScope(Dispatchers.IO + completableJob)

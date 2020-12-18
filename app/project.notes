@@ -5,23 +5,62 @@ Project shows use of:
 - EventBus.
 - All Kotlin.
 - Room database.
-- SharedPreferences.
 - View and Data binding.
 - Hilt dependency injection.
 - Coroutines and CoroutineWorker.
+- SharedPreferences (user prefs).
+- SharedPreferences (app specific).
 - Repository, ViewModel, RecyclerView.
 - DownloadManager and BroadcastReceiver.
 - Parsing downloaded xml based file into objects:
 - Navigation (single Activity multiple Fragments).
 
------------------------
-In no particular order.
------------------------
 
--> [To Do] Look at which field type injections can be moved to inject via constructor.
+-------------------------------
+[To Do] In no particular order.
+-------------------------------
+
+-> Look at which field type injections can be moved to inject via constructor.
    Note: Best practice appears to be inject via constructor (various Hilt articles).
 
--> [To Do] Recycler view headers ?
+-> Recycler view item detail view (what are we going to show) ?
 
--> {To Do] Swipe layout (Android magazine 441).
+-> Swipe layout (Android magazine 441).
+   - what do we want to achieve with the swipe ?
 
+-> Retrofit and save the result to file ?
+   - instead of DownloadManager and BroadcastReceiver.
+
+-> Start downloading the individual race details associated with each meeting in the background ?
+
+-> What about a filter to set the Meeting type in the adapter;
+   - to e.g. R or T or G or S or some combination ?
+     - just load these into the view holder, or restrict what the view holder displays ?
+
+
+-------------------------------
+Assorted snippets (code ideas):
+-------------------------------
+
+** SnackBar **
+
+<some_view>>.setOnClickListener { view ->
+    Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show()
+}
+
+** Can we use coroutines for the adapter ? **
+
+private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+fun addHeaderAndSubmitList(list: List<SleepNight>?) {
+    adapterScope.launch {
+        val items = when (list) {
+            null -> listOf(DataItem.Header)
+            else -> listOf(DataItem.Header) + list.map { DataItem.SleepNightItem(it) }
+        }
+        withContext(Dispatchers.Main) {
+            submitList(items)
+        }
+    }
+}

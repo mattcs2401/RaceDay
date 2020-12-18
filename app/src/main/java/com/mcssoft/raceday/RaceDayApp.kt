@@ -11,7 +11,7 @@ class RaceDayApp : Application() {
         super.onCreate()
 
         // https://greenrobot.org/eventbus/documentation/subscriber-index/
-        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus();
+        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
     }
 }
 /*

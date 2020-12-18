@@ -1,10 +1,9 @@
 package com.mcssoft.raceday.repository
 
 import android.content.Context
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class RaceDayPreferences @Inject constructor (private val context: Context) {
+class RaceDayPreferences @Inject constructor (context: Context) {
 /* https://developer.android.com/training/data-storage/shared-preferences
 *
 * Notes:

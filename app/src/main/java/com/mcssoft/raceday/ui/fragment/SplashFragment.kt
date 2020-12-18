@@ -1,6 +1,5 @@
 package com.mcssoft.raceday.ui.fragment
 
-import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.IntentFilter
 import android.os.Bundle
@@ -15,9 +14,12 @@ import com.mcssoft.raceday.databinding.SplashFragmentBinding
 import com.mcssoft.raceday.events.ResultMessageEvent
 import com.mcssoft.raceday.repository.RaceDayPreferences
 import com.mcssoft.raceday.repository.RaceDayRepository
-import com.mcssoft.raceday.utility.*
+import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.RESULT_FAILURE
 import com.mcssoft.raceday.utility.Constants.RESULT_SUCCESS
+import com.mcssoft.raceday.utility.RaceDayUtilities
+import com.mcssoft.raceday.utility.RaceDownloadManager
+import com.mcssoft.raceday.utility.RaceDownloadReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
