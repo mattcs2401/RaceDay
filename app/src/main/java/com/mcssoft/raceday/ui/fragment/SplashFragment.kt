@@ -86,7 +86,6 @@ class SplashFragment : Fragment() {
     }
     //</editor-fold>
 
-    @Suppress("ControlFlowWithEmptyBody")
     /**
      * Kick it all off.
      *
@@ -103,6 +102,8 @@ class SplashFragment : Fragment() {
         val path = raceDayUtilities.getPrimaryStoragePath()
 
         if(path != "") {
+            raceDayPreferences.setDefaultRaceCodes()
+
             if(raceDayPreferences.getUseFile()) {
 
                 if(raceDayUtilities.fileExists(File(path)) && raceDayUtilities.isFileToday(File(path))) {
@@ -119,8 +120,8 @@ class SplashFragment : Fragment() {
                 defaultStart(path)
             }
         } else {
-            // There is no primary storage.
-            /* TODO - Primary storage path doesn't exist. Maybe some sort of dialog ?*/
+            binding.idTvProgress.text = "Fatal error: No primary storage exists."
+            /* TODO - Maybe some sort of dialog ?*/
         }
     }
 
@@ -138,16 +139,19 @@ class SplashFragment : Fragment() {
                Log.d("TAG", "SplashFragment: Result success")
 
                 // Create repository cache.
+                binding.idTvProgress.text = "Initialise cache."
                 raceDayRepository.createOrRefreshCache()
 
                 // Navigate to MainFragment.
                 navigateToMain()
             }
             RESULT_FAILURE -> {
-                binding.progressBar.visibility = View.GONE
-                binding.textView.text = requireContext().resources.getText(R.string.splash_failure)
-                Log.d("TAG", "SplashFragment: Result failure")
+                binding.idPbSplash.visibility = View.GONE
+                binding.idTvProgress.text = requireContext().resources.getText(R.string.splash_failure)
+                Log.d("TAG", "SplashFragment: Result failure. Error: " + event.message)
 
+                // Note: This will generally mean the file has downloaded Ok, but was unable to be
+                // parsed into RaceMeetings.
                 // TODO - some sort of retry mechanism ?
             }
         }
@@ -160,6 +164,7 @@ class SplashFragment : Fragment() {
         Log.d("TAG", "SplashFragment: Restart")
 
         // Create repository cache.
+        binding.idTvProgress.text = "Initialise cache."
         raceDayRepository.createOrRefreshCache()
 
         // Navigate to MainFragment.
@@ -193,7 +198,7 @@ class SplashFragment : Fragment() {
 
         // Download, parse and write today's data (this is where it kicks off for new).
         raceDownloadManager.downloadPage(url, path, "RaceDay.xml")
-                                                                                                                                          }
+    }
 
     private fun navigateToMain() {
         // Navigate to MainFragment.

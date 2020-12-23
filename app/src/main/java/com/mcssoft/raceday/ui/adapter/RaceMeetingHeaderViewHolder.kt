@@ -28,9 +28,6 @@ class RaceMeetingHeaderViewHolder(private val binding: ListItemMeetingHeaderBind
 
     override fun onClick(view: View) {
         iViewHolder.onViewHolderSelect(VIEW_TYPE_DETAIL, adapterPosition)
-//        // Testing only.
-//        Toast.makeText(view.context, "Clicked on the arrow. Meeting code=" +
-//                binding.meeting?.meetingCode, Toast.LENGTH_SHORT).show()
     }
 
 }

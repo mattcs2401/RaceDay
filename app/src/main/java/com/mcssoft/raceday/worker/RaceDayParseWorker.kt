@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 
-class RaceDayParseWorker(private val context: Context, private val params: WorkerParameters):
+class RaceDayParseWorker (private val context: Context, private val params: WorkerParameters):
         CoroutineWorker(context, params) {
 
     private lateinit var raceDayParser: RaceDayParser
@@ -38,9 +38,6 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
             // Instantiate repository (for database access).
             raceDayRepository = RaceDayRepository(context)
 
-            // Delete anything previously there.
-            raceDayRepository.clearCache()
-
             // Write the new details.
             for (item in meetingsListing) {
                 val meeting = RaceMeeting(item["MtgId"]!!)
@@ -61,15 +58,14 @@ class RaceDayParseWorker(private val context: Context, private val params: Worke
             Log.d("TAG", "ParseWorker - Result.success")
 
             // Notify in Fragment.
-            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS))
+            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS, null))
 
             Result.success()
 
         } catch (error: Throwable) {
             // TODO - more meaningful errors, maybe a dialog ? Notify ?
-
-            Log.d("TAG", "ParseWorker - Result.failure")
-            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_FAILURE))
+            Log.d("TAG", "ParseWorker - Result.failure. Error: " + error.message )
+            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_FAILURE, error.message))
 
             Result.failure()
         }

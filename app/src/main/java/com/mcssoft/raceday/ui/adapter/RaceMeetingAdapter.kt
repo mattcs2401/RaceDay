@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -39,6 +40,7 @@ class RaceMeetingAdapter @Inject constructor()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d("TAG","RaceMeetingAdapter.onBindViewHolder")
         when(getItemViewType(position)) {
             VIEW_TYPE_HEADER -> {
                 holder as RaceMeetingHeaderViewHolder

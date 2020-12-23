@@ -6,6 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mcssoft.raceday.database.entity.RaceMeeting
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface IRaceDayDAO {
@@ -18,5 +20,8 @@ interface IRaceDayDAO {
 
     @Query("select * from race_day_details")
     fun getMeetings(): LiveData<List<RaceMeeting>>
+
+//    @Query("select * from race_day_details")
+//    fun getMeetingsFlow(): Flow<List<RaceMeeting>>
 
 }

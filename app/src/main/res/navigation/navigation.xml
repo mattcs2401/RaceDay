@@ -17,24 +17,15 @@
     <fragment
         android:id="@+id/id_main_fragment"
         android:name="com.mcssoft.raceday.ui.fragment.MainFragment"
-        android:label="Splash"
+        android:label="MainFragment"
         tools:layout="@layout/main_fragment">
-        <!--        <action-->
-        <!--            android:id="@+id/mainFragment_to_editFragment"-->
-        <!--            app:destination="@id/id_edit_fragment" />-->
         <action
             android:id="@+id/action_mainFragment_to_preferencesFragment"
             app:destination="@id/id_preferences_fragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_splashFragment"
+            app:destination="@id/id_splash_fragment" />
     </fragment>
-    <!--    <fragment-->
-    <!--        android:id="@+id/id_edit_fragment"-->
-    <!--        android:name="com.mcssoft.raceday.ui.fragment.EditFragment"-->
-    <!--        android:label="EditFragment"-->
-    <!--        tools:layout="@layout/edit_fragment">-->
-    <!--        <action-->
-    <!--            android:id="@+id/editFragment_to_mainFragment"-->
-    <!--            app:destination="@id/id_main_fragment" />-->
-    <!--</fragment>-->
     <fragment
         android:id="@+id/id_preferences_fragment"
         android:name="com.mcssoft.raceday.ui.fragment.PreferencesFragment"

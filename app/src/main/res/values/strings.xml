@@ -20,4 +20,11 @@
     <string name="splash_message">Downloading and processing. Please wait.</string>
     <string name="splash_failure">SplashFragment: Processing result failure</string>
 
+    <!-- Delete All dialog. -->
+    <string name="title_delete_all">Delete Everything</string>
+    <string name="message_delete_all">This action cannot be undone.</string>
+
+    <!-- Button labels. -->
+    <string name="lbl_ok">OK</string>
+    <string name="lbl_cancel">Cancel</string>
 </resources>

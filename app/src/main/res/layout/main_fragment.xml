@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/id_main_fragment"
@@ -8,18 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.MainFragment">
 
-    <TextView
-        android:id="@+id/id_plcaeholder"
-        android:layout_width="match_parent"
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/id_recycler_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/id_btn_race"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="R"
+        app:layout_constraintBottom_toTopOf="@+id/id_recycler_view"
+        app:layout_constraintEnd_toStartOf="@+id/id_btn_greyhound" />
+
+    <Button
+        android:id="@+id/id_btn_trots"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Place holder for another layout."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="8dp"
+        android:text="T"
+        app:layout_constraintBottom_toTopOf="@+id/id_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/id_btn_greyhound"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="G"
+        app:layout_constraintBottom_toTopOf="@+id/id_recycler_view"
+        app:layout_constraintEnd_toStartOf="@+id/id_btn_trots" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/id_recycler_view"
@@ -33,7 +60,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_plcaeholder"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context="com.mcssoft.raceday.ui.activity.MainActivity"
-        tools:listitem="@layout/list_item_meeting_header" />
+        tools:listitem="@layout/list_item_meeting_header">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

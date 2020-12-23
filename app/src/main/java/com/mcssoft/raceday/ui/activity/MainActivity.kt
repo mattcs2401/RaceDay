@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.databinding.MainActivityBinding
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("TAG","MainActivity.onCreate")
 
+        // Set view binding.
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
