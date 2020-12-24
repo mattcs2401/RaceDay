@@ -30,39 +30,6 @@ class RaceDayPreferences @Inject constructor (context: Context) {
     fun getUseFile(): Boolean {
         return preferences.getBoolean("key_file_use", false)
     }
-
-    fun setDefaultCodeR(value: Boolean) {
-        with(preferences.edit()) {
-            putBoolean("key_default_code_R", value)
-            apply()
-        }
-    }
-
-    fun getDefaultCodeR(): Boolean {
-        return preferences.getBoolean("key_default_code_R", false)
-    }
-
-    fun setDefaultCodeT(value: Boolean) {
-        with(preferences.edit()) {
-            putBoolean("key_default_code_T", value)
-            apply()
-        }
-    }
-
-    fun getDefaultCodeT(): Boolean {
-        return preferences.getBoolean("key_default_code_T", false)
-    }
-
-    fun setDefaultCodeG(value: Boolean) {
-        with(preferences.edit()) {
-            putBoolean("key_default_code_G", value)
-            apply()
-        }
-    }
-
-    fun getDefaultCodeG(): Boolean {
-        return preferences.getBoolean("key_default_code_G", false)
-    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Application preferences">
@@ -78,29 +45,6 @@ class RaceDayPreferences @Inject constructor (context: Context) {
             putString("key_file_date", value)
             apply()
         }
-    }
-
-    fun setDefaultRaceCodes() {
-        with(preferences.edit()) {
-            val codeSet = mutableListOf<String>("","","")
-
-            if(getDefaultCodeR()) codeSet[0] = "1"
-            else codeSet[0] = "0"
-
-            if(getDefaultCodeT()) codeSet[1] = "1"
-            else codeSet[1] = "0"
-
-            if(getDefaultCodeG()) codeSet[2] = "1"
-            else codeSet[2] = "0"
-
-            putStringSet("key_default_race_codes", codeSet.toSet())
-
-            apply()
-        }
-    }
-
-    fun getDefaultRaceCodes(): MutableSet<String>? {
-        return preferences.getStringSet("key_default_race_codes", mutableListOf<String>("","","").toSet())
     }
     //</editor-fold>
 

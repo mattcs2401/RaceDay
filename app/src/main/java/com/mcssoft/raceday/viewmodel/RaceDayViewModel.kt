@@ -13,9 +13,6 @@ import javax.inject.Inject
 @ActivityScoped
 class RaceDayViewModel @ViewModelInject constructor(private var repository: RaceDayRepository) : ViewModel() {
 
-    // Note: There is a preference that filters the meeting type, e.g. R, T, G.
-    @Inject lateinit var raceDayPreferences: RaceDayPreferences
-
     val meetings: LiveData<List<RaceMeeting>>?
         get() = repository.getRaceDayCache()
 

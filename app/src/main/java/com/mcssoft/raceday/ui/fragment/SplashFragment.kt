@@ -102,8 +102,6 @@ class SplashFragment : Fragment() {
         val path = raceDayUtilities.getPrimaryStoragePath()
 
         if(path != "") {
-            raceDayPreferences.setDefaultRaceCodes()
-
             if(raceDayPreferences.getUseFile()) {
 
                 if(raceDayUtilities.fileExists(File(path)) && raceDayUtilities.isFileToday(File(path))) {
@@ -150,8 +148,9 @@ class SplashFragment : Fragment() {
                 binding.idTvProgress.text = requireContext().resources.getText(R.string.splash_failure)
                 Log.d("TAG", "SplashFragment: Result failure. Error: " + event.message)
 
-                // Note: This will generally mean the file has downloaded Ok, but was unable to be
-                // parsed into RaceMeetings.
+                // Note:
+                // This will generally mean the file has downloaded Ok, but was unable to be parsed
+                // into RaceMeetings.
                 // TODO - some sort of retry mechanism ?
             }
         }

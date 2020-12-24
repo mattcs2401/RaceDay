@@ -58,14 +58,14 @@ class RaceDayParseWorker (private val context: Context, private val params: Work
             Log.d("TAG", "ParseWorker - Result.success")
 
             // Notify in Fragment.
-            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS, null))
+            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_SUCCESS))
 
             Result.success()
 
         } catch (error: Throwable) {
             // TODO - more meaningful errors, maybe a dialog ? Notify ?
             Log.d("TAG", "ParseWorker - Result.failure. Error: " + error.message )
-            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_FAILURE, error.message))
+            EventBus.getDefault().post(ResultMessageEvent(Constants.RESULT_FAILURE, error.message!!))
 
             Result.failure()
         }

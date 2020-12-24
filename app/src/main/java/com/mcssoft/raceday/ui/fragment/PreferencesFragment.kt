@@ -1,6 +1,7 @@
 package com.mcssoft.raceday.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.*
@@ -24,19 +25,23 @@ class PreferencesFragment : PreferenceFragmentCompat(),
 
         setUseFile()
 
-        setDefaultRaceCode()
-
         preferenceScreen = screen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("TAG", "PreferencesFragment.onViewCreated")
         // Set toolbar title.
         requireActivity().findViewById<Toolbar>(R.id.id_toolbar)?.title = "Preferences"
 
         initialise()
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Simply a marker for testing purposes.
+        Log.d("TAG", "PreferencesFragment.onStop")
     }
 
     //<editor-fold default state="collapsed" desc="Region: Listeners">
@@ -45,28 +50,12 @@ class PreferencesFragment : PreferenceFragmentCompat(),
             "key_file_use" -> {
                 raceDayPreferences.setFileUse(newValue as Boolean)
             }
-            "key_default_code_R" -> {
-                raceDayPreferences.setDefaultCodeR(newValue as Boolean)
-            }
-            "key_default_code_T" -> {
-                raceDayPreferences.setDefaultCodeT(newValue as Boolean)
-            }
-            "key_default_code_G" -> {
-                raceDayPreferences.setDefaultCodeG(newValue as Boolean)
-            }
         }
         return true
     }
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         /** Note: OnPreferenceChange will have already happened. **/
-
-        raceDayPreferences.setDefaultRaceCodes()
-
-//        when (preference.key) {
-//            "bp" -> "bp"
-//        }
-
         return true
     }
     //</editor-fold>
@@ -75,20 +64,10 @@ class PreferencesFragment : PreferenceFragmentCompat(),
     private fun initialise() {
         if(spFileUse.isChecked)
             raceDayPreferences.setFileUse(true)
-        else raceDayPreferences.setFileUse(false)
+        else
+            raceDayPreferences.setFileUse(false)
 
-        if(cbpDefaultCodeR.isChecked)
-            raceDayPreferences.setDefaultCodeR(true)
-        else raceDayPreferences.setDefaultCodeR(false)
-
-        if(cbpDefaultCodeT.isChecked)
-            raceDayPreferences.setDefaultCodeT(true)
-
-        if(cbpDefaultCodeG.isChecked)
-            raceDayPreferences.setDefaultCodeG(true)
-        else raceDayPreferences.setDefaultCodeG(false)
-
-        raceDayPreferences.setDefaultRaceCodes()
+//        raceDayPreferences.setDefaultRaceCodes()
     }
 
     // Switch preference as whether to re-use existing download file data.
@@ -101,44 +80,9 @@ class PreferencesFragment : PreferenceFragmentCompat(),
         }
         screen.addPreference(spFileUse)
     }
-
-    private fun setDefaultRaceCode() {
-        // Preference category for default Race code, e.g. R. T, G (code S to be advised).
-        pcDefaultRaceCode = PreferenceCategory(context).apply {
-            title = "Default Race Code"
-            summary = "Select the default Race code for the list of displayed meetings."
-        }
-        screen.addPreference(pcDefaultRaceCode)
-
-        cbpDefaultCodeR = CheckBoxPreference(context).apply {
-            key="key_default_code_R"
-            title="R"
-            setDefaultValue(true)
-        }
-        pcDefaultRaceCode.addPreference(cbpDefaultCodeR)
-
-        cbpDefaultCodeT = CheckBoxPreference(context).apply {
-            key="key_default_code_T"
-            title="T"
-            setDefaultValue(false)
-        }
-        pcDefaultRaceCode.addPreference(cbpDefaultCodeT)
-
-        cbpDefaultCodeG = CheckBoxPreference(context).apply {
-            key="key_default_code_G"
-            title="G"
-            setDefaultValue(false)
-        }
-        pcDefaultRaceCode.addPreference(cbpDefaultCodeG)
-    }
     //</editor-fold>
 
     private lateinit var screen: PreferenceScreen
 
     private lateinit var spFileUse: SwitchPreferenceCompat
-
-    private lateinit var pcDefaultRaceCode: PreferenceCategory
-    private lateinit var cbpDefaultCodeR: CheckBoxPreference
-    private lateinit var cbpDefaultCodeT: CheckBoxPreference
-    private lateinit var cbpDefaultCodeG: CheckBoxPreference
 }

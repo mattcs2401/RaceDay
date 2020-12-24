@@ -1,15 +1,17 @@
 package com.mcssoft.raceday.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.adapter.RaceMeetingAdapter
 import com.mcssoft.raceday.utility.RaceDayBackPressCB
@@ -18,16 +20,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.mcssoft.raceday.databinding.MainFragmentBinding
 import com.mcssoft.raceday.interfaces.IDeleteAll
+import com.mcssoft.raceday.repository.RaceDayPreferences
 import com.mcssoft.raceday.ui.dialog.DeleteAllDialog
 import com.mcssoft.raceday.utility.RaceDayUtilities
 import java.io.File
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), IDeleteAll {
+class MainFragment : Fragment(), IDeleteAll, MaterialButtonToggleGroup.OnButtonCheckedListener {
 
     @Inject lateinit var mainViewModel: RaceDayViewModel
     @Inject lateinit var raceAdapter: RaceMeetingAdapter
     @Inject lateinit var raceDayUtilities: RaceDayUtilities
+    @Inject lateinit var raceDayPreferences: RaceDayPreferences
 
     //<editor-fold default state="collapsed" desc="Region: Lifecycle">
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -100,6 +104,22 @@ class MainFragment : Fragment(), IDeleteAll {
         }
         return true
     }
+
+    override fun onButtonChecked(group: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean) {
+        //TODO("Not yet implemented")
+        when(checkedId) {
+            binding?.idBtnRace?.id -> {
+                Toast.makeText(requireContext(), "Race button clicked.", Toast.LENGTH_SHORT).show()
+            }
+            binding?.idBtnTrots?.id -> {
+                Toast.makeText(requireContext(), "Trots button clicked.", Toast.LENGTH_SHORT).show()
+            }
+            binding?.idBtnGreyhound?.id -> {
+                Toast.makeText(requireContext(), "Greyhound button clicked.", Toast.LENGTH_SHORT).show()
+            }
+            else -> { val bp = "bp"}
+        }
+    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Interface-IDeleteAll">
@@ -118,7 +138,7 @@ class MainFragment : Fragment(), IDeleteAll {
     //<editor-fold default state="collapsed" desc="Region: Utility">
     private fun initialise() {
         // Fragment title in action/tool bar.
-        setTitle()
+        setUIComponents()
 
         setHasOptionsMenu(true)
 
@@ -134,8 +154,8 @@ class MainFragment : Fragment(), IDeleteAll {
     }
 
     private fun setRecyclerView() {
-//        // There will only be the number of meetings as parsed from the download file.
-//        binding?.idRecyclerView?.setHasFixedSize(true)
+        // There will only be the number of meetings as parsed from the download file.
+        binding?.idRecyclerView?.setHasFixedSize(true)
 
         // Add dividers between row items.
         val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
@@ -153,10 +173,11 @@ class MainFragment : Fragment(), IDeleteAll {
         }
     }
 
-    private fun setTitle() {
-        requireActivity()
-            .findViewById<Toolbar>(R.id.id_toolbar)
-            ?.title = "Race Day"
+    private fun setUIComponents() {
+        // Set the title in the toolbar.
+        requireActivity().findViewById<Toolbar>(R.id.id_toolbar)?.title = "Race Day"
+        // Set the toggle group listener.
+        binding?.idToggleGroup?.addOnButtonCheckedListener(this)
     }
     //</editor-fold>
 
