@@ -19,10 +19,7 @@ object Constants {
     // Base meeting type. Only Meetings of this type will be displayed (ATT).
     const val MEETING_TYPE: String = "R"    // (R)ace.
 
-    // TBA - Base set of meeting codes.
-    //       Only a Meeting with one of these codes will be displayed (ATT).
-    //val MEETING_CODES = listOf(
-    //    "AR","BR","CR","ER","IR","MR","NR","OR","PR","QR","SR","TR","VR","WR","OS","ZS"
-    //)
+    // Base set of Meeting locations.
+    val LOCATIONS = listOf("ACT","QLD","NSW","VIC","SA","WA","NT","NZL")
 
 }

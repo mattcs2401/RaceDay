@@ -17,7 +17,7 @@ data class MeetingDto(
     val railPosition: String,
     val venueMnemonic: String,
     val races: List<RaceDto>,
-//    val sellCode: SellCode, // contains {"meetingCode":"B","scheduledType":"R"}
+    val sellCode: SellCodeDto     // TBA - contains e.g. {"meetingCode":"B","scheduledType":"R"}
 )
 
 fun MeetingDto.toMeeting(): Meeting {

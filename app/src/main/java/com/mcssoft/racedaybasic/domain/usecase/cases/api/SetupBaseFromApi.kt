@@ -56,7 +56,7 @@ class SetupBaseFromApi @Inject constructor(
 
             // Save Meeting/Race info.
             response.body.meetings.filter { type ->
-                type.raceType == Constants.MEETING_TYPE
+                (type.raceType == Constants.MEETING_TYPE) && (type.location in Constants.LOCATIONS)
             }.forEach { meetingDto ->
                 // Write Meeting details.
                 val mId = populateMeeting(meetingDto)

@@ -2,8 +2,6 @@ package com.mcssoft.racedaybasic.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mcssoft.racedaybasic.domain.dto.RaceDto
-import com.mcssoft.racedaybasic.domain.dto.SellCode
 
 @Entity(
     tableName = "Meeting"
@@ -25,7 +23,7 @@ data class Meeting(
 ) {
     var meetingId: String = "$venueMnemonic:$meetingDate"       // TBA - no actual id value  in Dto.
 //    val races: List<RaceDto>      // Races listing.
-//    val sellCode: SellCode,       // TBA
+//    val sellCode: SellCodeDto,       // TBA
 }
 /*
 DTO class:
@@ -41,7 +39,7 @@ data class MeetingDto(
     val raceType: String,         // e.g. R
     val races: List<RaceDto>,        // Races listing.
     val railPosition: String,     // e.g. True
-    val sellCode: SellCode,       // TBA
+    val sellCode: SellCodeDto,       // TBA
     val trackCondition: String,   // e.g. SOFT6
     val venueMnemonic: String,    // e.g. SCO (Scone)
     val weatherCondition: String  // e.g. FINE
