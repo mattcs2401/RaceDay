@@ -1,0 +1,49 @@
+package com.mcssoft.racedaybasic.domain.usecase
+
+import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
+import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
+
+data class RaceDayUseCases(
+
+    // Get and save the base set of data from the Api (Meetings and Races).
+    val setupBaseFromApi: SetupBaseFromApi,
+
+//    // Get and save the base set of data from the Api (Meetings and Races).
+//    val setupRunnerFromApi: SetupRunnerFromApi,
+
+    // Get a list of Meetings from the database.
+    val getMeetings: GetMeetings,
+//
+//    // Get a single Meeting from the database.
+//    val getMeeting: GetMeeting,
+//
+//    // Get a list of the Races from the database.
+//    val getRaces: GetRaces,
+//
+//    // Get a Race from the database.
+//    val getRace: GetRace,
+//
+//    // Get a list of the Runners from the database.
+//    val getRunners: GetRunners,
+//
+//    // Check/uncheck the "checked" metadata element on the Runner record.
+//    val setRunnerChecked: SetRunnerChecked,
+//
+//    // Get Settings.
+//    val getPreferences: GetPreferences,
+//
+//    // Save Settings.
+//    val savePreferences: SavePreferences,
+//
+//    // Get the Summary.
+//    val getSummaries: GetSummaries,
+//
+//    // Update the summary.
+//    val setForSummary: SetForSummary,
+//
+//    // A quick check that Trainer/Horse tables are (pre)populated.
+//    val checkPrePopulate: CheckPrePopulate,
+//
+//    // Pre-populate Trainer/Horse tables.
+//    val prePopulate: PrePopulate
+)

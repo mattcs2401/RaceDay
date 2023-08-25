@@ -1,0 +1,63 @@
+package com.mcssoft.racedaybasic.ui.components.navigation
+
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.mcssoft.racedaybasic.ui.splash.SplashScreen
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsScreen
+
+@Composable
+fun NavGraph(
+//    context: Context    // TBA.
+) {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = Screen.SplashScreen.route
+    ) {
+        // Splash screen.
+        composable(route = Screen.SplashScreen.route) {
+            SplashScreen(navController = navController)
+        }
+        // Meetings screen.
+        composable(route = Screen.MeetingsScreen.route) {
+            MeetingsScreen(navController = navController)
+        }
+//        // Races screen.
+//        composable(
+//            route = Screen.RacesScreen.route + "meetingId={meetingId}",
+//            arguments = listOf(navArgument("meetingId") {
+//                type = NavType.LongType
+//            })
+//        ) {
+//            RacesScreen(navController = navController)
+//        }
+//        // Runners screen.
+//        composable(
+//            route = Screen.RunnersScreen.route + "raceId={raceId}",
+//            arguments = listOf(navArgument("raceId") {
+//                type = NavType.LongType
+//            })
+//        ) {
+//            RunnersScreen(navController = navController)
+//        }
+//        // Settings screen.
+//        composable(route = Screen.SettingsScreen.route) {
+//            SettingsScreen(navController = navController)
+//        }
+//        // Summary screen (selected Runner items).
+//        composable(route = Screen.SummaryScreen.route) {
+//            SummaryScreen(navController = navController)
+//        }
+//        // Admin screen (TBA).
+//        composable(route = Screen.AdminScreen.route) {
+//            AdminScreen(navController = navController)
+//        }
+    }
+
+}

@@ -1,0 +1,10 @@
+============
+RaceDayBasic
+============
+
+Based on the URL:
+
+https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/<YYYY-MM-DD>/meetings?jurisdiction=QLD
+
+Notes:
+1. jurisdiction=QLD seems to be ignored ?
