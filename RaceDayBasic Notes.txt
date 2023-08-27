@@ -1,10 +1,28 @@
-============
-RaceDayBasic
-============
+|----------------|
+|  RaceDayBasic  |
+|----------------|
 
 Based on the URL:
-
 https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/<YYYY-MM-DD>/meetings?jurisdiction=QLD
 
 Notes:
-1. jurisdiction=QLD seems to be ignored ?
+1. jurisdiction=QLD seems to be ignored but errors if it's not there ?
+e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW, VIC, ACT, QLD, SA, NT or TAS"}],"code":"INVALID_SYNTAX_ERROR","message":"Invalid query string"}}
+
+======
+ TODO
+======
+Not really in any strict order:
+-------------------------------
+
+-> Better error notification back to Splash screen.
+
+-> Meetings loading indicator (like for Splash).
+
+-> Meetings screen header - put in date?
+
+-> Meeting item layout & info.
+
+-> Meeting item extra layout & info.
+
+
