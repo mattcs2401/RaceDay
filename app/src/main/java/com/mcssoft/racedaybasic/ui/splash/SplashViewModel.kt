@@ -23,11 +23,55 @@ class SplashViewModel @Inject constructor(
     private val _state = MutableStateFlow(SplashState.initialise())
     val state: StateFlow<SplashState> = _state
 
+//    private val _prefState = MutableStateFlow(PrefState.initialise())
+//    val prefState = _prefState.asStateFlow()
+
     init {
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 
         setupBaseFromApi(date)
+    }
+
+    private fun setupBaseFromLocal() {
+        viewModelScope.launch {
+            raceDayUseCases.setupBaseFromLocal().collect { result ->
+                when {
+                    result.loading -> {
+                        _state.update { state ->
+                            state.copy(
+                                loading = true,
+                                status = SplashState.Status.Loading,
+                                loadingMsg = "Loading base from Local."
+                            )
+                        }
+                    }
+                    result.failed -> {
+                        Log.d("TAG", "[SetupBaseFromLocal] result.failed: " + result.exception)
+                        _state.update { state ->
+                            state.copy(
+                                exception = Exception("[SetupBaseFromLocal] ${result.exception}"),
+                                status = SplashState.Status.Failure,
+                                loading = false,
+                                loadingMsg = "An error occurred."
+                            )
+                        }
+                    }
+                    result.successful -> {
+                        Log.d("TAG", "[SetupBaseFromApi] result.successful")
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = SplashState.Status.Success,
+                                loading = false,
+                                baseFromLocal = true,
+                                loadingMsg = "Setup base from Local success."
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**

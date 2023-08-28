@@ -7,6 +7,7 @@ data class SplashState(
     val loading: Boolean = false,
     val loadingMsg: String,
     val baseFromApi: Boolean = false,
+    val baseFromLocal: Boolean = false,
     val runnerFromApi: Boolean = false,
 ) {
     companion object {
@@ -20,9 +21,9 @@ data class SplashState(
     }
 
     sealed class Status {
-        object Initialise : Status()
-        object Loading : Status()
-        object Success : Status()
-        object Failure : Status()
+        data object Initialise : Status()
+        data object Loading : Status()
+        data object Success : Status()
+        data object Failure : Status()
     }
 }

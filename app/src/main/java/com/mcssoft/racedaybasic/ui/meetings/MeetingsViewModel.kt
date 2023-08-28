@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
+import com.mcssoft.racedaybasic.ui.splash.SplashState
+import com.mcssoft.racedaybasic.utility.DateUtils
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +20,7 @@ class MeetingsViewModel @Inject constructor(
 //    private val prefs: IPreferences,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(MeetingsState.initialise())
+    private val _state = MutableStateFlow(MeetingsState.initialise(DateUtils().getDateToday()))
     val state = _state.asStateFlow()
 
 //    private val _prefState = MutableStateFlow(PrefState.initialise())
@@ -26,7 +28,13 @@ class MeetingsViewModel @Inject constructor(
 
     init {
         Log.d("TAG", "enter MeetingsViewModel")
-
+        _state.update { state ->
+            state.copy(
+                loading = true,
+                status = MeetingsState.Status.Loading,
+                loadingMsg = "Loading Meetings listing."
+            )
+        }
         viewModelScope.launch {
 //            val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
 

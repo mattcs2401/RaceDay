@@ -24,6 +24,7 @@ import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.components.navigation.TopBar
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaybasic.R
+import com.mcssoft.racedaybasic.ui.meetings.components.MeetingsTopBar
 
 @Composable
 fun MeetingsScreen(
@@ -37,8 +38,9 @@ fun MeetingsScreen(
 
     Scaffold(
         topBar = {
-            TopBar(
+            MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
+                title2 = state.mtgDate,
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
@@ -100,24 +102,24 @@ private fun ManageState(
     if (showRefresh.value) {
         ShowRefreshDialog(show = showRefresh, navController = navController)
     }
-//    when (mtgsState.status) {
-//        is Initialise -> {}
-//        is Loading -> {
-//            LoadingDialog(
-//                titleText = stringResource(id = R.string.dlg_loading_title),
-//                msgText = stringResource(id = R.string.dlg_loading_msg),
-//                onDismiss = {}
-//            )
-//        }
-//        is Failure -> {
-//            showRefresh.value = false
-//            showError.value = true
-//            ShowErrorDialog(show = showError, mtgsState.exception)
-//        }
-//        is Success -> {
-//            // TBA.
-//        }
-//    }
+    when (mtgsState.status) {
+        is MeetingsState.Status.Initialise -> {}
+        is MeetingsState.Status.Loading -> {
+            LoadingDialog(
+                titleText = stringResource(id = R.string.dlg_loading_title),
+                msgText = stringResource(id = R.string.dlg_loading_msg),
+                onDismiss = {}
+            )
+        }
+        is MeetingsState.Status.Failure -> {
+            showRefresh.value = false
+            showError.value = true
+            ShowErrorDialog(show = showError, mtgsState.exception)
+        }
+        is MeetingsState.Status.Success -> {
+            // TBA.
+        }
+    }
 }
 
 @Composable

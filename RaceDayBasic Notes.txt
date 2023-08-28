@@ -15,6 +15,8 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 Not really in any strict order:
 -------------------------------
 
+*** Make more use of the @Preview ***
+
 -> Better error notification back to Splash screen.
 
 -> Meetings loading indicator (like for Splash).
@@ -25,4 +27,6 @@ Not really in any strict order:
 
 -> Meeting item extra layout & info.
 
+-> Races ?
 
+-> Runners ?
