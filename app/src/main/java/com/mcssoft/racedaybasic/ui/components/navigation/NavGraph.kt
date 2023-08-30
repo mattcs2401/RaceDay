@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.splash.SplashScreen
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsScreen
+import com.mcssoft.racedaybasic.ui.settings.SettingsScreen
 
 @Composable
 fun NavGraph(
@@ -24,10 +25,12 @@ fun NavGraph(
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
         }
+
         // Meetings screen.
         composable(route = Screen.MeetingsScreen.route) {
             MeetingsScreen(navController = navController)
         }
+
 //        // Races screen.
 //        composable(
 //            route = Screen.RacesScreen.route + "meetingId={meetingId}",
@@ -46,11 +49,13 @@ fun NavGraph(
 //        ) {
 //            RunnersScreen(navController = navController)
 //        }
-//        // Settings screen.
-//        composable(route = Screen.SettingsScreen.route) {
-//            SettingsScreen(navController = navController)
-//        }
-//        // Summary screen (selected Runner items).
+
+        // Settings screen.
+        composable(route = Screen.SettingsScreen.route) {
+            SettingsScreen(navController = navController)
+        }
+
+    //        // Summary screen (selected Runner items).
 //        composable(route = Screen.SummaryScreen.route) {
 //            SummaryScreen(navController = navController)
 //        }

@@ -58,7 +58,7 @@ class SplashViewModel @Inject constructor(
                         }
                     }
                     result.successful -> {
-                        Log.d("TAG", "[SetupBaseFromApi] result.successful")
+                        Log.d("TAG", "[SetupBaseFromLocal] result.successful")
                         _state.update { state ->
                             state.copy(
                                 exception = null,

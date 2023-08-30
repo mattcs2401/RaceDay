@@ -2,22 +2,23 @@ package com.mcssoft.racedaybasic.hilt
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.datasource.database.RaceDayDb
 import com.mcssoft.racedaybasic.data.datasource.remote.IRaceDay
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
-import com.mcssoft.racedaybasic.data.repository.preferences.IPreferences
-import com.mcssoft.racedaybasic.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
-import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
-import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.GetPreferences
-import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.SavePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,8 +71,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePreferences(@ApplicationContext context: Context): IPreferences {
-        return PreferencesImpl(context)
+    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            corruptionHandler = ReplaceFileCorruptionHandler(
+                produceNewData = { emptyPreferences() }
+            ),
+            produceFile = { context.preferencesDataStoreFile("settings") }
+        )
     }
 
     @Provides
@@ -82,9 +88,7 @@ object AppModule {
     @Provides
     fun provideUseCases(
         remote: IRemoteRepo,
-        local: IDbRepo,
-        prefs: IPreferences,
-        context: Context,
+        local: IDbRepo
     ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
@@ -95,8 +99,6 @@ object AppModule {
 //            getRaces = GetRaces(local),
 //            getRace = GetRace(local),
 //            getRunners = GetRunners(local),
-            getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs)
 //            setRunnerChecked = SetRunnerChecked(local),
 //            getSummaries = GetSummaries(local),
 //            setForSummary = SetForSummary(local),
