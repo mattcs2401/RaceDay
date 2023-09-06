@@ -16,8 +16,6 @@ fun BottomBar(
     navController: NavController
 ) {
     val bottomNavItems = listOf(
-        BottomNavItem.Admin,
-        BottomNavItem.Settings,
         BottomNavItem.Summary
     )
 

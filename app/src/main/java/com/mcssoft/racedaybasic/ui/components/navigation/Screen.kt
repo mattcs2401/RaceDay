@@ -10,9 +10,6 @@ sealed class Screen(val route: String) {
 
     object RunnersScreen : Screen("runners_screen")
 
-    object SettingsScreen : Screen("settings_screen")
-
     object SummaryScreen : Screen("summary_screen")
 
-    object AdminScreen: Screen("admin_screen")
 }

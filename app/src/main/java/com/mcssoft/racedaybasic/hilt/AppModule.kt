@@ -69,16 +69,16 @@ object AppModule {
         return RemoteRepoImpl(api)
     }
 
-    @Provides
-    @Singleton
-    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
-        return PreferenceDataStoreFactory.create(
-            corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { emptyPreferences() }
-            ),
-            produceFile = { context.preferencesDataStoreFile("settings") }
-        )
-    }
+//    @Provides
+//    @Singleton
+//    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
+//        return PreferenceDataStoreFactory.create(
+//            corruptionHandler = ReplaceFileCorruptionHandler(
+//                produceNewData = { emptyPreferences() }
+//            ),
+//            produceFile = { context.preferencesDataStoreFile("settings") }
+//        )
+//    }
 
     @Provides
     fun provideContext(@ApplicationContext context: Context): Context {
@@ -106,5 +106,13 @@ object AppModule {
 //            prePopulate = PrePopulate(local, context)
         )
     }
+
+}
+
+interface IAppModule2 {
+
+}
+
+class AppModule2: IAppModule2 {
 
 }

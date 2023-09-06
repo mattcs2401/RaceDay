@@ -9,17 +9,17 @@ sealed class BottomNavItem(
     var icon: Int,
     var title: String
 ) {
-    object Admin: BottomNavItem(
-        Screen.AdminScreen.route,
-        R.drawable.ic_admin_24,
-        "Admin"
-    )
+//    object Admin: BottomNavItem(
+//        Screen.AdminScreen.route,
+//        R.drawable.ic_admin_24,
+//        "Admin"
+//    )
 
-    object Settings: BottomNavItem(
-        Screen.SettingsScreen.route,
-        R.drawable.ic_settings_24,
-        "Settings"
-    )
+//    object Settings: BottomNavItem(
+//        Screen.SettingsScreen.route,
+//        R.drawable.ic_settings_24,
+//        "Settings"
+//    )
 
     object Summary: BottomNavItem(
         Screen.SummaryScreen.route,
