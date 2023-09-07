@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsScreen
-import com.mcssoft.racedaybasic.ui.splash.SplashScreen
+import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
+import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
 
 @Composable
 fun NavGraph(

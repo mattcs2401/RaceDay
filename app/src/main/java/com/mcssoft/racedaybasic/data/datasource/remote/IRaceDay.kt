@@ -10,14 +10,14 @@ interface IRaceDay {
     /**
      * Get the api.beta.tab.com.au Api data.
      * @param date: The meeting date; as "YYYY-MM-DD".
-     * @param jurisdiction: TBA.
+     * @param jurisdiction: TBA - got to be there but doesn't seem to affect/restrict anything.
      * @return A response anchored at BaseDto (refer ..\domain\dto\BaseDto).
      * @note Must be called from a coroutine or suspending function.
      */
     @GET("{date}/meetings")
     suspend fun getRaceDay(
         @Path("date") date: String,
-        @Query("jurisdiction") jurisdiction: String = "QLD"     // TBA.
+        @Query("jurisdiction") jurisdiction: String = "QLD"
     ): Response<BaseDto>
 
 }

@@ -24,13 +24,16 @@ fun MeetingDto.toMeeting(): Meeting {
     return Meeting(
         location = location,                     // QLD
         meetingDate = meetingDate,               // e.g. 2023-08-23
+        meetingTime = "",                        // TBA - 1st Race time ?
         meetingName = meetingName,               // e.g. Sunshine Coast
-        prizeMoney = prizeMoney,                 //
+        prizeMoney = prizeMoney,                 // TBA.
         raceType = raceType,                     // e.g. R
         railPosition = railPosition,             // True
         trackCondition = trackCondition,         // e.g. Good4
         venueMnemonic = venueMnemonic,           // e.g SSC
         weatherCondition = weatherCondition,     // Fine
-        racesNo = races.size
+        racesNo = races.size,                    // the number of associated Races.
+        meetingId = "$venueMnemonic:$meetingDate",    // TBA - no actual id value in Dto.
+        sellCode = "${sellCode.meetingCode}${sellCode.scheduledType}",
     )
 }

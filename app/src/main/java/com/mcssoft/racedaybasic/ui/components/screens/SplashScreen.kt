@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.splash
+package com.mcssoft.racedaybasic.ui.components.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -11,13 +11,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
+import com.mcssoft.racedaybasic.ui.splash.SplashState
+import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 
 /**
  * App starting point.

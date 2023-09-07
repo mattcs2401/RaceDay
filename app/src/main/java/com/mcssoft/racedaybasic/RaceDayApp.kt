@@ -6,10 +6,16 @@ import android.app.NotificationManager
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class RaceDayBasicApp : Application() {
+class RaceDayApp : Application() {
+
+//    companion object {
+//        lateinit var appModule: AppModuleImpl
+//    }
 
     override fun onCreate() {
         super.onCreate()
+
+//        appModule = AppModuleImpl(this)
 
         val channel = NotificationChannel(
             this.resources.getString(R.string.download_channel_id),

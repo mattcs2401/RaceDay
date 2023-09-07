@@ -1,14 +1,11 @@
 package com.mcssoft.racedaybasic.ui.splash
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaybasic.ui.splash.SplashState
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -23,55 +20,11 @@ class SplashViewModel @Inject constructor(
     private val _state = MutableStateFlow(SplashState.initialise())
     val state: StateFlow<SplashState> = _state
 
-//    private val _prefState = MutableStateFlow(PrefState.initialise())
-//    val prefState = _prefState.asStateFlow()
-
     init {
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 
         setupBaseFromApi(date)
-    }
-
-    private fun setupBaseFromLocal() {
-        viewModelScope.launch {
-            raceDayUseCases.setupBaseFromLocal().collect { result ->
-                when {
-                    result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                loading = true,
-                                status = SplashState.Status.Loading,
-                                loadingMsg = "Loading base from Local."
-                            )
-                        }
-                    }
-                    result.failed -> {
-                        Log.d("TAG", "[SetupBaseFromLocal] result.failed: " + result.exception)
-                        _state.update { state ->
-                            state.copy(
-                                exception = Exception("[SetupBaseFromLocal] ${result.exception}"),
-                                status = SplashState.Status.Failure,
-                                loading = false,
-                                loadingMsg = "An error occurred."
-                            )
-                        }
-                    }
-                    result.successful -> {
-                        Log.d("TAG", "[SetupBaseFromLocal] result.successful")
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = SplashState.Status.Success,
-                                loading = false,
-                                baseFromLocal = true,
-                                loadingMsg = "Setup base from Local success."
-                            )
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**

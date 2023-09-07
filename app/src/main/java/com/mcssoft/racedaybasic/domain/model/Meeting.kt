@@ -12,19 +12,18 @@ data class Meeting(
 
     val location: String,         // e.g. NSW
     val meetingDate: String,      // e.g. 2023-08-21
+    val meetingTime: String?,     // TBA - from 1st Race time ?
     val meetingName: String,      // e.g. SCONE
     val prizeMoney: String,       // e.g. $xxx
     val raceType: String,         // e.g. R
     val railPosition: String?,    // e.g. True
     val trackCondition: String?,  // e.g. SOFT6
     val venueMnemonic: String,    // e.g. SCO (Scone)
-    val weatherCondition: String?, // e.g. FINE
-    val racesNo: Int
-) {
-    var meetingId: String = "$venueMnemonic:$meetingDate"       // TBA - no actual id value  in Dto.
-//    val races: List<RaceDto>      // Races listing.
-//    val sellCode: SellCodeDto,       // TBA
-}
+    val weatherCondition: String?,// e.g. FINE
+    val racesNo: Int,             // number of associated Races.
+    val sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
+    val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
+)
 /*
 DTO class:
 data class MeetingDto(
@@ -37,9 +36,9 @@ data class MeetingDto(
     val meetingName: String,      // e.g. SCONE
     val prizeMoney: String,       // e.g. $xxx
     val raceType: String,         // e.g. R
-    val races: List<RaceDto>,        // Races listing.
-    val railPosition: String,     // e.g. True
-    val sellCode: SellCodeDto,       // TBA
+    val races: List<RaceDto>,     // Races listing.
+    val railPosition: String,     // e.g. 'True', or 'True all the way' or 'Out 5m entire', etc.
+    val sellCode: SellCodeDto,    // e.g. {"meetingCode":"B","scheduledType":"R"}
     val trackCondition: String,   // e.g. SOFT6
     val venueMnemonic: String,    // e.g. SCO (Scone)
     val weatherCondition: String  // e.g. FINE

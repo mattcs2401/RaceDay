@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
-import com.mcssoft.racedaybasic.ui.splash.SplashState
 import com.mcssoft.racedaybasic.utility.DateUtils
-import com.mcssoft.racedaycompose.ui.meetings.MeetingsEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,15 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
-    private val raceDayUseCases: RaceDayUseCases,
-//    private val prefs: IPreferences,
+    private val raceDayUseCases: RaceDayUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MeetingsState.initialise(DateUtils().getDateToday()))
     val state = _state.asStateFlow()
-
-//    private val _prefState = MutableStateFlow(PrefState.initialise())
-//    val prefState = _prefState.asStateFlow()
 
     init {
         Log.d("TAG", "enter MeetingsViewModel")
@@ -36,20 +30,8 @@ class MeetingsViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-//            val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
-
-            // Update PrefState.
-//            _prefState.update { state -> state.copy(byAuNzPref = onlyAuNzPref) }
-
             getMeetingsFromLocal()//onlyAuNzPref)
         }
-    }
-
-    /**
-     * Called from the Meetings screen. Do a complete reload of the Api data.
-     */
-    fun onEvent(event: MeetingsEvent) {
-        // TBA.
     }
 
     /**
@@ -57,7 +39,7 @@ class MeetingsViewModel @Inject constructor(
      * Get a list of Meetings from the database.
      * @note Database is already populated.
      */
-    private fun getMeetingsFromLocal() {//onlyAuNz: Boolean) {
+    private fun getMeetingsFromLocal() {
         viewModelScope.launch {
             raceDayUseCases.getMeetings().collect { result ->
                 when {

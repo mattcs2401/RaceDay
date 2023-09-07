@@ -2,14 +2,13 @@ package com.mcssoft.racedaybasic.ui.components.navigation
 
 sealed class Screen(val route: String) {
 
-    object SplashScreen : Screen("splash_screen")
+    data object SplashScreen : Screen("splash_screen")
 
-    object MeetingsScreen : Screen("meetings_screen")
+    data object MeetingsScreen : Screen("meetings_screen")
 
-    object RacesScreen : Screen("races_screen")
+    data object RacesScreen : Screen("races_screen")
 
-    object RunnersScreen : Screen("runners_screen")
+    data object RunnersScreen : Screen("runners_screen")
 
-    object SummaryScreen : Screen("summary_screen")
-
+    data object SummaryScreen : Screen("summary_screen")
 }

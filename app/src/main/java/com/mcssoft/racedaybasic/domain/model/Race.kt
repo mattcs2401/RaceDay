@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
-    var mtgId: Long = 0,     // "foreign" key.
+    var mtgId: Long = 0,     // "foreign" key (_id of the Meeting record).
 
 )
 /*

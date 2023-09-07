@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.meetings.components
+package com.mcssoft.racedaybasic.ui.meetings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -26,38 +26,34 @@ fun MeetingItemExtra(
         constraintSet,
         modifier = Modifier
             .padding(top = 48.dp) // simply to give room for the top row.
-            .clickable { onItemClick(meeting) },
+            .clickable {
+                onItemClick(meeting)
+            },
     ) {
         Text(
             "Races: ${meeting.racesNo}",
             Modifier.layoutId("idRacesNo"),
-            fontSize = 12.sp
+            fontSize = 10.sp
         )
-
         meeting.weatherCondition?.let {
             Text(
                 it,
                 Modifier.layoutId("idWeatherCond"),
-                fontSize = 12.sp
+                fontSize = 10.sp
             )
         }
-
         meeting.trackCondition?.let {
             Text(
                 it,
                 Modifier.layoutId("idTrackCond"),
-                fontSize = 12.sp
+                fontSize = 10.sp
             )
         }
-
-//        if (meeting .trackRating > 0) {
-//            Text(
-//                meeting.trackRating.toString(),
-//                Modifier.layoutId("idTrackRating"),
-//                fontSize = 12.sp
-//            )
-//        }
-
+        Text(
+            meeting.railPosition.toString(),
+            Modifier.layoutId("idRailPos"),
+            fontSize = 10.sp
+        )
     }
 }
 
@@ -65,7 +61,7 @@ private val constraintSet = ConstraintSet {
     val idRacesNo = createRefFor("idRacesNo")
     val idWeatherCond = createRefFor("idWeatherCond")
     val idTrackCond = createRefFor("idTrackCond")
-    val idTrackRating = createRefFor("idTrackRating")
+    val idRailPos = createRefFor("idRailPos")
 
     constrain(idRacesNo) {
         start.linkTo(parent.start, margin = 16.dp)
@@ -80,7 +76,7 @@ private val constraintSet = ConstraintSet {
         start.linkTo(idWeatherCond.end, margin = 8.dp)
         top.linkTo(idWeatherCond.top, margin = 0.dp)
     }
-    constrain(idTrackRating) {
+    constrain(idRailPos) {
         start.linkTo(idTrackCond.end, margin = 8.dp)
         top.linkTo(idTrackCond.top, margin = 0.dp)
     }

@@ -21,7 +21,6 @@ import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
 import com.mcssoft.racedaybasic.ui.theme.margin0dp
 import com.mcssoft.racedaybasic.ui.theme.margin16dp
 import com.mcssoft.racedaybasic.ui.theme.padding4dp
-import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItemExtra
 
 @Composable
 fun MeetingItem(
@@ -37,7 +36,7 @@ fun MeetingItem(
     var expandedState by remember { mutableStateOf(false) }
 
     val rotationState by animateFloatAsState(
-        targetValue = if (expandedState) 180f else 0f
+        targetValue = if (expandedState) 180f else 0f, label = ""
     )
 
     Card(
@@ -57,16 +56,12 @@ fun MeetingItem(
                 .clickable { onItemClick(meeting) }
         ) {
             Text(
-                meeting.venueMnemonic,
-                Modifier.layoutId("idMCode")
+                meeting.location,
+                Modifier.layoutId("idMLoc")
             )
             Text(
-                meeting.meetingName,
+                "${meeting.meetingName} (${meeting.venueMnemonic})",
                 Modifier.layoutId("idVenueName")
-            )
-            Text(
-                meeting.meetingDate,
-                Modifier.layoutId("idTime")
             )
             IconButton(
                 onClick = {
@@ -77,10 +72,10 @@ fun MeetingItem(
                     .rotate(rotationState)
             ) {
 //                if (!meeting.abandoned) {
-//                    Icon(
-//                        imageVector = Icons.Default.ArrowDropDown,
-//                        contentDescription = "Drop-Down Arrow"
-//                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Drop-Down Arrow"
+                    )
 //                }
             }
         }
@@ -93,18 +88,18 @@ fun MeetingItem(
 }
 
 private val constraintSet = ConstraintSet {
-    val idMCode = createRefFor("idMCode")
+    val idMLoc = createRefFor("idMLoc")
     val idVenueName = createRefFor("idVenueName")
     val idTime = createRefFor("idTime")
     val idArrow = createRefFor("idArrow")
 
-    constrain(idMCode) {
+    constrain(idMLoc) {
         top.linkTo(parent.top, margin = margin16dp)
         start.linkTo(parent.start, margin = margin16dp)
     }
     constrain(idVenueName) {
-        start.linkTo(idMCode.end, margin = margin16dp)
-        top.linkTo(idMCode.top, margin = margin0dp)
+        start.linkTo(idMLoc.end, margin = margin16dp)
+        top.linkTo(idMLoc.top, margin = margin0dp)
     }
     constrain(idTime) {
         top.linkTo(idVenueName.top, margin = margin0dp)

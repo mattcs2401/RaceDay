@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.meetings
+package com.mcssoft.racedaybasic.ui.components.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,9 +21,10 @@ import com.mcssoft.racedaybasic.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.BottomBar
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
-import com.mcssoft.racedaybasic.ui.components.navigation.TopBar
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaybasic.R
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsState
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingsTopBar
 
 @Composable
