@@ -1,5 +1,6 @@
 package com.mcssoft.racedaybasic.data.repository.remote
 
+import android.util.Log
 import com.mcssoft.racedaybasic.data.datasource.remote.IRaceDay
 import com.mcssoft.racedaybasic.domain.dto.BaseDto
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class RemoteRepoImpl @Inject constructor(
                     NetworkResponse.success(result)
                 }
                 else -> {
-                    NetworkResponse.error(result.message())
+                    NetworkResponse.error(result.code())
                 }
             }
         } catch (ex: Exception) {

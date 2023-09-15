@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -29,9 +30,8 @@ class MeetingsViewModel @Inject constructor(
                 loadingMsg = "Loading Meetings listing."
             )
         }
-        viewModelScope.launch {
-            getMeetingsFromLocal()//onlyAuNzPref)
-        }
+        // Get a list of the Meetings that have been populated into the database.
+        getMeetingsFromLocal()
     }
 
     /**
@@ -40,7 +40,7 @@ class MeetingsViewModel @Inject constructor(
      * @note Database is already populated.
      */
     private fun getMeetingsFromLocal() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             raceDayUseCases.getMeetings().collect { result ->
                 when {
                     result.loading -> {
@@ -61,7 +61,7 @@ class MeetingsViewModel @Inject constructor(
                         }
                     }
                     result.successful -> {
-                        Log.d("TAG", "getMeetingsFromLocal(onlyAuNz) result.successful")
+                        Log.d("TAG", "getMeetingsFromLocal() result.successful")
                         _state.update { state ->
                             state.copy(
                                 exception = null,

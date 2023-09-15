@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun MeetingsTopBar(
     title: String,
-    title2: String = "",
+    title2: String?,
     backgroundColour: Color,
     actions: @Composable (RowScope.() -> Unit) = {}
 ) {
@@ -30,7 +30,9 @@ fun MeetingsTopBar(
         title = {
             Row(content = {
                 Text(title, modifier = Modifier.weight(weight = 2f))
-                Text(title2, fontSize = 12.sp, modifier = Modifier.weight(weight = 3f))
+                if (title2 != null) {
+                    Text(title2, fontSize = 12.sp, modifier = Modifier.weight(weight = 3f))
+                }
             })
         },
         backgroundColor = backgroundColour,

@@ -3,6 +3,7 @@ package com.mcssoft.racedaybasic.domain.usecase.cases.api
 import android.util.Log
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
+import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
 import com.mcssoft.racedaybasic.domain.dto.MeetingDto
 import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.dto.toMeeting
@@ -28,7 +29,7 @@ class SetupBaseFromApi @Inject constructor(
      * @notes If Meeting code is not used, then all Meetings are returned in the RaceDayDto details,
      *        else, just the one Meeting.
      */
-    operator fun invoke(mtgDate: String): Flow<DataResult<String>> = flow {
+    operator fun invoke(mtgDate: String): Flow<DataResult<Any>> = flow {
         Log.d("TAG", "SetupBaseFromApi.invoke()")
 
         try {
@@ -37,20 +38,18 @@ class SetupBaseFromApi @Inject constructor(
             // GET from the Api (as BaseDto).
             val response = iRemoteRepo.getRaceDay(mtgDate)
 
-            when {
-                response.exception -> {
-                    throw Exception(response.ex)
+            when(response.status) {
+                is NetworkResponse.Status.Exception -> {
+                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Exception: ${response.exception}")
+                    throw Exception("An exception occurred: {${response.ex.toString()}}")
                 }
-                response.successful -> {
+                is NetworkResponse.Status.Error -> {
+                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}")
+                    emit(DataResult.error(response.errorCode))
+                }
+                is NetworkResponse.Status.Success -> {
                     // Delete whatever is there (CASCADE should take care of Race/Runner etc).
                     iDbRepo.deleteMeetings()
-                }
-                response.error -> {
-                    if (response.errorMsg != "") {
-                        throw Exception("An error occurred: ${response.errorMsg}")
-                    } else {
-                        throw Exception("An unknown error occurred.")
-                    }
                 }
             }
 
@@ -64,11 +63,10 @@ class SetupBaseFromApi @Inject constructor(
                 populateRaces(mId, meetingDto.races)
             }
 
-            emit(DataResult.success(""))
+            emit(DataResult.success(response.errorCode))
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
-
     }
 
     /**

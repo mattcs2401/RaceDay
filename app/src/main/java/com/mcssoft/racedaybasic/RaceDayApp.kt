@@ -3,6 +3,7 @@ package com.mcssoft.racedaybasic
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -15,16 +16,20 @@ class RaceDayApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-//        appModule = AppModuleImpl(this)
+//        val channel = NotificationChannel(
+//            this.resources.getString(R.string.download_channel_id),
+//            this.resources.getString(R.string.download_channel_name),
+//            NotificationManager.IMPORTANCE_HIGH
+//        )
 
         val channel = NotificationChannel(
-            this.resources.getString(R.string.download_channel_id),
-            this.resources.getString(R.string.download_channel_name),
+            "notify_channel",
+            "Notifications",
             NotificationManager.IMPORTANCE_HIGH
         )
         // TODO - integrate the notifications.
-//        val notificationManager = getSystemService(NotificationManager::class.java)
-//        notificationManager.createNotificationChannel(channel)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager// NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
     }
 
 }

@@ -10,7 +10,7 @@ data class NetworkResponse<T>(
     val status: Status,
     val data: Response<T>?,  // an OkHttp.Response<BaseDto> object.
     val ex: Exception?,
-    val err: String,
+    val code: Int,
 ) {
     companion object {
         fun <T> success(data: Response<T>): NetworkResponse<T> {
@@ -18,7 +18,7 @@ data class NetworkResponse<T>(
                 status = Status.Success,
                 data = data,
                 ex = null,
-                err = ""
+                code = data.code()
             )
         }
 
@@ -27,16 +27,16 @@ data class NetworkResponse<T>(
                 status = Status.Exception,
                 data = null,
                 ex = exception,
-                err = ""
+                code = 0
             )
         }
 
-        fun <T> error(message: String = ""): NetworkResponse<T> {
+        fun <T> error(code: Int): NetworkResponse<T> {
             return NetworkResponse(
                 status = Status.Error,
                 data = null,
                 ex = null,
-                err = message
+                code = code
             )
         }
     }
@@ -53,8 +53,8 @@ data class NetworkResponse<T>(
     val error: Boolean
         get() = !exception && this.data?.isSuccessful == false
 
-    val errorMsg: String
-        get() = this.err
+    val errorCode: Int
+        get() = this.code
 
     val successful: Boolean
         get() = !exception && this.data?.isSuccessful == true

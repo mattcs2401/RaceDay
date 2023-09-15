@@ -14,8 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.theme.*
 
 /**
@@ -149,3 +151,15 @@ fun CommonDialog(
         }
     }
 }
+
+@Preview
+@Composable
+fun ShowCommonDialog() {
+    CommonDialog(
+        icon = R.drawable.ic_error_48,
+        dialogTitle = "An error occurred",
+        dialogText = "Some common dialog text.",
+        dismissButtonText = "Ok",
+        onDismissClicked = {}
+    )
+} 

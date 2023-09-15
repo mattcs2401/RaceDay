@@ -37,20 +37,20 @@ fun MeetingItemExtra(
         )
         meeting.weatherCondition?.let {
             Text(
-                it,
+                "Weather: $it",
                 Modifier.layoutId("idWeatherCond"),
                 fontSize = 10.sp
             )
         }
         meeting.trackCondition?.let {
             Text(
-                it,
+                "Track: $it",
                 Modifier.layoutId("idTrackCond"),
                 fontSize = 10.sp
             )
         }
         Text(
-            meeting.railPosition.toString(),
+            "Rail: ${meeting.railPosition.toString()}",
             Modifier.layoutId("idRailPos"),
             fontSize = 10.sp
         )
@@ -69,7 +69,7 @@ private val constraintSet = ConstraintSet {
         bottom.linkTo(parent.bottom, margin = 16.dp)
     }
     constrain(idWeatherCond) {
-        start.linkTo(idRacesNo.end, margin = 32.dp)
+        start.linkTo(idRacesNo.end, margin = 16.dp) //32
         top.linkTo(idRacesNo.top, margin = 0.dp)
     }
     constrain(idTrackCond) {

@@ -14,6 +14,8 @@ import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
+import com.mcssoft.racedaybasic.utility.INetworkManager
+import com.mcssoft.racedaybasic.utility.NetworkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,6 +64,10 @@ object AppModule {
         return RemoteRepoImpl(api)
     }
 
+    @Provides
+    fun provideNetworkManager(): INetworkManager {
+        return NetworkManager()
+    }
 //    @Provides
 //    @Singleton
 //    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {

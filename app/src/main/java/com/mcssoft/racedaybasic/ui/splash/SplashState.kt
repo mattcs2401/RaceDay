@@ -2,6 +2,7 @@ package com.mcssoft.racedaybasic.ui.splash
 
 data class SplashState(
     val date: String = "",
+    val response: Int = 0,
     val exception: Exception?,
     val status: Status,
     val loading: Boolean = false,
@@ -25,5 +26,6 @@ data class SplashState(
         data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
+        data object Error: Status()
     }
 }

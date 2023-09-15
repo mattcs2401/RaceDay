@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
+import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,8 +35,8 @@ class SplashViewModel @Inject constructor(
     private fun setupBaseFromApi(date: String) {
         viewModelScope.launch {
             raceDayUseCases.setupBaseFromApi(date).collect { result ->
-                when {
-                    result.loading -> {
+                when(result.status) {
+                    is DataResult.Status.Loading -> {
                         _state.update { state ->
                             state.copy(
                                 loading = true,
@@ -44,22 +45,39 @@ class SplashViewModel @Inject constructor(
                             )
                         }
                     }
-                    result.failed -> {
-                        Log.d("TAG", "[SetupBaseFromApi] result.failed: " + result.exception)
+                    is DataResult.Status.Error -> {
+                        Log.d("TAG", "[SplashViewModel] result.error: " + result.errorCode)
                         _state.update { state ->
                             state.copy(
-                                exception = Exception("[SetupBaseFromApi] ${result.exception}"),
-                                status = SplashState.Status.Failure,
+                                exception = null,
+                                response = result.errorCode,
+                                status = SplashState.Status.Error,
                                 loading = false,
                                 loadingMsg = "An error occurred."
                             )
                         }
                     }
-                    result.successful -> {
-                        Log.d("TAG", "[SetupBaseFromApi] result.successful")
+                    is DataResult.Status.Failure -> {
+                        val exceptionText = result.exception?.message ?: "Exception"
+                        Log.d("TAG", "[SplashViewModel] result.failed: $exceptionText")
+                        // A response code, if exists, will take precedence over an exception.
+                        if(state.value.response == 0) {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = Exception("[SplashViewModel] $exceptionText"),
+                                    status = SplashState.Status.Failure,
+                                    loading = false,
+                                    loadingMsg = "An Exception error occurred."
+                                )
+                            }
+                        }
+                    }
+                    is DataResult.Status.Success -> {
+                        Log.d("TAG", "[SplashViewModel] result.successful")
                         _state.update { state ->
                             state.copy(
                                 exception = null,
+                                response = result.errorCode,
                                 status = SplashState.Status.Success,
                                 loading = false,
                                 baseFromApi = true,
@@ -67,6 +85,7 @@ class SplashViewModel @Inject constructor(
                             )
                         }
                     }
+                    else -> {}
                 }
             }
         }

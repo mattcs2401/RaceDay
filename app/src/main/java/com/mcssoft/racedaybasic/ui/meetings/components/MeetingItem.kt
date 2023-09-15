@@ -53,7 +53,9 @@ fun MeetingItem(
         ConstraintLayout(
             constraintSet,
             modifier = Modifier
-                .clickable { onItemClick(meeting) }
+                .clickable {
+                    onItemClick(meeting)
+                }
         ) {
             Text(
                 meeting.location,
