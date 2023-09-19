@@ -1,6 +1,9 @@
 package com.mcssoft.racedaybasic.ui.splash
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases

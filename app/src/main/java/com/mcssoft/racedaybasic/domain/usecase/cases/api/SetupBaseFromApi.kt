@@ -90,12 +90,6 @@ class SetupBaseFromApi @Inject constructor(
     private suspend fun populateMeeting(meetingDto: MeetingDto): Long {
         // Initial create of the Meeting.
         val meeting = meetingDto.toMeeting()
-        // Add in the additional "summary" values.
-//        meeting.meetingTime = DateUtils().getTime(raceDto.RaceTime)
-//        meeting.racesNo = meetingDto.Races.count()
-//        meeting.weatherCond = raceDto.WeatherCondition ?: ""
-//        meeting.trackCond = raceDto.TrackCondition ?: ""
-//        meeting.trackRating = raceDto.TrackRating
         // Insert.
         return iDbRepo.insertMeeting(meeting)
     }
