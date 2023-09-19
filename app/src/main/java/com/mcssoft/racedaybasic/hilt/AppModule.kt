@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.mcssoft.racedaybasic.R
-import com.mcssoft.racedaybasic.RaceDayApp
 import com.mcssoft.racedaybasic.data.datasource.database.RaceDayDb
 import com.mcssoft.racedaybasic.data.datasource.remote.IRaceDay
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
@@ -14,8 +13,6 @@ import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
-import com.mcssoft.racedaybasic.utility.INetworkManager
-import com.mcssoft.racedaybasic.utility.NetworkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,10 +42,11 @@ object AppModule {
 
     @Provides
     fun provideApi(app: Application): IRaceDay {
+//        val nwInterceptor = NetworkInterceptor()
 //        val logging = HttpLoggingInterceptor()
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
-//            .addInterceptor(logging)
+//            .addInterceptor(nwInterceptor)
             .build()
         return Retrofit.Builder()
             .client(client)
@@ -65,9 +63,10 @@ object AppModule {
     }
 
     @Provides
-    fun provideNetworkManager(): INetworkManager {
-        return NetworkManager()
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
     }
+
 //    @Provides
 //    @Singleton
 //    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
@@ -77,11 +76,6 @@ object AppModule {
 //            ),
 //            produceFile = { context.preferencesDataStoreFile("settings") }
 //        )
-//    }
-
-//    @Provides
-//    fun provideContext(@ApplicationContext context: Context): Context {
-//        return context
 //    }
 
     @Provides

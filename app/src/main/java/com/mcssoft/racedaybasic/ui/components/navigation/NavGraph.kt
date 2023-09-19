@@ -1,16 +1,16 @@
 package com.mcssoft.racedaybasic.ui.components.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
 import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
 
 @Composable
-fun NavGraph(
-//    context: Context    // TBA.
-) {
+fun NavGraph() {//nwStatus: String) {
     val navController = rememberNavController()
 
     NavHost(
@@ -18,7 +18,11 @@ fun NavGraph(
         startDestination = Screen.SplashScreen.route
     ) {
         // Splash screen.
-        composable(route = Screen.SplashScreen.route) {
+        composable(route = Screen.SplashScreen.route /*+ "status=${nwStatus}",
+            arguments = listOf(navArgument("status") {
+                type = NavType.StringType
+            })*/
+        ) {
             SplashScreen(navController = navController)
         }
 

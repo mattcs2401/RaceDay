@@ -6,10 +6,12 @@ data class SplashState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean = false,
-    val loadingMsg: String,
+    val loadingMsg: String = "",
     val baseFromApi: Boolean = false,
-    val baseFromLocal: Boolean = false,
-    val runnerFromApi: Boolean = false,
+    val customExType: String? = null,
+    val customExMsg: String? = null
+//    val baseFromLocal: Boolean = false,
+//    val runnerFromApi: Boolean = false
 ) {
     companion object {
         fun initialise(): SplashState {
@@ -17,6 +19,20 @@ data class SplashState(
                 exception = null,
                 status = Status.Initialise,
                 loadingMsg = "Initialising."
+            )
+        }
+        fun failure(ex: Exception): SplashState {
+            return SplashState(
+                exception = ex,
+                status = Status.Failure
+            )
+        }
+        fun failure(type: String, msg: String): SplashState {
+            return SplashState(
+                exception = null,
+                status = Status.Failure,
+                customExType = type,
+                customExMsg = msg
             )
         }
     }

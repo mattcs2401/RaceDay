@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val raceDayUseCases: RaceDayUseCases,
+    private val raceDayUseCases: RaceDayUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SplashState.initialise())
@@ -58,16 +58,36 @@ class SplashViewModel @Inject constructor(
                         }
                     }
                     is DataResult.Status.Failure -> {
-                        val exceptionText = result.exception?.message ?: "Exception"
-                        Log.d("TAG", "[SplashViewModel] result.failed: $exceptionText")
-                        // A response code, if exists, will take precedence over an exception.
-                        if(state.value.response == 0) {
+                        if (state.value.response == 0) {
+                            if (result.exception == null) {
+                                _state.update { state ->
+                                    state.copy(
+                                        customExType = result.customExType,
+                                        customExMsg = result.customExMsg,
+                                        status = SplashState.Status.Failure,
+                                        loading = false,
+                                    )
+                                }
+                            } else {
+                                val exceptionText = result.exception.message ?: "Exception"
+                                Log.d("TAG", "[SplashViewModel] result.failed: $exceptionText")
+
+                                _state.update { state ->
+                                    state.copy(
+                                        exception = Exception(exceptionText),
+                                        status = SplashState.Status.Failure,
+                                        loading = false,
+                                        loadingMsg = "An Exception error occurred."
+                                    )
+                                }
+                            }
+                        } else {
                             _state.update { state ->
                                 state.copy(
-                                    exception = Exception("[SplashViewModel] $exceptionText"),
+                                    exception = null,
                                     status = SplashState.Status.Failure,
                                     loading = false,
-                                    loadingMsg = "An Exception error occurred."
+                                    response = result.errorCode
                                 )
                             }
                         }

@@ -4,7 +4,9 @@ data class DataResult<T>(
     val status: Status? = null,
     var data: T? = null,
     var response: Int = 0,
-    val exception: Exception? = null
+    val exception: Exception? = null,
+    val customExType: String? = null,
+    val customExMsg: String? = null
 ) {
     companion object {
         fun <T> loading(): DataResult<T> {
@@ -28,6 +30,16 @@ data class DataResult<T>(
                 status = Status.Failure,
                 data = null,
                 exception = exception,
+                response = 0
+            )
+        }
+        fun <T> failure(type: String?, msg: String?): DataResult<T> {
+            return DataResult(
+                status = Status.Failure,
+                data = null,
+                exception = null,
+                customExType = type,
+                customExMsg = msg,
                 response = 0
             )
         }

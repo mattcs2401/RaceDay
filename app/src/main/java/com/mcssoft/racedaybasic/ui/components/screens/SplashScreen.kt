@@ -61,7 +61,7 @@ fun SplashScreen(
                     ShowErrorDialog(show = showErrorDialog, state.response)
                 }
                 is SplashState.Status.Failure -> {
-                    ShowExceptionErrorDialog(show = showExErrorDialog, state.exception as Exception)
+                    ShowExceptionErrorDialog(show = showExErrorDialog, state = state)//.exception as Exception)
 //                    val debug = "debug"
                     /** TODO - some sort of retry. **/
                 }
@@ -106,16 +106,27 @@ fun ShowErrorDialog(
 @Composable
 fun ShowExceptionErrorDialog (
     show: MutableState<Boolean>,
-    exception: Exception
+    state: SplashState
 ) {
     if(show.value) {
-        ExceptionErrorDialog(
-            dialogTitle = "An Exception occurred",
-            exceptionMsg = exception.localizedMessage ?: "An unknown error occurred.",
-            dismissButtonText = "OK",
-            onDismissClicked = {
-                show.value = !show.value
-            }
-        )
+        if (state.exception != null) {
+            ExceptionErrorDialog(
+                dialogTitle = "An Exception occurred",
+                exceptionMsg = state.exception.localizedMessage ?: "An unknown error occurred.",
+                dismissButtonText = "OK",
+                onDismissClicked = {
+                    show.value = !show.value
+                }
+            )
+        } else {
+            ExceptionErrorDialog(
+                dialogTitle = state.customExType!!,
+                exceptionMsg = state.customExMsg!!,
+                dismissButtonText = "OK",
+                onDismissClicked = {
+                    show.value = !show.value
+                }
+            )
+        }
     }
 }

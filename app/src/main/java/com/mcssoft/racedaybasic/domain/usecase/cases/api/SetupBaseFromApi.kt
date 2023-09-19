@@ -1,5 +1,6 @@
 package com.mcssoft.racedaybasic.domain.usecase.cases.api
 
+import android.net.http.HttpException
 import android.util.Log
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
@@ -13,6 +14,7 @@ import com.mcssoft.racedaybasic.utility.Constants
 import com.mcssoft.racedaybasic.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 /**
@@ -40,12 +42,22 @@ class SetupBaseFromApi @Inject constructor(
 
             when(response.status) {
                 is NetworkResponse.Status.Exception -> {
-                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Exception: ${response.exception}")
-                    throw Exception("An exception occurred: {${response.ex.toString()}}")
+                    when(response.ex) {
+                        is UnknownHostException -> {
+                            emit(DataResult.failure("Unknown Host","Check the network connection."))
+                            return@flow
+                        }
+                        else -> {
+                            emit(DataResult.failure(response.ex!!))//"An exception occurred: ${response.ex?.message ?: "Exception"}")
+                            return@flow
+                        }
+                    }
+//                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Exception: ${response.exception}")
                 }
                 is NetworkResponse.Status.Error -> {
                     Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}")
                     emit(DataResult.error(response.errorCode))
+                    return@flow
                 }
                 is NetworkResponse.Status.Success -> {
                     // Delete whatever is there (CASCADE should take care of Race/Runner etc).
