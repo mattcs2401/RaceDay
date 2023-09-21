@@ -23,6 +23,7 @@ import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.dialog.ErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.ExceptionErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
+import com.mcssoft.racedaybasic.ui.components.dialog.ShowErrorDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.splash.SplashState
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
@@ -30,9 +31,6 @@ import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 /**
  * App starting point.
  */
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@RootNavGraph(start = true)
-//@Destination
 @Composable
 fun SplashScreen(
     navController: NavController,
@@ -48,36 +46,38 @@ fun SplashScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
         ) {
-            when (state.status) {
-                is SplashState.Status.Initialise -> {}
-                is SplashState.Status.Loading -> {
-                    LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_init_title),
-                        msgText = state.loadingMsg,
-                        onDismiss = {}
-                    )
-                }
-                is SplashState.Status.Error -> {
-                    ShowErrorDialog(show = showErrorDialog, state)
-                }
-                is SplashState.Status.Failure -> {
-                    ShowExceptionErrorDialog(state = state)
-                }
-                is SplashState.Status.Success -> {
-//                    if (state.baseFromApi && (!state.runnerFromApi)) {
-//                        viewModel.setupRunnersFromApi(LocalContext.current)
-//                        // Runners will continue to load in the background.
-                        LaunchedEffect(key1 = true) {
-                            //navigator.navigate(MeetingsScreenDestination)
-                            navController.navigate(Screen.MeetingsScreen.route)
+            if (!state.hasInternet) {
+                ShowErrorDialog(
+                    show = showErrorDialog,
+                    title = "No Internet",
+                    msg = "Check your device settings."
+                )
+            } else {
+                when (state.status) {
+                    is SplashState.Status.Initialise -> {}
+                    is SplashState.Status.Loading -> {
+                        LoadingDialog(
+                            titleText = stringResource(id = R.string.dlg_init_title),
+                            msgText = state.loadingMsg,
+                            onDismiss = {}
+                        )
+                    }
+                    is SplashState.Status.Error -> {
+                        ShowErrorDialog(state = state)
+                    }
+                    is SplashState.Status.Failure -> {
+                        ShowExceptionErrorDialog(state = state)
+                    }
+                    is SplashState.Status.Success -> {
+                        if (state.baseFromApi && (!state.runnerFromApi)) {
+    //                        viewModel.setupRunnersFromApi(LocalContext.current)
+    //                        // Runners will continue to load in the background.
+                            LaunchedEffect(key1 = true) {
+                                navController.navigate(Screen.MeetingsScreen.route)
+                            }
                         }
                     }
-//                    if (state.baseFromApi && state.runnerFromApi) {
-//                        LaunchedEffect(key1 = true) {
-//                            navigator.navigate(MeetingsScreenDestination)
-//                        }
-//                    }
-//                }
+                }
             }
         }
     }
@@ -85,20 +85,43 @@ fun SplashScreen(
 
 @Composable
 fun ShowErrorDialog(
-    show: MutableState<Boolean>,
+//    show: MutableState<Boolean>,
     state: SplashState
 ) {
-    if(show.value) {
+    val activity = LocalContext.current as Activity
+//    if(show.value) {
         ErrorDialog(
-            show = show,
+//            show = show,
             dialogTitle = "An error occurred",
             message = "Error code: ${state.response}",
             dismissButtonText = "OK",
             onDismissClicked = {
-                show.value = !show.value
+                activity.finishAndRemoveTask()
+//                show.value = !show.value
             }
         )
-    }
+//    }
+}
+
+@Composable
+fun ShowErrorDialog(
+    show: MutableState<Boolean>,
+    title: String,
+    msg: String
+) {
+    val activity = LocalContext.current as Activity
+//    if(show.value) {
+        ErrorDialog(
+//            show = show,
+            dialogTitle = title,
+            message = msg,
+            dismissButtonText = "OK",
+            onDismissClicked = {
+                activity.finishAndRemoveTask()
+//                show.value = !show.value
+            }
+        )
+//    }
 }
 
 /**

@@ -7,13 +7,13 @@ import com.mcssoft.racedaybasic.R
 
 @Composable
 fun ErrorDialog(
-    show: MutableState<Boolean>,
+//    show: MutableState<Boolean> = ,
     dialogTitle: String,
     message: String,  // message from any error TBA.
     dismissButtonText: String,
     onDismissClicked: () -> Unit
 ) {
-    if(show.value) {
+//    if(show.value) {
         CommonDialog(
             icon = R.drawable.ic_error_48,
             dialogTitle = dialogTitle,
@@ -26,5 +26,5 @@ fun ErrorDialog(
 //                /** TODO - TBA what we do here ? **/
 //            }
         )
-    }
+//    }
 }

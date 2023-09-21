@@ -12,12 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-//    @Inject lateinit var networkObserver: NetworkObserver
-
     override fun onStart() {
         super.onStart()
 //        registerReceiver(receiver, null)    // filer TBA.
-//        connectivityManager.registerConnectionObserver(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,16 +26,8 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            // TODO - integrate network availability.
-//            val isNetworkAvailable = connectivityManager.isNetworkAvailable.value
-
-
-
             RaceDayBasicTheme {
-//                val status by networkObserver.observe()
-//                    .collectAsState(INetworkObserver.Status.Unavailable)
-
-                NavGraph()//status.toString())//applicationContext)
+                NavGraph()
             }
         }
     }
@@ -51,17 +40,6 @@ class MainActivity : ComponentActivity() {
             startService(intent)
         }
 //        unregisterReceiver(receiver)
-//        connectivityManager.unregisterConnectionObserver(this)
     }
 
 }
-
-//@InstallIn(ActivityComponent::class)
-//@Module
-//class NetworkModule {
-//    @Singleton
-//    @Provides
-//    fun providesNetwork(): INetworkObserver {
-//        return NetworkObserver()
-//    }
-//}

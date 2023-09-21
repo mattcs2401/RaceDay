@@ -9,9 +9,10 @@ data class SplashState(
     val loadingMsg: String = "",
     val baseFromApi: Boolean = false,
     val customExType: String? = null,
-    val customExMsg: String? = null
+    val customExMsg: String? = null,
 //    val baseFromLocal: Boolean = false,
-//    val runnerFromApi: Boolean = false
+    val runnerFromApi: Boolean = false,
+    val hasInternet: Boolean = true
 ) {
     companion object {
         fun initialise(): SplashState {

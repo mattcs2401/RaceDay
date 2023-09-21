@@ -48,11 +48,10 @@ class SetupBaseFromApi @Inject constructor(
                             return@flow
                         }
                         else -> {
-                            emit(DataResult.failure(response.ex!!))//"An exception occurred: ${response.ex?.message ?: "Exception"}")
+                            emit(DataResult.failure(response.ex!!))
                             return@flow
                         }
                     }
-//                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Exception: ${response.exception}")
                 }
                 is NetworkResponse.Status.Error -> {
                     Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}")

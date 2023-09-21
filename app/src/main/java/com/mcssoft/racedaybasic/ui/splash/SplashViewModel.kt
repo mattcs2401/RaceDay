@@ -1,11 +1,17 @@
 package com.mcssoft.racedaybasic.ui.splash
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
+import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.util.Log
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.racedaybasic.RaceDayApp
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.DateUtils
@@ -18,8 +24,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    app: Application,
     private val raceDayUseCases: RaceDayUseCases
-) : ViewModel() {
+) : AndroidViewModel(app) {
 
     private val _state = MutableStateFlow(SplashState.initialise())
     val state: StateFlow<SplashState> = _state
@@ -28,7 +35,15 @@ class SplashViewModel @Inject constructor(
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 
-        setupBaseFromApi(date)
+        if(hasInternet()) {
+            setupBaseFromApi(date)
+        } else {
+            _state.update { state -> state.copy(hasInternet = false) }
+            viewModelScope.launch {
+                _state.emit(state.value)
+            }
+            // TBA - some error dialog.
+        }
     }
 
     /**
@@ -111,6 +126,19 @@ class SplashViewModel @Inject constructor(
                     else -> {}
                 }
             }
+        }
+    }
+
+    // Hack from https://www.youtube.com/watch?v=X4c2ZWG_ihU
+    private fun hasInternet(): Boolean {
+        val connMgr = getApplication<RaceDayApp>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connMgr.activeNetwork ?: return false
+        val capabilities = connMgr.getNetworkCapabilities(activeNetwork) ?: return false
+
+        return when {
+            capabilities.hasTransport(TRANSPORT_WIFI) -> true
+            capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+            else -> false
         }
     }
 
