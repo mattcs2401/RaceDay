@@ -9,8 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.racedaybasic.domain.model.Race
-import com.mcssoft.racedaybasic.ui.theme.*
+import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
+import com.mcssoft.racedaybasic.ui.theme.elevation4dp
+import com.mcssoft.racedaybasic.ui.theme.fontSize12sp
+import com.mcssoft.racedaybasic.ui.theme.margin0dp
+import com.mcssoft.racedaybasic.ui.theme.margin16dp
+import com.mcssoft.racedaybasic.ui.theme.margin8dp
+import com.mcssoft.racedaybasic.ui.theme.padding4dp
 
 @Composable
 fun RaceItem(
@@ -26,44 +34,56 @@ fun RaceItem(
         //backgroundColor = TBA
     ) {
         ConstraintLayout(
+            constraintSet,
             modifier = Modifier
                 .clickable { onItemClick(race) }
         ) {
-
-            val (idRaceNo, idRaceName, idRaceTime, idRaceDist) = createRefs()
-
             Text(
                 race.raceNo.toString(),
-                Modifier.constrainAs(idRaceNo) {
-                    top.linkTo(parent.top, margin = margin16dp)
-                    start.linkTo(parent.start, margin = margin16dp)
-                }, fontSize = 12.sp
+                Modifier.layoutId("idRaceNo"),
+                fontSize = fontSize12sp
             )
-
             Text(
                 race.raceName,
-                Modifier.constrainAs(idRaceName) {
-                    top.linkTo(idRaceNo.top, margin = margin0dp)
-                    start.linkTo(idRaceNo.end, margin = margin8dp)
-                }, fontSize = 12.sp
+                Modifier.layoutId("idRaceName"),
+                fontSize = fontSize12sp
             )
-
             Text(
-                race.raceStartTime,
-                Modifier.constrainAs(idRaceTime) {
-                    top.linkTo(idRaceName.bottom, margin = margin8dp)
-                    start.linkTo(idRaceName.start, margin = margin0dp)
-                    bottom.linkTo(parent.bottom, margin = margin16dp)
-                }, fontSize = 12.sp
+                "Start ${race.raceStartTime}",
+                Modifier.layoutId("idRaceTime"),
+                fontSize = fontSize12sp
             )
-
             Text(
-                "${race.raceDistance}m",
-                Modifier.constrainAs(idRaceDist) {
-                    top.linkTo(idRaceTime.top, margin = margin0dp)
-                    start.linkTo(idRaceTime.end, margin = margin16dp)
-                }, fontSize = 12.sp
+                "Distance ${race.raceDistance}m",
+                Modifier.layoutId("idRaceDist"),
+                fontSize = fontSize12sp
             )
         }
+    }
+}
+
+private val constraintSet = ConstraintSet {
+
+    val idRaceNo = createRefFor("idRaceNo")
+    val idRaceName = createRefFor("idRaceName")
+    val idRaceTime = createRefFor("idRaceTime")
+    val idRaceDist = createRefFor("idRaceDist")
+
+    constrain(idRaceNo) {
+        top.linkTo(parent.top, margin = margin16dp)
+        start.linkTo(parent.start, margin = margin16dp)
+    }
+    constrain(idRaceName) {
+        top.linkTo(idRaceNo.top, margin = margin0dp)
+        start.linkTo(idRaceNo.end, margin = margin8dp)
+    }
+    constrain(idRaceTime) {
+        top.linkTo(idRaceName.bottom, margin = margin8dp)
+        start.linkTo(idRaceName.start, margin = margin0dp)
+        bottom.linkTo(parent.bottom, margin = margin16dp)
+    }
+    constrain(idRaceDist) {
+        top.linkTo(idRaceTime.top, margin = margin0dp)
+        start.linkTo(idRaceTime.end, margin = margin16dp)
     }
 }
