@@ -2,17 +2,29 @@ package com.mcssoft.racedaybasic.hilt
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.datasource.database.RaceDayDb
 import com.mcssoft.racedaybasic.data.datasource.remote.IRaceDay
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
+import com.mcssoft.racedaybasic.data.repository.preferences.IPreferences
+import com.mcssoft.racedaybasic.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
+import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
+import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.GetPreferences
+import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRaces
+import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.SavePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +33,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -67,34 +80,43 @@ object AppModule {
         return context
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
-//        return PreferenceDataStoreFactory.create(
-//            corruptionHandler = ReplaceFileCorruptionHandler(
-//                produceNewData = { emptyPreferences() }
-//            ),
-//            produceFile = { context.preferencesDataStoreFile("settings") }
-//        )
-//    }
+    @Provides
+    @Singleton
+    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            corruptionHandler = ReplaceFileCorruptionHandler(
+                produceNewData = { emptyPreferences() }
+            ),
+            produceFile = { context.preferencesDataStoreFile("settings") }
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferences(@ApplicationContext context: Context): IPreferences {
+        return PreferencesImpl(context)
+    }
 
     @Provides
     fun provideUseCases(
         remote: IRemoteRepo,
-        local: IDbRepo
+        local: IDbRepo,
+        prefs: IPreferences
     ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
 //            setupRunnerFromApi = SetupRunnerFromApi(),//context),
-//            getMeeting = GetMeeting(local),
+            getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
-//            getRaces = GetRaces(local),
+            getRaces = GetRaces(local),
 //            getRace = GetRace(local),
 //            getRunners = GetRunners(local),
 //            setRunnerChecked = SetRunnerChecked(local),
 //            getSummaries = GetSummaries(local),
 //            setForSummary = SetForSummary(local),
+            getPreferences = GetPreferences(prefs),
+            savePreferences = SavePreferences(prefs),
 //            checkPrePopulate = CheckPrePopulate(local),
 //            prePopulate = PrePopulate(local, context)
         )

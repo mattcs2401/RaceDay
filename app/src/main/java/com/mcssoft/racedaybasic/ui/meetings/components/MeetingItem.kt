@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -14,12 +15,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
 import com.mcssoft.racedaybasic.ui.theme.margin0dp
 import com.mcssoft.racedaybasic.ui.theme.margin16dp
+import com.mcssoft.racedaybasic.ui.theme.margin8dp
 import com.mcssoft.racedaybasic.ui.theme.padding4dp
 
 @Composable
@@ -62,8 +65,13 @@ fun MeetingItem(
                 Modifier.layoutId("idMLoc")
             )
             Text(
-                "${meeting.meetingName} (${meeting.venueMnemonic})",
+                meeting.meetingName,
                 Modifier.layoutId("idVenueName")
+            )
+            Text(
+                "(${meeting.venueMnemonic})",
+                Modifier.layoutId("idVenueMnemonic"),
+                fontSize = 12.sp
             )
             IconButton(
                 onClick = {
@@ -92,6 +100,7 @@ fun MeetingItem(
 private val constraintSet = ConstraintSet {
     val idMLoc = createRefFor("idMLoc")
     val idVenueName = createRefFor("idVenueName")
+    val idVenueMnemonic = createRefFor("idVenueMnemonic")
     val idTime = createRefFor("idTime")
     val idArrow = createRefFor("idArrow")
 
@@ -102,6 +111,10 @@ private val constraintSet = ConstraintSet {
     constrain(idVenueName) {
         start.linkTo(idMLoc.end, margin = margin16dp)
         top.linkTo(idMLoc.top, margin = margin0dp)
+    }
+    constrain(idVenueMnemonic) {
+        start.linkTo(idVenueName.end, margin = margin8dp)
+        top.linkTo(idVenueName.top, margin = margin0dp)
     }
     constrain(idTime) {
         top.linkTo(idVenueName.top, margin = margin0dp)

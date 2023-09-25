@@ -12,6 +12,7 @@ import com.mcssoft.racedaybasic.domain.dto.toRace
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.utility.Constants
 import com.mcssoft.racedaybasic.utility.DataResult
+import com.mcssoft.racedaybasic.utility.DateUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.net.UnknownHostException
@@ -104,7 +105,7 @@ class SetupBaseFromApi @Inject constructor(
         val lRaces = mutableListOf<Race>()
         dtoRaces.forEach { dtoRace ->
             val race = dtoRace.toRace(mId)
-//            race.raceTime = DateUtils().getTime(dtoRace.RaceTime)
+            race.raceStartTime = DateUtils().getTime(dtoRace.raceStartTime)
             lRaces.add(race)
         }
         return iDbRepo.insertRaces(lRaces)

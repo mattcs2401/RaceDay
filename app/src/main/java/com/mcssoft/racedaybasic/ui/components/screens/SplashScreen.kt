@@ -39,8 +39,7 @@ fun SplashScreen(
     val state by viewModel.state.collectAsState()
     val showErrorDialog = remember { mutableStateOf(true) }
 
-    Scaffold(
-    ) {
+    Scaffold {
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -12,9 +12,9 @@ object Constants {
     // The "key" for the ...
     const val KEY_RACE_ID: String = "raceId"
 
-    // The "key" for the ...
-    const val KEY_FROM_DB_PREF_CHANGE: String = "keyFromDbChange"
-    const val KEY_ONLY_AUNZ_PREF_CHANGE: String = "keyOnlyAuNzChange"
+//    // The "key" for the ...
+//    const val KEY_FROM_DB_PREF_CHANGE: String = "keyFromDbChange"
+//    const val KEY_ONLY_AUNZ_PREF_CHANGE: String = "keyOnlyAuNzChange"
 
     // Base meeting type. Only Meetings of this type will be displayed (ATT).
     const val MEETING_TYPE: String = "R"    // (R)ace.

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
 import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
+import com.mcssoft.racedaybasic.ui.components.screens.RacesScreen
 
 @Composable
 fun NavGraph() {//nwStatus: String) {
@@ -30,16 +31,15 @@ fun NavGraph() {//nwStatus: String) {
         composable(route = Screen.MeetingsScreen.route) {
             MeetingsScreen(navController = navController)
         }
-
-//        // Races screen.
-//        composable(
-//            route = Screen.RacesScreen.route + "meetingId={meetingId}",
-//            arguments = listOf(navArgument("meetingId") {
-//                type = NavType.LongType
-//            })
-//        ) {
-//            RacesScreen(navController = navController)
-//        }
+        // Races screen.
+        composable(
+            route = Screen.RacesScreen.route + "meetingId={meetingId}",
+            arguments = listOf(navArgument("meetingId") {
+                type = NavType.LongType
+            })
+        ) {
+            RacesScreen(navController = navController)
+        }
 //        // Runners screen.
 //        composable(
 //            route = Screen.RunnersScreen.route + "raceId={raceId}",

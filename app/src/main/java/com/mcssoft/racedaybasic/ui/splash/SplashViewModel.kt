@@ -1,15 +1,12 @@
 package com.mcssoft.racedaybasic.ui.splash
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.RaceDayApp
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
@@ -35,8 +32,9 @@ class SplashViewModel @Inject constructor(
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 
-        if(hasInternet()) {
-            setupBaseFromApi(date)
+        if (hasInternet()) {
+//            setupBaseFromApi(date)
+            stateSuccess()
         } else {
             _state.update { state -> state.copy(hasInternet = false) }
             viewModelScope.launch {
@@ -53,27 +51,13 @@ class SplashViewModel @Inject constructor(
     private fun setupBaseFromApi(date: String) {
         viewModelScope.launch {
             raceDayUseCases.setupBaseFromApi(date).collect { result ->
-                when(result.status) {
+                when (result.status) {
                     is DataResult.Status.Loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                loading = true,
-                                status = SplashState.Status.Loading,
-                                loadingMsg = "Loading base from API."
-                            )
-                        }
+                        stateLoading()
                     }
                     is DataResult.Status.Error -> {
                         Log.d("TAG", "[SplashViewModel] result.error: " + result.errorCode)
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                response = result.errorCode,
-                                status = SplashState.Status.Error,
-                                loading = false,
-                                loadingMsg = "An error occurred."
-                            )
-                        }
+                        stateError(result.errorCode)
                     }
                     is DataResult.Status.Failure -> {
                         if (state.value.response == 0) {
@@ -112,16 +96,7 @@ class SplashViewModel @Inject constructor(
                     }
                     is DataResult.Status.Success -> {
                         Log.d("TAG", "[SplashViewModel] result.successful")
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                response = result.errorCode,
-                                status = SplashState.Status.Success,
-                                loading = false,
-                                baseFromApi = true,
-                                loadingMsg = "Setup base from API success."
-                            )
-                        }
+                        stateSuccess()
                     }
                     else -> {}
                 }
@@ -131,7 +106,8 @@ class SplashViewModel @Inject constructor(
 
     // Hack from https://www.youtube.com/watch?v=X4c2ZWG_ihU
     private fun hasInternet(): Boolean {
-        val connMgr = getApplication<RaceDayApp>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connMgr =
+            getApplication<RaceDayApp>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = connMgr.activeNetwork ?: return false
         val capabilities = connMgr.getNetworkCapabilities(activeNetwork) ?: return false
 
@@ -190,76 +166,38 @@ class SplashViewModel @Inject constructor(
 //        }
 //    }
 
-/*
-    private fun checkPrePopulate() {
-        raceDayUseCases.checkPrePopulate().onEach { result ->
-            when {
-                result.loading -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = SplashState.Status.Loading,
-                            loading = true
-                        )
-                    }
-                }
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
-                            status = SplashState.Status.Failure,
-                            loading = false
-                        )
-                    }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = SplashState.Status.Success,
-                            loading = false,
-                            prePopulated = (result.data == true)
-                        )
-                    }
-                }
-            }
-        }.launchIn(viewModelScope)
+    private fun stateLoading() {
+        _state.update { state ->
+            state.copy(
+                loading = true,
+                status = SplashState.Status.Loading,
+                loadingMsg = "Loading base from API."
+            )
+        }
     }
-*/
-/*
-    fun prePopulate() {
-        raceDayUseCases.prePopulate().onEach { result ->
-            when {
-                result.loading -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = SplashState.Status.Loading,
-                            loading = true
-                        )
-                    }
-                }
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
-                            status = SplashState.Status.Failure,
-                            loading = false
-                        )
-                    }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = SplashState.Status.Success,
-                            loading = false,
-                            prePopulated = (result.data == true)
-                        )
-                    }
-                }
-            }
-        }.launchIn(viewModelScope)
+
+    private fun stateError(errorCode: Int) {
+        _state.update { state ->
+            state.copy(
+                exception = null,
+                response = errorCode,
+                status = SplashState.Status.Error,
+                loading = false,
+                loadingMsg = "An error occurred."
+            )
+        }
     }
- */
+
+    private fun stateSuccess() {
+        _state.update { state ->
+            state.copy(
+                exception = null,
+                response = 200,//result.errorCode,
+                status = SplashState.Status.Success,
+                loading = false,
+                baseFromApi = true,
+                loadingMsg = "Setup base from API success."
+            )
+        }
+    }
 }

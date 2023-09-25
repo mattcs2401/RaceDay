@@ -29,6 +29,12 @@ data class RaceDto(
 
 fun RaceDto.toRace(mId: Long): Race {
     return Race(
-        mtgId = mId
+        mtgId = mId,
+        raceNo = raceNumber,
+        raceClassConditions = raceClassConditions,
+        raceName = raceName,
+        raceStartTime = raceStartTime,
+        raceDistance = raceDistance
+
     )
 }
