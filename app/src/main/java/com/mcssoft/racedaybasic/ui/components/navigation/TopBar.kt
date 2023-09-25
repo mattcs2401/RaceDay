@@ -54,6 +54,6 @@ fun TopBar(
 
 @Preview
 @Composable
-fun showTopBar(title: String = "Meetings") {
+fun ShowTopBar(title: String = "Meetings") {
     TopBar(title, MaterialTheme.colors.primary)
 }

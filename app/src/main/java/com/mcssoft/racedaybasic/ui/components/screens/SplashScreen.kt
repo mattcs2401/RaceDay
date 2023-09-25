@@ -24,7 +24,9 @@ import com.mcssoft.racedaybasic.ui.components.dialog.ErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.ExceptionErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.ShowErrorDialog
+import com.mcssoft.racedaybasic.ui.components.navigation.BottomNavItem.Summary.title
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
+import com.mcssoft.racedaybasic.ui.splash.SplashEvent
 import com.mcssoft.racedaybasic.ui.splash.SplashState
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 
@@ -37,7 +39,7 @@ fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    val showErrorDialog = remember { mutableStateOf(true) }
+//    val showErrorDialog = remember { mutableStateOf(true) }
 
     Scaffold {
         Box(
@@ -46,11 +48,7 @@ fun SplashScreen(
                 .background(MaterialTheme.colors.background)
         ) {
             if (!state.hasInternet) {
-                ShowErrorDialog(
-                    show = showErrorDialog,
-                    title = "No Internet",
-                    msg = "Check your device settings."
-                )
+                ShowErrorDialog(state = state, viewModel = viewModel)
             } else {
                 when (state.status) {
                     is SplashState.Status.Initialise -> {}
@@ -62,10 +60,10 @@ fun SplashScreen(
                         )
                     }
                     is SplashState.Status.Error -> {
-                        ShowErrorDialog(state = state)
+                        ShowErrorDialog(state = state, viewModel = viewModel)
                     }
                     is SplashState.Status.Failure -> {
-                        ShowExceptionErrorDialog(state = state)
+                        ShowExceptionErrorDialog(state = state, viewModel = viewModel)
                     }
                     is SplashState.Status.Success -> {
                         if (state.baseFromApi && (!state.runnerFromApi)) {
@@ -84,43 +82,35 @@ fun SplashScreen(
 
 @Composable
 fun ShowErrorDialog(
-//    show: MutableState<Boolean>,
-    state: SplashState
+    state: SplashState,
+    viewModel: SplashViewModel
 ) {
     val activity = LocalContext.current as Activity
-//    if(show.value) {
-        ErrorDialog(
-//            show = show,
-            dialogTitle = "An error occurred",
-            message = "Error code: ${state.response}",
-            dismissButtonText = "OK",
-            onDismissClicked = {
-                activity.finishAndRemoveTask()
-//                show.value = !show.value
-            }
-        )
-//    }
+    ErrorDialog(
+        dialogTitle = "An error occurred",
+        message = "Error code: ${state.response}",
+        dismissButtonText = "OK",
+        onDismissClicked = {
+            viewModel.onEvent(SplashEvent.Error(activity))
+        }
+    )
 }
 
 @Composable
 fun ShowErrorDialog(
-    show: MutableState<Boolean>,
     title: String,
-    msg: String
+    msg: String,
+    viewModel: SplashViewModel
 ) {
     val activity = LocalContext.current as Activity
-//    if(show.value) {
-        ErrorDialog(
-//            show = show,
-            dialogTitle = title,
-            message = msg,
-            dismissButtonText = "OK",
-            onDismissClicked = {
-                activity.finishAndRemoveTask()
-//                show.value = !show.value
-            }
-        )
-//    }
+    ErrorDialog(
+        dialogTitle = title,
+        message = msg,
+        dismissButtonText = "OK",
+        onDismissClicked = {
+            viewModel.onEvent(SplashEvent.Error(activity))
+        }
+    )
 }
 
 /**
@@ -128,16 +118,18 @@ fun ShowErrorDialog(
  */
 @Composable
 fun ShowExceptionErrorDialog (
-    state: SplashState
+    state: SplashState,
+    viewModel: SplashViewModel
 ) {
     val activity = LocalContext.current as Activity
+
     if (state.exception != null) {
         ExceptionErrorDialog(
             dialogTitle = "An Exception occurred",
             exceptionMsg = state.exception.localizedMessage ?: "An unknown error occurred.",
             dismissButtonText = "OK",
             onDismissClicked = {
-                activity.finishAndRemoveTask()
+                viewModel.onEvent(SplashEvent.Error(activity))
             }
         )
     } else {
@@ -146,7 +138,7 @@ fun ShowExceptionErrorDialog (
             exceptionMsg = state.customExMsg!!,
             dismissButtonText = "OK",
             onDismissClicked = {
-                activity.finishAndRemoveTask()
+                viewModel.onEvent(SplashEvent.Error(activity))
             }
         )
     }

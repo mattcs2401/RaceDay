@@ -3,7 +3,6 @@ package com.mcssoft.racedaybasic.data.repository.preferences
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -43,6 +42,7 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.MeetingIdPref -> {
                 getMeetingId()
             }
+            else -> {}
         }
     }
 
@@ -60,6 +60,7 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.MeetingIdPref -> {
                 setMeetingId(value as Long)
             }
+            else -> {}
         }
     }
 

@@ -1,17 +1,12 @@
 package com.mcssoft.racedaybasic.ui.splash
 
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
-import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaybasic.RaceDayApp
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.DateUtils
+import com.mcssoft.racedaybasic.utility.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,9 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    app: Application,
+    private val networkHelper: NetworkHelper,
     private val raceDayUseCases: RaceDayUseCases
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(SplashState.initialise())
     val state: StateFlow<SplashState> = _state
@@ -32,7 +27,7 @@ class SplashViewModel @Inject constructor(
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 
-        if (hasInternet()) {
+        if (networkHelper.hasNetwork()) {
 //            setupBaseFromApi(date)
             stateSuccess()
         } else {
@@ -41,6 +36,14 @@ class SplashViewModel @Inject constructor(
                 _state.emit(state.value)
             }
             // TBA - some error dialog.
+        }
+    }
+
+    fun onEvent(event: SplashEvent) {
+        when(event) {
+            is SplashEvent.Error -> {
+                event.activity.finishAndRemoveTask()
+            }
         }
     }
 
@@ -101,20 +104,6 @@ class SplashViewModel @Inject constructor(
                     else -> {}
                 }
             }
-        }
-    }
-
-    // Hack from https://www.youtube.com/watch?v=X4c2ZWG_ihU
-    private fun hasInternet(): Boolean {
-        val connMgr =
-            getApplication<RaceDayApp>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connMgr.activeNetwork ?: return false
-        val capabilities = connMgr.getNetworkCapabilities(activeNetwork) ?: return false
-
-        return when {
-            capabilities.hasTransport(TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
-            else -> false
         }
     }
 

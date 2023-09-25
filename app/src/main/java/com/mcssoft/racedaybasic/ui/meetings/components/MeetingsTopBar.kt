@@ -42,6 +42,6 @@ fun MeetingsTopBar(
 
 @Preview
 @Composable
-fun showTopBar(title: String = "Meetings", title2: String = "2023-08-28") {
+fun ShowTopBar(title: String = "Meetings", title2: String = "2023-08-28") {
     MeetingsTopBar(title, title2, MaterialTheme.colors.primary)
 }
