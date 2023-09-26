@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
+import com.mcssoft.racedaybasic.domain.model.Runner
 
 @Dao
 interface IDbRepo {
@@ -98,22 +99,22 @@ interface IDbRepo {
      * @param runners: The list of Runners.
      * @return A list of the _ids of the inserted Runner records. Usage is TBA ATT.
      */
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertRunners(runners: List<Runner>): List<Long>
-//
-//    @Query("select * from Runner where _id = :runnerId")
-//    suspend fun getRunner(runnerId: Long): Runner
-//
-//    /**
-//     * Get a list of Runners based on the id of the associated RaceDto.
-//     * @param raceId: The RaceDto id (database row id).
-//     * @return A list of Runners.
-//     */
-//    @Query("select * from Runner where raceId= :raceId")
-//    suspend fun getRunners(raceId: Long): List<Runner>
-//
-//    @Query("update Runner set checked= :checked where _id= :runnerId")
-//    suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRunners(runners: List<Runner>): List<Long>
+
+    @Query("select * from Runner where _id = :runnerId")
+    suspend fun getRunner(runnerId: Long): Runner
+
+    /**
+     * Get a list of Runners based on the id of the associated RaceDto.
+     * @param raceId: The RaceDto id (database row id).
+     * @return A list of Runners.
+     */
+    @Query("select * from Runner where raceId= :raceId")
+    suspend fun getRunners(raceId: Long): List<Runner>
+
+    @Query("update Runner set checked= :checked where _id= :runnerId")
+    suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">

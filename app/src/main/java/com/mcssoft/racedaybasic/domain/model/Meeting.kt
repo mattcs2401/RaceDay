@@ -21,7 +21,7 @@ data class Meeting(
     val venueMnemonic: String,    // e.g. SCO (Scone)
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
-    val sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
+    var sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
     val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
 )
 /*

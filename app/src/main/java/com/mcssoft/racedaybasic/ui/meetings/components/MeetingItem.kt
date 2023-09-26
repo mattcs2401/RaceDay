@@ -62,8 +62,8 @@ fun MeetingItem(
                 }
         ) {
             Text(
-                meeting.location,
-                Modifier.layoutId("idMLoc")
+                meeting.sellCode,
+                Modifier.layoutId("idSellCode")
             )
             Text(
                 meeting.meetingName,
@@ -99,7 +99,7 @@ fun MeetingItem(
 }
 
 private val constraintSet = ConstraintSet {
-    val idMLoc = createRefFor("idMLoc")
+    val idMLoc = createRefFor("idSellCode")
     val idVenueName = createRefFor("idVenueName")
     val idVenueMnemonic = createRefFor("idVenueMnemonic")
     val idTime = createRefFor("idTime")

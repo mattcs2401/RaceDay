@@ -19,12 +19,16 @@ import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
+import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnerFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
 import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.GetPreferences
 import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRaces
 import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.SavePreferences
+import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRace
+import com.mcssoft.racedaybasic.domain.usecase.cases.runners.GetRunners
+import com.mcssoft.racedaybasic.domain.usecase.cases.runners.SetRunnerChecked
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -106,17 +110,17 @@ object AppModule {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
-//            setupRunnerFromApi = SetupRunnerFromApi(),//context),
+            setupRunnerFromApi = SetupRunnerFromApi(),//context),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
-//            getRace = GetRace(local),
-//            getRunners = GetRunners(local),
-//            setRunnerChecked = SetRunnerChecked(local),
+            getRace = GetRace(local),
+            getRunners = GetRunners(local),
+            setRunnerChecked = SetRunnerChecked(local),
 //            getSummaries = GetSummaries(local),
 //            setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs),
+            savePreferences = SavePreferences(prefs)
 //            checkPrePopulate = CheckPrePopulate(local),
 //            prePopulate = PrePopulate(local, context)
         )

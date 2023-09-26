@@ -22,7 +22,7 @@ class GetMeetings @Inject constructor(
 
             var meetings = iDbRepo.getMeetings()
 
-            meetings = meetings.sortedBy { meeting -> meeting.location }
+            meetings = meetings.sortedBy { meeting -> meeting.sellCode }
 
             emit(DataResult.success(meetings))
 

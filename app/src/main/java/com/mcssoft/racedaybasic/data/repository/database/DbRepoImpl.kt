@@ -4,6 +4,7 @@ import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.domain.dto.RaceDto
+import com.mcssoft.racedaybasic.domain.model.Runner
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -59,24 +60,24 @@ class DbRepoImpl @Inject constructor(
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Runner related.">
-//    override suspend fun insertRunners(runners: List<Runner>): List<Long> {
-//        return dao.insertRunners(runners)
-//    }
-//
-//    override suspend fun getRunner(runnerId: Long): Runner {
-//        return dao.getRunner(runnerId)
-//    }
-//
-//    override suspend fun getRunners(raceId: Long): List<Runner> {
-//        return dao.getRunners(raceId)
-//    }
-//
-//    override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
-//        return dao.setRunnerChecked(runnerId, checked)
-//    }
-//    //</editor-fold>
-//
-//    //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    override suspend fun insertRunners(runners: List<Runner>): List<Long> {
+        return dao.insertRunners(runners)
+    }
+
+    override suspend fun getRunner(runnerId: Long): Runner {
+        return dao.getRunner(runnerId)
+    }
+
+    override suspend fun getRunners(raceId: Long): List<Runner> {
+        return dao.getRunners(raceId)
+    }
+
+    override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
+        return dao.setRunnerChecked(runnerId, checked)
+    }
+    //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Summary related.">
 //    override suspend fun getSummaries(): List<Summary> {
 //        return dao.getSummaries()
 //    }
@@ -92,7 +93,6 @@ class DbRepoImpl @Inject constructor(
 //    override suspend fun deleteSummary(id: Long) {
 //        dao.deleteSummary(id)
 //    }
-
     //</editor-fold>
 
 //    override suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>> {
