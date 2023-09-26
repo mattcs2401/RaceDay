@@ -43,8 +43,6 @@ fun CommonDialog(
     onConfirmClicked: (() -> Unit)? = null,
     backgroundColour: Color = Color.White
 ) {
-    // TODO - This is unlikely to conform to Material specs.
-
     Dialog(
         onDismissRequest = onDismissClicked,
         properties = DialogProperties(

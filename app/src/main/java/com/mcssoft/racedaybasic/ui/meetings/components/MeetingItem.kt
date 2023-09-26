@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
+import com.mcssoft.racedaybasic.ui.theme.fontSize12sp
 import com.mcssoft.racedaybasic.ui.theme.margin0dp
 import com.mcssoft.racedaybasic.ui.theme.margin16dp
 import com.mcssoft.racedaybasic.ui.theme.margin8dp
@@ -71,7 +72,7 @@ fun MeetingItem(
             Text(
                 "(${meeting.venueMnemonic})",
                 Modifier.layoutId("idVenueMnemonic"),
-                fontSize = 12.sp
+                fontSize = fontSize12sp
             )
             IconButton(
                 onClick = {

@@ -26,7 +26,7 @@ data class Race(
     var raceName: String = "",              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
     var raceStartTime: String = "",         // e.g. "2023-09-24T03:10:00.000Z"
     var raceDistance: Int = 0,              // e.g. 1600
-
+    var raceStatus: String = ""             // for anything Abandoned.
     // TBA - scratchings
 )
 // *** Note: This is only the basic "view". ***

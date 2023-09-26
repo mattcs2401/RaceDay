@@ -11,6 +11,10 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaybasic.domain.model.Meeting
+import com.mcssoft.racedaybasic.ui.theme.fontSize10sp
+import com.mcssoft.racedaybasic.ui.theme.margin0dp
+import com.mcssoft.racedaybasic.ui.theme.margin16dp
+import com.mcssoft.racedaybasic.ui.theme.margin8dp
 
 /**
  * Additional display of Meeting details (the 'expanded' state).
@@ -33,26 +37,26 @@ fun MeetingItemExtra(
         Text(
             "Races: ${meeting.racesNo}",
             Modifier.layoutId("idRacesNo"),
-            fontSize = 10.sp
+            fontSize = fontSize10sp
         )
         meeting.weatherCondition?.let {
             Text(
                 "Weather: $it",
                 Modifier.layoutId("idWeatherCond"),
-                fontSize = 10.sp
+                fontSize = fontSize10sp
             )
         }
         meeting.trackCondition?.let {
             Text(
                 "Track: $it",
                 Modifier.layoutId("idTrackCond"),
-                fontSize = 10.sp
+                fontSize = fontSize10sp
             )
         }
         Text(
             "Rail: ${meeting.railPosition.toString()}",
             Modifier.layoutId("idRailPos"),
-            fontSize = 10.sp
+            fontSize = fontSize10sp
         )
     }
 }
@@ -64,20 +68,20 @@ private val constraintSet = ConstraintSet {
     val idRailPos = createRefFor("idRailPos")
 
     constrain(idRacesNo) {
-        start.linkTo(parent.start, margin = 16.dp)
-        top.linkTo(parent.top, margin = 0.dp)
-        bottom.linkTo(parent.bottom, margin = 16.dp)
+        start.linkTo(parent.start, margin = margin16dp)
+        top.linkTo(parent.top, margin = margin0dp)
+        bottom.linkTo(parent.bottom, margin = margin16dp)
     }
     constrain(idWeatherCond) {
-        start.linkTo(idRacesNo.end, margin = 16.dp) //32
-        top.linkTo(idRacesNo.top, margin = 0.dp)
+        start.linkTo(idRacesNo.end, margin = margin16dp)
+        top.linkTo(idRacesNo.top, margin = margin0dp)
     }
     constrain(idTrackCond) {
-        start.linkTo(idWeatherCond.end, margin = 8.dp)
-        top.linkTo(idWeatherCond.top, margin = 0.dp)
+        start.linkTo(idWeatherCond.end, margin = margin8dp)
+        top.linkTo(idWeatherCond.top, margin = margin0dp)
     }
     constrain(idRailPos) {
-        start.linkTo(idTrackCond.end, margin = 8.dp)
-        top.linkTo(idTrackCond.top, margin = 0.dp)
+        start.linkTo(idTrackCond.end, margin = margin8dp)
+        top.linkTo(idTrackCond.top, margin = margin0dp)
     }
 }

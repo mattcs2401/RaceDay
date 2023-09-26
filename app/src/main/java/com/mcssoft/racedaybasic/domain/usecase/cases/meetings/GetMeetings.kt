@@ -16,25 +16,13 @@ class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     operator fun invoke(): Flow<DataResult<List<Meeting>>> = flow {
-        Log.d("TAG", "GetMeetings.invoke()")
+//        Log.d("TAG", "GetMeetings.invoke()")
         try {
             emit(DataResult.loading())
 
             var meetings = iDbRepo.getMeetings()
 
-//            // Filter if required.
-//            if (onlyAuNz) {
-//                // TODO - this could possibly still filter out something inadvertently.
-//                val value = meetings.filter { meeting ->
-//                    meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
-//                }.also { list ->
-//                    // also filter out any abandoned Meetings.
-//                    list.filter {
-//                        meeting -> !meeting.abandoned
-//                    }
-//                }
-//                meetings = value
-//            }
+            meetings = meetings.sortedBy { meeting -> meeting.location }
 
             emit(DataResult.success(meetings))
 

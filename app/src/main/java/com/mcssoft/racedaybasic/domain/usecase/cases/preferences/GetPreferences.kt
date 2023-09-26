@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-// TODO - someway to signify which setting we are getting, maybe some sort of sealed class ?
-
 class GetPreferences @Inject constructor(
     private val preferences: IPreferences
 ) {

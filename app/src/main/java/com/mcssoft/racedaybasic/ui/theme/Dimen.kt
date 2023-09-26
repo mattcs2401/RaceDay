@@ -13,11 +13,14 @@ val height64dp = 64.dp
 
 val elevation4dp = 4.dp
 
+val fontSize10sp = 10.sp
 val fontSize12sp = 12.sp
 
 val margin0dp = 0.dp
+val margin4dp = 4.dp
 val margin8dp = 8.dp
 val margin16dp = 16.dp
+val margin32dp = 32.dp
 
 val padding4dp = 4.dp
 val padding8dp = 8.dp

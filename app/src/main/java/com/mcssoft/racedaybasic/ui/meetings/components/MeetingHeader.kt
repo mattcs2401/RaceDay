@@ -14,24 +14,29 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.ui.theme.fontSize12sp
+import com.mcssoft.racedaybasic.ui.theme.margin0dp
+import com.mcssoft.racedaybasic.ui.theme.margin16dp
+import com.mcssoft.racedaybasic.ui.theme.margin32dp
+import com.mcssoft.racedaybasic.ui.theme.margin4dp
+import com.mcssoft.racedaybasic.ui.theme.margin8dp
 import com.mcssoft.racedaybasic.ui.theme.width2dp
 
 /**
  * Meeting summary information at the top of the list of Races for that Meeting.
  * @param meeting: The Meeting.
- * @param colour: The background colour.
+ * @param bkgColour: The background colour.
  *
  * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
  */
 @Composable
 fun MeetingHeader(
     meeting: Meeting,
-    colour: Color
+    bkgColour: Color
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colour)
+            .background(bkgColour)
             .border(
                 width = width2dp,
                 color = Color.Blue
@@ -40,14 +45,6 @@ fun MeetingHeader(
         ConstraintLayout(
             constraintSet
         ) {
-            Text(
-                text = "Meeting: ",
-                Modifier.layoutId("idMtgCode")
-            )
-            Text(
-                text = meeting.venueMnemonic,
-                Modifier.layoutId("idMtgCodeText")
-            )
             Text(
                 text = "Venue: ",
                 Modifier.layoutId("idVenueName")
@@ -80,46 +77,33 @@ fun MeetingHeader(
 }
 
 private val constraintSet = ConstraintSet {
-    // 1st line refs.
-    val idMtgCode = createRefFor("idMtgCode")
-    val idMtgCodeText = createRefFor("idMtgCodeText")
     val idVenueName = createRefFor("idVenueName")
     val idVenueNameText = createRefFor("idVenueNameText")
-    // 2nd line refs.
     val idRacesNo = createRefFor("idRacesNo")
     val idWeatherCond = createRefFor("idWeatherCond")
     val idTrackCond = createRefFor("idTrackCond")
 
     // 1st line layout.
-    constrain(idMtgCode) {
-        top.linkTo(parent.top, margin = 8.dp)
-        start.linkTo(parent.start, margin = 16.dp)
-    }
-    constrain(idMtgCodeText) {
-        top.linkTo(idMtgCode.top, margin = 0.dp)
-        start.linkTo(idMtgCode.end, margin = 4.dp)
-    }
     constrain(idVenueName) {
-        top.linkTo(idMtgCodeText.top, margin = 0.dp)
-        start.linkTo(idMtgCodeText.end, margin = 16.dp)
+        top.linkTo(parent.top, margin = margin8dp)
+        start.linkTo(parent.start, margin = margin16dp)
     }
     constrain(idVenueNameText) {
-        top.linkTo(idVenueName.top, margin = 0.dp)
-        start.linkTo(idVenueName.end, margin = 4.dp)
+        top.linkTo(idVenueName.top, margin = margin0dp)
+        start.linkTo(idVenueName.end, margin = margin4dp)
     }
-
     // 2nd line layout.
     constrain(idRacesNo) {
-        start.linkTo(idMtgCode.start, margin = 0.dp)
-        top.linkTo(idMtgCode.bottom, margin = 8.dp)
-        bottom.linkTo(parent.bottom, margin = 16.dp)
+        start.linkTo(idVenueName.start, margin = margin0dp)
+        top.linkTo(idVenueName.bottom, margin = margin8dp)
+        bottom.linkTo(parent.bottom, margin = margin16dp)
     }
     constrain(idWeatherCond) {
-        start.linkTo(idRacesNo.end, margin = 32.dp)
-        top.linkTo(idRacesNo.top, margin = 0.dp)
+        start.linkTo(idRacesNo.end, margin = margin32dp)
+        top.linkTo(idRacesNo.top, margin = margin0dp)
     }
     constrain(idTrackCond) {
-        start.linkTo(idWeatherCond.end, margin = 8.dp)
-        top.linkTo(idWeatherCond.top, margin = 0.dp)
+        start.linkTo(idWeatherCond.end, margin = margin8dp)
+        top.linkTo(idWeatherCond.top, margin = margin0dp)
     }
 }

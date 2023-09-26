@@ -155,6 +155,7 @@ private fun ShowErrorDialog(
             dialogTitle = stringResource(id = R.string.dlg_error_title),
             dialogText = stringResource(id = R.string.dlg_error_msg_unknown),
             dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
+            // TODO - exit the app ?
             onDismissClicked = {
                 show.value = !show.value
             },

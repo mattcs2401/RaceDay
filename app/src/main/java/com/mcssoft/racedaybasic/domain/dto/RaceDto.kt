@@ -34,7 +34,7 @@ fun RaceDto.toRace(mId: Long): Race {
         raceClassConditions = raceClassConditions,
         raceName = raceName,
         raceStartTime = raceStartTime,
-        raceDistance = raceDistance
-
+        raceDistance = raceDistance,
+        raceStatus = raceStatus
     )
 }
