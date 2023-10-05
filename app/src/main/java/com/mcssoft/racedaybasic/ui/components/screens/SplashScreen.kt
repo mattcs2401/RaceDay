@@ -8,12 +8,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.dialog.ErrorDialog
@@ -23,17 +22,18 @@ import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.splash.SplashEvent
 import com.mcssoft.racedaybasic.ui.splash.SplashState
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
+import com.mcssoft.racedaybasic.ui.theme.RaceDayBasicTheme
+import kotlinx.coroutines.flow.StateFlow
 
 /**
- * App starting point.
+ * App UI starting point.
  */
 @Composable
 fun SplashScreen(
+    state: SplashState,
     navController: NavController,
-    viewModel: SplashViewModel = hiltViewModel(),
+    onEvent: (SplashEvent) -> Unit
 ) {
-    val state by viewModel.state.collectAsState()
-//    val showErrorDialog = remember { mutableStateOf(true) }
 
     Scaffold {
         Box(
@@ -42,7 +42,10 @@ fun SplashScreen(
                 .background(MaterialTheme.colors.background)
         ) {
             if (!state.hasInternet) {
-                ShowErrorDialog(state = state, viewModel = viewModel)
+                ShowErrorDialog(
+                    state = state,
+                    onEvent = onEvent
+                )
             } else {
                 when (state.status) {
                     is SplashState.Status.Initialise -> {}
@@ -54,20 +57,23 @@ fun SplashScreen(
                         )
                     }
                     is SplashState.Status.Error -> {
-                        ShowErrorDialog(state = state, viewModel = viewModel)
+                        ShowErrorDialog(
+                            state = state,
+                            onEvent = onEvent
+                        )
                     }
                     is SplashState.Status.Failure -> {
-                        ShowExceptionErrorDialog(state = state, viewModel = viewModel)
+                        ShowExceptionErrorDialog(
+                            state = state,
+                            onEvent = onEvent
+                        )
                     }
                     is SplashState.Status.Success -> {
-                        if (state.baseFromApi && (!state.runnerFromApi)) {
-    //                        viewModel.setupRunnersFromApi(LocalContext.current)
-    //                        // Runners will continue to load in the background.
-                            LaunchedEffect(key1 = true) {
-                                navController.navigate(Screen.MeetingsScreen.route)
-                            }
+                        LaunchedEffect(key1 = true) {
+                            navController.navigate(Screen.MeetingsScreen.route)
                         }
                     }
+                    else -> {}
                 }
             }
         }
@@ -77,7 +83,7 @@ fun SplashScreen(
 @Composable
 fun ShowErrorDialog(
     state: SplashState,
-    viewModel: SplashViewModel
+    onEvent: (SplashEvent) -> Unit
 ) {
     val activity = LocalContext.current as Activity
     ErrorDialog(
@@ -85,7 +91,7 @@ fun ShowErrorDialog(
         message = "Error code: ${state.response}",
         dismissButtonText = "OK",
         onDismissClicked = {
-            viewModel.onEvent(SplashEvent.Error(activity))
+            onEvent(SplashEvent.Error(activity))
         }
     )
 }
@@ -94,7 +100,7 @@ fun ShowErrorDialog(
 fun ShowErrorDialog(
     title: String,
     msg: String,
-    viewModel: SplashViewModel
+    onEvent: (SplashEvent) -> Unit
 ) {
     val activity = LocalContext.current as Activity
     ErrorDialog(
@@ -102,7 +108,7 @@ fun ShowErrorDialog(
         message = msg,
         dismissButtonText = "OK",
         onDismissClicked = {
-            viewModel.onEvent(SplashEvent.Error(activity))
+            onEvent(SplashEvent.Error(activity))
         }
     )
 }
@@ -113,7 +119,7 @@ fun ShowErrorDialog(
 @Composable
 fun ShowExceptionErrorDialog (
     state: SplashState,
-    viewModel: SplashViewModel
+    onEvent: (SplashEvent) -> Unit
 ) {
     val activity = LocalContext.current as Activity
 
@@ -123,7 +129,7 @@ fun ShowExceptionErrorDialog (
             exceptionMsg = state.exception.localizedMessage ?: "An unknown error occurred.",
             dismissButtonText = "OK",
             onDismissClicked = {
-                viewModel.onEvent(SplashEvent.Error(activity))
+                onEvent(SplashEvent.Error(activity))
             }
         )
     } else {
@@ -132,7 +138,7 @@ fun ShowExceptionErrorDialog (
             exceptionMsg = state.customExMsg!!,
             dismissButtonText = "OK",
             onDismissClicked = {
-                viewModel.onEvent(SplashEvent.Error(activity))
+                onEvent(SplashEvent.Error(activity))
             }
         )
     }

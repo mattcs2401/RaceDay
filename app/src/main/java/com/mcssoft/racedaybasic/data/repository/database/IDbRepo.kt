@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Summary
 
 @Dao
 interface IDbRepo {
@@ -118,18 +119,18 @@ interface IDbRepo {
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
-//    @Query("select * from Summary")
-//    suspend fun getSummaries(): List<Summary>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertSummary(summary: Summary): Long
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertSummaries(summaries: List<Summary>): List<Long>
-//
+    @Query("select * from Summary")
+    suspend fun getSummaries(): List<Summary>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSummary(summary: Summary): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSummaries(summaries: List<Summary>): List<Long>
+
 //    @Query("delete from Summary where rrid = :id")
 //    suspend fun deleteSummary(id: Long)
-//    //</editor-fold>
+    //</editor-fold>
 //
 //    @Query("select count(*) from Trainer")
 //    suspend fun getTrainerCount(): Int

@@ -9,6 +9,8 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RunnersWorker(
     private val context: Context,
@@ -17,21 +19,21 @@ class RunnersWorker(
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
-    interface IEntryPoints {
+    interface IEntryPoint {
         fun getRemoteRepo(): IRemoteRepo
         fun getDbRepo(): IDbRepo
     }
 
-    private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoints::class.java)
+    private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
 
     override suspend fun doWork(): Result {
         val date = inputData.getString("key_date")
 //        Log.d("TAG", "[RunnerWorker.doWork] starting.")
-
-//        try {
-//            val iDbRepo = entryPoints.getDbRepo()
+        withContext(Dispatchers.IO) {
+            try {
+                val iDbRepo = entryPoints.getDbRepo()
 //            val codes = iDbRepo.getMeetingCodes()
-//            val iRemoteRepo = entryPoints.getRemoteRepo()
+                val iRemoteRepo = entryPoints.getRemoteRepo()
 //
 //            // Loop through each of the meeting codes.
 //            codes.forEach { code ->
@@ -62,13 +64,16 @@ class RunnersWorker(
 //                    delay(50)  // TBA ?
 //                }
 //            }
-//        } catch (exception: Exception) {
+            } catch (exception: Exception) {
 //            Log.d("TAG", "[RunnerWorker.doWork] exception.")
 //            val key = context.resources.getString(R.string.key_exception)
 //            val output = workDataOf(key to exception.localizedMessage)
 //            return Result.failure(output)
-//        }
+            }
 //        Log.d("TAG", "[RunnerWorker.doWork] ending.")
+//            return@withContext Result.success()
+        }
         return Result.success()
     }
+
 }

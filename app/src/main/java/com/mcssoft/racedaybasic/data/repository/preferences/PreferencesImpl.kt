@@ -42,7 +42,6 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.MeetingIdPref -> {
                 getMeetingId()
             }
-            else -> {}
         }
     }
 
@@ -60,7 +59,6 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.MeetingIdPref -> {
                 setMeetingId(value as Long)
             }
-            else -> {}
         }
     }
 

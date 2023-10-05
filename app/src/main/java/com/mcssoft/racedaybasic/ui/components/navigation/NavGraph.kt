@@ -1,17 +1,22 @@
 package com.mcssoft.racedaybasic.ui.components.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
-import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
 import com.mcssoft.racedaybasic.ui.components.screens.RacesScreen
+import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
+import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 
 @Composable
-fun NavGraph() {//nwStatus: String) {
+fun NavGraph() {
     val navController = rememberNavController()
 
     NavHost(
@@ -19,17 +24,26 @@ fun NavGraph() {//nwStatus: String) {
         startDestination = Screen.SplashScreen.route
     ) {
         // Splash screen.
-        composable(route = Screen.SplashScreen.route /*+ "status=${nwStatus}",
-            arguments = listOf(navArgument("status") {
-                type = NavType.StringType
-            })*/
-        ) {
-            SplashScreen(navController = navController)
+        composable(route = Screen.SplashScreen.route
+        ){
+            val viewModel = hiltViewModel<SplashViewModel>()
+            val state by viewModel.state.collectAsState()
+            SplashScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
         }
 
         // Meetings screen.
         composable(route = Screen.MeetingsScreen.route) {
-            MeetingsScreen(navController = navController)
+            val viewModel = hiltViewModel<MeetingsViewModel>()
+            val state by viewModel.state.collectAsState()
+            MeetingsScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
         }
         // Races screen.
         composable(

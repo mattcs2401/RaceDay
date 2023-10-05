@@ -1,5 +1,8 @@
 package com.mcssoft.racedaybasic.ui.components.screens
 
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,19 +26,23 @@ import com.mcssoft.racedaybasic.ui.components.navigation.BottomBar
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaybasic.R
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsEvent
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsState
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingsTopBar
+import com.mcssoft.racedaybasic.ui.splash.SplashEvent
+import com.mcssoft.racedaybasic.ui.splash.SplashState
 
 @Composable
 fun MeetingsScreen(
+    state: MeetingsState,
     navController: NavController,
-    viewModel: MeetingsViewModel = hiltViewModel(),
+    onEvent: (MeetingsEvent) -> Unit   // TBA
 ) {
-    val state by viewModel.state.collectAsState()
-
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
+
+    BackPressHandler(onBackPressed = {})
 
     Scaffold(
         topBar = {
@@ -79,48 +86,30 @@ fun MeetingsScreen(
                     )
                 }
             }
-            ManageState(
-                mtgsState = state,
-                showRefresh = showRefreshDialog,
-                showError = showErrorDialog,
-                navController = navController
-            )
+            if (showRefreshDialog.value) {
+                ShowRefreshDialog(show = showRefreshDialog, navController = navController)
+            }
+            when(state.status) {
+                is MeetingsState.Status.Initialise -> {}
+                is MeetingsState.Status.Loading -> {
+                    LoadingDialog(
+                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        msgText = stringResource(id = R.string.dlg_loading_msg),
+                        onDismiss = {}
+                    )
+                }
+                is MeetingsState.Status.Failure -> {
+                    showRefreshDialog.value = false
+                    showErrorDialog.value = true
+                    ShowErrorDialog(show = showErrorDialog, state.exception)
+                }
+                is MeetingsState.Status.Success -> {
+                    // TBA.
+                }
+            }
         }
     }
 
-}
-
-@Composable
-/**
- * An attempt to group all the state related activity into one place.
- */
-private fun ManageState(
-    mtgsState: MeetingsState,
-    showRefresh: MutableState<Boolean>,
-    showError: MutableState<Boolean>,
-    navController: NavController,
-) {
-    if (showRefresh.value) {
-        ShowRefreshDialog(show = showRefresh, navController = navController)
-    }
-    when (mtgsState.status) {
-        is MeetingsState.Status.Initialise -> {}
-        is MeetingsState.Status.Loading -> {
-            LoadingDialog(
-                titleText = stringResource(id = R.string.dlg_loading_title),
-                msgText = stringResource(id = R.string.dlg_loading_msg),
-                onDismiss = {}
-            )
-        }
-        is MeetingsState.Status.Failure -> {
-            showRefresh.value = false
-            showError.value = true
-            ShowErrorDialog(show = showError, mtgsState.exception)
-        }
-        is MeetingsState.Status.Success -> {
-            // TBA.
-        }
-    }
 }
 
 @Composable
@@ -165,6 +154,32 @@ private fun ShowErrorDialog(
                 /** TODO - TBA what we do here ? **/
             }
         )
+    }
+}
+
+@Composable
+//https://www.valueof.io/blog/intercept-back-press-button-in-jetpack-compose
+fun BackPressHandler(
+    backPressedDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
+        }
     }
 }
 /*

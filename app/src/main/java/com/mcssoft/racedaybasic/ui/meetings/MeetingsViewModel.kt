@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
+import com.mcssoft.racedaybasic.ui.splash.SplashEvent
 import com.mcssoft.racedaybasic.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,15 @@ class MeetingsViewModel @Inject constructor(
         }
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
+    }
+
+    fun onEvent(event: MeetingsEvent) {
+//        when(event) {
+////            is SplashEvent.Error -> {
+////                event.activity.finishAndRemoveTask()
+////            }
+//            else -> {}
+//        }
     }
 
     /**
@@ -76,4 +86,34 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
+//    /**
+//     * Use case: SetupRunnersFromApi.
+//     * Get the raw data from the Api (Runners).
+//     * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
+//     *       info is per ??.
+//     */
+//    fun setupRunnersFromApi(context: Context) {
+//        viewModelScope.launch {
+//            delay(250) // TBA ?
+//            raceDayUseCases.setupRunnersFromApi(context).collect { result ->
+//                when(result.status) {
+//                    is DataResult.Status.Loading -> {
+//                        stateLoading("Loading Runners from API.")
+//                    }
+//                    is DataResult.Status.Error -> {
+//                        Log.d("TAG", "[SplashViewModel] result.error: " + result.errorCode)
+//                        stateError(result.errorCode)
+//                    }
+//                    is DataResult.Status.Success -> {
+//                        Log.d("TAG", "[SplashViewModel] result.successful")
+//                        stateSuccess(result.errorCode)
+//                    }
+//                    is DataResult.Status.Failure -> {
+//                        stateFailure(result)
+//                    }
+//                    else -> {}
+//                }
+//            }
+//        }
+//    }
 }

@@ -22,7 +22,8 @@ data class Meeting(
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
     var sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
-    val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
+    val meetingId: String,        // e.g. concat of 'venueMnemonic:meetingDate'.
+    val racesBaseUrl: String      // basic Race info.
 )
 /*
 DTO class:

@@ -3,7 +3,7 @@ package com.mcssoft.racedaybasic.domain.dto
 import com.mcssoft.racedaybasic.domain.model.Meeting
 
 data class MeetingDto(
-//    val _links: Links,
+    val _links: Links,
 //    val displayMeetingName: String,
 //    val exoticPools: List<ExoticPool>,
 //    val fixedOddsOnly: Boolean,
@@ -35,5 +35,6 @@ fun MeetingDto.toMeeting(): Meeting {
         racesNo = races.size,                    // the number of associated Races.
         meetingId = "$venueMnemonic:$meetingDate",    // TBA - no actual id value in Dto.
         sellCode = "${sellCode.meetingCode}${sellCode.scheduledType}",
+        racesBaseUrl = _links.races
     )
 }

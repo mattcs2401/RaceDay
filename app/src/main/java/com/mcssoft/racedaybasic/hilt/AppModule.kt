@@ -19,7 +19,7 @@ import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
-import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnerFromApi
+import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnersFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
@@ -29,6 +29,8 @@ import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.SavePreferences
 import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRace
 import com.mcssoft.racedaybasic.domain.usecase.cases.runners.GetRunners
 import com.mcssoft.racedaybasic.domain.usecase.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaybasic.domain.usecase.cases.summary.GetSummaries
+import com.mcssoft.racedaybasic.domain.usecase.cases.summary.SetForSummary
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -110,15 +112,15 @@ object AppModule {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
-            setupRunnerFromApi = SetupRunnerFromApi(),//context),
+            setupRunnersFromApi = SetupRunnersFromApi(),//context),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
             getRace = GetRace(local),
             getRunners = GetRunners(local),
             setRunnerChecked = SetRunnerChecked(local),
-//            getSummaries = GetSummaries(local),
-//            setForSummary = SetForSummary(local),
+            getSummaries = GetSummaries(local),
+            setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs)
 //            checkPrePopulate = CheckPrePopulate(local),
@@ -127,31 +129,3 @@ object AppModule {
     }
 
 }
-
-//interface IAppModule {
-//    val provideApi: IRaceDay
-//    val provideRepository: IRemoteRepo
-//}
-//
-//class AppModuleImpl(context: Context): IAppModule {
-//
-//    override val provideApi: IRaceDay by lazy {
-//        val logging = HttpLoggingInterceptor()
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-//        val client = OkHttpClient.Builder()
-//            .addInterceptor(logging)
-//            .build()
-//        Retrofit.Builder()
-//            .client(client)
-//            .baseUrl(context.resources.getString(R.string.base_url))
-//            .addConverterFactory(GsonConverterFactory.create())
-////            .addCallAdapterFactory(ResultCallAdapterFactory())
-//            .build()
-//            .create(IRaceDay::class.java)
-//    }
-//
-//    override val provideRepository: IRemoteRepo by lazy {
-//        RemoteRepoImpl(RaceDayApp.appModule.provideApi)//api)
-//    }
-//
-//}

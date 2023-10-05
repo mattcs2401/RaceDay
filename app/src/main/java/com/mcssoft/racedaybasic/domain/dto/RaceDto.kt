@@ -3,7 +3,7 @@ package com.mcssoft.racedaybasic.domain.dto
 import com.mcssoft.racedaybasic.domain.model.Race
 
 data class RaceDto(
-    val _links: LinksX,
+    val _links: LinksX?,
     val allIn: Boolean,
     val allowBundle: Boolean,
     val broadcastChannel: String,
@@ -35,6 +35,7 @@ fun RaceDto.toRace(mId: Long): Race {
         raceName = raceName,
         raceStartTime = raceStartTime,
         raceDistance = raceDistance,
-        raceStatus = raceStatus
+        raceStatus = raceStatus,
+        runnersBaseUrl = _links?.self
     )
 }

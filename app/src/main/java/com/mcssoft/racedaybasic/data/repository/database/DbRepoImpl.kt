@@ -2,9 +2,8 @@ package com.mcssoft.racedaybasic.data.repository.database
 
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
-import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
-import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Summary
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -78,18 +77,18 @@ class DbRepoImpl @Inject constructor(
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
-//    override suspend fun getSummaries(): List<Summary> {
-//        return dao.getSummaries()
-//    }
-//
-//    override suspend fun insertSummary(summary: Summary): Long {
-//        return dao.insertSummary(summary)
-//    }
-//
-//    override suspend fun insertSummaries(summaries: List<Summary>): List<Long> {
-//        return dao.insertSummaries(summaries)
-//    }
-//
+    override suspend fun getSummaries(): List<Summary> {
+        return dao.getSummaries()
+    }
+
+    override suspend fun insertSummary(summary: Summary): Long {
+        return dao.insertSummary(summary)
+    }
+
+    override suspend fun insertSummaries(summaries: List<Summary>): List<Long> {
+        return dao.insertSummaries(summaries)
+    }
+
 //    override suspend fun deleteSummary(id: Long) {
 //        dao.deleteSummary(id)
 //    }

@@ -3,6 +3,7 @@ package com.mcssoft.racedaybasic.data.repository.remote
 import android.util.Log
 import com.mcssoft.racedaybasic.data.datasource.remote.IRaceDay
 import com.mcssoft.racedaybasic.domain.dto.BaseDto
+import com.mcssoft.racedaybasic.domain.dto2.BaseDto2
 import javax.inject.Inject
 
 /**
@@ -28,4 +29,19 @@ class RemoteRepoImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRaceDayRunners(date: String, venue: String, raceNo: String): NetworkResponse<BaseDto2> {
+        return try {
+            val result = api.getRunners(date, venue, raceNo)
+            when {
+                result.isSuccessful -> {
+                    NetworkResponse.success(result)
+                }
+                else -> {
+                    NetworkResponse.error(result.code())
+                }
+            }
+        } catch(ex: Exception) {
+            NetworkResponse.exception(ex)
+        }
+    }
 }

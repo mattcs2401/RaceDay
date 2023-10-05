@@ -1,7 +1,7 @@
 package com.mcssoft.racedaybasic.domain.usecase
 
 import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
-import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnerFromApi
+import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnersFromApi
 import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
 import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
@@ -11,6 +11,8 @@ import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRace
 import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRaces
 import com.mcssoft.racedaybasic.domain.usecase.cases.runners.GetRunners
 import com.mcssoft.racedaybasic.domain.usecase.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaybasic.domain.usecase.cases.summary.GetSummaries
+import com.mcssoft.racedaybasic.domain.usecase.cases.summary.SetForSummary
 
 data class RaceDayUseCases(
 
@@ -21,7 +23,7 @@ data class RaceDayUseCases(
     val setupBaseFromLocal: SetupBaseFromLocal,
 
     // Get and save the base set of data from the Api (Meetings and Races).
-    val setupRunnerFromApi: SetupRunnerFromApi,
+    val setupRunnersFromApi: SetupRunnersFromApi,
 
     // Get a list of Meetings from the database.
     val getMeetings: GetMeetings,
@@ -41,11 +43,11 @@ data class RaceDayUseCases(
     // Check/uncheck the "checked" metadata element on the Runner record.
     val setRunnerChecked: SetRunnerChecked,
 
-//    // Get the Summary.
-//    val getSummaries: GetSummaries,
-//
-//    // Update the summary.
-//    val setForSummary: SetForSummary,
+    // Get the Summary.
+    val getSummaries: GetSummaries,
+
+    // Update the summary.
+    val setForSummary: SetForSummary,
 
     // Get internal to app preferences.
     val getPreferences: GetPreferences,
