@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,7 +31,7 @@ fun NavGraph() {
         composable(route = Screen.SplashScreen.route
         ){
             val viewModel = hiltViewModel<SplashViewModel>()
-            val state by viewModel.state.collectAsState()
+            val state by viewModel.state.collectAsStateWithLifecycle()
             SplashScreen(
                 navController = navController,
                 state = state,
@@ -41,7 +42,7 @@ fun NavGraph() {
         // Meetings screen.
         composable(route = Screen.MeetingsScreen.route) {
             val viewModel = hiltViewModel<MeetingsViewModel>()
-            val state by viewModel.state.collectAsState()
+            val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
                 navController = navController,
                 state = state,
@@ -57,7 +58,7 @@ fun NavGraph() {
             })
         ) {
             val viewModel = hiltViewModel<RacesViewModel>()
-            val state by viewModel.state.collectAsState()
+            val state by viewModel.state.collectAsStateWithLifecycle()
             RacesScreen(
                 navController = navController,
                 state = state,
@@ -73,7 +74,7 @@ fun NavGraph() {
             })
         ) {
             val viewModel = hiltViewModel<RunnersViewModel>()
-            val state by viewModel.state.collectAsState()
+            val state by viewModel.state.collectAsStateWithLifecycle()
             RunnersScreen(
                 navController = navController,
                 state = state,

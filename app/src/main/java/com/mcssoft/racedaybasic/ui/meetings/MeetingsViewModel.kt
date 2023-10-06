@@ -37,9 +37,6 @@ class MeetingsViewModel @Inject constructor(
 
     fun onEvent(event: MeetingsEvent) {
 //        when(event) {
-////            is SplashEvent.Error -> {
-////                event.activity.finishAndRemoveTask()
-////            }
 //            else -> {}
 //        }
     }

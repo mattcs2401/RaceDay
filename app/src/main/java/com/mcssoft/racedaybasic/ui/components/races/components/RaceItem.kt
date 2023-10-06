@@ -35,8 +35,7 @@ fun RaceItem(
     ) {
         ConstraintLayout(
             constraintSet,
-            modifier = Modifier
-                .clickable { onItemClick(race) }
+            modifier = Modifier.clickable { onItemClick(race) }
         ) {
             Text(
                 race.raceNo.toString(),
