@@ -9,9 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.mcssoft.racedaybasic.ui.components.races.RacesViewModel
+import com.mcssoft.racedaybasic.ui.components.runners.RunnersViewModel
 import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
 import com.mcssoft.racedaybasic.ui.components.screens.RacesScreen
 import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
+import com.mcssoft.racedaybasic.ui.components.screens.RunnersScreen
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 
@@ -45,6 +48,7 @@ fun NavGraph() {
                 onEvent = viewModel::onEvent
             )
         }
+
         // Races screen.
         composable(
             route = Screen.RacesScreen.route + "meetingId={meetingId}",
@@ -52,17 +56,30 @@ fun NavGraph() {
                 type = NavType.LongType
             })
         ) {
-            RacesScreen(navController = navController)
+            val viewModel = hiltViewModel<RacesViewModel>()
+            val state by viewModel.state.collectAsState()
+            RacesScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
         }
-//        // Runners screen.
-//        composable(
-//            route = Screen.RunnersScreen.route + "raceId={raceId}",
-//            arguments = listOf(navArgument("raceId") {
-//                type = NavType.LongType
-//            })
-//        ) {
-//            RunnersScreen(navController = navController)
-//        }
+
+        // Runners screen.
+        composable(
+            route = Screen.RunnersScreen.route + "raceId={raceId}",
+            arguments = listOf(navArgument("raceId") {
+                type = NavType.LongType
+            })
+        ) {
+            val viewModel = hiltViewModel<RunnersViewModel>()
+            val state by viewModel.state.collectAsState()
+            RunnersScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
+        }
 
         // Summary screen (selected Runner items).
 //        composable(route = Screen.SummaryScreen.route) {

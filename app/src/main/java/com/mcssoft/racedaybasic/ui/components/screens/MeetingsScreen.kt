@@ -34,6 +34,12 @@ import com.mcssoft.racedaybasic.ui.splash.SplashEvent
 import com.mcssoft.racedaybasic.ui.splash.SplashState
 
 @Composable
+/**
+ * @param state: Meetings state.
+ * @param navController: The Navigation.
+ * @param onEvent: Call up to MeetingsEvent in ViewModel.
+
+ */
 fun MeetingsScreen(
     state: MeetingsState,
     navController: NavController,

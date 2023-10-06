@@ -36,12 +36,14 @@
     <string name="dlg_error_msg_no_conn">Check the internet connection or mobile data status.</string>
 
     <!-- Settings/Preferences text. -->
-    <string name="pref_load_from_db">From DB</string>
-    <string name="pref_only_au">AU/NZ Races</string>
+<!--    <string name="pref_load_from_db">From DB</string>-->
+<!--    <string name="pref_only_au">AU/NZ Races</string>-->
 
-    <string name="pref_from_db_key">fromDbKey</string>
-    <string name="pref_only_aunz_key">onlyAuNzKey</string>
+<!--    <string name="pref_from_db_key">fromDbKey</string>-->
+<!--    <string name="pref_only_aunz_key">onlyAuNzKey</string>-->
+
     <string name="setting_meeting_id_key">meetingIdKey</string>
+    <string name="setting_race_id_key">raceIdKey</string>
 
     <!-- TopBar labels. -->
     <string name="label_meetings">Meetings</string>

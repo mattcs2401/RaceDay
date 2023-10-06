@@ -10,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.dialog.CommonDialog
@@ -21,23 +20,23 @@ import com.mcssoft.racedaybasic.ui.components.races.RacesEvent
 import com.mcssoft.racedaybasic.ui.components.races.RacesState
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingHeader
 import com.mcssoft.racedaybasic.ui.components.races.RacesState.Status.*
-import com.mcssoft.racedaybasic.ui.components.races.RacesViewModel
 import com.mcssoft.racedaybasic.ui.components.races.components.RaceItem
 import com.mcssoft.racedaybasic.ui.theme.height64dp
 import com.mcssoft.racedaybasic.ui.theme.padding64dp
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 /**
+ * @param state: Races state.
  * @param navController: The Navigation.
- * @param viewModel: The associated view model.
+ * @param onEvent: Call up to RacesEvent in ViewModel.
  */
 fun RacesScreen(
+    state: RacesState,
     navController: NavController,
-    viewModel: RacesViewModel = hiltViewModel()
+    onEvent: (RacesEvent) -> Unit   // TBA
 ) {
-    val state by viewModel.state.collectAsState()
     val scaffoldState = rememberScaffoldState()
+    val showErrorDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -105,61 +104,49 @@ fun RacesScreen(
                     )
                 }
             }
-            ManageState(
-                racesState = state,
-                viewModel = viewModel
-            )
+            when (state.status) {
+                is Initialise -> {}
+                is Loading -> {
+                    LoadingDialog(
+                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        msgText = stringResource(id = R.string.dlg_loading_msg),
+                        onDismiss = {}
+                    )
+                }
+                is Failure -> {
+                    showErrorDialog.value = true
+                    ShowErrorDialog(
+                        showErrorDialog = showErrorDialog,
+                        mtgId = state.mtgId,
+                        onEvent = onEvent
+                    )
+                }
+                is Success -> {/* TBA */}
+                else -> {}
+            }
         }
-    }
-}
-
-@Composable
-private fun ManageState(
-    racesState: RacesState,
-    viewModel: RacesViewModel
-) {
-    val errorDialogShow = remember { mutableStateOf(false) }
-
-    when (racesState.status) {
-        is Initialise -> {}
-        is Loading -> {
-            LoadingDialog(
-                titleText = stringResource(id = R.string.dlg_loading_title),
-                msgText = stringResource(id = R.string.dlg_loading_msg),
-                onDismiss = {}
-            )
-        }
-        is Failure -> {
-            errorDialogShow.value = true
-            ShowErrorDialog(
-                errorDialogShow,
-                racesState.mtgId,
-                viewModel = viewModel
-            )
-        }
-        is Success -> {/* TBA */}
     }
 }
 
 @Composable
 private fun ShowErrorDialog(
-    showError: MutableState<Boolean>,
     mtgId: Long,
-    viewModel: RacesViewModel
+    onEvent: (RacesEvent) -> Unit,
+    showErrorDialog: MutableState<Boolean>
 ) {
-    if (showError.value) {
-        showError.value = !showError.value
+    if (showErrorDialog.value) {
+        showErrorDialog.value = !showErrorDialog.value
         CommonDialog(
             icon = R.drawable.ic_error_48,
             dialogTitle = stringResource(id = R.string.dlg_error_title),
             dialogText = "Unable to get the Races listing.",
             dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             onDismissClicked = {
-                viewModel.onEvent(RacesEvent.Cancel)
+                onEvent(RacesEvent.Cancel)
             },
             confirmButtonText = stringResource(id = R.string.lbl_btn_retry),
             onConfirmClicked = {
-                viewModel.onEvent(RacesEvent.Retry(mtgId))
+                onEvent(RacesEvent.Retry(mtgId))
             }
         )
     }

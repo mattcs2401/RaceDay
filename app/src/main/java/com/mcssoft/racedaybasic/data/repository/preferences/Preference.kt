@@ -1,12 +1,10 @@
 package com.mcssoft.racedaybasic.data.repository.preferences
 
 sealed class Preference {
+    // App specific preference, i.e. not user selectable.
 
-//    object FromDbPref : Preference()
-
-//    object OnlyAuNzPref : Preference()
-
-    // App specific preference, i.e. not user selectable. MeetingId is saved on navigation from Race
-    // to Runner (for when back nav to Race).
-    data object MeetingIdPref : Preference()
+    // MeetingId is saved on navigation from Meetings screen to Races screen.
+    data object MeetingIdPref: Preference()
+    // RaceId is saved on navigation from Races screen to Runners screen.
+    data object RaceIdPref: Preference()
 }

@@ -15,7 +15,7 @@ import com.mcssoft.racedaybasic.domain.model.Race
  */
 data class RacesState(
     val exception: Exception?,
-    val status: Status,
+    val status: Status = Status.NoState,
     val loading: Boolean = false,
     val lRaces: List<Race> = emptyList(),
     val mtg: Meeting?,
@@ -46,10 +46,11 @@ data class RacesState(
     }
 
     sealed class Status {
-        object Initialise : Status()
-        object Loading : Status()
-        object Success : Status()
-        object Failure : Status()
+        data object Initialise : Status()
+        data object Loading : Status()
+        data object Success : Status()
+        data object Failure : Status()
+        data object NoState: Status()
     }
 
     val races: List<Race>
