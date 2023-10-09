@@ -15,7 +15,7 @@ class DateUtils {
         var day = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
         if(((calendar.get(Calendar.MONTH)) + 1) < 10) month = "0$month"
-        if(((calendar.get(Calendar.DAY_OF_MONTH)) + 1) < 10) day = "0$day"
+        if(((calendar.get(Calendar.DAY_OF_MONTH)) + 1) <= 10) day = "0$day"
 
         return "$year-$month-$day"
     }

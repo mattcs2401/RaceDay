@@ -51,4 +51,7 @@ For getRaceDay()
 For getRunners()
 - Runner values.
 #https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-09-24/meetings/R/SSC/races/1?jurisdiction=QLD
+
+Note: Will need to hit each Race separately to get all Runners.
+      That could quite a lot if each meeting has a 7-10 Race card etc.
  */

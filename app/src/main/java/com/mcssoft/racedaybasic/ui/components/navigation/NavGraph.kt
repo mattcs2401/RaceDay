@@ -1,7 +1,6 @@
 package com.mcssoft.racedaybasic.ui.components.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,8 +13,8 @@ import com.mcssoft.racedaybasic.ui.components.races.RacesViewModel
 import com.mcssoft.racedaybasic.ui.components.runners.RunnersViewModel
 import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
 import com.mcssoft.racedaybasic.ui.components.screens.RacesScreen
-import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
 import com.mcssoft.racedaybasic.ui.components.screens.RunnersScreen
+import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 
@@ -52,6 +51,7 @@ fun NavGraph() {
 
         // Races screen.
         composable(
+            // As yet, haven't been able to make the meetingId param optional.
             route = Screen.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType

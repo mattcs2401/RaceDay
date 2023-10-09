@@ -3,6 +3,7 @@ package com.mcssoft.racedaybasic.ui.meetings
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.racedaybasic.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.ui.splash.SplashEvent
 import com.mcssoft.racedaybasic.utility.DateUtils

@@ -44,8 +44,8 @@ class RunnersViewModel @Inject constructor(
                 raceId = _state.value.raceId
             }
             // Get Race and Runner values for the screen.
-//            getRace(raceId)
-//            getRunners(raceId)
+            getRace(raceId)
+            getRunners(raceId)
         }
     }
 
@@ -60,6 +60,44 @@ class RunnersViewModel @Inject constructor(
 //        }
     }
 
+    private fun getRunners(rId: Long) {
+
+    }
+
+    private fun getRace(rId: Long) {
+        raceDayUseCases.getRace(rId).onEach { result ->
+            when {
+                result.loading -> {
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Loading,
+                            loading = true
+                        )
+                    }
+                }
+                result.failed -> {
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception,
+                            status = RunnersState.Status.Failure,
+                            loading = false
+                        )
+                    }
+                }
+                result.successful -> {
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Success,
+                            loading = false,
+                            race = result.data
+                        )
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
     /**
      * Save the meeting id to the preferences.

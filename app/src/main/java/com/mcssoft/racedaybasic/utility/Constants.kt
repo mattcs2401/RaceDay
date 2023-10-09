@@ -6,6 +6,9 @@ object Constants {
              resource. ViewModels are an example.
     */
 
+    // For long strings, e.g. Race names, just take 1st 30 characters.
+    const val TAKE = 30
+
     // The "key" for the parameter passed from the MeetingsScreen to the RacesScreen.
     const val KEY_MEETING_ID: String = "meetingId"
 

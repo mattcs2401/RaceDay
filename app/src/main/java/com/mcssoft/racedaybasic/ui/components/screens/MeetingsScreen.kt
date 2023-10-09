@@ -85,6 +85,7 @@ fun MeetingsScreen(
                     MeetingItem(
                         meeting = meeting,
                         onItemClick = {
+                            onEvent(MeetingsEvent.NavToRaces(meeting._id))
 //                            if (!meeting.abandoned) {
                                 navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
 //                            }
