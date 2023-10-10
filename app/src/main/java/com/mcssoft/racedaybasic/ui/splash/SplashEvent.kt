@@ -4,7 +4,7 @@ import android.app.Activity
 
 sealed class SplashEvent {
 
-//    data object Error: SplashEvent()
+//    data object ErrorDto: SplashEvent()
 
     data class Error(val activity: Activity): SplashEvent()
 }

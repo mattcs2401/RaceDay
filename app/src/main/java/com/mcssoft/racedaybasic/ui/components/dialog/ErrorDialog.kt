@@ -6,7 +6,7 @@ import com.mcssoft.racedaybasic.R
 @Composable
 fun ErrorDialog(
     dialogTitle: String,
-    message: String,  // message from any error TBA.
+    message: String,  // message from any errorDto TBA.
     dismissButtonText: String,
     onDismissClicked: () -> Unit
 ) {

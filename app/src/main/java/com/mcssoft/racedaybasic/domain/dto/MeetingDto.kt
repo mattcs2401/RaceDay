@@ -3,10 +3,7 @@ package com.mcssoft.racedaybasic.domain.dto
 import com.mcssoft.racedaybasic.domain.model.Meeting
 
 data class MeetingDto(
-    val _links: Links,
-//    val displayMeetingName: String,
-//    val exoticPools: List<ExoticPool>,
-//    val fixedOddsOnly: Boolean,
+    val displayMeetingName: String,
     val meetingName: String,
     val location: String,
     val raceType: String,
@@ -26,6 +23,7 @@ fun MeetingDto.toMeeting(): Meeting {
         meetingDate = meetingDate,               // e.g. 2023-08-23
         meetingTime = "",                        // TBA - 1st Race time ?
         meetingName = meetingName,               // e.g. Sunshine Coast
+        displayName = displayMeetingName,        // e.g.
         prizeMoney = prizeMoney,                 // TBA.
         raceType = raceType,                     // e.g. R
         railPosition = railPosition,             // True
@@ -34,7 +32,6 @@ fun MeetingDto.toMeeting(): Meeting {
         weatherCondition = weatherCondition,     // Fine
         racesNo = races.size,                    // the number of associated Races.
         meetingId = "$venueMnemonic:$meetingDate",    // TBA - no actual id value in Dto.
-        sellCode = "${sellCode.meetingCode}${sellCode.scheduledType}",
-        racesBaseUrl = _links.races
+        sellCode = "${sellCode.meetingCode}${sellCode.scheduledType}"
     )
 }

@@ -14,6 +14,7 @@ data class Meeting(
     val meetingDate: String,      // e.g. 2023-08-21
     val meetingTime: String?,     // TBA - from 1st Race time ?
     val meetingName: String,      // e.g. SCONE
+    val displayName: String?,      // e.g. TBA
     val prizeMoney: String,       // e.g. $xxx
     val raceType: String,         // e.g. R
     val railPosition: String?,    // e.g. True
@@ -22,16 +23,12 @@ data class Meeting(
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
     var sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
-    val meetingId: String,        // e.g. concat of 'venueMnemonic:meetingDate'.
-    val racesBaseUrl: String      // basic Race info.
+    val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
 )
 /*
 DTO class:
 data class MeetingDto(
-    val _links: Links,
     val displayMeetingName: String,
-    val exoticPools: List<ExoticPool>,
-    val fixedOddsOnly: Boolean,
     val location: String,         // e.g. NSW
     val meetingDate: String,      // e.g. 2023-08-21
     val meetingName: String,      // e.g. SCONE

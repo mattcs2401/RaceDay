@@ -19,16 +19,15 @@ import androidx.room.PrimaryKey
 data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
-    var mtgId: Long = 0,                    // "foreign" key (_id of the Meeting record).
+    var mtgId: Long,                   // "foreign" key (_id of the Meeting record).
 
-    var raceNo: Int = 0,                    // e.g. 1
-    var raceClassConditions: String = "",   // e.g. "3YO MDN"
-    var raceName: String = "",              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
-    var raceStartTime: String = "",         // e.g. "2023-09-24T03:10:00.000Z"
-    var raceDistance: Int = 0,              // e.g. 1600
-    var raceStatus: String = "",            // for anything Abandoned.
-    var runnersBaseUrl: String? = null,
-    // TBA - scratchings
+    var raceNo: Int,                   // e.g. 1
+    var raceClassConditions: String,   // e.g. "3YO MDN"
+    var raceName: String,              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
+    var raceStartTime: String,         // e.g. "2023-09-24T03:10:00.000Z"
+    var raceDistance: Int,             // e.g. 1600
+    var raceStatus: String,            // for anything Abandoned.
+    var runnersBaseUrl: String?
 )
 // *** Note: This is only the basic "view". ***
 // More detail via this (as example):
@@ -74,7 +73,7 @@ data class Race(
 /*
 DTO class:
 data class RaceDto(
-    val _links: LinksX,                     //
+    val _links: LinksXDto,                     //
     val allIn: Boolean,                     // ignore
     val allowBundle: Boolean,               // ignore
     val broadcastChannel: String,           // ignore
@@ -93,7 +92,7 @@ data class RaceDto(
     val raceStartTime: String,
     val raceStatus: String,
     val results: List<List<Int>>,
-    val scratchings: List<Scratching>,
+    val scratchings: List<ScratchingDto>,
     val skyRacing: SkyRacing,
     val willHaveFixedOdds: Boolean
 )

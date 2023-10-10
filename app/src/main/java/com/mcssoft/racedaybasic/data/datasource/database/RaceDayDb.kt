@@ -6,6 +6,7 @@ import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Scratching
 import com.mcssoft.racedaybasic.domain.model.Summary
 
 @Database(
@@ -13,6 +14,7 @@ import com.mcssoft.racedaybasic.domain.model.Summary
         Meeting::class,
         Race::class,
         Runner::class,
+        Scratching::class,
         Summary::class
     ],
     version = 1,

@@ -155,7 +155,7 @@ fun CommonDialog(
 fun ShowCommonDialog() {
     CommonDialog(
         icon = R.drawable.ic_error_48,
-        dialogTitle = "An error occurred",
+        dialogTitle = "An errorDto occurred",
         dialogText = "Some common dialog text.",
         dismissButtonText = "Ok",
         onDismissClicked = {}

@@ -98,8 +98,8 @@ class MeetingsViewModel @Inject constructor(
 //                    is DataResult.Status.Loading -> {
 //                        stateLoading("Loading Runners from API.")
 //                    }
-//                    is DataResult.Status.Error -> {
-//                        Log.d("TAG", "[SplashViewModel] result.error: " + result.errorCode)
+//                    is DataResult.Status.ErrorDto -> {
+//                        Log.d("TAG", "[SplashViewModel] result.errorDto: " + result.errorCode)
 //                        stateError(result.errorCode)
 //                    }
 //                    is DataResult.Status.Success -> {

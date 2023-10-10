@@ -32,7 +32,7 @@ fun MeetingItem(
     onItemClick: (Meeting) -> Unit,
 ) {
     val backgroundColour = /*if (meeting.abandoned) {
-        MaterialTheme.colors.error
+        MaterialTheme.colors.errorDto
     } else {*/
         MaterialTheme.colors.primaryVariant
 //    }

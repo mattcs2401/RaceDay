@@ -30,14 +30,14 @@ class SplashViewModel @Inject constructor(
         _state.update { state -> state.copy(date = date) }
 
         if (networkHelper.hasNetwork()) {
-//            setupBaseFromApi(date)
-            stateSuccess(200)
+            setupBaseFromApi(date)
+//            stateSuccess(200)
         } else {
             _state.update { state -> state.copy(hasInternet = false) }
             viewModelScope.launch {
                 _state.emit(state.value)
             }
-            // TBA - some error dialog.
+            // TBA - some errorDto dialog.
         }
     }
 

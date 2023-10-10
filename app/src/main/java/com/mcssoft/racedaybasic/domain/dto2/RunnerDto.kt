@@ -3,7 +3,7 @@ package com.mcssoft.racedaybasic.domain.dto2
 import com.mcssoft.racedaybasic.domain.model.Runner
 
 data class RunnerDto(
-//    val _links: LinksX,
+//    val _links: LinksXDto,
     val barrierNumber: Int,
 //    val blinkers: Boolean,
 //    val claimAmount: Int,

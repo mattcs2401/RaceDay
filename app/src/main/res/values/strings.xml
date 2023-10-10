@@ -56,7 +56,7 @@
     <!-- Component labels. -->
     <string name="label_loading">Loading…</string>
 
-    <!-- Error text. -->
+    <!-- ErrorDto text. -->
     <string name="unknown_error">An unknown error occurred.</string>
 
     <!-- Keys. -->
