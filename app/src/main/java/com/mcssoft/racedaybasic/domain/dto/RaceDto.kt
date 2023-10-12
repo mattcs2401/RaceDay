@@ -1,6 +1,5 @@
 package com.mcssoft.racedaybasic.domain.dto
 
-import com.mcssoft.racedaybasic.domain.dto2.SkyRacing
 import com.mcssoft.racedaybasic.domain.model.Race
 
 data class RaceDto(

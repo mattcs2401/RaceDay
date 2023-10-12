@@ -1,43 +1,63 @@
 package com.mcssoft.racedaybasic.ui.splash
 
-import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.DateUtils
-import com.mcssoft.racedaybasic.utility.NetworkHelper
+import com.mcssoft.racedaybasic.utility.network.ConnectivityObserver
+import com.mcssoft.racedaybasic.utility.network.ConnectivityState
+import com.mcssoft.racedaybasic.utility.network.ConnectivityState.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    networkHelper: NetworkHelper,
+    private val connectivityObserver: ConnectivityObserver,
     private val raceDayUseCases: RaceDayUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SplashState.initialise())
-    val state: StateFlow<SplashState> = _state
+    val state = _state.asStateFlow()
+
+    private var connectivityState by mutableStateOf(ConnectivityState.initialise())
+//        private set
 
     init {
-        val date = DateUtils().getDateToday()
-        _state.update { state -> state.copy(date = date) }
+        getConnectivity()
 
-        if (networkHelper.hasNetwork()) {
-            setupBaseFromApi(date)
-//            stateSuccess(200)
-        } else {
-            _state.update { state -> state.copy(hasInternet = false) }
-            viewModelScope.launch {
-                _state.emit(state.value)
+        when (connectivityState) {
+            is Status.Available -> {
+                val date = DateUtils().getDateToday()
+                _state.update { state -> state.copy(date = date, hasInternet = true) }
+                viewModelScope.launch {
+                    _state.emit(state.value)
+                }
+//                setupBaseFromApi(date)
             }
-            // TBA - some errorDto dialog.
+            is Status.Unavailable -> {
+                _state.update { state -> state.copy(hasInternet = false) }
+                viewModelScope.launch {
+                    _state.emit(state.value)
+                }
+            }
+            else -> {}
+        }
+    }
+
+    private fun getConnectivity() {
+        viewModelScope.launch {
+            connectivityObserver.observe().collect { status ->
+                connectivityState = status
+            }
         }
     }
 

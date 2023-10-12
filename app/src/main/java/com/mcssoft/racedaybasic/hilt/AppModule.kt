@@ -31,6 +31,8 @@ import com.mcssoft.racedaybasic.domain.usecase.cases.runners.GetRunners
 import com.mcssoft.racedaybasic.domain.usecase.cases.runners.SetRunnerChecked
 import com.mcssoft.racedaybasic.domain.usecase.cases.summary.GetSummaries
 import com.mcssoft.racedaybasic.domain.usecase.cases.summary.SetForSummary
+import com.mcssoft.racedaybasic.utility.network.ConnectivityObserver
+import com.mcssoft.racedaybasic.utility.network.IConnectivityObserver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -101,6 +103,12 @@ object AppModule {
     @Singleton
     fun providePreferences(@ApplicationContext context: Context): IPreferences {
         return PreferencesImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityObserver(@ApplicationContext context: Context): IConnectivityObserver {
+        return ConnectivityObserver(context)
     }
 
     @Provides

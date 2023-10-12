@@ -7,4 +7,6 @@ sealed class SplashEvent {
 //    data object ErrorDto: SplashEvent()
 
     data class Error(val activity: Activity): SplashEvent()
+
+//    data object NetworkCheck: SplashEvent()
 }
