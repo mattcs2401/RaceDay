@@ -69,46 +69,13 @@ class SetupBaseFromApi @Inject constructor(
             response.body.meetings.filter { type ->
                 (type.raceType == Constants.MEETING_TYPE) && (type.location in Constants.LOCATIONS)
             }.forEach { meetingDto ->
-                // Write Meeting details.
-                val mId = populateMeeting(meetingDto)
-                // Write Race details.
-                populateRaces(mId, meetingDto.races)
+                iDbRepo.insertMeetingWithRaces(meetingDto, meetingDto.races)
             }
 
             emit(DataResult.success(response.errorCode))
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
-    }
-
-    /**
-     * Populate (insert) a Meeting into the database.
-     * @param meetingDto: The Meeting to insert (mapped from Dto domain to Model by extension
-     *                    function on the Dto object).
-     * @return The row _id of the inserted Meeting.
-     */
-    private suspend fun populateMeeting(meetingDto: MeetingDto): Long {
-        // Initial create of the Meeting.
-        val meeting = meetingDto.toMeeting()
-        // Insert.
-        return iDbRepo.insertMeeting(meeting)
-    }
-
-    /**
-     * Populate (bulk insert) a list of Races into the database.
-     * @param mId: The Meeting row _id from the Meeting's previous insert.
-     * @param dtoRaces: The list of Races to insert (mapped from Dto domain to Model by extension
-     *                  function on the Dto object).
-     * @return A list of the row _ids of the inserted Races (usage TBA)
-     */
-    private suspend fun populateRaces(mId: Long, dtoRaces: List<RaceDto>): List<Long> {
-        val lRaces = mutableListOf<Race>()
-        dtoRaces.forEach { dtoRace ->
-            val race = dtoRace.toRace(mId)
-            race.raceStartTime = DateUtils().getTime(dtoRace.raceStartTime)
-            lRaces.add(race)
-        }
-        return iDbRepo.insertRaces(lRaces)
     }
 
 }

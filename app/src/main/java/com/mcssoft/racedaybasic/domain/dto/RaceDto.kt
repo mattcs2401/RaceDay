@@ -19,7 +19,7 @@ data class RaceDto(
     val raceDistance: Int,
     val raceName: String,
     val raceNumber: Int,
-    val raceStartTime: String,
+    var raceStartTime: String,
     val raceStatus: String,
 //    val results: List<List<Int>>,
     val scratchings: List<ScratchingDto>,

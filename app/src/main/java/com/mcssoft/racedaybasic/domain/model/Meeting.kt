@@ -15,14 +15,14 @@ data class Meeting(
     val meetingTime: String?,     // TBA - from 1st Race time ?
     val meetingName: String,      // e.g. SCONE
     val displayName: String?,      // e.g. TBA
-    val prizeMoney: String,       // e.g. $xxx
+    val prizeMoney: String?,      // e.g. $xxx
     val raceType: String,         // e.g. R
     val railPosition: String?,    // e.g. True
     val trackCondition: String?,  // e.g. SOFT6
-    val venueMnemonic: String,    // e.g. SCO (Scone)
+    val venueMnemonic: String?,   // e.g. SCO (Scone)
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
-    var sellCode: String,         // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
+    var sellCode: String?,        // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
     val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
 )
 /*

@@ -4,16 +4,32 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import com.mcssoft.racedaybasic.domain.dto.MeetingDto
+import com.mcssoft.racedaybasic.domain.dto.RaceDto
+import com.mcssoft.racedaybasic.domain.dto.toMeeting
+import com.mcssoft.racedaybasic.domain.dto.toRace
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.domain.model.Summary
+import com.mcssoft.racedaybasic.utility.DateUtils
 
 @Dao
 interface IDbRepo {
     /*
       Note: All these must be called from a coroutine or suspending function.
     */
+
+    @Transaction
+    suspend fun insertMeetingWithRaces(meeting: MeetingDto, races: List<RaceDto>) {
+        val meetingId = insertMeeting(meeting.toMeeting())
+        val racesWithMeetingId  = races.map { raceDto ->
+            raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
+            raceDto.toRace(meetingId)
+        }
+        insertRaces(racesWithMeetingId)
+    }
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     /**

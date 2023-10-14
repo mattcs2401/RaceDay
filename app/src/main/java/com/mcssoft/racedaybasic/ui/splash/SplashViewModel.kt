@@ -41,7 +41,7 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(state.value)
                 }
-//                setupBaseFromApi(date)
+                setupBaseFromApi(date)
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }

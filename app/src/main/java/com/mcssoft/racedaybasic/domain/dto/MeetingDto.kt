@@ -8,13 +8,13 @@ data class MeetingDto(
     val location: String,
     val raceType: String,
     val meetingDate: String,
-    val prizeMoney: String,
+    val prizeMoney: String?,
     val weatherCondition: String,
     val trackCondition: String,
     val railPosition: String,
-    val venueMnemonic: String,
+    val venueMnemonic: String?,
     val races: List<RaceDto>,
-    val sellCode: SellCodeDto     // TBA - contains e.g. {"meetingCode":"B","scheduledType":"R"}
+    val sellCode: SellCodeDto?     // TBA - contains e.g. {"meetingCode":"B","scheduledType":"R"}
 )
 
 fun MeetingDto.toMeeting(): Meeting {
@@ -32,6 +32,6 @@ fun MeetingDto.toMeeting(): Meeting {
         weatherCondition = weatherCondition,     // Fine
         racesNo = races.size,                    // the number of associated Races.
         meetingId = "$venueMnemonic:$meetingDate",    // TBA - no actual id value in Dto.
-        sellCode = "${sellCode.meetingCode}${sellCode.scheduledType}"
+        sellCode = "${sellCode?.meetingCode}${sellCode?.scheduledType}"
     )
 }

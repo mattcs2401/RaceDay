@@ -61,10 +61,11 @@ fun MeetingItem(
                     onItemClick(meeting)
                 }
         ) {
-            Text(
-                meeting.sellCode,
-                Modifier.layoutId("idSellCode")
-            )
+            meeting.sellCode?.let { code ->
+                Text(code,
+                    Modifier.layoutId("idSellCode")
+                )
+            }
             Text(
                 meeting.meetingName,
                 Modifier.layoutId("idVenueName")
