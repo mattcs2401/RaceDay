@@ -1,11 +1,11 @@
 package com.mcssoft.racedaybasic.ui.meetings
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaybasic.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
-import com.mcssoft.racedaybasic.ui.splash.SplashEvent
+import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -84,34 +84,106 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
-//    /**
-//     * Use case: SetupRunnersFromApi.
-//     * Get the raw data from the Api (Runners).
-//     * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
-//     *       info is per ??.
-//     */
-//    fun setupRunnersFromApi(context: Context) {
-//        viewModelScope.launch {
+    /**
+     * Use case: SetupRunnersFromApi.
+     * Get the raw data from the Api (Runners).
+     * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
+     *       info is per ??.
+     */
+    fun setupRunnersFromApi(context: Context, meetingId: String) {
+        viewModelScope.launch {
 //            delay(250) // TBA ?
-//            raceDayUseCases.setupRunnersFromApi(context).collect { result ->
-//                when(result.status) {
-//                    is DataResult.Status.Loading -> {
-//                        stateLoading("Loading Runners from API.")
-//                    }
-//                    is DataResult.Status.ErrorDto -> {
-//                        Log.d("TAG", "[SplashViewModel] result.errorDto: " + result.errorCode)
-//                        stateError(result.errorCode)
-//                    }
-//                    is DataResult.Status.Success -> {
-//                        Log.d("TAG", "[SplashViewModel] result.successful")
-//                        stateSuccess(result.errorCode)
-//                    }
-//                    is DataResult.Status.Failure -> {
-//                        stateFailure(result)
-//                    }
-//                    else -> {}
-//                }
-//            }
-//        }
-//    }
+            raceDayUseCases.setupRunnersFromApi(context, meetingId).collect { result ->
+                when(result.status) {
+                    is DataResult.Status.Loading -> {
+                        stateLoading("Loading Runners from API.")
+                    }
+                    is DataResult.Status.Error -> {
+                        Log.d("TAG", "[MeetingsViewModel] result.error: " + result.errorCode)
+                        stateError(result.errorCode)
+                    }
+                    is DataResult.Status.Success -> {
+                        Log.d("TAG", "[MeetingsViewModel] result.successful")
+                        stateSuccess(result.errorCode)
+                    }
+                    is DataResult.Status.Failure -> {
+                        stateFailure(result)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    //<editor-fold default state="collapsed" desc="Region: Utility methods">
+    private fun stateLoading(msg: String) {
+        _state.update { state ->
+            state.copy(
+                loading = true,
+                status = MeetingsState.Status.Loading,
+                loadingMsg = msg
+            )
+        }
+    }
+
+    private fun stateError(errorCode: Int) {
+        _state.update { state ->
+            state.copy(
+                exception = null,
+                response = errorCode,
+                status = MeetingsState.Status.Error,
+                loading = false,
+                loadingMsg = "An error occurred."
+            )
+        }
+    }
+
+    private fun stateSuccess(code: Int) {
+        _state.update { state ->
+            state.copy(
+                exception = null,
+                response = code,
+                status = MeetingsState.Status.Success,
+                loading = false,
+                loadingMsg = "Setup Runners from Api success."
+            )
+        }
+    }
+
+    private fun stateFailure(result: DataResult<Any>) {
+        if (state.value.response == 0) {
+            if (result.exception == null) {
+                _state.update { state ->
+                    state.copy(
+                        customExType = result.customExType,
+                        customExMsg = result.customExMsg,
+                        status = MeetingsState.Status.Failure,
+                        loading = false,
+                    )
+                }
+            } else {
+                val exceptionText = result.exception.message ?: "Exception"
+                Log.d("TAG", "[MeetingsViewModel] result.failed: $exceptionText")
+
+                _state.update { state ->
+                    state.copy(
+                        exception = Exception(exceptionText),
+                        status = MeetingsState.Status.Failure,
+                        loading = false,
+                        loadingMsg = "An Exception error occurred."
+                    )
+                }
+            }
+        } else {
+            _state.update { state ->
+                state.copy(
+                    exception = null,
+                    status = MeetingsState.Status.Failure,
+                    loading = false,
+                    response = result.errorCode
+                )
+            }
+        }
+    }
+    //</editor-fold>
 }

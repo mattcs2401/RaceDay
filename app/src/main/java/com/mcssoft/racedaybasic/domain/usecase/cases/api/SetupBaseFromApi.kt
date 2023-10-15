@@ -1,18 +1,11 @@
 package com.mcssoft.racedaybasic.domain.usecase.cases.api
 
-import android.net.http.HttpException
 import android.util.Log
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
-import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
-import com.mcssoft.racedaybasic.domain.dto.MeetingDto
-import com.mcssoft.racedaybasic.domain.dto.RaceDto
-import com.mcssoft.racedaybasic.domain.dto.toMeeting
-import com.mcssoft.racedaybasic.domain.dto.toRace
-import com.mcssoft.racedaybasic.domain.model.Race
+import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse.Status
 import com.mcssoft.racedaybasic.utility.Constants
 import com.mcssoft.racedaybasic.utility.DataResult
-import com.mcssoft.racedaybasic.utility.DateUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.net.UnknownHostException
@@ -28,9 +21,7 @@ class SetupBaseFromApi @Inject constructor(
 ) {
     /**
      * @param mtgDate: The date to use in the Api Url.
-     * @return A Flow of DataResult<String>.
-     * @notes If Meeting code is not used, then all Meetings are returned in the RaceDayDto details,
-     *        else, just the one Meeting.
+     * @return A Flow of DataResult<Any>.
      */
     operator fun invoke(mtgDate: String): Flow<DataResult<Any>> = flow {
         Log.d("TAG", "SetupBaseFromApi.invoke()")
@@ -42,7 +33,7 @@ class SetupBaseFromApi @Inject constructor(
             val response = iRemoteRepo.getRaceDay(mtgDate)
 
             when(response.status) {
-                is NetworkResponse.Status.Exception -> {
+                is Status.Exception -> {
                     when(response.ex) {
                         is UnknownHostException -> {
                             emit(DataResult.failure("Unknown Host","Check the network connection."))
@@ -54,12 +45,12 @@ class SetupBaseFromApi @Inject constructor(
                         }
                     }
                 }
-                is NetworkResponse.Status.Error -> {
+                is Status.Error -> {
                     Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}")
                     emit(DataResult.error(response.errorCode))
                     return@flow
                 }
-                is NetworkResponse.Status.Success -> {
+                is Status.Success -> {
                     // Delete whatever is there (CASCADE should take care of Race/Runner etc).
                     iDbRepo.deleteMeetings()
                 }
@@ -69,6 +60,7 @@ class SetupBaseFromApi @Inject constructor(
             response.body.meetings.filter { type ->
                 (type.raceType == Constants.MEETING_TYPE) && (type.location in Constants.LOCATIONS)
             }.forEach { meetingDto ->
+                // Note: uses transaction boundary.
                 iDbRepo.insertMeetingWithRaces(meetingDto, meetingDto.races)
             }
 

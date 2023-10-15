@@ -1,6 +1,7 @@
 package com.mcssoft.racedaybasic.utility.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
@@ -27,8 +28,8 @@ class RunnersWorker(
     private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
 
     override suspend fun doWork(): Result {
-        val date = inputData.getString("key_date")
-//        Log.d("TAG", "[RunnerWorker.doWork] starting.")
+        val meetingId = inputData.getString("key_meeting_id")
+        Log.d("TAG", "[RunnerWorker.doWork] starting.")
         withContext(Dispatchers.IO) {
             try {
                 val iDbRepo = entryPoints.getDbRepo()

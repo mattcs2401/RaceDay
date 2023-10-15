@@ -17,9 +17,6 @@ import com.mcssoft.racedaybasic.utility.DateUtils
 
 @Dao
 interface IDbRepo {
-    /*
-      Note: All these must be called from a coroutine or suspending function.
-    */
 
     @Transaction
     suspend fun insertMeetingWithRaces(meeting: MeetingDto, races: List<RaceDto>) {

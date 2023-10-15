@@ -115,12 +115,13 @@ object AppModule {
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        prefs: IPreferences
+        prefs: IPreferences,
+        context: Context
     ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
-            setupRunnersFromApi = SetupRunnersFromApi(),//context),
+            setupRunnersFromApi = SetupRunnersFromApi(),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
@@ -131,8 +132,6 @@ object AppModule {
             setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs)
-//            checkPrePopulate = CheckPrePopulate(local),
-//            prePopulate = PrePopulate(local, context)
         )
     }
 

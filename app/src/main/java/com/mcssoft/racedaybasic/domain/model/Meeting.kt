@@ -1,10 +1,15 @@
 package com.mcssoft.racedaybasic.domain.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "Meeting"
+    tableName = "Meeting",
+    indices = [Index(
+        value = ["meetingId"],
+        unique = true
+    )]
 )
 data class Meeting(
     @PrimaryKey(autoGenerate = true)
@@ -23,7 +28,7 @@ data class Meeting(
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
     var sellCode: String?,        // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
-    val meetingId: String         // e.g. concat of 'venueMnemonic:meetingDate'.
+    val meetingId: String         // e.g. concat of 'meetingDate:venueMnemonic'.
 )
 /*
 DTO class:

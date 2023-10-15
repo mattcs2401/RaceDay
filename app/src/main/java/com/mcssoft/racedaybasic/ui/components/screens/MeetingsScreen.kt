@@ -113,6 +113,7 @@ fun MeetingsScreen(
                 is MeetingsState.Status.Success -> {
                     // TBA.
                 }
+                else -> {}
             }
         }
     }

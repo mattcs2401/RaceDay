@@ -3,12 +3,15 @@ package com.mcssoft.racedaybasic.ui.meetings
 import com.mcssoft.racedaybasic.domain.model.Meeting
 
 data class MeetingsState(
+    val response: Int = 0,
     val exception: Exception?,
-    val status: Status,
+    val status: Status = Status.NoState,
     val loadingMsg: String,
     val loading: Boolean = false,
     val data: List<Meeting>?,
-    val date: String
+    val date: String,
+    val customExType: String? = null,
+    val customExMsg: String? = null,
 ) {
     companion object {
         // Simply a Flow initializer.
@@ -29,6 +32,8 @@ data class MeetingsState(
         data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
+        data object Error: Status()
+        data object NoState: Status()
     }
 
     val body: List<Meeting>
