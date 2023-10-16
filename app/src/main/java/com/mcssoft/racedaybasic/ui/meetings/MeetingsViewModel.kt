@@ -34,6 +34,7 @@ class MeetingsViewModel @Inject constructor(
         }
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
+
     }
 
     fun onEvent(event: MeetingsEvent) {
@@ -78,6 +79,7 @@ class MeetingsViewModel @Inject constructor(
                                 data = result.data ?: emptyList()
                             )
                         }
+                        setupRunnersFromApi()
                     }
                 }
             }//.launchIn(viewModelScope)
@@ -87,13 +89,13 @@ class MeetingsViewModel @Inject constructor(
     /**
      * Use case: SetupRunnersFromApi.
      * Get the raw data from the Api (Runners).
-     * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
-     *       info is per ??.
+     * Note: This has to be done separately from the Meeting & Race info because of the Api
+     *       requirements.
      */
-    fun setupRunnersFromApi(context: Context, meetingId: String) {
+    fun setupRunnersFromApi() {
         viewModelScope.launch {
 //            delay(250) // TBA ?
-            raceDayUseCases.setupRunnersFromApi(context, meetingId).collect { result ->
+            raceDayUseCases.setupRunnersFromApi().collect { result ->
                 when(result.status) {
                     is DataResult.Status.Loading -> {
                         stateLoading("Loading Runners from API.")

@@ -1,5 +1,6 @@
 package com.mcssoft.racedaybasic.data.repository.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,6 +11,7 @@ import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.dto.toMeeting
 import com.mcssoft.racedaybasic.domain.dto.toRace
 import com.mcssoft.racedaybasic.domain.model.Meeting
+import com.mcssoft.racedaybasic.domain.model.MeetingIdsTuple
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.domain.model.Summary
@@ -27,6 +29,14 @@ interface IDbRepo {
         }
         insertRaces(racesWithMeetingId)
     }
+
+//    data class MeetingIdsTuple(
+//        @ColumnInfo(name = "meetingDate") val meetingDate: String,
+//        @ColumnInfo(name = "venueMnemonic") val venueMnemonic: String
+//    )
+
+    @Query("select meetingDate, venueMnemonic from Meeting")
+    suspend fun getMeetingIds(): List<MeetingIdsTuple>
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     /**

@@ -121,7 +121,7 @@ object AppModule {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
-            setupRunnersFromApi = SetupRunnersFromApi(),
+            setupRunnersFromApi = SetupRunnersFromApi(local, context),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),

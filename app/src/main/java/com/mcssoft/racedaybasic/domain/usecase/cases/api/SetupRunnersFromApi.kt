@@ -2,6 +2,7 @@ package com.mcssoft.racedaybasic.domain.usecase.cases.api
 
 import android.content.Context
 import androidx.lifecycle.asFlow
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -11,24 +12,32 @@ import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.worker.RunnersWorker
 import com.mcssoft.racedaycompose.utility.WorkerState
-import kotlinx.coroutines.flow.*
-import java.util.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transformWhile
+import java.util.UUID
 import javax.inject.Inject
 
-class SetupRunnersFromApi {
+class SetupRunnersFromApi  @Inject constructor(
+    private val iDbRepo: IDbRepo,
+    private val context: Context
+) {
+    private val workManager = WorkManager.getInstance(context)
 
-    private lateinit var workManager: WorkManager
-
-    operator fun invoke(context: Context, meetingId: String): Flow<DataResult<Any>> = flow {
-
-        workManager = WorkManager.getInstance(context)
-
+    operator fun invoke(): Flow<DataResult<Any>> = flow {
         try {
             emit(DataResult.loading())
-//            val workData = workDataOf("key_meeting_id" to meetingId)
+
+            val meetingIds = iDbRepo.getMeetingIds().map { mId ->
+                "${mId.meetingDate}:${mId.venueMnemonic}"
+            }.toTypedArray()
+            // meetingId[x] is format "{date}:{code}".
+            val workData = workDataOf("key_meeting_ids" to meetingIds)
             val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
                 .addTag("RunnersWorker")
-                .setInputData(workDataOf("key_meeting_id" to meetingId))
+                .setInputData(workData)
                 .build()
             workManager.enqueue(runnersWorker)
 

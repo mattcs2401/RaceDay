@@ -1,5 +1,6 @@
 package com.mcssoft.racedaybasic.domain.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -29,6 +30,11 @@ data class Meeting(
     val racesNo: Int,             // number of associated Races.
     var sellCode: String?,        // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
     val meetingId: String         // e.g. concat of 'meetingDate:venueMnemonic'.
+)
+
+data class MeetingIdsTuple(
+    @ColumnInfo(name = "meetingDate") val meetingDate: String,
+    @ColumnInfo(name = "venueMnemonic") val venueMnemonic: String
 )
 /*
 DTO class:

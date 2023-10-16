@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import androidx.work.workDataOf
+import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import dagger.hilt.EntryPoint
@@ -13,9 +15,9 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RunnersWorker(
+class RunnersWorker (
     private val context: Context,
-    workerParams: WorkerParameters
+    workerParams: WorkerParameters,
 ) : CoroutineWorker(context, workerParams) {
 
     @EntryPoint
@@ -24,19 +26,24 @@ class RunnersWorker(
         fun getRemoteRepo(): IRemoteRepo
         fun getDbRepo(): IDbRepo
     }
-
     private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
 
     override suspend fun doWork(): Result {
-        val meetingId = inputData.getString("key_meeting_id")
         Log.d("TAG", "[RunnerWorker.doWork] starting.")
         withContext(Dispatchers.IO) {
             try {
+                val meetingIds = inputData.getStringArray("key_meeting_ids")
                 val iDbRepo = entryPoints.getDbRepo()
-//            val codes = iDbRepo.getMeetingCodes()
                 val iRemoteRepo = entryPoints.getRemoteRepo()
-//
-//            // Loop through each of the meeting codes.
+
+                meetingIds?.forEach { id ->
+
+                    val date = id[0]
+                    val code = id[1]
+
+                    val bp = ""
+                }
+            // Loop through each of the meeting codes.
 //            codes.forEach { code ->
 //                // Get from the Api.
 //                val baseDto = iRemoteRepo.getRaceDay(date!!, code)
@@ -65,13 +72,13 @@ class RunnersWorker(
 //                    delay(50)  // TBA ?
 //                }
 //            }
-            } catch (exception: Exception) {
-//            Log.d("TAG", "[RunnerWorker.doWork] exception.")
-//            val key = context.resources.getString(R.string.key_exception)
-//            val output = workDataOf(key to exception.localizedMessage)
-//            return Result.failure(output)
+            } catch (ex: Exception) {
+            Log.d("TAG", "[RunnerWorker.doWork] exception.")
+            val key = context.resources.getString(R.string.key_exception)
+            val output = workDataOf(key to ex.localizedMessage)
+                return@withContext Result.failure(output)
             }
-//        Log.d("TAG", "[RunnerWorker.doWork] ending.")
+//            Log.d("TAG", "[RunnerWorker.doWork] ending.")
 //            return@withContext Result.success()
         }
         return Result.success()
