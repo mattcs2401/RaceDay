@@ -58,7 +58,9 @@ class SetupBaseFromApi @Inject constructor(
 
             // Save Meeting/Race info.
             response.body.meetings.filter { type ->
-                (type.raceType == Constants.MEETING_TYPE) && (type.location in Constants.LOCATIONS)
+                (type.raceType == Constants.MEETING_TYPE) &&
+                (type.location in Constants.LOCATIONS) &&
+                (!type.venueMnemonic.isNullOrBlank())      // from testing.
             }.forEach { meetingDto ->
                 // Note: uses transaction boundary.
                 iDbRepo.insertMeetingWithRaces(meetingDto, meetingDto.races)

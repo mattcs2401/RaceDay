@@ -1,7 +1,6 @@
 package com.mcssoft.racedaybasic.data.repository.database
 
 import com.mcssoft.racedaybasic.domain.model.Meeting
-import com.mcssoft.racedaybasic.domain.model.MeetingIdsTuple
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.domain.model.Summary
@@ -28,8 +27,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetingId(mId)
     }
 
-    override suspend fun getMeetingIds(): List<MeetingIdsTuple> {
-        return dao.getMeetingIds()
+    override suspend fun getMeetingAltIds(): List<String> {
+        return dao.getMeetingAltIds()
     }
 
     override suspend fun deleteMeetings(): Int {
@@ -52,6 +51,10 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun getRace(rId: Long): Race {
         return dao.getRace(rId)
+    }
+
+    override suspend fun getRaceIdsByVenueCode(code: String): List<Long> {
+        return dao.getRaceIdsByVenueCode(code)
     }
 
 //    override suspend fun getRaceId(mtgId: Long, raceNo: Int): Long {

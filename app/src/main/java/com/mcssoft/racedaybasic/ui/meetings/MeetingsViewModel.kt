@@ -1,6 +1,5 @@
 package com.mcssoft.racedaybasic.ui.meetings
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,13 +24,7 @@ class MeetingsViewModel @Inject constructor(
 
     init {
         Log.d("TAG", "enter MeetingsViewModel")
-        _state.update { state ->
-            state.copy(
-                loading = true,
-                status = MeetingsState.Status.Loading,
-                loadingMsg = "Loading Meetings listing."
-            )
-        }
+
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
 
@@ -53,12 +46,7 @@ class MeetingsViewModel @Inject constructor(
             raceDayUseCases.getMeetings().collect { result ->
                 when {
                     result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                status = MeetingsState.Status.Loading,
-                                loading = true
-                            )
-                        }
+                        stateLoading("Loading Meetings listing.")
                     }
                     result.failed -> {
                         _state.update { state ->
@@ -79,41 +67,10 @@ class MeetingsViewModel @Inject constructor(
                                 data = result.data ?: emptyList()
                             )
                         }
-                        setupRunnersFromApi()
+//                        setupRunnersFromApi()
                     }
                 }
             }//.launchIn(viewModelScope)
-        }
-    }
-
-    /**
-     * Use case: SetupRunnersFromApi.
-     * Get the raw data from the Api (Runners).
-     * Note: This has to be done separately from the Meeting & Race info because of the Api
-     *       requirements.
-     */
-    fun setupRunnersFromApi() {
-        viewModelScope.launch {
-//            delay(250) // TBA ?
-            raceDayUseCases.setupRunnersFromApi().collect { result ->
-                when(result.status) {
-                    is DataResult.Status.Loading -> {
-                        stateLoading("Loading Runners from API.")
-                    }
-                    is DataResult.Status.Error -> {
-                        Log.d("TAG", "[MeetingsViewModel] result.error: " + result.errorCode)
-                        stateError(result.errorCode)
-                    }
-                    is DataResult.Status.Success -> {
-                        Log.d("TAG", "[MeetingsViewModel] result.successful")
-                        stateSuccess(result.errorCode)
-                    }
-                    is DataResult.Status.Failure -> {
-                        stateFailure(result)
-                    }
-                    else -> {}
-                }
-            }
         }
     }
 

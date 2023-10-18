@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Race",
-    indices = [Index(value = ["mtgId"])],
+    indices = [Index(value = ["mtgId", "venue"])],
     foreignKeys = [
         ForeignKey(
             entity = Meeting::class,
@@ -20,14 +20,15 @@ data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
     var mtgId: Long,                   // "foreign" key (_id of the Meeting record).
+    var venue: String,                 // venue code.
 
     var raceNo: Int,                   // e.g. 1
-    var raceClassConditions: String,   // e.g. "3YO MDN"
+    var raceClassConditions: String?,  // e.g. "3YO MDN"
     var raceName: String,              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
     var raceStartTime: String,         // e.g. "2023-09-24T03:10:00.000Z"
     var raceDistance: Int,             // e.g. 1600
     var raceStatus: String,            // for anything Abandoned.
-    var runnersBaseUrl: String?
+    var runnersBaseUrl: String?        // TBA
 )
 /*
 DTO class:

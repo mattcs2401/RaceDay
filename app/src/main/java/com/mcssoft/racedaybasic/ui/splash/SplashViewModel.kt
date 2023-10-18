@@ -66,6 +66,9 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.Error -> {
                 event.activity.finishAndRemoveTask()
             }
+            is SplashEvent.SetRunners -> {
+                setupRunnersFromApi()
+            }
         }
     }
 
@@ -90,6 +93,38 @@ class SplashViewModel @Inject constructor(
                     is DataResult.Status.Success -> {
                         Log.d("TAG", "[SplashViewModel] result.successful")
                         stateSuccess(result.errorCode)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Use case: SetupRunnersFromApi.
+     * Get the raw data from the Api (Runners).
+     * Note: This has to be done separately from the Meeting & Race info because of the Api
+     *       requirements.
+     */
+    private fun setupRunnersFromApi() {
+        viewModelScope.launch {
+//            delay(250) // TBA ?
+            raceDayUseCases.setupRunnersFromApi().collect { result ->
+                when(result.status) {
+                    is DataResult.Status.Loading -> {
+                        stateLoading("Loading Runners from API.")
+                    }
+                    is DataResult.Status.Error -> {
+                        Log.d("TAG", "[MeetingsViewModel] result.error: " + result.errorCode)
+                        stateError(result.errorCode)
+                    }
+                    is DataResult.Status.Success -> {
+                        Log.d("TAG", "[MeetingsViewModel] result.successful")
+                        stateSuccess(result.errorCode)
+                    }
+                    is DataResult.Status.Failure -> {
+                        stateFailure(result)
                     }
                     else -> {}
                 }

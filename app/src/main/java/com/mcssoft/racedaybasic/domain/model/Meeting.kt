@@ -29,13 +29,14 @@ data class Meeting(
     val weatherCondition: String?,// e.g. FINE
     val racesNo: Int,             // number of associated Races.
     var sellCode: String?,        // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
-    val meetingId: String         // e.g. concat of 'meetingDate:venueMnemonic'.
+    val meetingId: String         //
 )
 
-data class MeetingIdsTuple(
-    @ColumnInfo(name = "meetingDate") val meetingDate: String,
-    @ColumnInfo(name = "venueMnemonic") val venueMnemonic: String
-)
+//data class MeetingSubset(
+//    @ColumnInfo(name = "meetingDate") val meetingDate: String,
+//    @ColumnInfo(name = "venueMnemonic") val venueMnemonic: String,
+//    @ColumnInfo(name = "racesNo") val racesNo: Int
+//)
 /*
 DTO class:
 data class MeetingDto(

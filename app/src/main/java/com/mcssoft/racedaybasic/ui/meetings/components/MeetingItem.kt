@@ -62,7 +62,8 @@ fun MeetingItem(
                 }
         ) {
             meeting.sellCode?.let { code ->
-                Text(code,
+                Text(
+                    code,
                     Modifier.layoutId("idSellCode")
                 )
             }

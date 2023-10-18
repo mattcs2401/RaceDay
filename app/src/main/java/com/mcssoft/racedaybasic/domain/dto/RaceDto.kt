@@ -15,7 +15,7 @@ data class RaceDto(
 //    val matchName: String,
 //    val meetingDate: String,
 //    val multiLegApproximates: List<MultiLegApproximate>,
-    val raceClassConditions: String,
+    val raceClassConditions: String?,
     val raceDistance: Int,
     val raceName: String,
     val raceNumber: Int,
@@ -27,11 +27,12 @@ data class RaceDto(
 //    val willHaveFixedOdds: Boolean
 )
 
-fun RaceDto.toRace(mId: Long): Race {
+fun RaceDto.toRace(mId: Long, venue: String): Race {
     return Race(
         mtgId = mId,
+        venue = venue,
         raceNo = raceNumber,
-        raceClassConditions = raceClassConditions,
+        raceClassConditions = raceClassConditions ?: "",
         raceName = raceName,
         raceStartTime = raceStartTime,
         raceDistance = raceDistance,

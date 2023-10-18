@@ -2,13 +2,11 @@ package com.mcssoft.racedaybasic.domain.usecase.cases.api
 
 import android.content.Context
 import androidx.lifecycle.asFlow
-import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
-import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.worker.RunnersWorker
 import com.mcssoft.racedaycompose.utility.WorkerState
@@ -30,11 +28,10 @@ class SetupRunnersFromApi  @Inject constructor(
         try {
             emit(DataResult.loading())
 
-            val meetingIds = iDbRepo.getMeetingIds().map { mId ->
-                "${mId.meetingDate}:${mId.venueMnemonic}"
-            }.toTypedArray()
-            // meetingId[x] is format "{date}:{code}".
-            val workData = workDataOf("key_meeting_ids" to meetingIds)
+            // Note: "toTypedArray()" from testing.
+            val meetingAltIds = iDbRepo.getMeetingAltIds().toTypedArray()
+
+            val workData = workDataOf("key_meeting_ids" to meetingAltIds)
             val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
                 .addTag("RunnersWorker")
                 .setInputData(workData)

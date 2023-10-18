@@ -1,6 +1,5 @@
 package com.mcssoft.racedaybasic.data.repository.database
 
-import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,8 +9,9 @@ import com.mcssoft.racedaybasic.domain.dto.MeetingDto
 import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.dto.toMeeting
 import com.mcssoft.racedaybasic.domain.dto.toRace
+import com.mcssoft.racedaybasic.domain.dto2.RunnerDto
+import com.mcssoft.racedaybasic.domain.dto2.toRunner
 import com.mcssoft.racedaybasic.domain.model.Meeting
-import com.mcssoft.racedaybasic.domain.model.MeetingIdsTuple
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.domain.model.Summary
@@ -21,22 +21,30 @@ import com.mcssoft.racedaybasic.utility.DateUtils
 interface IDbRepo {
 
     @Transaction
+    // Note: Here the meetingId is the database row id (_id).
     suspend fun insertMeetingWithRaces(meeting: MeetingDto, races: List<RaceDto>) {
         val meetingId = insertMeeting(meeting.toMeeting())
         val racesWithMeetingId  = races.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
-            raceDto.toRace(meetingId)
+            raceDto.toRace(meetingId, meeting.venueMnemonic!!)
         }
         insertRaces(racesWithMeetingId)
     }
 
-//    data class MeetingIdsTuple(
-//        @ColumnInfo(name = "meetingDate") val meetingDate: String,
-//        @ColumnInfo(name = "venueMnemonic") val venueMnemonic: String
-//    )
+    @Transaction
+    suspend fun insertRunnersWithRaceId(raceIds: List<Long>, runners: List<RunnerDto>) {
 
-    @Query("select meetingDate, venueMnemonic from Meeting")
-    suspend fun getMeetingIds(): List<MeetingIdsTuple>
+        val runnersWithRaceId = runners.zip(raceIds) {runner, rId ->
+            runner.toRunner(rId)
+        }
+        insertRunners(runnersWithRaceId)
+    }
+
+    @Query("select _id from race where venue = :code")
+    suspend fun getRaceIdsByVenueCode(code: String): List<Long>
+
+    @Query("select meetingId from Meeting")
+    suspend fun getMeetingAltIds(): List<String>
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     /**

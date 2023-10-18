@@ -72,6 +72,7 @@ fun SplashScreen(
                         LaunchedEffect(key1 = true) {
                             navController.navigate(Screen.MeetingsScreen.route)
                         }
+                        onEvent(SplashEvent.SetRunners)
                     }
                     else -> {}
                 }

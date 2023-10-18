@@ -12,7 +12,7 @@ data class SplashState(
     val hasInternet: Boolean = true
 ) {
     companion object {
-        // Flow initializer. TBA
+        // Flow initializer.
         fun initialise(): SplashState {
             return SplashState(
                 exception = null,
