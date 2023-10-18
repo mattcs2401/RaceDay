@@ -29,81 +29,36 @@ class RunnersWorker (
     private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
 
     override suspend fun doWork(): Result {
-        Log.d("TAG", "[RunnerWorker.doWork] starting.")
-        withContext(Dispatchers.IO) {
-            try {
-                val meetingIds = inputData.getStringArray("key_meeting_ids")
-                val iDbRepo = entryPoints.getDbRepo()
-                val iRemoteRepo = entryPoints.getRemoteRepo()
+        return try {
+            Log.d("TAG", "[RunnerWorker.doWork] starting.")
 
-//                meetingIds?.forEach { id ->
-//                    processForRunners(id, iRemoteRepo, iDbRepo)
-//                }
+            val date = inputData.getString("key_meeting_date")
+            val code = inputData.getString("key_meeting_code")
+            val races = inputData.getString("key_num_races")
 
-                // Testing - just use the first value in the meetingIds array.
-                processForRunners(meetingIds?.get(0) ?: "-1", iRemoteRepo, iDbRepo)
+            val iDbRepo = entryPoints.getDbRepo()
+            val iRemoteRepo = entryPoints.getRemoteRepo()
 
+            processForRunners(date!!, code!!, races!!, iRemoteRepo, iDbRepo)
 
-                //Loop through each of the meeting codes.
-//            codes.forEach { code ->
-//                // Get from the Api.
-//                val baseDto = iRemoteRepo.getRaceDay(date!!, code)
-//                // Get the MeetingDto, there'll only be one but a list is returned.
-//                val meetingDto = baseDto.body.RaceDay.Meetings[0]
-//
-//                // Process the list of Races associated with the Meeting.
-//
-//                // Get the database row id of the equivalent Meeting in the database.
-//                val mId = iDbRepo.getMeetingId(meetingDto.MeetingId)
-//                // Loop through the list of RaceDto.
-//                meetingDto.Races.forEach { raceDto ->
-//                    // Get the (database row) of the Race.
-//                    val rId = iDbRepo.getRaceId(mId, raceDto.RaceNumber)
-//                    delay(50)  // TBA ?
-//
-//                    // Temporary list (used for database insert).
-//                    val runners = arrayListOf<Runner>()
-//                    // Create the (domain) Runners and add to listing.
-//                    raceDto.Runners.forEach { runnerDto ->
-//                        val runner = runnerDto.toRunner(rId)
-//                        runners.add(runner)
-//                    }
-//                    // Insert the list of Runners.
-//                    iDbRepo.insertRunners(runners)
-//                    delay(50)  // TBA ?
-//                }
-//            }
-                Log.d("TAG", "[RunnerWorker.doWork] ending.")
-                return@withContext Result.success()
-            } catch (ex: Exception) {
-                Log.d("TAG", "[RunnerWorker.doWork] exception: " + ex.toString())
-                val key = context.resources.getString(R.string.key_exception)
-                val output = workDataOf(key to ex.localizedMessage)
+            Result.success()
+        } catch(ex: Exception) {
+            Log.d("TAG", "[RunnerWorker.doWork] exception: " + ex.toString())
+            val key = context.resources.getString(R.string.key_exception)
+            val output = workDataOf(key to ex.localizedMessage)
 
-                return@withContext Result.failure(output)
-            }
-//            Log.d("TAG", "[RunnerWorker.doWork] ending.")
-//            return@withContext Result.success()
+            Result.failure(output)
         }
-        return Result.success()
+
     }
 
-    private suspend fun processForRunners(id: String, iRemoteRepo: IRemoteRepo, iDbRepo: IDbRepo) {
-        val idList = id.split(":")
-        val date = idList[0]
-        val code = idList[1]
-        val numRaces = idList[2]
-
-        for(race in 1..(numRaces+1).toInt()) {
-
+    private suspend fun processForRunners(date: String, code: String, races: String, iRemoteRepo: IRemoteRepo, iDbRepo: IDbRepo) {
+        for(race in 1..races.toInt()) {
+            Log.d("TAG", "Process for Runners - Race: $race")
             val response = iRemoteRepo.getRaceDayRunners(date, code, race.toString())
             val raceIds = iDbRepo.getRaceIdsByVenueCode(code)
             iDbRepo.insertRunnersWithRaceId(raceIds, response.body.runners)
-
-            val bp = ""
         }
-
-
     }
 
 }

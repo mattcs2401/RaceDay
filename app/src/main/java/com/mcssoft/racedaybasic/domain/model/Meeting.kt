@@ -1,6 +1,5 @@
 package com.mcssoft.racedaybasic.domain.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -8,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "Meeting",
     indices = [Index(
-        value = ["meetingId"],
+        value = ["meetingDate", "venueMnemonic", "numRaces"],
         unique = true
     )]
 )
@@ -27,9 +26,8 @@ data class Meeting(
     val trackCondition: String?,  // e.g. SOFT6
     val venueMnemonic: String?,   // e.g. SCO (Scone)
     val weatherCondition: String?,// e.g. FINE
-    val racesNo: Int,             // number of associated Races.
+    val numRaces: Int,            // number of associated Races.
     var sellCode: String?,        // e.g. concat of {"meetingCode":"B","scheduledType":"R"}
-    val meetingId: String         //
 )
 
 //data class MeetingSubset(

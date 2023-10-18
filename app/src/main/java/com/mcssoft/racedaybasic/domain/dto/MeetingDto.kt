@@ -30,9 +30,7 @@ fun MeetingDto.toMeeting(): Meeting {
         trackCondition = trackCondition,              // e.g. Good4
         venueMnemonic = venueMnemonic ?: "",          // e.g SSC
         weatherCondition = weatherCondition,          // Fine
-        racesNo = races.size,                         // the number of associated Races.
-        meetingId =
-            "$meetingDate:$venueMnemonic:${races.size}",   // TBA - no actual id value in Dto.
+        numRaces = races.size,                         // the number of associated Races.
         sellCode =
             "${sellCode?.meetingCode}${sellCode?.scheduledType}"
     )

@@ -41,7 +41,8 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(state.value)
                 }
-                setupBaseFromApi(date)
+//                setupBaseFromApi(date)
+                stateSuccess(-1, "Setup base from Api success.")
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }
@@ -67,7 +68,7 @@ class SplashViewModel @Inject constructor(
                 event.activity.finishAndRemoveTask()
             }
             is SplashEvent.SetRunners -> {
-                setupRunnersFromApi()
+//                setupRunnersFromApi()
             }
         }
     }
@@ -92,7 +93,7 @@ class SplashViewModel @Inject constructor(
                     }
                     is DataResult.Status.Success -> {
                         Log.d("TAG", "[SplashViewModel] result.successful")
-                        stateSuccess(result.errorCode)
+                        stateSuccess(result.errorCode, "Setup Base from Api success.")
                     }
                     else -> {}
                 }
@@ -120,8 +121,9 @@ class SplashViewModel @Inject constructor(
                         stateError(result.errorCode)
                     }
                     is DataResult.Status.Success -> {
-                        Log.d("TAG", "[MeetingsViewModel] result.successful")
-                        stateSuccess(result.errorCode)
+                        Log.d("TAG",
+                            "[MeetingsViewModel] setupRunnersFromApi result.successful")
+                        stateSuccess(result.errorCode, "Setup Runner from Api success.")
                     }
                     is DataResult.Status.Failure -> {
                         stateFailure(result)
@@ -155,14 +157,14 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun stateSuccess(code: Int) {
+    private fun stateSuccess(code: Int, msg: String) {
         _state.update { state ->
             state.copy(
                 exception = null,
                 response = code,
                 status = SplashState.Status.Success,
                 loading = false,
-                loadingMsg = "Setup Runner from Api success."
+                loadingMsg = msg
             )
         }
     }

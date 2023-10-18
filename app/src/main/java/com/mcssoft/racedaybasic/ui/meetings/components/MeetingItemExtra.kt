@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaybasic.domain.model.Meeting
@@ -35,7 +34,7 @@ fun MeetingItemExtra(
             },
     ) {
         Text(
-            "Races: ${meeting.racesNo}",
+            "Races: ${meeting.numRaces}",
             Modifier.layoutId("idRacesNo"),
             fontSize = fontSize10sp
         )

@@ -53,7 +53,7 @@ fun MeetingHeader(
                 Modifier.layoutId("idVenueNameText")
             )
             Text(
-                "Races: ${meeting.racesNo}",
+                "Races: ${meeting.numRaces}",
                 Modifier.layoutId("idRacesNo"),
                 fontSize = fontSize12sp
             )

@@ -28,25 +28,32 @@ class SetupRunnersFromApi  @Inject constructor(
         try {
             emit(DataResult.loading())
 
-            // Note: "toTypedArray()" from testing.
-            val meetingAltIds = iDbRepo.getMeetingAltIds().toTypedArray()
+            val meetingAltIds = iDbRepo.getMeetingAltIds()
+            meetingAltIds.forEach { item ->
+                val date = item.meetingDate
+                val code = item.venueMnemonic
+                val races = item.numRaces.toString()
 
-            val workData = workDataOf("key_meeting_ids" to meetingAltIds)
-            val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
-                .addTag("RunnersWorker")
-                .setInputData(workData)
-                .build()
-            workManager.enqueue(runnersWorker)
+                val workData = workDataOf(
+                    "key_meeting_date" to date, "key_meeting_code" to code, "key_num_races" to races
+                )
+                val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
+                    .addTag("RunnersWorker")
+                    .setInputData(workData)
+                    .build()
+                workManager.enqueue(runnersWorker)
 
-            observeRunnerWorker(runnersWorker.id).collect { result ->
-                when (result) {
-                    WorkerState.Scheduled -> {}
-                    WorkerState.Cancelled -> {}
-                    WorkerState.Failed -> {
-                        throw Exception("Observe runnerWorker failure.")
-                    }
-                    WorkerState.Succeeded -> {
-                        emit(DataResult.success(""))
+                observeRunnerWorker(runnersWorker.id).collect { result ->
+                    when (result) {
+                        WorkerState.Scheduled -> {}
+                        WorkerState.Cancelled -> {}
+                        WorkerState.Failed -> {
+                            throw Exception("Observe runnerWorker failure.")
+                        }
+
+                        WorkerState.Succeeded -> {
+                            emit(DataResult.success(""))
+                        }
                     }
                 }
             }

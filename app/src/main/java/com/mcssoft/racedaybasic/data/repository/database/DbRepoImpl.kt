@@ -23,11 +23,12 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetings()
     }
 
-    override suspend fun getMeetingId(mId: Int): Long {
-        return dao.getMeetingId(mId)
-    }
+//    override suspend fun getMeetingId(mId: Int): Long {
+//        return dao.getMeetingId(mId)
+//    }
 
-    override suspend fun getMeetingAltIds(): List<String> {
+
+    override suspend fun getMeetingAltIds(): List<IDbRepo.MeetingAltInfo> {
         return dao.getMeetingAltIds()
     }
 

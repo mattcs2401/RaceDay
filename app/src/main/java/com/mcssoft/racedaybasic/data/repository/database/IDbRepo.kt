@@ -33,7 +33,6 @@ interface IDbRepo {
 
     @Transaction
     suspend fun insertRunnersWithRaceId(raceIds: List<Long>, runners: List<RunnerDto>) {
-
         val runnersWithRaceId = runners.zip(raceIds) {runner, rId ->
             runner.toRunner(rId)
         }
@@ -43,10 +42,15 @@ interface IDbRepo {
     @Query("select _id from race where venue = :code")
     suspend fun getRaceIdsByVenueCode(code: String): List<Long>
 
-    @Query("select meetingId from Meeting")
-    suspend fun getMeetingAltIds(): List<String>
-
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
+    data class MeetingAltInfo(
+        val meetingDate: String,
+        val venueMnemonic: String,
+        val numRaces: Int
+    )
+    @Query("select meetingDate, venueMnemonic, numRaces from Meeting")
+    suspend fun getMeetingAltIds(): List<MeetingAltInfo>
+
     /**
      * Insert a MeetingDto.
      * @param meeting: The MeetingDto to insert.
@@ -70,13 +74,13 @@ interface IDbRepo {
     @Query("select * from Meeting where _id = :mId")
     suspend fun getMeeting(mId: Long): Meeting
 
-    /**
-     * Get a Meeting's id (record's row id) by the MeetingId value.
-     * @param mId: The Meeting's MeetingId.
-     * @return A MeetingDto.
-     */
-    @Query("select _id from Meeting where meetingId = :mId")
-    suspend fun getMeetingId(mId: Int): Long
+//    /**
+//     * Get a Meeting's id (record's row id) by the MeetingId value.
+//     * @param mId: The Meeting's MeetingId.
+//     * @return A MeetingDto.
+//     */
+//    @Query("select _id from Meeting where meetingId = :mId")
+//    suspend fun getMeetingId(mId: Int): Long
 
 
 //    @Query("select meetingCode from MeetingDto")
