@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.components.screens
+package com.mcssoft.racedaybasic.ui.components.races
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,8 +15,6 @@ import com.mcssoft.racedaybasic.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.components.navigation.TopBar
-import com.mcssoft.racedaybasic.ui.components.races.RacesEvent
-import com.mcssoft.racedaybasic.ui.components.races.RacesState
 import com.mcssoft.racedaybasic.ui.components.races.components.MeetingHeader
 import com.mcssoft.racedaybasic.ui.components.races.RacesState.Status.*
 import com.mcssoft.racedaybasic.ui.components.races.components.RaceItem

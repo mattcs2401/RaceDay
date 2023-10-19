@@ -8,13 +8,16 @@ import androidx.work.workDataOf
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
+import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
+import com.mcssoft.racedaybasic.domain.dto2.BaseDto2
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
+/**
+ * Class to insert the Runners associated with a Race.
+ */
 class RunnersWorker (
     private val context: Context,
     workerParams: WorkerParameters,
@@ -26,20 +29,32 @@ class RunnersWorker (
         fun getRemoteRepo(): IRemoteRepo
         fun getDbRepo(): IDbRepo
     }
-    private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
+    private val entryPoints =
+        EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
+    private val iDbRepo = entryPoints.getDbRepo()
+    private val iRemoteRepo = entryPoints.getRemoteRepo()
 
     override suspend fun doWork(): Result {
         return try {
             Log.d("TAG", "[RunnerWorker.doWork] starting.")
 
-            val date = inputData.getString("key_meeting_date")
-            val code = inputData.getString("key_meeting_code")
-            val races = inputData.getString("key_num_races")
+            var response: NetworkResponse<BaseDto2>   // response from Api.
+            var  raceId: Long
 
-            val iDbRepo = entryPoints.getDbRepo()
-            val iRemoteRepo = entryPoints.getRemoteRepo()
+            val date = inputData.getString(context.resources.getString(R.string.key_meeting_date))
+            val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
+            val races = inputData.getString(context.resources.getString(R.string.key_num_races))
 
-            processForRunners(date!!, code!!, races!!, iRemoteRepo, iDbRepo)
+            for(race in 1..(races?.toInt() ?: -1)) {
+                Log.d("TAG", "Process for Runners - Race: $race")
+
+                // Get the Runners for a Race.
+                response = iRemoteRepo.getRaceDayRunners(date!!, code!!, race.toString())
+                // Get the Race id for the Race.
+                raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code, race.toString())
+                // Insert records.
+                iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
+            }
 
             Result.success()
         } catch(ex: Exception) {
@@ -48,16 +63,6 @@ class RunnersWorker (
             val output = workDataOf(key to ex.localizedMessage)
 
             Result.failure(output)
-        }
-
-    }
-
-    private suspend fun processForRunners(date: String, code: String, races: String, iRemoteRepo: IRemoteRepo, iDbRepo: IDbRepo) {
-        for(race in 1..races.toInt()) {
-            Log.d("TAG", "Process for Runners - Race: $race")
-            val response = iRemoteRepo.getRaceDayRunners(date, code, race.toString())
-            val raceIds = iDbRepo.getRaceIdsByVenueCode(code)
-            iDbRepo.insertRunnersWithRaceId(raceIds, response.body.runners)
         }
     }
 

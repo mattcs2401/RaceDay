@@ -12,7 +12,7 @@ data class RunnerDto(
 //    val earlySpeedRatingBand: String,
 //    val emergency: Boolean,
 //    val fixedOdds: FixedOdds,
-//    val handicapWeight: Double,
+    val handicapWeight: Double,
 //    val harnessHandicap: Any,
     val last5Starts: String?,
 //    val parimutuel: Parimutuel,
@@ -25,14 +25,14 @@ data class RunnerDto(
     val tcdwIndicators: String?,
 //    val techFormRating: Int,
 //    val totalRatingPoints: Int,
-//    val trainerFullName: String,
+    val trainerFullName: String,
     val trainerName: String,
 //    val vacantBox: Boolean
 )
 
-fun RunnerDto.toRunner(rId: Long): Runner {
+fun RunnerDto.toRunner(raceId: Long): Runner {
     return Runner(
-        raceId = rId,
+        raceId = raceId,
         runnerName = runnerName,
         runnerNumber = runnerNumber,
         barrierNumber = barrierNumber,
@@ -40,6 +40,8 @@ fun RunnerDto.toRunner(rId: Long): Runner {
         last5Starts = last5Starts ?: "",
         riderDriverName = riderDriverName,
         trainerName = trainerName,
+        trainerFullName = trainerFullName,
         dfsFormRating = dfsFormRating,
+        handicapWeight = handicapWeight
     )
 }

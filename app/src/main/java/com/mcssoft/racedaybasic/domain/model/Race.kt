@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Race",
-    indices = [Index(value = ["mtgId", "venue"])],
+    indices = [Index(value = ["mtgId", "venue", "raceNo"])],
     foreignKeys = [
         ForeignKey(
             entity = Meeting::class,

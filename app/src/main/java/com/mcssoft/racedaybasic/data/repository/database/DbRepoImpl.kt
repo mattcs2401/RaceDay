@@ -54,8 +54,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getRace(rId)
     }
 
-    override suspend fun getRaceIdsByVenueCode(code: String): List<Long> {
-        return dao.getRaceIdsByVenueCode(code)
+    override suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long {
+        return dao.getRaceIdByVenueCodeAndRaceNo(venueCode, raceNum)
     }
 
 //    override suspend fun getRaceId(mtgId: Long, raceNo: Int): Long {

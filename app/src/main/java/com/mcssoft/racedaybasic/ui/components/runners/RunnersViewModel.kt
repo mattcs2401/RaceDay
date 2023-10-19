@@ -5,14 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.data.repository.preferences.Preference
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
-import com.mcssoft.racedaybasic.ui.components.races.RacesState
 import com.mcssoft.racedaybasic.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,102 +61,144 @@ class RunnersViewModel @Inject constructor(
 //        }
     }
 
-    private fun getRunners(rId: Long) {
+    private fun getRunners(raceId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            raceDayUseCases.getRunners(raceId).collect { result ->
+                when {
+                    result.loading -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Loading,
+                                loading = true
+                            )
+                        }
+                    }
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RunnersState.Status.Failure,
+                                loading = false
+                            )
+                        }
+                    }
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Success,
+                                loading = false,
+                                runners = result.data ?: emptyList()
+                            )
+                        }
+                    }
+                }
+            }
 
+        }
     }
 
     private fun getRace(rId: Long) {
-        raceDayUseCases.getRace(rId).onEach { result ->
-            when {
-                result.loading -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RunnersState.Status.Loading,
-                            loading = true
-                        )
+        viewModelScope.launch(Dispatchers.IO) {
+            raceDayUseCases.getRace(rId).collect { result ->
+                when {
+                    result.loading -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Loading,
+                                loading = true
+                            )
+                        }
                     }
-                }
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RunnersState.Status.Failure,
-                            loading = false
-                        )
+
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RunnersState.Status.Failure,
+                                loading = false
+                            )
+                        }
                     }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RunnersState.Status.Success,
-                            loading = false,
-                            race = result.data
-                        )
+
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Success,
+                                loading = false,
+                                race = result.data
+                            )
+                        }
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     /**
-     * Save the meeting id to the preferences.
+     * Save the Race id to the preferences.
      */
-    private fun saveRaceId(pref: Preference.RaceIdPref, rId: Long) {
-        raceDayUseCases.savePreferences(pref, rId).onEach { result ->
-            when {
-                result.loading -> {}
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RunnersState.Status.Failure,
-                            loading = false
-                        )
+    private fun saveRaceId(pref: Preference.RaceIdPref, raceId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            raceDayUseCases.savePreferences(pref, raceId).collect { result ->
+                when {
+                    result.loading -> {}
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RunnersState.Status.Failure,
+                                loading = false
+                            )
+                        }
                     }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RunnersState.Status.Success,
-                            loading = false,
-                            raceId = rId
-                        )
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Success,
+                                loading = false,
+                                raceId = raceId
+                            )
+                        }
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     /**
      * Get the meeting id from the preferences.
      */
     private fun getRaceId(pref: Preference.RaceIdPref) {
-        raceDayUseCases.getPreferences(pref).onEach { result ->
-            when {
-                result.loading -> {}
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RunnersState.Status.Failure,
-                            loading = false
-                        )
+        viewModelScope.launch(Dispatchers.IO) {
+            raceDayUseCases.getPreferences(pref).collect { result ->
+                when {
+                    result.loading -> {}
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RunnersState.Status.Failure,
+                                loading = false
+                            )
+                        }
                     }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RunnersState.Status.Success,
-                            loading = false,
-                            raceId = result.data as Long
-                        )
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Success,
+                                loading = false,
+                                raceId = result.data as Long
+                            )
+                        }
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 }

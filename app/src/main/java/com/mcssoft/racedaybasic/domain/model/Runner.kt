@@ -28,7 +28,9 @@ data class Runner(
     var last5Starts: String = "",
     var riderDriverName: String = "",
     var trainerName: String = "",
+    var trainerFullName: String = "",
     var dfsFormRating: Int = -1,
+    var handicapWeight: Double = 0.0,
     // Additional for Summary use.
     var checked: Boolean = false
 )

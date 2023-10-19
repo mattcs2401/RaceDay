@@ -11,10 +11,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.components.races.RacesViewModel
 import com.mcssoft.racedaybasic.ui.components.runners.RunnersViewModel
-import com.mcssoft.racedaybasic.ui.components.screens.MeetingsScreen
-import com.mcssoft.racedaybasic.ui.components.screens.RacesScreen
-import com.mcssoft.racedaybasic.ui.components.screens.RunnersScreen
-import com.mcssoft.racedaybasic.ui.components.screens.SplashScreen
+import com.mcssoft.racedaybasic.ui.meetings.MeetingsScreen
+import com.mcssoft.racedaybasic.ui.components.races.RacesScreen
+import com.mcssoft.racedaybasic.ui.components.runners.RunnersScreen
+import com.mcssoft.racedaybasic.ui.splash.SplashScreen
 import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
 

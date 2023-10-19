@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.components.screens
+package com.mcssoft.racedaybasic.ui.meetings
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
@@ -26,12 +25,7 @@ import com.mcssoft.racedaybasic.ui.components.navigation.BottomBar
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaybasic.R
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsEvent
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsState
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
 import com.mcssoft.racedaybasic.ui.meetings.components.MeetingsTopBar
-import com.mcssoft.racedaybasic.ui.splash.SplashEvent
-import com.mcssoft.racedaybasic.ui.splash.SplashState
 
 @Composable
 /**

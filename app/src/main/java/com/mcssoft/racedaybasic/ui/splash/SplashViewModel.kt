@@ -29,7 +29,6 @@ class SplashViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var connectivityState by mutableStateOf(ConnectivityState.initialise())
-//        private set
 
     init {
         getConnectivity()
@@ -42,7 +41,7 @@ class SplashViewModel @Inject constructor(
                     _state.emit(state.value)
                 }
 //                setupBaseFromApi(date)
-                stateSuccess(-1, "Setup base from Api success.")
+                stateSuccess(200, "Setup base from Api success.")
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }

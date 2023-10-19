@@ -1,15 +1,13 @@
 package com.mcssoft.racedaybasic.ui.components.runners
 
-import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
-import com.mcssoft.racedaybasic.ui.components.races.RacesState
 
 data class RunnersState(
     val exception: Exception? = null,
     val status: Status = Status.NoState,
     val loading: Boolean = false,
-    val lRunners: List<Runner> = emptyList(),
+    val runners: List<Runner> = emptyList(),
     val race: Race? = null,
     val raceId: Long = 0
     ) {
@@ -19,7 +17,7 @@ data class RunnersState(
             return RunnersState(
                 exception = null,
                 status = Status.Initialise,
-                race = null,
+                race = null
             )
         }
     }

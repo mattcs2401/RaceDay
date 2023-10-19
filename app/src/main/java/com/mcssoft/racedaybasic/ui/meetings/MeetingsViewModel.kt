@@ -67,10 +67,9 @@ class MeetingsViewModel @Inject constructor(
                                 data = result.data ?: emptyList()
                             )
                         }
-//                        setupRunnersFromApi()
                     }
                 }
-            }//.launchIn(viewModelScope)
+            }
         }
     }
 

@@ -22,10 +22,13 @@ val margin4dp = 4.dp
 val margin8dp = 8.dp
 val margin16dp = 16.dp
 val margin32dp = 32.dp
+val margin48dp = 48.dp
 
 val padding4dp = 4.dp
 val padding8dp = 8.dp
 val padding16dp = 16.dp
+val padding32dp = 32.dp
+val padding48dp = 48.dp
 val padding64dp = 64.dp
 
 val stroke2dp = 2.dp

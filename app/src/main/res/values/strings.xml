@@ -61,5 +61,8 @@
 
     <!-- Keys. -->
     <string name="key_exception">key_exception</string>
+    <string name="key_meeting_date">key_meeting_date</string>
+    <string name="key_meeting_code">key_meeting_code</string>
+    <string name="key_num_races">key_num_races</string>
 
 </resources>

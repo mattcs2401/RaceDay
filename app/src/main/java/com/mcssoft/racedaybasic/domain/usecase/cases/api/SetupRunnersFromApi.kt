@@ -6,6 +6,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.worker.RunnersWorker
@@ -35,7 +36,9 @@ class SetupRunnersFromApi  @Inject constructor(
                 val races = item.numRaces.toString()
 
                 val workData = workDataOf(
-                    "key_meeting_date" to date, "key_meeting_code" to code, "key_num_races" to races
+                    context.resources.getString(R.string.key_meeting_date) to date,
+                    context.resources.getString(R.string.key_meeting_code) to code,
+                    context.resources.getString(R.string.key_num_races) to races
                 )
                 val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
                     .addTag("RunnersWorker")

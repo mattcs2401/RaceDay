@@ -32,15 +32,15 @@ interface IDbRepo {
     }
 
     @Transaction
-    suspend fun insertRunnersWithRaceId(raceIds: List<Long>, runners: List<RunnerDto>) {
-        val runnersWithRaceId = runners.zip(raceIds) {runner, rId ->
-            runner.toRunner(rId)
+    suspend fun insertRunnersWithRaceId(raceId: Long, runners: List<RunnerDto>) {
+        val runnersWithRaceId = runners.map { runnerDto ->
+            runnerDto.toRunner(raceId)
         }
         insertRunners(runnersWithRaceId)
     }
 
-    @Query("select _id from race where venue = :code")
-    suspend fun getRaceIdsByVenueCode(code: String): List<Long>
+    @Query("select _id from race where venue = :venueCode and raceNo = :raceNum")
+    suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     data class MeetingAltInfo(

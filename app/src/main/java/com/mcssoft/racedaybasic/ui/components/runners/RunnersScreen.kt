@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.components.screens
+package com.mcssoft.racedaybasic.ui.components.runners
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,8 +23,6 @@ import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.components.navigation.TopBar
 import com.mcssoft.racedaybasic.ui.components.runners.components.RacesHeader
-import com.mcssoft.racedaybasic.ui.components.runners.RunnersEvent
-import com.mcssoft.racedaybasic.ui.components.runners.RunnersState
 import com.mcssoft.racedaybasic.ui.components.runners.components.RunnerItem
 import com.mcssoft.racedaybasic.ui.theme.height64dp
 import com.mcssoft.racedaybasic.ui.theme.padding64dp
@@ -101,12 +99,12 @@ fun RunnersScreen(
                     .padding(top = padding64dp)
             ) {
                 items(
-                    items = state.lRunners
+                    items = state.runners
                 ) { runner ->
                     RunnerItem(
                         runner = runner,
                         onItemClick = {
-//                            navController.navigate(Screen.RunnersScreen.route + "raceId=${race._id}")
+//                            set checkbox ?
                         }
                     )
                 }

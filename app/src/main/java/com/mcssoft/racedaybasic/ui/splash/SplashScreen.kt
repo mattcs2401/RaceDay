@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.components.screens
+package com.mcssoft.racedaybasic.ui.splash
 
 import android.app.Activity
 import androidx.compose.foundation.background
@@ -11,19 +11,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.dialog.ErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.ExceptionErrorDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
-import com.mcssoft.racedaybasic.ui.splash.SplashEvent
-import com.mcssoft.racedaybasic.ui.splash.SplashState
-import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
-import com.mcssoft.racedaybasic.ui.theme.RaceDayBasicTheme
-import kotlinx.coroutines.flow.StateFlow
 
 /**
  * App UI starting point.
