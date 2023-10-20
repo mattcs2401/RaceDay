@@ -1,7 +1,7 @@
 package com.mcssoft.racedaybasic.data.repository.remote
 
 import com.mcssoft.racedaybasic.domain.dto.BaseDto
-import com.mcssoft.racedaybasic.domain.dto2.BaseDto2
+import com.mcssoft.racedaybasic.domain.dto.BaseDto2
 
 interface IRemoteRepo {
 

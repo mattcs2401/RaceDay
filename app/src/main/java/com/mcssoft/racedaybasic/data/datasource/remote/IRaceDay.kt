@@ -1,7 +1,7 @@
 package com.mcssoft.racedaybasic.data.datasource.remote
 
 import com.mcssoft.racedaybasic.domain.dto.BaseDto
-import com.mcssoft.racedaybasic.domain.dto2.BaseDto2
+import com.mcssoft.racedaybasic.domain.dto.BaseDto2
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

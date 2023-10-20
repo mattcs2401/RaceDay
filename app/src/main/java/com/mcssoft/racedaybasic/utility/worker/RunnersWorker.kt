@@ -9,7 +9,7 @@ import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
-import com.mcssoft.racedaybasic.domain.dto2.BaseDto2
+import com.mcssoft.racedaybasic.domain.dto.BaseDto2
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors

@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.dto2
+package com.mcssoft.racedaybasic.domain.dto
 
 data class BaseDto2(
     val runners: List<RunnerDto>,

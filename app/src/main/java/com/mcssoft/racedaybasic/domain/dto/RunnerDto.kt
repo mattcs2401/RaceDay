@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.dto2
+package com.mcssoft.racedaybasic.domain.dto
 
 import com.mcssoft.racedaybasic.domain.model.Runner
 

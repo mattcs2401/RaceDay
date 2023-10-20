@@ -28,7 +28,7 @@ data class Race(
     var raceStartTime: String,         // e.g. "2023-09-24T03:10:00.000Z"
     var raceDistance: Int,             // e.g. 1600
     var raceStatus: String,            // for anything Abandoned.
-    var runnersBaseUrl: String?        // TBA
+    var hasScratchings: Boolean
 )
 /*
 DTO class:

@@ -52,6 +52,7 @@ fun RunnerItemExtra(
             fontSize = fontSize10sp
         )
         Text(
+
             "Wgt: ${runner.handicapWeight}",
             Modifier.layoutId("idHandicapWeight"),
             fontSize = fontSize10sp
@@ -59,7 +60,7 @@ fun RunnerItemExtra(
         Checkbox(
             checked = checked.value,
             onCheckedChange = {
-                chkd -> checked.value = chkd
+                chked -> checked.value = chked
                 onEvent(RunnersEvent.GetCheck(checked.value, runner))
             },
             Modifier.layoutId("idCheckBox"),

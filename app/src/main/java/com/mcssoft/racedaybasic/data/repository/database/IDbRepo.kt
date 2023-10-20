@@ -9,8 +9,8 @@ import com.mcssoft.racedaybasic.domain.dto.MeetingDto
 import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.dto.toMeeting
 import com.mcssoft.racedaybasic.domain.dto.toRace
-import com.mcssoft.racedaybasic.domain.dto2.RunnerDto
-import com.mcssoft.racedaybasic.domain.dto2.toRunner
+import com.mcssoft.racedaybasic.domain.dto.RunnerDto
+import com.mcssoft.racedaybasic.domain.dto.toRunner
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
