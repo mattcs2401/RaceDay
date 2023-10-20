@@ -1,44 +1,43 @@
 package com.mcssoft.racedaybasic.ui.components.runners.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.racedaybasic.domain.model.Runner
-import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
-import com.mcssoft.racedaybasic.ui.theme.elevation4dp
+import com.mcssoft.racedaybasic.ui.components.runners.RunnersEvent
 import com.mcssoft.racedaybasic.ui.theme.fontSize10sp
-import com.mcssoft.racedaybasic.ui.theme.fontSize12sp
 import com.mcssoft.racedaybasic.ui.theme.margin0dp
 import com.mcssoft.racedaybasic.ui.theme.margin16dp
 import com.mcssoft.racedaybasic.ui.theme.margin8dp
 import com.mcssoft.racedaybasic.ui.theme.padding32dp
-import com.mcssoft.racedaybasic.ui.theme.padding48dp
-import com.mcssoft.racedaybasic.ui.theme.padding4dp
 
 @Composable
 fun RunnerItemExtra(
     runner: Runner,
-    onItemClick: (Runner) -> Unit
+    onEvent: (RunnersEvent) -> Unit,
+//    onItemClick: (Runner) -> Unit
 ){
+    val checked = remember { mutableStateOf(false) }
+
     ConstraintLayout(
         constraintSet,
         modifier = Modifier
             .padding(top = padding32dp) // simply to give room for the top row.
-            .clickable {
-                onItemClick(runner)
-            }
+//            .clickable {
+//                onItemClick(runner)
+//            }
     ) {
         Text(
-            "(${runner.tcdwIndicators})",
+       "(${runner.tcdwIndicators})",
             Modifier.layoutId("idTcdwIndicators"),
             fontSize = fontSize10sp
         )
@@ -57,7 +56,18 @@ fun RunnerItemExtra(
             Modifier.layoutId("idHandicapWeight"),
             fontSize = fontSize10sp
         )
-//        Checkbox(checked = false, onCheckedChange = )
+        Checkbox(
+            checked = checked.value,
+            onCheckedChange = {
+                chkd -> checked.value = chkd
+                onEvent(RunnersEvent.GetCheck(checked.value, runner))
+            },
+            Modifier.layoutId("idCheckBox"),
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.Magenta,
+                uncheckedColor = Color.Gray
+            )
+        )
     }
 }
 
@@ -66,6 +76,7 @@ private val constraintSet = ConstraintSet() {
     val idTrainerName = createRefFor("idTrainerName")
     val idDfsFormRating = createRefFor("idDfsFormRating")
     val idHandicapWeight = createRefFor("idHandicapWeight")
+    val idCheckBox = createRefFor("idCheckBox")
 
     constrain(idTcdwIndicators) {
         top.linkTo(parent.top, margin = margin16dp)
@@ -83,6 +94,10 @@ private val constraintSet = ConstraintSet() {
     constrain(idHandicapWeight) {
         top.linkTo(idDfsFormRating.top, margin = margin0dp)
         start.linkTo(idDfsFormRating.end, margin = margin8dp)
+    }
+    constrain(idCheckBox) {
+        top.linkTo(parent.top, margin = margin0dp)
+        end.linkTo(parent.absoluteRight, margin = margin8dp)
     }
 }
 

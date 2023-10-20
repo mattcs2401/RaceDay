@@ -1,7 +1,6 @@
 package com.mcssoft.racedaybasic.ui.components.runners.components;
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -21,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.ui.components.runners.RunnersEvent
 import com.mcssoft.racedaybasic.ui.theme.RoundedCornerShapes
 import com.mcssoft.racedaybasic.ui.theme.elevation4dp
 import com.mcssoft.racedaybasic.ui.theme.fontSize10sp
@@ -34,8 +34,9 @@ import com.mcssoft.racedaybasic.ui.theme.padding4dp
 
 @Composable
 fun RunnerItem(
-        runner: Runner,
-        onItemClick: (Runner) -> Unit
+    runner: Runner,
+    onEvent: (RunnersEvent) -> Unit,
+//        onItemClick: (Runner) -> Unit
 ){
     var expandedState by remember { mutableStateOf(false) }
 
@@ -53,7 +54,7 @@ fun RunnerItem(
     ) {
         ConstraintLayout(
             constraintSet,
-            modifier = Modifier.clickable { onItemClick(runner) }
+//            modifier = Modifier.clickable { onItemClick(runner) }
         ) {
             Text(
                 runner.runnerNumber.toString(),
@@ -103,7 +104,7 @@ fun RunnerItem(
         }
         if (expandedState) {
             // Runner extra info, the 'expanded' state.
-            RunnerItemExtra(runner, onItemClick)
+            RunnerItemExtra(runner, onEvent)//, onItemClick)
         }
     }
 }

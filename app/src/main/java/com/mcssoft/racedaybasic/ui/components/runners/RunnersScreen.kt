@@ -31,12 +31,12 @@ import com.mcssoft.racedaybasic.ui.theme.padding64dp
 /**
  * @param state: Races state.
  * @param navController: The Navigation.
- * @param onEvent: Call up to RacesEvent in ViewModel.
+ * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
-    onEvent: (RunnersEvent) -> Unit   // TBA
+    onEvent: (RunnersEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
 //    val showErrorDialog = remember { mutableStateOf(false) }
@@ -103,9 +103,8 @@ fun RunnersScreen(
                 ) { runner ->
                     RunnerItem(
                         runner = runner,
-                        onItemClick = {
-//                            set checkbox ?
-                        }
+                        onEvent = onEvent
+//                        onItemClick = { }
                     )
                 }
             }

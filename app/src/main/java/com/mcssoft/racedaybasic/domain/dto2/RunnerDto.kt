@@ -42,6 +42,7 @@ fun RunnerDto.toRunner(raceId: Long): Runner {
         trainerName = trainerName,
         trainerFullName = trainerFullName,
         dfsFormRating = dfsFormRating,
-        handicapWeight = handicapWeight
+        handicapWeight = handicapWeight,
+        checked = false                     // not part of Dto.
     )
 }

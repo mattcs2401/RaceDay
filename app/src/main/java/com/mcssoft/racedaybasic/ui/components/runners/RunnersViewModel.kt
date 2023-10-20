@@ -51,14 +51,13 @@ class RunnersViewModel @Inject constructor(
     }
 
     fun onEvent(event: RunnersEvent) {
-//        when(event) {
-//            is RacesEvent.Retry -> {
-//                mtgId = event.mtgId    // TBA ?
-//            }
-//            is RacesEvent.Cancel -> {
-//                // TBA ?
-//            }
-//        }
+        when(event) {
+            is RunnersEvent.GetCheck -> {
+                // TODO - create/update Summary record.
+                val checked = event.checked
+                val runner = event.runner
+            }
+        }
     }
 
     private fun getRunners(raceId: Long) {

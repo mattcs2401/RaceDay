@@ -53,7 +53,6 @@ class SetupRunnersFromApi  @Inject constructor(
                         WorkerState.Failed -> {
                             throw Exception("Observe runnerWorker failure.")
                         }
-
                         WorkerState.Succeeded -> {
                             emit(DataResult.success(""))
                         }

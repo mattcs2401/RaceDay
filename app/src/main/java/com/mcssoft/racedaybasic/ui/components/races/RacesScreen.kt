@@ -30,7 +30,7 @@ import com.mcssoft.racedaybasic.ui.theme.padding64dp
 fun RacesScreen(
     state: RacesState,
     navController: NavController,
-    onEvent: (RacesEvent) -> Unit   // TBA
+    onEvent: (RacesEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val showErrorDialog = remember { mutableStateOf(false) }

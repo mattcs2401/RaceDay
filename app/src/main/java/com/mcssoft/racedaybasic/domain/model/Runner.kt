@@ -21,18 +21,18 @@ data class Runner(
     var _id: Long = 0L,
     var raceId: Long = 0,
 
-    var runnerName: String = "",
-    var runnerNumber: Int = -1,
-    var barrierNumber: Int = -1,
-    var tcdwIndicators: String = "",
-    var last5Starts: String = "",
-    var riderDriverName: String = "",
-    var trainerName: String = "",
-    var trainerFullName: String = "",
-    var dfsFormRating: Int = -1,
-    var handicapWeight: Double = 0.0,
+    var runnerName: String,
+    var runnerNumber: Int,
+    var barrierNumber: Int,
+    var tcdwIndicators: String,
+    var last5Starts: String,
+    var riderDriverName: String,
+    var trainerName: String,
+    var trainerFullName: String,
+    var dfsFormRating: Int,
+    var handicapWeight: Double,
     // Additional for Summary use.
-    var checked: Boolean = false
+    var checked: Boolean
 )
 /*
     {
