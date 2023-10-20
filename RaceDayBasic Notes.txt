@@ -15,6 +15,14 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
    404 - Not found.
    General network timeouts?
 
+=======
+Issues:
+=======
+-> Race time value in the raw data is not always correct:
+e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
+     Should be 12:14.
+
+
 ======
  TODO
 ======
@@ -27,20 +35,6 @@ Not really in any strict order:
 
 -> Meetings loading indicator (like for Splash).
 
--> Meetings screen header - put in date?
-
--> Meeting item layout & info.
-   -> Meeting item extra layout & info.
-
--> Races item layout & info.
-   -> Races item extra layout & info.
-
--> Use transactions in database (Phillip Lackner video).
-
--> Runners ?
-
 -> Summary screen of what's been selected.
 
 -> Foreground ? service for Notifications.
-
--> Network connectivity check ?

@@ -28,8 +28,8 @@ class DbRepoImpl @Inject constructor(
 //    }
 
 
-    override suspend fun getMeetingAltIds(): List<IDbRepo.MeetingAltInfo> {
-        return dao.getMeetingAltIds()
+    override suspend fun getMeetingSubset(): List<IDbRepo.MeetingSubset> {
+        return dao.getMeetingSubset()
     }
 
     override suspend fun deleteMeetings(): Int {

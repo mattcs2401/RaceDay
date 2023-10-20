@@ -29,8 +29,8 @@ class SetupRunnersFromApi  @Inject constructor(
         try {
             emit(DataResult.loading())
 
-            val meetingAltIds = iDbRepo.getMeetingAltIds()
-            meetingAltIds.forEach { item ->
+            val meetingSubset = iDbRepo.getMeetingSubset()
+            meetingSubset.forEach { item ->
                 val date = item.meetingDate
                 val code = item.venueMnemonic
                 val races = item.numRaces.toString()

@@ -53,14 +53,6 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun getConnectivity() {
-        viewModelScope.launch {
-            connectivityObserver.observe().collect { status ->
-                connectivityState = status
-            }
-        }
-    }
-
     fun onEvent(event: SplashEvent) {
         when(event) {
             is SplashEvent.Error -> {
@@ -68,6 +60,14 @@ class SplashViewModel @Inject constructor(
             }
             is SplashEvent.SetRunners -> {
 //                setupRunnersFromApi()
+            }
+        }
+    }
+
+    private fun getConnectivity() {
+        viewModelScope.launch {
+            connectivityObserver.observe().collect { status ->
+                connectivityState = status
             }
         }
     }

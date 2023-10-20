@@ -43,13 +43,13 @@ interface IDbRepo {
     suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
-    data class MeetingAltInfo(
+    data class MeetingSubset(
         val meetingDate: String,
         val venueMnemonic: String,
         val numRaces: Int
     )
     @Query("select meetingDate, venueMnemonic, numRaces from Meeting")
-    suspend fun getMeetingAltIds(): List<MeetingAltInfo>
+    suspend fun getMeetingSubset(): List<MeetingSubset>
 
     /**
      * Insert a MeetingDto.

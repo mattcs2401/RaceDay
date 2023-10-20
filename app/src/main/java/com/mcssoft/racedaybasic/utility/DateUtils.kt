@@ -26,8 +26,16 @@ class DateUtils {
      * @return Time value formatted as "HH:MI".
      */
     fun getTime(dateTime: String): String {
-        val time = dateTime.split("T")[1].split(":")
-        return "${time[0]}:${time[1]}"
+        val timeAll = dateTime.split("T")[1].split(":").toMutableList()
+
+        // Sometimes hour value is, e.g. 02:14 when should be 12:14.
+        val timeHour = timeAll[0].toCharArray()
+        if(timeHour[0] == '0') {
+            timeHour[0] = '1'
+            timeAll[0] = "${timeHour[0]}${timeHour[1]}"
+        }
+
+        return "${timeAll[0]}:${timeAll[1]}"
     }
 }
 /*
