@@ -24,16 +24,16 @@ android {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        compose true
+        compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
     packagingOptions {
         resources {
@@ -60,12 +60,12 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ver"
     implementation "androidx.compose.foundation:foundation:$compose_ver"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-alpha03"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
-    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0-alpha03"
 
     /* Room database. */
-    def room_ver = '2.6.0-rc01'
+    def room_ver = '2.6.0'
     ksp "androidx.room:room-compiler:$room_ver"
     implementation "androidx.room:room-ktx:$room_ver"
     implementation "androidx.room:room-runtime:$room_ver"
