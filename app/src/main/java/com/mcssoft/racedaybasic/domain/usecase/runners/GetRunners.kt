@@ -1,26 +1,25 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.races
+package com.mcssoft.racedaybasic.domain.usecase.runners
 
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
-import com.mcssoft.racedaybasic.domain.model.Race
+import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-/**
- * Get a list of Races from the database.
- * @param iDbRepo: Database access.
- */
-class GetRace @Inject constructor(
+class GetRunners @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke(raceId: Long): Flow<DataResult<Race>> = flow {
+    /**
+     *
+     */
+    operator fun invoke(raceId: Long): Flow<DataResult<List<Runner>>> = flow {
         try {
             emit(DataResult.loading())
 
-            val race = iDbRepo.getRace(raceId)
+            val runners = iDbRepo.getRunners(raceId)
 
-            emit(DataResult.success(race))
+            emit(DataResult.success(runners))
 
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))

@@ -10,7 +10,7 @@ class DbRepoImpl @Inject constructor(
     private val dao: IDbRepo
 ) : IDbRepo {
 
-    //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
+    //<editor-fold default state="collapsed" desc="Region: Meeting related.">
     override suspend fun insertMeeting(meeting: Meeting): Long {
         return dao.insertMeeting(meeting)
     }
@@ -23,11 +23,6 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetings()
     }
 
-//    override suspend fun getMeetingId(mId: Int): Long {
-//        return dao.getMeetingId(mId)
-//    }
-
-
     override suspend fun getMeetingSubset(): List<IDbRepo.MeetingSubset> {
         return dao.getMeetingSubset()
     }
@@ -36,12 +31,12 @@ class DbRepoImpl @Inject constructor(
         return dao.deleteMeetings()
     }
 
-    override suspend fun meetingCount(): Int {
-        return dao.meetingCount()
-    }
+//    override suspend fun meetingCount(): Int {
+//        return dao.meetingCount()
+//    }
     //</editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: RaceDto related.">
+    //<editor-fold default state="collapsed" desc="Region: Race related.">
     override suspend fun insertRaces(races: List<Race>): List<Long> {
         return dao.insertRaces(races)
     }
@@ -57,10 +52,6 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long {
         return dao.getRaceIdByVenueCodeAndRaceNo(venueCode, raceNum)
     }
-
-//    override suspend fun getRaceId(mtgId: Long, raceNo: Int): Long {
-//        return dao.getRaceId(mtgId, raceNo)
-//    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Runner related.">
@@ -99,15 +90,4 @@ class DbRepoImpl @Inject constructor(
 //    }
     //</editor-fold>
 
-//    override suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>> {
-//        return dao.loadTrainerHorses()
-//    }
-//
-//    override suspend fun getTrainerCount(): Int {
-//        return dao.getTrainerCount()
-//    }
-//
-//    override suspend fun insertTrainer(entity: Trainer) {
-//        return dao.insertTrainer(entity)
-//    }
 }

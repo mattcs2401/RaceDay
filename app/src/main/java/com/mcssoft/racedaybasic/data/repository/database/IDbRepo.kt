@@ -24,10 +24,17 @@ interface IDbRepo {
     // Note: Here the meetingId is the database row id (_id).
     suspend fun insertMeetingWithRaces(meeting: MeetingDto, races: List<RaceDto>) {
         val meetingId = insertMeeting(meeting.toMeeting())
+
         val racesWithMeetingId  = races.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
+
+            val scratchings = raceDto.scratchings.map { scratchingDto ->
+
+            }
+
             raceDto.toRace(meetingId, meeting.venueMnemonic!!)
         }
+
         insertRaces(racesWithMeetingId)
     }
 
@@ -74,29 +81,17 @@ interface IDbRepo {
     @Query("select * from Meeting where _id = :mId")
     suspend fun getMeeting(mId: Long): Meeting
 
-//    /**
-//     * Get a Meeting's id (record's row id) by the MeetingId value.
-//     * @param mId: The Meeting's MeetingId.
-//     * @return A MeetingDto.
-//     */
-//    @Query("select _id from Meeting where meetingId = :mId")
-//    suspend fun getMeetingId(mId: Int): Long
-
-
-//    @Query("select meetingCode from MeetingDto")
-//    suspend fun getMeetingCodes(): List<String>
-
     /**
      * Delete all from Meetings.
      */
     @Query("delete from Meeting")
     suspend fun deleteMeetings(): Int       // CASCADE should take care of Races/Runners etc.
 
-    /**
-     * Get a count of the MeetingDto records.
-     */
-    @Query("select count(*) from Meeting")
-    suspend fun meetingCount(): Int
+//    /**
+//     * Get a count of the MeetingDto records.
+//     */
+//    @Query("select count(*) from Meeting")
+//    suspend fun meetingCount(): Int
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: RaceDto related.">
@@ -149,7 +144,7 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Query("update Runner set checked= :checked where _id= :runnerId")
+    @Query("update Runner set isChecked= :checked where _id= :runnerId")
     suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
     //</editor-fold>
 
@@ -162,18 +157,5 @@ interface IDbRepo {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
-
-//    @Query("delete from Summary where rrid = :id")
-//    suspend fun deleteSummary(id: Long)
     //</editor-fold>
-//
-//    @Query("select count(*) from Trainer")
-//    suspend fun getTrainerCount(): Int
-//
-//    @Query("select * from Trainer join Horse on Trainer._id = Horse.tId")
-//    suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertTrainer(entity: Trainer)
-
 }

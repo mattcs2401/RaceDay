@@ -10,8 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,7 +40,7 @@ class RunnersViewModel @Inject constructor(
                 // Get the Race id from the preferences.
                 getRaceId(Preference.RaceIdPref)
                 // Race id is returned in the state.
-                raceId = _state.value.raceId
+                raceId = state.value.raceId
             }
             // Get Race and Runner values for the screen.
             getRace(raceId)
@@ -111,7 +109,6 @@ class RunnersViewModel @Inject constructor(
                             )
                         }
                     }
-
                     result.failed -> {
                         _state.update { state ->
                             state.copy(
@@ -121,7 +118,6 @@ class RunnersViewModel @Inject constructor(
                             )
                         }
                     }
-
                     result.successful -> {
                         _state.update { state ->
                             state.copy(
@@ -200,4 +196,5 @@ class RunnersViewModel @Inject constructor(
             }
         }
     }
+
 }

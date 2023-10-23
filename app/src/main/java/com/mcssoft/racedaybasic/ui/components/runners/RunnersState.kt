@@ -4,12 +4,12 @@ import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
 
 data class RunnersState(
-    val exception: Exception? = null,
-    val status: Status = Status.NoState,
-    val loading: Boolean = false,
-    val runners: List<Runner> = emptyList(),
-    val race: Race? = null,
-    val raceId: Long = 0
+    val exception: Exception?,
+    val status: Status,
+    val loading: Boolean,
+    val runners: List<Runner>,
+    val race: Race?,
+    val raceId: Long
     ) {
 
     companion object {
@@ -17,7 +17,20 @@ data class RunnersState(
             return RunnersState(
                 exception = null,
                 status = Status.Initialise,
-                race = null
+                loading = false,
+                runners = emptyList(),
+                race = null,
+                raceId = 0
+            )
+        }
+        fun loading(): RunnersState {
+            return RunnersState(
+                exception = null,
+                status = Status.Loading,
+                loading = true,
+                runners = emptyList(),
+                race = null,
+                raceId = 0
             )
         }
     }
@@ -27,6 +40,5 @@ data class RunnersState(
         data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
-        data object NoState: Status()
     }
 }

@@ -1,6 +1,5 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.meetings
+package com.mcssoft.racedaybasic.domain.usecase.meetings
 
-import android.util.Log
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.utility.DataResult
@@ -12,19 +11,16 @@ import javax.inject.Inject
  * Get a list of Meetings from the database.
  * @param iDbRepo: Database access.
  */
-class GetMeetings @Inject constructor(
+class GetMeeting @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke(): Flow<DataResult<List<Meeting>>> = flow {
-//        Log.d("TAG", "GetMeetings.invoke()")
+    operator fun invoke(mId: Long): Flow<DataResult<Meeting>> = flow {
         try {
             emit(DataResult.loading())
 
-            var meetings = iDbRepo.getMeetings()
+            val meeting = iDbRepo.getMeeting(mId)
 
-            meetings = meetings.sortedBy { meeting -> meeting.sellCode }
-
-            emit(DataResult.success(meetings))
+            emit(DataResult.success(meeting))
 
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))

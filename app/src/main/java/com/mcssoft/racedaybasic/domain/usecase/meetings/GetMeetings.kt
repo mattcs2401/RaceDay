@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.meetings
+package com.mcssoft.racedaybasic.domain.usecase.meetings
 
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.domain.model.Meeting
@@ -11,16 +11,19 @@ import javax.inject.Inject
  * Get a list of Meetings from the database.
  * @param iDbRepo: Database access.
  */
-class GetMeeting @Inject constructor(
+class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke(mId: Long): Flow<DataResult<Meeting>> = flow {
+    operator fun invoke(): Flow<DataResult<List<Meeting>>> = flow {
+//        Log.d("TAG", "GetMeetings.invoke()")
         try {
             emit(DataResult.loading())
 
-            val meeting = iDbRepo.getMeeting(mId)
+            var meetings = iDbRepo.getMeetings()
 
-            emit(DataResult.success(meeting))
+            meetings = meetings.sortedBy { meeting -> meeting.sellCode }
+
+            emit(DataResult.success(meetings))
 
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))

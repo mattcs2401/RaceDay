@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.api
+package com.mcssoft.racedaybasic.domain.usecase.api
 
 import android.util.Log
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
@@ -54,6 +54,7 @@ class SetupBaseFromApi @Inject constructor(
                     // Delete whatever is there (CASCADE should take care of Race/Runner etc).
                     iDbRepo.deleteMeetings()
                 }
+                else -> {}
             }
 
             // Save Meeting/Race info.
@@ -62,7 +63,7 @@ class SetupBaseFromApi @Inject constructor(
                 (type.location in Constants.LOCATIONS) &&
                 (!type.venueMnemonic.isNullOrBlank())      // from testing.
             }.forEach { meetingDto ->
-                // Note: uses transaction boundary.
+                // Note: Scratchings also processed here.
                 iDbRepo.insertMeetingWithRaces(meetingDto, meetingDto.races)
             }
 

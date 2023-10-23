@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.api
+package com.mcssoft.racedaybasic.domain.usecase.api
 
 import android.content.Context
 import androidx.lifecycle.asFlow

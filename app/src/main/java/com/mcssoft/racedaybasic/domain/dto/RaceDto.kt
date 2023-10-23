@@ -36,7 +36,6 @@ fun RaceDto.toRace(mId: Long, venue: String): Race {
         raceName = raceName,
         raceStartTime = raceStartTime,
         raceDistance = raceDistance,
-        raceStatus = raceStatus,
-        hasScratchings = scratchings.isEmpty()
+        raceStatus = raceStatus
     )
 }

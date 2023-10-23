@@ -18,19 +18,19 @@ import com.mcssoft.racedaybasic.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
-import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupBaseFromApi
-import com.mcssoft.racedaybasic.domain.usecase.cases.api.SetupRunnersFromApi
-import com.mcssoft.racedaybasic.domain.usecase.cases.local.SetupBaseFromLocal
-import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeeting
-import com.mcssoft.racedaybasic.domain.usecase.cases.meetings.GetMeetings
-import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.GetPreferences
-import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRaces
-import com.mcssoft.racedaybasic.domain.usecase.cases.preferences.SavePreferences
-import com.mcssoft.racedaybasic.domain.usecase.cases.races.GetRace
-import com.mcssoft.racedaybasic.domain.usecase.cases.runners.GetRunners
-import com.mcssoft.racedaybasic.domain.usecase.cases.runners.SetRunnerChecked
-import com.mcssoft.racedaybasic.domain.usecase.cases.summary.GetSummaries
-import com.mcssoft.racedaybasic.domain.usecase.cases.summary.SetForSummary
+import com.mcssoft.racedaybasic.domain.usecase.api.SetupBaseFromApi
+import com.mcssoft.racedaybasic.domain.usecase.api.SetupRunnersFromApi
+import com.mcssoft.racedaybasic.domain.usecase.local.SetupBaseFromLocal
+import com.mcssoft.racedaybasic.domain.usecase.meetings.GetMeeting
+import com.mcssoft.racedaybasic.domain.usecase.meetings.GetMeetings
+import com.mcssoft.racedaybasic.domain.usecase.preferences.GetPreferences
+import com.mcssoft.racedaybasic.domain.usecase.preferences.SavePreferences
+import com.mcssoft.racedaybasic.domain.usecase.races.GetRace
+import com.mcssoft.racedaybasic.domain.usecase.races.GetRaces
+import com.mcssoft.racedaybasic.domain.usecase.runners.GetRunners
+import com.mcssoft.racedaybasic.domain.usecase.runners.SetRunnerChecked
+import com.mcssoft.racedaybasic.domain.usecase.summary.GetSummaries
+import com.mcssoft.racedaybasic.domain.usecase.summary.SetForSummary
 import com.mcssoft.racedaybasic.utility.network.ConnectivityObserver
 import com.mcssoft.racedaybasic.utility.network.IConnectivityObserver
 import dagger.Module
@@ -131,7 +131,8 @@ object AppModule {
             getSummaries = GetSummaries(local),
             setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs)
+            savePreferences = SavePreferences(prefs),
+//            getScratchings = GetScratchings(local)
         )
     }
 

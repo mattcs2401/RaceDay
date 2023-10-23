@@ -53,6 +53,7 @@ class RacesViewModel @Inject constructor(
             is RacesEvent.Cancel -> {
                 // TBA ?
             }
+            else -> {}
         }
     }
 

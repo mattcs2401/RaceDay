@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Runner",
-    indices = [Index(value = ["raceId"])],
+    indices = [Index(value = ["raceId", "isScratched", "isChecked"])],
     foreignKeys = [
         ForeignKey(
             entity = Race::class,
@@ -31,8 +31,10 @@ data class Runner(
     var trainerFullName: String,
     var dfsFormRating: Int,
     var handicapWeight: Double,
-    // Additional for Summary use.
-    var checked: Boolean
+
+    // Additional, not in the Dto.
+    var isScratched: Boolean,          // Flag, Runner is a scratching.
+    var isChecked: Boolean             // For Summary use.
 )
 /*
     {

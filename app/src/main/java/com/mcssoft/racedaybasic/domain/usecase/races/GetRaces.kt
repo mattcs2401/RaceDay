@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.races
+package com.mcssoft.racedaybasic.domain.usecase.races
 
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.domain.model.Race

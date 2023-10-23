@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.domain.usecase.cases.local
+package com.mcssoft.racedaybasic.domain.usecase.local
 
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
