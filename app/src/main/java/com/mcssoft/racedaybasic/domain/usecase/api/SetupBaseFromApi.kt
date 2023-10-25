@@ -51,8 +51,8 @@ class SetupBaseFromApi @Inject constructor(
                     return@flow
                 }
                 is Status.Success -> {
-                    // Delete whatever is there (CASCADE should take care of Race/Runner etc).
-                    iDbRepo.deleteMeetings()
+                    // Simply delete whatever is there.
+                    iDbRepo.deleteAll()
                 }
                 else -> {}
             }

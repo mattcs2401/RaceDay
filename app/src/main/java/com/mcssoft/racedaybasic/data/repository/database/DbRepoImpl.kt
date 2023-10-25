@@ -3,12 +3,17 @@ package com.mcssoft.racedaybasic.data.repository.database
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Scratching
 import com.mcssoft.racedaybasic.domain.model.Summary
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
     private val dao: IDbRepo
 ) : IDbRepo {
+
+    override suspend fun deleteAll() {
+        return dao.deleteAll()
+    }
 
     //<editor-fold default state="collapsed" desc="Region: Meeting related.">
     override suspend fun insertMeeting(meeting: Meeting): Long {
@@ -90,4 +95,13 @@ class DbRepoImpl @Inject constructor(
 //    }
     //</editor-fold>
 
+    //<editor-fold default state="collapsed" desc="Region: Scratching related.">
+    override suspend fun insertScratchings(scratchings: List<Scratching>): List<Long> {
+        return dao.insertScratchings(scratchings)
+    }
+
+    override suspend fun deleteScratchings(): Int {
+        return dao.deleteScratchings()
+    }
+    //</editor-fold>
 }

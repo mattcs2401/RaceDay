@@ -11,9 +11,11 @@ import com.mcssoft.racedaybasic.domain.dto.toMeeting
 import com.mcssoft.racedaybasic.domain.dto.toRace
 import com.mcssoft.racedaybasic.domain.dto.RunnerDto
 import com.mcssoft.racedaybasic.domain.dto.toRunner
+import com.mcssoft.racedaybasic.domain.dto.toScratching
 import com.mcssoft.racedaybasic.domain.model.Meeting
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Scratching
 import com.mcssoft.racedaybasic.domain.model.Summary
 import com.mcssoft.racedaybasic.utility.DateUtils
 
@@ -21,15 +23,29 @@ import com.mcssoft.racedaybasic.utility.DateUtils
 interface IDbRepo {
 
     @Transaction
-    // Note: Here the meetingId is the database row id (_id).
-    suspend fun insertMeetingAndRaces(meeting: MeetingDto, races: List<RaceDto>) {
+    // Note: Any Scratchings are also processed.
+    suspend fun insertMeetingAndRaces(meeting: MeetingDto, racesDto: List<RaceDto>) {
+        // Meeting and Race info.
         val meetingId = insertMeeting(meeting.toMeeting())
 
-        val racesWithMeetingId  = races.map { raceDto ->
+        val racesWithMeetingId  = racesDto.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
             raceDto.toRace(meetingId, meeting.venueMnemonic!!)
         }
         insertRaces(racesWithMeetingId)
+
+        // Scratchings info.
+        val scratches = mutableListOf<Scratching>()
+
+        racesDto.forEach { rDto ->
+            // One set of Scratching for one Race.
+            rDto.scratchings.forEach { scratchDto ->
+                scratches.add(
+                    scratchDto.toScratching(meeting.venueMnemonic!!, rDto.raceNumber, scratchDto)
+                )
+            }
+            insertScratchings(scratches)
+        }
     }
 
     @Transaction
@@ -40,8 +56,11 @@ interface IDbRepo {
         insertRunners(runnersWithRaceId)
     }
 
-    @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
-    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: String): Long
+    @Transaction
+    suspend fun deleteAll() {
+        deleteMeetings()
+        deleteScratchings()
+    }
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     data class MeetingSubset(
@@ -108,14 +127,8 @@ interface IDbRepo {
     @Query("select * from Race where _id= :rId")
     suspend fun getRace(rId: Long): Race
 
-//    /**
-//     * Get the id (database row id) of a RaceDto based on the (foreign key) MeetingDto id and RaceDto number.
-//     * @param mtgId: The MeetingDto id (database row number).
-//     * @param raceNo: The RaceDto number.
-//     * @return A the RaceDto id.
-//     */
-//    @Query("select _id from RaceDto where mtgId= :mtgId and raceNumber= :raceNo")
-//    suspend fun getRaceId(mtgId: Long, raceNo: Int): Long
+    @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
+    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: String): Long
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Runner related.">
@@ -151,5 +164,13 @@ interface IDbRepo {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
+    //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Scratching related.">
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScratchings(scratchings: List<Scratching>): List<Long>
+
+    @Query("delete from Scratching")
+    suspend fun deleteScratchings(): Int
     //</editor-fold>
 }
