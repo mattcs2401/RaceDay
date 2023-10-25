@@ -64,7 +64,7 @@ class SetupBaseFromApi @Inject constructor(
                 (!type.venueMnemonic.isNullOrBlank())      // from testing.
             }.forEach { meetingDto ->
                 // Note: Scratchings also processed here.
-                iDbRepo.insertMeetingWithRaces(meetingDto, meetingDto.races)
+                iDbRepo.insertMeetingAndRaces(meetingDto, meetingDto.races)
             }
 
             emit(DataResult.success(response.errorCode))

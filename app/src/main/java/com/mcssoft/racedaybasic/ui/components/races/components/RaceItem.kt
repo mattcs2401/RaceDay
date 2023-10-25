@@ -53,7 +53,7 @@ fun RaceItem(
             }
         ) {
             Text(
-                race.raceNo.toString(),
+                race.raceNumber.toString(),
                 Modifier.layoutId("idRaceNo"),
                 fontSize = fontSize12sp
             )

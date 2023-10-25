@@ -22,19 +22,13 @@ interface IDbRepo {
 
     @Transaction
     // Note: Here the meetingId is the database row id (_id).
-    suspend fun insertMeetingWithRaces(meeting: MeetingDto, races: List<RaceDto>) {
+    suspend fun insertMeetingAndRaces(meeting: MeetingDto, races: List<RaceDto>) {
         val meetingId = insertMeeting(meeting.toMeeting())
 
         val racesWithMeetingId  = races.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
-
-            val scratchings = raceDto.scratchings.map { scratchingDto ->
-
-            }
-
             raceDto.toRace(meetingId, meeting.venueMnemonic!!)
         }
-
         insertRaces(racesWithMeetingId)
     }
 
@@ -46,8 +40,8 @@ interface IDbRepo {
         insertRunners(runnersWithRaceId)
     }
 
-    @Query("select _id from race where venue = :venueCode and raceNo = :raceNum")
-    suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long
+    @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
+    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: String): Long
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     data class MeetingSubset(

@@ -45,7 +45,7 @@ fun RacesHeader(
             constraintSet
         ) {
             Text(
-                race.raceNo.toString(),
+                race.raceNumber.toString(),
                 Modifier.layoutId("idRaceNo"),
                 //fontSize = fontSize16sp
             )
