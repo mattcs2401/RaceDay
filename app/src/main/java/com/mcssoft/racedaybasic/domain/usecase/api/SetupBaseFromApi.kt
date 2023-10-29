@@ -63,7 +63,7 @@ class SetupBaseFromApi @Inject constructor(
                 (type.location in Constants.LOCATIONS) &&
                 (!type.venueMnemonic.isNullOrBlank())      // from testing.
             }.forEach { meetingDto ->
-                // Note: Scratchings also processed here.
+                // Note: Any Scratchings also processed here.
                 iDbRepo.insertMeetingAndRaces(meetingDto, meetingDto.races)
             }
 

@@ -37,23 +37,16 @@ interface IDbRepo {
         // Scratchings info.
         val scratches = mutableListOf<Scratching>()
 
-        racesDto.forEach { rDto ->
+        racesDto.forEach { raceDto ->
             // One set of Scratching for one Race.
-            rDto.scratchings.forEach { scratchDto ->
-                scratches.add(
-                    scratchDto.toScratching(meeting.venueMnemonic!!, rDto.raceNumber, scratchDto)
-                )
+            raceDto.scratchings.forEach { scratchDto ->
+                val scratch = scratchDto.toScratching(meeting.venueMnemonic!!, raceDto.raceNumber, scratchDto)
+                scratches.add(scratch)
             }
             insertScratchings(scratches)
+            // Reset for next iteration (i.e. different Race and Scratchings).
+            scratches.removeAll(scratches)
         }
-    }
-
-    @Transaction
-    suspend fun insertRunnersWithRaceId(raceId: Long, runners: List<RunnerDto>) {
-        val runnersWithRaceId = runners.map { runnerDto ->
-            runnerDto.toRunner(raceId)
-        }
-        insertRunners(runnersWithRaceId)
     }
 
     @Transaction
@@ -107,7 +100,7 @@ interface IDbRepo {
 //    suspend fun meetingCount(): Int
     //</editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: RaceDto related.">
+    //<editor-fold default state="collapsed" desc="Region: Race related.">
     /**
      * Insert a list of Races.
      * @param races: The list of Races.
@@ -128,7 +121,7 @@ interface IDbRepo {
     suspend fun getRace(rId: Long): Race
 
     @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
-    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: String): Long
+    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Runner related.">
@@ -140,11 +133,19 @@ interface IDbRepo {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRunners(runners: List<Runner>): List<Long>
 
+    @Transaction
+    suspend fun insertRunnersWithRaceId(raceId: Long, runners: List<RunnerDto>) {
+        val runnersWithRaceId = runners.map { runnerDto ->
+            runnerDto.toRunner(raceId)
+        }
+        insertRunners(runnersWithRaceId)
+    }
+
     @Query("select * from Runner where _id = :runnerId")
     suspend fun getRunner(runnerId: Long): Runner
 
     /**
-     * Get a list of Runners based on the id of the associated RaceDto.
+     * Get a list of Runners based on the id of the associated Race.
      * @param raceId: The RaceDto id (database row id).
      * @return A list of Runners.
      */
@@ -153,6 +154,16 @@ interface IDbRepo {
 
     @Query("update Runner set isChecked= :checked where _id= :runnerId")
     suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
+
+    @Transaction
+    suspend fun updateRunnersAsScratched(runners: List<Runner>) {
+        runners.forEach { runner ->
+            updateRunnerScratched(runner._id)
+        }
+    }
+
+    @Query("update Runner set isScratched = 'true' where _id = :rId")
+    suspend fun updateRunnerScratched(rId: Long)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
@@ -167,10 +178,13 @@ interface IDbRepo {
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert//(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertScratchings(scratchings: List<Scratching>): List<Long>
 
     @Query("delete from Scratching")
     suspend fun deleteScratchings(): Int
+
+    @Query("select * from Scratching where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
+    suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
 }

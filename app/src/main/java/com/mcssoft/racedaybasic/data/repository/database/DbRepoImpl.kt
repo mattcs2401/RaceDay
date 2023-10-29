@@ -54,8 +54,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getRace(rId)
     }
 
-    override suspend fun getRaceIdByVenueCodeAndRaceNo(venueCode: String, raceNum: String): Long {
-        return dao.getRaceIdByVenueCodeAndRaceNo(venueCode, raceNum)
+    override suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long {
+        return dao.getRaceIdByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
     }
     //</editor-fold>
 
@@ -70,6 +70,14 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun getRunners(raceId: Long): List<Runner> {
         return dao.getRunners(raceId)
+    }
+
+    override suspend fun updateRunnersAsScratched(runners: List<Runner>) {
+        return dao.updateRunnersAsScratched(runners)
+    }
+
+    override suspend fun updateRunnerScratched(rId: Long) {
+        return dao.updateRunnerScratched(rId)
     }
 
     override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
@@ -102,6 +110,10 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun deleteScratchings(): Int {
         return dao.deleteScratchings()
+    }
+
+    override suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching> {
+        return dao.getScratchingsForRace(venueMnemonic, raceNumber)
     }
     //</editor-fold>
 }

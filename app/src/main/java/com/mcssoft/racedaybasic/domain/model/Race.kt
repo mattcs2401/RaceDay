@@ -31,7 +31,8 @@ data class Race(
     var raceName: String,              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
     var raceStartTime: String,         // e.g. "2023-09-24T03:10:00.000Z"
     var raceDistance: Int,             // e.g. 1600
-    var raceStatus: String            // for anything Abandoned.
+    var raceStatus: String,            // for anything Abandoned.
+    var hasScratchings: Boolean        // flag for Scratchings exist.
 )
 /*
 DTO class:

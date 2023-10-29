@@ -9,8 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "Scratching",
     indices = [
         Index(
-            value = ["venueMnemonic","raceNumber"],
-            unique = true
+            value = ["venueMnemonic","raceNumber"]
         )],
 )
 data class Scratching(
@@ -23,5 +22,4 @@ data class Scratching(
 
     var venueMnemonic: String,         // venue code (not in ScratchingDto).
     var raceNumber: Int                // Race number (not in ScratchingDto).
-) {
-}
+)

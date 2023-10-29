@@ -36,6 +36,7 @@ fun RaceDto.toRace(mtgId: Long, venueMnemonic: String): Race {
         raceName = raceName,
         raceStartTime = raceStartTime,
         raceDistance = raceDistance,
-        raceStatus = raceStatus
+        raceStatus = raceStatus,
+        hasScratchings = scratchings.isNotEmpty()
     )
 }

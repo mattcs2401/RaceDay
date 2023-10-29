@@ -10,6 +10,9 @@ import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
 import com.mcssoft.racedaybasic.domain.dto.BaseDto2
+import com.mcssoft.racedaybasic.domain.model.Race
+import com.mcssoft.racedaybasic.domain.model.Runner
+import com.mcssoft.racedaybasic.domain.model.Scratching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -40,20 +43,27 @@ class RunnersWorker (
 
             var response: NetworkResponse<BaseDto2>   // response from Api.
             var  raceId: Long
+            var race: Race
 
             val date = inputData.getString(context.resources.getString(R.string.key_meeting_date))
             val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
             val races = inputData.getString(context.resources.getString(R.string.key_num_races))
 
-            for(race in 1..(races?.toInt() ?: -1)) {
-                Log.d("TAG", "Process for Runners - Race: $race")
+            for(raceNum in 1..(races?.toInt() ?: -1)) {
+                Log.d("TAG", "Process for Runners - Race: $raceNum")
 
-                // Get the Runners for a Race.
-                response = iRemoteRepo.getRaceDayRunners(date!!, code!!, race.toString())
+                // Get the Runners for a Race. Parameter raceNum as sString for Url construct.
+                response = iRemoteRepo.getRaceDayRunners(date!!, code!!, raceNum.toString())
                 // Get the Race id for the Race.
-                raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code, race.toString())
+                raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code, raceNum)
                 // Insert records.
                 iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
+                // Get the Race. Need Race info to get Scratchings.
+                race = iDbRepo.getRace(raceId)
+
+                if(race.hasScratchings) {
+                    processScratchings(race)
+                }
             }
 
             Result.success()
@@ -66,4 +76,29 @@ class RunnersWorker (
         }
     }
 
+    private suspend fun processScratchings(race: Race) {
+        val runners = iDbRepo.getRunners(race._id)
+        val scratches = iDbRepo.getScratchingsForRace(race.venueMnemonic, race.raceNumber)
+
+        val sRunner = mutableListOf<Runner>()    // scratched Runners.
+
+        runners.forEach { runner ->
+            scratches.forEach { scratch ->
+                if(scratch.runnerName == runner.runnerName &&
+                    scratch.runnerNumber == runner.runnerNumber
+                ) {
+                    runner.isScratched = true
+                    sRunner.add(runner)
+                }
+            }
+        }
+        iDbRepo.updateRunnersAsScratched(sRunner)
+        // TODO - Update the Runner records in the database.
+       val bp = "bp"
+    }
 }
+/*
+fun <T, U> List<T>.myEquals(other: List<T>, compareBy: (T) -> U): Boolean {
+    return map(compareBy).toSet() == other.map(compareBy).toSet()
+}
+ */

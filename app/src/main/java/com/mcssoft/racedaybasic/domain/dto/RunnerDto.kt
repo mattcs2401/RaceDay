@@ -44,6 +44,6 @@ fun RunnerDto.toRunner(raceId: Long): Runner {
         dfsFormRating = dfsFormRating,
         handicapWeight = handicapWeight,
         isChecked = false,                     // not part of Dto.
-        isScratched = false
+        isScratched = false                    // not part of Dto.
     )
 }
