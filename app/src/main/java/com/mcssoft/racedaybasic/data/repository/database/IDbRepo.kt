@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.mcssoft.racedaybasic.domain.dto.MeetingDto
 import com.mcssoft.racedaybasic.domain.dto.RaceDto
 import com.mcssoft.racedaybasic.domain.dto.toMeeting
@@ -110,7 +111,7 @@ interface IDbRepo {
     suspend fun insertRaces(races: List<Race>): List<Long>
 
     /**
-     * Get a listing of the Races based on their (foreign key) MeetingDto id.
+     * Get a listing of the Races based on their (foreign key) Meeting id.
      * @param mtgId: The Meeting id (database row number).
      * @return A list of Races.
      */
@@ -149,21 +150,24 @@ interface IDbRepo {
      * @param raceId: The RaceDto id (database row id).
      * @return A list of Runners.
      */
-    @Query("select * from Runner where raceId= :raceId")
+    @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
     @Query("update Runner set isChecked= :checked where _id= :runnerId")
     suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
 
-    @Transaction
-    suspend fun updateRunnersAsScratched(runners: List<Runner>) {
-        runners.forEach { runner ->
-            updateRunnerScratched(runner._id)
-        }
-    }
+//    @Transaction
+//    suspend fun updateRunnersAsScratched(runners: List<Runner>) {
+//        runners.forEach { runner ->
+//            updateRunnerScratched(runner._id)
+//        }
+//    }
+//
+//    @Query("update Runner set isScratched = 'true' where _id = :rId")
+//    suspend fun updateRunnerScratched(rId: Long)
 
-    @Query("update Runner set isScratched = 'true' where _id = :rId")
-    suspend fun updateRunnerScratched(rId: Long)
+    @Update
+    suspend fun updateRunnerAsScratched(runner: Runner)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">

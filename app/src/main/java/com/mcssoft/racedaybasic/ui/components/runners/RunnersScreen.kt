@@ -103,8 +103,8 @@ fun RunnersScreen(
                 ) { runner ->
                     RunnerItem(
                         runner = runner,
-                        onEvent = onEvent
-//                        onItemClick = { }
+                        onEvent = onEvent,
+                        onItemClick = { }
                     )
                 }
             }

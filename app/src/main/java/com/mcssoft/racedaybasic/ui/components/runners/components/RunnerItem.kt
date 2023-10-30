@@ -1,11 +1,14 @@
 package com.mcssoft.racedaybasic.ui.components.runners.components;
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -16,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
@@ -36,7 +40,7 @@ import com.mcssoft.racedaybasic.ui.theme.padding4dp
 fun RunnerItem(
     runner: Runner,
     onEvent: (RunnersEvent) -> Unit,
-//        onItemClick: (Runner) -> Unit
+    onItemClick: (Runner) -> Unit
 ){
     var expandedState by remember { mutableStateOf(false) }
 
@@ -44,17 +48,26 @@ fun RunnerItem(
         targetValue = if (expandedState) 180f else 0f, label = ""
     )
 
+    var scratched by remember { mutableStateOf(false) }
+
+    if(runner.isScratched) {
+        scratched = true
+    }
+
     Card(
         modifier = Modifier
            .fillMaxWidth()
            .padding(padding4dp),
       shape = RoundedCornerShapes.medium,
       elevation = elevation4dp
-      //backgroundColor = TBA
     ) {
         ConstraintLayout(
             constraintSet,
-//            modifier = Modifier.clickable { onItemClick(runner) }
+            if(scratched) {
+                Modifier.background(color = Color.Red)
+            } else {
+                Modifier.clickable { onItemClick(runner) }
+            }
         ) {
             Text(
                 runner.runnerNumber.toString(),
@@ -86,20 +99,20 @@ fun RunnerItem(
                 Modifier.layoutId("idRider"),
                 fontSize = fontSize10sp
             )
-            IconButton(
-                onClick = {
-                    expandedState = !expandedState
-                },
-                Modifier
-                    .layoutId("idArrow")
-                    .rotate(rotationState)
-            ) {
-//                if (!meeting.abandoned) {
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Drop-Down Arrow"
-                )
-//                }
+            if (!scratched) {
+                IconButton(
+                    onClick = {
+                        expandedState = !expandedState
+                    },
+                    Modifier
+                        .layoutId("idArrow")
+                        .rotate(rotationState)
+                ){
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Drop-Down Arrow"
+                    )
+                }
             }
         }
         if (expandedState) {
@@ -148,4 +161,3 @@ private val constraintSet = ConstraintSet() {
         centerVerticallyTo(parent)
     }
 }
-
