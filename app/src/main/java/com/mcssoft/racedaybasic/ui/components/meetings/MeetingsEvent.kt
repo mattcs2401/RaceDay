@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.meetings
+package com.mcssoft.racedaybasic.ui.components.meetings
 
 sealed class MeetingsEvent {
     // TBA

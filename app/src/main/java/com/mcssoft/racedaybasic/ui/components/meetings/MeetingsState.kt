@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.meetings
+package com.mcssoft.racedaybasic.ui.components.meetings
 
 import com.mcssoft.racedaybasic.domain.model.Meeting
 

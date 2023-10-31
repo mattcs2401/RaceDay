@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.splash
+package com.mcssoft.racedaybasic.ui.components.splash
 
 import android.app.Activity
 import androidx.compose.foundation.background

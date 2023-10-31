@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.meetings
+package com.mcssoft.racedaybasic.ui.components.meetings
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -23,9 +23,9 @@ import com.mcssoft.racedaybasic.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaybasic.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaybasic.ui.components.navigation.BottomBar
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
-import com.mcssoft.racedaybasic.ui.meetings.components.MeetingItem
+import com.mcssoft.racedaybasic.ui.components.meetings.components.MeetingItem
 import com.mcssoft.racedaybasic.R
-import com.mcssoft.racedaybasic.ui.meetings.components.MeetingsTopBar
+import com.mcssoft.racedaybasic.ui.components.meetings.components.MeetingsTopBar
 
 @Composable
 /**

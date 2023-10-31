@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.splash
+package com.mcssoft.racedaybasic.ui.components.splash
 
 import android.util.Log
 import androidx.compose.runtime.getValue

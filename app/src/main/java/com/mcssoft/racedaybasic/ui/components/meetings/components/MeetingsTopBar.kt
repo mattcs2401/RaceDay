@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.meetings.components
+package com.mcssoft.racedaybasic.ui.components.meetings.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
