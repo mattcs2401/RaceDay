@@ -11,12 +11,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.racedaybasic.ui.components.races.RacesViewModel
 import com.mcssoft.racedaybasic.ui.components.runners.RunnersViewModel
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsScreen
+import com.mcssoft.racedaybasic.ui.components.meetings.MeetingsScreen
 import com.mcssoft.racedaybasic.ui.components.races.RacesScreen
 import com.mcssoft.racedaybasic.ui.components.runners.RunnersScreen
-import com.mcssoft.racedaybasic.ui.splash.SplashScreen
-import com.mcssoft.racedaybasic.ui.meetings.MeetingsViewModel
-import com.mcssoft.racedaybasic.ui.splash.SplashViewModel
+import com.mcssoft.racedaybasic.ui.components.splash.SplashScreen
+import com.mcssoft.racedaybasic.ui.components.meetings.MeetingsViewModel
+import com.mcssoft.racedaybasic.ui.components.splash.SplashViewModel
+import com.mcssoft.racedaybasic.ui.components.summary.SummaryScreen
+import com.mcssoft.racedaybasic.ui.components.summary.SummaryViewModel
+
 
 @Composable
 fun NavGraph() {
@@ -83,9 +86,17 @@ fun NavGraph() {
         }
 
         // Summary screen (selected Runner items).
-//        composable(route = Screen.SummaryScreen.route) {
-//            SummaryScreen(navController = navController)
-//        }
+        composable(
+            route = Screen.SummaryScreen.route
+        ){
+            val viewModel = hiltViewModel<SummaryViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            SummaryScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
+        }
 
     }
 
