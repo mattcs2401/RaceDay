@@ -40,8 +40,8 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(state.value)
                 }
-                setupBaseFromApi(date)
-                //stateSuccess(200, "Setup base from Api success.")
+                //setupBaseFromApi(date)
+                stateSuccess(200, "Setup base from Api success.")
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }
@@ -59,7 +59,7 @@ class SplashViewModel @Inject constructor(
                 event.activity.finishAndRemoveTask()
             }
             is SplashEvent.SetRunners -> {
-                setupRunnersFromApi()
+                //setupRunnersFromApi()
             }
         }
     }

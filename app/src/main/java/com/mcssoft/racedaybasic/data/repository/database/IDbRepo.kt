@@ -36,17 +36,17 @@ interface IDbRepo {
         insertRaces(racesWithMeetingId)
 
         // Scratchings info.
-        val scratches = mutableListOf<Scratching>()
+        val lScratches = mutableListOf<Scratching>()
 
         racesDto.forEach { raceDto ->
             // One set of Scratching for one Race.
             raceDto.scratchings.forEach { scratchDto ->
                 val scratch = scratchDto.toScratching(meeting.venueMnemonic!!, raceDto.raceNumber, scratchDto)
-                scratches.add(scratch)
+                lScratches.add(scratch)
             }
-            insertScratchings(scratches)
+            insertScratchings(lScratches)
             // Reset for next iteration (i.e. different Race and Scratchings).
-            scratches.removeAll(scratches)
+            lScratches.removeAll(lScratches)
         }
     }
 
@@ -93,12 +93,6 @@ interface IDbRepo {
      */
     @Query("delete from Meeting")
     suspend fun deleteMeetings(): Int       // CASCADE should take care of Races/Runners etc.
-
-//    /**
-//     * Get a count of the MeetingDto records.
-//     */
-//    @Query("select count(*) from Meeting")
-//    suspend fun meetingCount(): Int
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Race related.">
@@ -153,18 +147,8 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Query("update Runner set isChecked= :checked where _id= :runnerId")
-    suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
-
-//    @Transaction
-//    suspend fun updateRunnersAsScratched(runners: List<Runner>) {
-//        runners.forEach { runner ->
-//            updateRunnerScratched(runner._id)
-//        }
-//    }
-//
-//    @Query("update Runner set isScratched = 'true' where _id = :rId")
-//    suspend fun updateRunnerScratched(rId: Long)
+    @Update
+    suspend fun updateRunnerAsChecked(runner: Runner)
 
     @Update
     suspend fun updateRunnerAsScratched(runner: Runner)

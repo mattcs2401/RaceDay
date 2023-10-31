@@ -9,7 +9,9 @@ data class RunnersState(
     val loading: Boolean,
     val runners: List<Runner>,
     val race: Race?,
-    val raceId: Long
+    val raceId: Long,
+//    val scratched: Boolean,
+    val checked: Boolean
     ) {
 
     companion object {
@@ -20,7 +22,8 @@ data class RunnersState(
                 loading = false,
                 runners = emptyList(),
                 race = null,
-                raceId = 0
+                raceId = 0,
+                checked = false
             )
         }
         fun loading(): RunnersState {
@@ -30,7 +33,8 @@ data class RunnersState(
                 loading = true,
                 runners = emptyList(),
                 race = null,
-                raceId = 0
+                raceId = 0,
+                checked = false
             )
         }
     }

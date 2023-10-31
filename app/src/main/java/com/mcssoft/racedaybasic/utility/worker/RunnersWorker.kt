@@ -87,9 +87,7 @@ class RunnersWorker (
         // The list of scratchings.
         val lScratches = iDbRepo.getScratchingsForRace(race.venueMnemonic, race.raceNumber)
 
-        val lScrRunners = mutableListOf<Runner>()    // scratched Runners.
-
-        lRunners.forEach { runner ->
+       lRunners.forEach { runner ->
             lScratches.forEach { scratch ->
                 // Same name and runner number should be enough to be unique.
                 if(scratch.runnerName == runner.runnerName &&
@@ -97,10 +95,8 @@ class RunnersWorker (
                 ) {
                     runner.isScratched = true
                     iDbRepo.updateRunnerAsScratched(runner)
-//                    lScrRunners.add(runner)
                 }
             }
         }
-//        iDbRepo.updateRunnersAsScratched(lScrRunners)
     }
 }

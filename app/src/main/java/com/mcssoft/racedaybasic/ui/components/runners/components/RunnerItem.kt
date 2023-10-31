@@ -117,7 +117,7 @@ fun RunnerItem(
         }
         if (expandedState) {
             // Runner extra info, the 'expanded' state.
-            RunnerItemExtra(runner, onEvent)//, onItemClick)
+            RunnerItemExtra(runner, onEvent)
         }
     }
 }

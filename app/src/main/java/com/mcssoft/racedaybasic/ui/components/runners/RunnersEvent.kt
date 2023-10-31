@@ -4,8 +4,7 @@ import com.mcssoft.racedaybasic.domain.model.Runner
 
 sealed class RunnersEvent {
 
-    data class GetCheck(
-        val checked: Boolean,
+    data class Check(
         val runner: Runner
     ): RunnersEvent()
 }

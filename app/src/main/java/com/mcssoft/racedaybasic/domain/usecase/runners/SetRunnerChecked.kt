@@ -1,6 +1,7 @@
 package com.mcssoft.racedaybasic.domain.usecase.runners
 
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
+import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,11 +13,11 @@ class SetRunnerChecked @Inject constructor(
     /**
      *
      */
-    operator fun invoke(runnerId: Long, checked: Boolean): Flow<DataResult<String>> = flow {
+    operator fun invoke(runner: Runner): Flow<DataResult<String>> = flow {
         try {
 //            emit(DataResult.loading())
 
-            iDbRepo.setRunnerChecked(runnerId, checked)
+            iDbRepo.updateRunnerAsChecked(runner)
 
             emit(DataResult.success(""))
 

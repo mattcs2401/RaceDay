@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaybasic.data.repository.preferences.Preference
+import com.mcssoft.racedaybasic.domain.model.Runner
 import com.mcssoft.racedaybasic.domain.usecase.RaceDayUseCases
 import com.mcssoft.racedaybasic.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,10 +51,37 @@ class RunnersViewModel @Inject constructor(
 
     fun onEvent(event: RunnersEvent) {
         when(event) {
-            is RunnersEvent.GetCheck -> {
+            is RunnersEvent.Check -> {
                 // TODO - create/update Summary record.
-                val checked = event.checked
-                val runner = event.runner
+                setRunnerChecked(event.runner)
+            }
+        }
+    }
+
+    private fun setRunnerChecked(runner: Runner) {
+        viewModelScope.launch(Dispatchers.IO) {
+            raceDayUseCases.setRunnerChecked(runner).collect { result ->
+                when {
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RunnersState.Status.Failure,
+                                loading = false
+                            )
+                        }
+                    }
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RunnersState.Status.Success,
+                                loading = false,
+                                checked = result.data.toBoolean()
+                            )
+                        }
+                    }
+                }
             }
         }
     }

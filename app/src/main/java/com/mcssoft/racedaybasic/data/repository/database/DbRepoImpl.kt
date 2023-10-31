@@ -35,10 +35,6 @@ class DbRepoImpl @Inject constructor(
     override suspend fun deleteMeetings(): Int {
         return dao.deleteMeetings()
     }
-
-//    override suspend fun meetingCount(): Int {
-//        return dao.meetingCount()
-//    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Race related.">
@@ -72,20 +68,12 @@ class DbRepoImpl @Inject constructor(
         return dao.getRunners(raceId)
     }
 
-//    override suspend fun updateRunnersAsScratched(runners: List<Runner>) {
-//        return dao.updateRunnersAsScratched(runners)
-//    }
-
-//    override suspend fun updateRunnerScratched(rId: Long) {
-//        return dao.updateRunnerScratched(rId)
-//    }
-
     override suspend fun updateRunnerAsScratched(runner: Runner) {
         dao.updateRunnerAsScratched(runner)
     }
 
-    override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
-        return dao.setRunnerChecked(runnerId, checked)
+    override suspend fun updateRunnerAsChecked(runner: Runner) {
+        return dao.updateRunnerAsChecked(runner)
     }
     //</editor-fold>
 
