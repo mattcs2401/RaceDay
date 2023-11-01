@@ -84,10 +84,10 @@ private val constraintSet = ConstraintSet {
     }
 }
 
-@Preview
-@Composable
-fun ShowDialog() {
-    LoadingDialog(titleText = "Initialising", msgText = "Setup base from API.", {})
-}
+//@Preview
+//@Composable
+//fun ShowDialog() {
+//    LoadingDialog(titleText = "Initialising", msgText = "Setup base from API.") {}
+//}
 
 

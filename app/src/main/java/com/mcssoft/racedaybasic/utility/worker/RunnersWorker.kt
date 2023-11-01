@@ -11,7 +11,6 @@ import com.mcssoft.racedaybasic.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaybasic.data.repository.remote.NetworkResponse
 import com.mcssoft.racedaybasic.domain.dto.BaseDto2
 import com.mcssoft.racedaybasic.domain.model.Race
-import com.mcssoft.racedaybasic.domain.model.Runner
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -68,7 +67,7 @@ class RunnersWorker (
             }
             Result.success()
         } catch(ex: Exception) {
-            Log.d("TAG", "[RunnerWorker.doWork] exception: " + ex.toString())
+            Log.d("TAG", "[RunnerWorker.doWork] exception: $ex")
             val key = context.resources.getString(R.string.key_exception)
             val output = workDataOf(key to ex.localizedMessage)
 

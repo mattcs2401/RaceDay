@@ -1,4 +1,4 @@
-package com.mcssoft.racedaybasic.ui.components.runners.components;
+package com.mcssoft.racedaybasic.ui.components.runners.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -122,7 +121,7 @@ fun RunnerItem(
     }
 }
 
-private val constraintSet = ConstraintSet() {
+private val constraintSet = ConstraintSet {
     val idRunnerNo = createRefFor("idRunnerNo")
     val idLastFive = createRefFor("idLastFive")
     val idRunnerName = createRefFor("idRunnerName")

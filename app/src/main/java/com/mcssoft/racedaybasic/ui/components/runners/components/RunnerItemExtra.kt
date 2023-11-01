@@ -73,7 +73,7 @@ fun RunnerItemExtra(
     }
 }
 
-private val constraintSet = ConstraintSet() {
+private val constraintSet = ConstraintSet {
     val idTcdwIndicators = createRefFor("idTcdwIndicators")
     val idTrainerName = createRefFor("idTrainerName")
     val idDfsFormRating = createRefFor("idDfsFormRating")

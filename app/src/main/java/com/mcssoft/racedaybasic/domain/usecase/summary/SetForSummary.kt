@@ -5,6 +5,4 @@ import javax.inject.Inject
 
 class SetForSummary  @Inject constructor(
     private val iDbRepo: IDbRepo
-) {
-
-}
+)

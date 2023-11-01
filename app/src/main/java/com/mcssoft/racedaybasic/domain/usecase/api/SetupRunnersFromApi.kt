@@ -10,7 +10,7 @@ import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.data.repository.database.IDbRepo
 import com.mcssoft.racedaybasic.utility.DataResult
 import com.mcssoft.racedaybasic.utility.worker.RunnersWorker
-import com.mcssoft.racedaycompose.utility.WorkerState
+import com.mcssoft.racedaybasic.utility.worker.WorkerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow

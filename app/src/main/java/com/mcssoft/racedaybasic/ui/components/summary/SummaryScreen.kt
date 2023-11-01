@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import com.mcssoft.racedaybasic.R
 import com.mcssoft.racedaybasic.ui.components.navigation.Screen
 import com.mcssoft.racedaybasic.ui.components.navigation.TopBar
-import com.mcssoft.racedaybasic.ui.components.runners.components.RunnerItem
 import com.mcssoft.racedaybasic.ui.components.summary.components.SummaryItem
 import com.mcssoft.racedaybasic.ui.theme.padding64dp
 

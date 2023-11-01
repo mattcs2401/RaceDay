@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.mcssoft.racedaybasic.R
-import java.io.File
 
 class NotifyService: Service() {
 

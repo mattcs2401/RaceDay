@@ -31,9 +31,6 @@ Not really in any strict order:
 
 *** Make more use of the @Preview ***
 
--> Scratchings
-   - part of Race details as a List.
-
 -> Better error notification back to Splash screen.
    - some work done.
 

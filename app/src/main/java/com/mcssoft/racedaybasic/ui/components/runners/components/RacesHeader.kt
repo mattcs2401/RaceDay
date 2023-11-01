@@ -13,7 +13,6 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.racedaybasic.domain.model.Race
 import com.mcssoft.racedaybasic.ui.theme.fontSize12sp
-import com.mcssoft.racedaybasic.ui.theme.fontSize16sp
 import com.mcssoft.racedaybasic.ui.theme.margin0dp
 import com.mcssoft.racedaybasic.ui.theme.margin16dp
 import com.mcssoft.racedaybasic.ui.theme.margin8dp

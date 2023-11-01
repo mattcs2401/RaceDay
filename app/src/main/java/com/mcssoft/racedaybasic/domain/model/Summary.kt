@@ -8,6 +8,4 @@ data class Summary(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L
 
-){
-
-}
+)

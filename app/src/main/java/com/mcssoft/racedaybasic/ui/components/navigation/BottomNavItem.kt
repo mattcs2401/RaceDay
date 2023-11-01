@@ -21,7 +21,7 @@ sealed class BottomNavItem(
 //        "Settings"
 //    )
 
-    object Summary: BottomNavItem(
+    data object Summary: BottomNavItem(
         Screen.SummaryScreen.route,
         R.drawable.ic_summary_24,
         "Summary"

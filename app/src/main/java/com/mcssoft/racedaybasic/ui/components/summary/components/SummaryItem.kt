@@ -34,6 +34,6 @@ fun SummaryItem(
     }
 }
 
-private val constraintSet = ConstraintSet() {
+private val constraintSet = ConstraintSet {
 
 }

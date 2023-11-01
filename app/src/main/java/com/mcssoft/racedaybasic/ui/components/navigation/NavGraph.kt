@@ -20,7 +20,6 @@ import com.mcssoft.racedaybasic.ui.components.splash.SplashViewModel
 import com.mcssoft.racedaybasic.ui.components.summary.SummaryScreen
 import com.mcssoft.racedaybasic.ui.components.summary.SummaryViewModel
 
-
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
