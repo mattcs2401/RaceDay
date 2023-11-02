@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">RaceDayBasic</string>
+    <string name="app_name">RaceDay</string>
 
-    <string name="app_db_name">race_day_basic.db</string>
+    <string name="app_db_name">race_day.db</string>
 
     <string name="base_url">https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/</string>
 

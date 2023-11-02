@@ -17,7 +17,7 @@
         android:theme="@style/Theme.RaceDayBasicTheme"
         tools:targetApi="34">
         <activity
-            android:name="com.mcssoft.racedaybasic.ui.MainActivity"
+            android:name="com.mcssoft.raceday.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.RaceDayBasicTheme">
             <intent-filter>

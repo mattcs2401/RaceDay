@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "RaceDayBasic"
+rootProject.name = "RaceDay"
 include(":app")
  

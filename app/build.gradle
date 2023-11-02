@@ -7,10 +7,10 @@ plugins {
 }
 android {
     compileSdk 34
-    namespace 'com.mcssoft.racedaybasic'
+    namespace 'com.mcssoft.raceday'
 
     defaultConfig {
-        applicationId "com.mcssoft.racedaybasic"
+        applicationId "com.mcssoft.raceday"
         minSdk 27
         targetSdk 34
         versionCode 1
