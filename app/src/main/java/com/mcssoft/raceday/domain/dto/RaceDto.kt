@@ -27,9 +27,10 @@ data class RaceDto(
 //    val willHaveFixedOdds: Boolean
 )
 
-fun RaceDto.toRace(mtgId: Long, venueMnemonic: String): Race {
+fun RaceDto.toRace(mtgId: Long, sellCode: String, venueMnemonic: String): Race {
     return Race(
         mtgId = mtgId,                      // not part of RaceDto.
+        sellCode = sellCode,                // "   "    "  "
         venueMnemonic = venueMnemonic,      // "   "    "  "
         raceNumber = raceNumber,
         raceClassConditions = raceClassConditions ?: "",

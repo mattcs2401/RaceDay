@@ -29,13 +29,14 @@ interface IDbRepo {
 
     @Transaction
     // Note: Any Scratchings are also processed.
-    suspend fun insertMeetingAndRaces(meeting: MeetingDto, racesDto: List<RaceDto>) {
+    suspend fun insertMeetingAndRaces(meetingDto: MeetingDto, racesDto: List<RaceDto>) {
         // Meeting and Race info.
-        val meetingId = insertMeeting(meeting.toMeeting())
+        val meeting = meetingDto.toMeeting()     // for sellCode concat.
+        val meetingId = insertMeeting(meeting)
 
         val racesWithMeetingId  = racesDto.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
-            raceDto.toRace(meetingId, meeting.venueMnemonic!!)
+            raceDto.toRace(meetingId, meeting.sellCode!!, meeting.venueMnemonic!!)
         }
         insertRaces(racesWithMeetingId)
 
@@ -45,7 +46,7 @@ interface IDbRepo {
         racesDto.forEach { raceDto ->
             // One set of Scratching for one Race.
             raceDto.scratchings.forEach { scratchDto ->
-                val scratch = scratchDto.toScratching(meeting.venueMnemonic!!, raceDto.raceNumber, scratchDto)
+                val scratch = scratchDto.toScratching(meetingDto.venueMnemonic!!, raceDto.raceNumber, scratchDto)
                 lScratches.add(scratch)
             }
             insertScratchings(lScratches)
@@ -161,6 +162,7 @@ interface IDbRepo {
             val summaryDto = SummaryDto(
                 race._id,
                 runner._id,
+                race.sellCode,
                 race.venueMnemonic,
                 race.raceNumber,
                 race.raceStartTime,

@@ -18,7 +18,8 @@ data class Summary(
     var raceId: Long,             //
     var runnerId: Long,           //
 
-    var venueMnemonic: String,    // e.g. BR (from Race).
+    var sellCode: String,         // e.g. BR (from Race).
+    var venueMnemonic: String,    // e.g. DBN (from Race).
     var raceNumber: Int,          // e.g. 1 (from Race).
     var raceStartTime: String,    // e.g. 12:30 (from Race).
     var runnerNumber: Int,        // e.g. 2 (from Runner).

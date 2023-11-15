@@ -65,11 +65,10 @@ fun SummaryScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = padding64dp)
         ) {
             items(
                 items = state.summaries
-            ) { summary ->
+            ) {summary ->
                 SummaryItem(
                     summary = summary,
                     onEvent = onEvent,

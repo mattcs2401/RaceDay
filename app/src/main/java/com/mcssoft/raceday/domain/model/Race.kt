@@ -24,6 +24,8 @@ data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
     var mtgId: Long,                   // "foreign" key (_id of the Meeting record).
+
+    var sellCode: String,              //
     var venueMnemonic: String,         // venue code.
 
     var raceNumber: Int,               // e.g. 1

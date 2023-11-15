@@ -6,6 +6,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
@@ -26,6 +28,8 @@ fun SummaryItem(
     onEvent: (SummaryEvent) -> Unit,   // TBA
     onItemClick: (Summary) -> Unit     // TBA
 ) {
+    var textStyle = TextStyle(textDecoration = TextDecoration.None)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,29 +41,34 @@ fun SummaryItem(
             constraintSet
         ){
             Text(
-                summary.venueMnemonic,
+                summary.sellCode,//venueMnemonic,
                 Modifier.layoutId("idVenueMnemonic"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
-                summary.raceNumber.toString(),
+                "R${summary.raceNumber}",
                 Modifier.layoutId("idRaceNumber"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
-                summary.runnerNumber.toString(),
+                "H${summary.runnerNumber.toString()}",
                 Modifier.layoutId("idRunnerNumber"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
                 summary.runnerName,
                 Modifier.layoutId("idRunnerName"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
                 summary.raceStartTime,
                 Modifier.layoutId("idRaceStartTime"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
         }
     }
