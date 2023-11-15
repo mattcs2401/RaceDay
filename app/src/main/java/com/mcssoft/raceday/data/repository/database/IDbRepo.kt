@@ -1,6 +1,7 @@
 package com.mcssoft.raceday.data.repository.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,7 +19,10 @@ import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
+import com.mcssoft.raceday.domain.model.SummaryDto
+import com.mcssoft.raceday.domain.model.toSummary
 import com.mcssoft.raceday.utility.DateUtils
+import kotlinx.coroutines.delay
 
 @Dao
 interface IDbRepo {
@@ -54,6 +58,7 @@ interface IDbRepo {
     suspend fun deleteAll() {
         deleteMeetings()
         deleteScratchings()
+        deleteSummaries()
     }
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
@@ -62,6 +67,7 @@ interface IDbRepo {
         val venueMnemonic: String,
         val numRaces: Int
     )
+
     @Query("select meetingDate, venueMnemonic, numRaces from Meeting")
     suspend fun getMeetingSubset(): List<MeetingSubset>
 
@@ -147,11 +153,35 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Update
-    suspend fun updateRunnerAsChecked(runner: Runner)
+    @Transaction
+    suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
+        updateRunner(runner)
+        delay(50)       // TBA
+        if(runner.isChecked) {
+            val summaryDto = SummaryDto(
+                race._id,
+                runner._id,
+                race.venueMnemonic,
+                race.raceNumber,
+                race.raceStartTime,
+                runner.runnerNumber,
+                runner.runnerName
+            )
+            insertSummary(summaryDto.toSummary())
+        } else {
+            getSummaryByRunner(race.raceName, runner.runnerNumber)?.let { summary ->
+                deleteSummary(summary)
+            }
+        }
+    }
 
     @Update
-    suspend fun updateRunnerAsScratched(runner: Runner)
+    suspend fun updateRunnerAsScratched(runner: Runner) {
+        updateRunner(runner)
+    }
+
+    @Update
+    suspend fun updateRunner(runner: Runner)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
@@ -163,6 +193,18 @@ interface IDbRepo {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
+
+    @Query("select * from Summary where runnerName = :rName and runnerNumber = :rNumber")
+    suspend fun getSummaryByRunner(rName: String, rNumber: Int): Summary?
+
+    @Query("delete from Summary")
+    suspend fun deleteSummaries(): Int
+
+    @Query("delete from Summary where _id = :id")
+    suspend fun deleteSummary(id: Long): Int
+
+    @Delete
+    suspend fun deleteSummary(summary: Summary)
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">

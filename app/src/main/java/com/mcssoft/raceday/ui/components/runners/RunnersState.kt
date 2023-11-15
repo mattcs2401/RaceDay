@@ -10,9 +10,8 @@ data class RunnersState(
     val runners: List<Runner>,
     val race: Race?,
     val raceId: Long,
-//    val scratched: Boolean,
     val checked: Boolean
-    ) {
+) {
 
     companion object {
         fun initialise(): RunnersState {

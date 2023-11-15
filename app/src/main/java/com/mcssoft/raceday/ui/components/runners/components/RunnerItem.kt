@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.ui.components.runners.components
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,10 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
+import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.runners.RunnersEvent
 import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
@@ -37,6 +38,7 @@ import com.mcssoft.raceday.ui.theme.padding4dp
 
 @Composable
 fun RunnerItem(
+    race: Race,         // for if/when Runner is checked, need Race info to create Summary record.
     runner: Runner,
     onEvent: (RunnersEvent) -> Unit,
     onItemClick: (Runner) -> Unit
@@ -49,8 +51,11 @@ fun RunnerItem(
 
     var scratched by remember { mutableStateOf(false) }
 
+    var textStyle = TextStyle(textDecoration = TextDecoration.None)
+
     if(runner.isScratched) {
         scratched = true
+        textStyle = TextStyle(textDecoration = TextDecoration.LineThrough)
     }
 
     Card(
@@ -62,26 +67,33 @@ fun RunnerItem(
     ) {
         ConstraintLayout(
             constraintSet,
-            if(scratched) {
-                Modifier.background(color = Color.Red)
-            } else {
+            if(!scratched) {
                 Modifier.clickable { onItemClick(runner) }
+//                Modifier.background(color = Color.Red)
+//            } else {
+//                Modifier.clickable { onItemClick(runner) }
+            } else {
+//                Modifier.clickable { }
+                Modifier.clickable(enabled = false, onClick = {})
             }
         ) {
             Text(
                 runner.runnerNumber.toString(),
                 Modifier.layoutId("idRunnerNo"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
                 runner.last5Starts,
                 Modifier.layoutId("idLastFive"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
                 runner.runnerName,
                 Modifier.layoutId("idRunnerName"),
-                fontSize = fontSize12sp
+                fontSize = fontSize12sp,
+                style = textStyle
             )
             Text(
                 "(${runner.barrierNumber})",
@@ -116,7 +128,7 @@ fun RunnerItem(
         }
         if (expandedState) {
             // Runner extra info, the 'expanded' state.
-            RunnerItemExtra(runner, onEvent)
+            RunnerItemExtra(race, runner, onEvent)
         }
     }
 }

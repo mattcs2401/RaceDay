@@ -39,7 +39,7 @@ class RunnersWorker (
 
     override suspend fun doWork(): Result {
         return try {
-            Log.d("TAG", "[RunnerWorker.doWork] starting.")
+            Log.d("TAG", "[RunnersWorker.doWork] starting.")
 
             var race: Race
             var  raceId: Long
@@ -67,7 +67,7 @@ class RunnersWorker (
             }
             Result.success()
         } catch(ex: Exception) {
-            Log.d("TAG", "[RunnerWorker.doWork] exception: $ex")
+            Log.d("TAG", "[RunnersWorker.doWork] exception: $ex")
             val key = context.resources.getString(R.string.key_exception)
             val output = workDataOf(key to ex.localizedMessage)
 

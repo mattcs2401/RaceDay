@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
+import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.runners.RunnersEvent
 import com.mcssoft.raceday.ui.theme.fontSize10sp
@@ -24,6 +25,7 @@ import com.mcssoft.raceday.ui.theme.padding32dp
 
 @Composable
 fun RunnerItemExtra(
+    race: Race,
     runner: Runner,
     onEvent: (RunnersEvent) -> Unit,
 ){
@@ -61,7 +63,7 @@ fun RunnerItemExtra(
             onCheckedChange = { checked ->
                 isChecked = checked
                 runner.isChecked = isChecked
-                onEvent(RunnersEvent.Check(runner))
+                onEvent(RunnersEvent.Check(race, runner))
             },
             Modifier.layoutId("idCheckBox"),
             enabled = true,

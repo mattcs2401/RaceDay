@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.preferences.Preference
+import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.ui.components.snackbar.SnackbarController
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,9 +34,9 @@ class RunnersViewModel @Inject constructor(
           to the RunnersScreen). However, when navigating back from the Runners screen, there is no
            need to supply one, so the original is saved into the preferences and reused.
          */
-        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { rId ->
-            if (rId > 0) {
-                raceId = rId
+        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { rceId ->
+            if (rceId > 0) {
+                raceId = rceId
                 // Save the Race id to the preferences (for back nav from Runners screen).
                 saveRaceId(Preference.RaceIdPref, raceId)
             } else {
@@ -49,18 +51,28 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Events raised from the UI.
+     * @param event: The event type.
+     */
     fun onEvent(event: RunnersEvent) {
         when(event) {
             is RunnersEvent.Check -> {
                 // TODO - create/update Summary record.
-                setRunnerChecked(event.runner)
+                // Note: Room will update the Runner database record with the isChecked status of
+                // this Runner object.
+                setRunnerChecked(event.race, event.runner)
             }
         }
     }
 
-    private fun setRunnerChecked(runner: Runner) {
+    /**
+     * Set the metadata 'checked' on the Runner object.
+     * @param runner: The Runner.
+     */
+    private fun setRunnerChecked(race: Race, runner: Runner) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.setRunnerChecked(runner).collect { result ->
+            useCases.setRunnerChecked(race, runner).collect { result ->
                 when {
                     result.failed -> {
                         _state.update { state ->
@@ -86,6 +98,10 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Get the Runners associated with a Race from the database.
+     * @param raceId: The Race id (_id value).
+     */
     private fun getRunners(raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.getRunners(raceId).collect { result ->
@@ -124,9 +140,13 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
-    private fun getRace(rId: Long) {
+    /**
+     * Get the Race object from the database.
+     * @param raceId: The Race id (_id value).
+     */
+    private fun getRace(raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getRace(rId).collect { result ->
+            useCases.getRace(raceId).collect { result ->
                 when {
                     result.loading -> {
                         _state.update { state ->
@@ -161,8 +181,11 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
+    //<editor-fold default state="collapsed" desc="Region: Preferences methods">
     /**
      * Save the Race id to the preferences.
+     * @param pref: The Preference type.
+     * @param raceId: The Race id value to save.
      */
     private fun saveRaceId(pref: Preference.RaceIdPref, raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -194,7 +217,8 @@ class RunnersViewModel @Inject constructor(
     }
 
     /**
-     * Get the meeting id from the preferences.
+     * Get the Race id from the preferences.
+     * @param pref: The Preference type.
      */
     private fun getRaceId(pref: Preference.RaceIdPref) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -224,5 +248,6 @@ class RunnersViewModel @Inject constructor(
             }
         }
     }
+    //</editor-fold>
 
 }

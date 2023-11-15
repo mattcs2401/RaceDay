@@ -29,20 +29,22 @@ import com.mcssoft.raceday.ui.theme.padding64dp
 
 @Composable
 /**
- * @param state: Races state.
+ * @param state: Runners state.
  * @param navController: The Navigation.
+ * @param snackbarController: For when show a SnackBar.
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
+//    snackbarController: SnackbarController,
     onEvent: (RunnersEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
-//    val showErrorDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
+//        snackbarHost = { scaffoldState.snackbarHostState },
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),
@@ -101,13 +103,24 @@ fun RunnersScreen(
                 items(
                     items = state.runners
                 ) { runner ->
-                    RunnerItem(
-                        runner = runner,
-                        onEvent = onEvent,
-                        onItemClick = { }
-                    )
+                    state.race?.let { race ->
+                        RunnerItem(
+                            race = race,
+                            runner = runner,
+                            onEvent = onEvent,
+                            onItemClick = { }
+                        )
+                    }
                 }
             }
+//            RaceDaySnackbar(
+//                snackbarHostState = scaffoldState.snackbarHostState,
+//                modifier = Modifier.align(Alignment.BottomCenter),
+//                onDismiss = {
+//                    // TODO - some RunnerEvent ?
+//                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+//                },
+//            )
         }
     }
 }

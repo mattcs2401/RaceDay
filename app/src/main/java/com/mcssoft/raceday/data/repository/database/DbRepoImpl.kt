@@ -68,12 +68,20 @@ class DbRepoImpl @Inject constructor(
         return dao.getRunners(raceId)
     }
 
+    override suspend fun updateRunner(runner: Runner) {
+        dao.updateRunner(runner)
+    }
+
     override suspend fun updateRunnerAsScratched(runner: Runner) {
         dao.updateRunnerAsScratched(runner)
     }
 
-    override suspend fun updateRunnerAsChecked(runner: Runner) {
-        return dao.updateRunnerAsChecked(runner)
+    override suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
+        return dao.updateRunnerForChecked(race, runner)
+    }
+
+    override suspend fun getSummaryByRunner(rName: String, rNumber: Int): Summary? {
+        return dao.getSummaryByRunner(rName, rNumber)
     }
     //</editor-fold>
 
@@ -90,9 +98,18 @@ class DbRepoImpl @Inject constructor(
         return dao.insertSummaries(summaries)
     }
 
-//    override suspend fun deleteSummary(id: Long) {
-//        dao.deleteSummary(id)
-//    }
+    override suspend fun deleteSummary(id: Long): Int {
+        return dao.deleteSummary(id)
+    }
+
+    override suspend fun deleteSummaries(): Int {
+        return dao.deleteSummaries()
+    }
+
+    override suspend fun deleteSummary(summary: Summary) {
+        return dao.deleteSummary(summary)
+    }
+
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">

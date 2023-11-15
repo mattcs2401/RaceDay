@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +17,7 @@ import com.mcssoft.raceday.ui.components.races.RacesScreen
 import com.mcssoft.raceday.ui.components.runners.RunnersScreen
 import com.mcssoft.raceday.ui.components.splash.SplashScreen
 import com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel
+import com.mcssoft.raceday.ui.components.snackbar.SnackbarController
 import com.mcssoft.raceday.ui.components.splash.SplashViewModel
 import com.mcssoft.raceday.ui.components.summary.SummaryScreen
 import com.mcssoft.raceday.ui.components.summary.SummaryViewModel
@@ -61,6 +63,7 @@ fun NavGraph() {
         ) {
             val viewModel = hiltViewModel<RacesViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
+
             RacesScreen(
                 navController = navController,
                 state = state,
@@ -77,8 +80,10 @@ fun NavGraph() {
         ) {
             val viewModel = hiltViewModel<RunnersViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
+//            val snackbarController = SnackbarController(viewModel.viewModelScope)
             RunnersScreen(
                 navController = navController,
+//                snackbarController = snackbarController,
                 state = state,
                 onEvent = viewModel::onEvent
             )
@@ -93,7 +98,7 @@ fun NavGraph() {
             SummaryScreen(
                 navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent
+                onEvent = viewModel::onEvent     // TBA
             )
         }
 
