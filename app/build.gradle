@@ -51,17 +51,17 @@ dependencies {
     /* Compose.
      * Not sure all these actually required.
      */
-    def compose_ver = '1.6.0-alpha08'
+    def compose_ver = '1.6.0-beta01'
     implementation "androidx.compose.ui:ui:$compose_ver"
-    implementation "androidx.activity:activity-compose:1.8.0"
+    implementation "androidx.activity:activity-compose:1.8.1"
     implementation "androidx.compose.ui:ui-tooling:$compose_ver"
     implementation "androidx.navigation:navigation-compose:2.7.5"
     implementation "androidx.compose.material:material:$compose_ver"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ver"
     implementation "androidx.compose.foundation:foundation:$compose_ver"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-rc01"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
 
     /* Room database. */
@@ -80,7 +80,7 @@ dependencies {
 
     /* Retrofit. */
     def retrofit_ver = '2.9.0'
-    def okhttp_ver = '5.0.0-alpha.3'
+    def okhttp_ver = '5.0.0-alpha.11'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_ver"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
