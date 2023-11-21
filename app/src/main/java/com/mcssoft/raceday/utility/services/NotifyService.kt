@@ -7,6 +7,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.mcssoft.raceday.R
 
+// Based largely on: https://www.youtube.com/watch?v=YZL-_XJSClc
 class NotifyService: Service() {
 
     private lateinit var notification: Notification
@@ -17,20 +18,20 @@ class NotifyService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action) {
-            Actions.START.toString() -> start()
-            Actions.STOP.toString() -> stopSelf()
+            Actions.START.toString() -> start()       // defined below.
+            Actions.STOP.toString() -> stopSelf()     //in-built.
 
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
     private fun start() {
-        notification = NotificationCompat.Builder(this, "notify_channel")
+        notification = NotificationCompat.Builder(this, "notify_channel_id")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Notify is active")
             .setContentText("Notify text")
             .build()
-//        startForeground(1, notification)
+        startForeground(1, notification)
     }
 
     enum class Actions {

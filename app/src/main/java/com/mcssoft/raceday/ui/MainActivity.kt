@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Intent(applicationContext, NotifyService::class.java).also {intent ->
+        Intent(applicationContext, NotifyService::class.java).also { intent ->
             intent.action = NotifyService.Actions.START.toString()
             startService(intent)
         }
@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
             intent.action = NotifyService.Actions.STOP.toString()
             startService(intent)
         }
-//        unregisterReceiver(receiver)
     }
 
 }

@@ -109,7 +109,6 @@ class DbRepoImpl @Inject constructor(
     override suspend fun deleteSummary(summary: Summary) {
         return dao.deleteSummary(summary)
     }
-
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">
@@ -125,4 +124,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getScratchingsForRace(venueMnemonic, raceNumber)
     }
     //</editor-fold>
+
+    override suspend fun getTrainers(raceId: Long): List<String> {
+        return dao.getTrainers(raceId)
+    }
 }

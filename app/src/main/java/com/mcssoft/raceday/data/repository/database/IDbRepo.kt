@@ -219,4 +219,7 @@ interface IDbRepo {
     @Query("select * from Scratching where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
+
+    @Query("select trainerName from Runner where raceId = :raceId")
+    suspend fun getTrainers(raceId: Long): List<String>
 }

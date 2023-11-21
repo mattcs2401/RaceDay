@@ -13,6 +13,7 @@ import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
+import com.mcssoft.raceday.domain.usecase.trainers.GetTrainers
 
 data class UseCases(
 
@@ -54,5 +55,7 @@ data class UseCases(
 
     // Save internal to App preferences.
     val savePreferences: SavePreferences,
-    
+
+    //
+    val getTrainers: GetTrainers
 )

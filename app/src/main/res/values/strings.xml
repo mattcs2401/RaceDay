@@ -6,8 +6,8 @@
     <string name="base_url">https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/</string>
 
     <!-- Notification. -->
-    <string name="download_channel_id">download_channel_id</string>
-    <string name="download_channel_name">Runners Download</string>
+    <string name="notify_channel_id">notify_channel_id</string>
+    <string name="notify_channel_name">Notification</string>
 
     <!-- Icon labels. -->
     <string name="lbl_icon_refresh">Refresh</string>

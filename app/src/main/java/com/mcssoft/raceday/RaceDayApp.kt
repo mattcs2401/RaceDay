@@ -13,18 +13,12 @@ class RaceDayApp : Application() {
         super.onCreate()
 
         val channel = NotificationChannel(
-            this.resources.getString(R.string.download_channel_id),
-            this.resources.getString(R.string.download_channel_name),
+            this.resources.getString(R.string.notify_channel_id),
+            this.resources.getString(R.string.notify_channel_name),
             NotificationManager.IMPORTANCE_HIGH
         )
 
-//        val channel = NotificationChannel(
-//            "notify_channel",
-//            "Notifications",
-//            NotificationManager.IMPORTANCE_HIGH
-//        )
-        // TODO - integrate the notifications.
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager// NotificationManager::class.java)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 

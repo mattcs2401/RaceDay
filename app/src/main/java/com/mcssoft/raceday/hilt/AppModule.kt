@@ -31,6 +31,7 @@ import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
+import com.mcssoft.raceday.domain.usecase.trainers.GetTrainers
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -131,7 +132,8 @@ object AppModule {
             getSummaries = GetSummaries(local),
             setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs)
+            savePreferences = SavePreferences(prefs),
+            getTrainers = GetTrainers(local)
         )
     }
 

@@ -1,6 +1,10 @@
 package com.mcssoft.raceday.domain.usecase.api
 
 import android.content.Context
+import android.view.View
+import android.widget.Toast
+import androidx.compose.material.Snackbar
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.asFlow
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -54,6 +58,7 @@ class SetupRunnersFromApi  @Inject constructor(
                             throw Exception("Observe runnerWorker failure.")
                         }
                         WorkerState.Succeeded -> {
+                            Toast.makeText(context, "Runners for: $code Ok.", Toast.LENGTH_SHORT).show()
                             emit(DataResult.success(""))
                         }
                     }
