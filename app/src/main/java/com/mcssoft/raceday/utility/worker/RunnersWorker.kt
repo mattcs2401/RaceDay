@@ -12,10 +12,13 @@ import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
 import com.mcssoft.raceday.domain.model.Race
+import com.mcssoft.raceday.ui.components.splash.SplashState
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Class to insert the Runners associated with a Race.

@@ -1,9 +1,31 @@
 package com.mcssoft.raceday.utility.worker
 
-enum class WorkerState {
+data class WorkerState(
+    var status: Status,
+//    val isRunnerWorker: Boolean,
+//    val isTrainerWorker: Boolean
+) {
 
-    Scheduled, Cancelled, Failed, Succeeded;
+    companion object {
+        // Flow initializer.
+        fun initialise(): WorkerState {
+            return WorkerState(
+                status = Status.Initialise,
+//                isRunnerWorker = false,
+//                isTrainerWorker = false
+            )
+        }
+    }
 
-    val isTerminalState: Boolean get() = this in listOf(Cancelled, Failed, Succeeded)
+    sealed class Status {
+        data object Initialise: Status()
+        data object Scheduled : Status()
+        data object Cancelled : Status()
+        data object Failed : Status()
+        data object Succeeded : Status()
+    }
 
+    fun isTerminalState(state: Status): Boolean {
+        return state in listOf(Status.Cancelled, Status.Failed, Status.Succeeded)
+    }
 }

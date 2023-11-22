@@ -1,10 +1,7 @@
 package com.mcssoft.raceday.domain.usecase.api
 
 import android.content.Context
-import android.view.View
 import android.widget.Toast
-import androidx.compose.material.Snackbar
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.asFlow
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -15,11 +12,15 @@ import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.worker.RunnersWorker
 import com.mcssoft.raceday.utility.worker.WorkerState
+import com.mcssoft.raceday.utility.worker.WorkerState.Status
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
+import kotlinx.coroutines.flow.update
 import java.util.UUID
 import javax.inject.Inject
 
@@ -29,12 +30,17 @@ class SetupRunnersFromApi  @Inject constructor(
 ) {
     private val workManager = WorkManager.getInstance(context)
 
+    private val _state = MutableStateFlow(WorkerState.initialise())
+    val state = _state.asStateFlow()
+
     operator fun invoke(): Flow<DataResult<Any>> = flow {
         try {
             emit(DataResult.loading())
 
             val meetingSubset = iDbRepo.getMeetingSubset()
+
             meetingSubset.forEach { item ->
+
                 val date = item.meetingDate
                 val code = item.venueMnemonic
                 val races = item.numRaces.toString()
@@ -52,15 +58,16 @@ class SetupRunnersFromApi  @Inject constructor(
 
                 observeRunnerWorker(runnersWorker.id).collect { result ->
                     when (result) {
-                        WorkerState.Scheduled -> {}
-                        WorkerState.Cancelled -> {}
-                        WorkerState.Failed -> {
+                        Status.Scheduled -> {}
+                        Status.Cancelled -> {}
+                        Status.Failed -> {
                             throw Exception("Observe runnerWorker failure.")
                         }
-                        WorkerState.Succeeded -> {
+                        Status.Succeeded -> {
                             Toast.makeText(context, "Runners for: $code Ok.", Toast.LENGTH_SHORT).show()
                             emit(DataResult.success(""))
                         }
+                        else -> {}
                     }
                 }
             }
@@ -69,29 +76,31 @@ class SetupRunnersFromApi  @Inject constructor(
         }
     }
 
-    private fun observeRunnerWorker(workerId: UUID): Flow<WorkerState> {
+    private fun observeRunnerWorker(workerId: UUID): Flow<Status> {
         return workManager.getWorkInfoByIdLiveData(workerId)
             .asFlow()
             .map { workInfo ->
                 mapWorkInfoStateToTaskState(workInfo.state)
             }
             .transformWhile { workerState ->
+                _state.update { state -> state.copy(status = workerState) }
                 emit(workerState)
                 // This is to terminate this flow when terminal state is arrived.
-                !workerState.isTerminalState
+                !state.value.isTerminalState(workerState)
             }.distinctUntilChanged()
     }
 
-    private fun mapWorkInfoStateToTaskState(state: WorkInfo.State): WorkerState = when (state) {
+    private fun mapWorkInfoStateToTaskState(state: WorkInfo.State): Status = when (state) {
         WorkInfo.State.ENQUEUED,
         WorkInfo.State.RUNNING,
-        WorkInfo.State.BLOCKED -> WorkerState.Scheduled
-        WorkInfo.State.CANCELLED -> WorkerState.Cancelled
-        WorkInfo.State.FAILED -> WorkerState.Failed
-        WorkInfo.State.SUCCEEDED -> WorkerState.Succeeded
+        WorkInfo.State.BLOCKED -> Status.Scheduled
+        WorkInfo.State.CANCELLED -> Status.Cancelled
+        WorkInfo.State.FAILED -> Status.Failed
+        WorkInfo.State.SUCCEEDED -> Status.Succeeded
     }
 }
 /*
+-----------------
 From Kotlin docs:
 -----------------
 transformWhile
@@ -99,5 +108,4 @@ transformWhile
 
 distinctUntilChanged
 - Returns flow where all subsequent repetitions of the same value are filtered out.
-
  */
