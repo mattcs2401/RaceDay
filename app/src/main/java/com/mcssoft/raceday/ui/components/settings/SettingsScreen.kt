@@ -1,22 +1,25 @@
 package com.mcssoft.raceday.ui.components.settings
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
-import com.mcssoft.raceday.ui.components.trainer.TrainerEvent
-import com.mcssoft.raceday.ui.components.trainer.TrainerState
 
 @Composable
 fun SettingsScreen(
@@ -59,11 +62,27 @@ fun SettingsScreen(
             )
         }
     ) {
-        // Summaries listing.
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
         ) {
+            // Temporary chintzy under construction.
+            Icon(
+                painterResource(id = R.drawable.ic_under_const_48),
+                stringResource(id = R.string.lbl_icon_home),
+                Modifier.align(Alignment.Center)
+            )
+            Text("Under construction.",
+                modifier = Modifier.align(Alignment.Center)
+                    .padding(top = 64.dp)
+            )
+        }
+//        // Summaries listing.
+//        LazyColumn(
+//            modifier = Modifier
+//                .fillMaxSize()
+//        ) {
 //            items(
 //                items = state.summaries
 //            ) { summary ->
@@ -73,6 +92,6 @@ fun SettingsScreen(
 //                    onItemClick = { }
 //                )
 //            }
-        }
+//        }
     }
 }

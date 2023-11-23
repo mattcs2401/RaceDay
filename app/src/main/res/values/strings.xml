@@ -49,7 +49,7 @@
     <string name="label_meetings">Meetings</string>
     <string name="label_races">Races</string>
     <string name="label_runners">Runners</string>
-    <string name="label_preferences">Preferences</string>
+<!--    <string name="label_preferences">Preferences</string>-->
     <string name="label_summary">Summary</string>
     <string name="label_admin">Administrative</string>
     <string name="label_trainer">Trainer</string>
