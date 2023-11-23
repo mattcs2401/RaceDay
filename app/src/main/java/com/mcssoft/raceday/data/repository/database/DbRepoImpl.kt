@@ -5,6 +5,8 @@ import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
+import com.mcssoft.raceday.domain.model.Trainer
+import com.mcssoft.raceday.domain.model.TrainerDto
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -125,7 +127,17 @@ class DbRepoImpl @Inject constructor(
     }
     //</editor-fold>
 
-    override suspend fun getTrainers(trainerNames: String): List<IDbRepo.TrainerSubSet> {
-        return dao.getTrainers(trainerNames)
+    //<editor-fold default state="collapsed" desc="Region: Trainer related.">
+    override suspend fun getTrainers(): List<Trainer> {
+        return dao.getTrainers()
     }
+
+    override suspend fun insertTrainers(trainers: List<Trainer>): List<Long> {
+        return dao.insertTrainers(trainers)
+    }
+
+    override suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto> {
+        return dao.getTrainersAsDto(trainerNames)
+    }
+    //</editor-fold>
 }

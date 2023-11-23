@@ -1,14 +1,12 @@
 package com.mcssoft.raceday.ui.components.trainer
 
+import com.mcssoft.raceday.domain.model.Trainer
+
 data class TrainerState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
-//    val summaries: List<Summary>,
-//    val race: Race?,
-//    val raceId: Long,
-//    val scratched: Boolean,
-//    val checked: Boolean
+    val trainers: List<Trainer>,
 ) {
 
     companion object {
@@ -17,7 +15,7 @@ data class TrainerState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-//                summaries = emptyList(),
+                trainers = emptyList(),
             )
         }
         fun loading(): TrainerState {
@@ -25,7 +23,7 @@ data class TrainerState(
                 exception = null,
                 status = Status.Loading,
                 loading = true,
-//                summaries = emptyList(),
+                trainers = emptyList(),
             )
         }
     }

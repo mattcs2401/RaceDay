@@ -20,7 +20,10 @@ import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.domain.model.SummaryDto
+import com.mcssoft.raceday.domain.model.Trainer
+import com.mcssoft.raceday.domain.model.TrainerDto
 import com.mcssoft.raceday.domain.model.toSummary
+import com.mcssoft.raceday.domain.model.toTrainer
 import com.mcssoft.raceday.utility.DateUtils
 import kotlinx.coroutines.delay
 
@@ -220,14 +223,22 @@ interface IDbRepo {
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
 
-    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
-    suspend fun getTrainers(trainerNames: String): List<TrainerSubSet>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrainers(trainers: List<Trainer>): List<Long>
 
-    data class TrainerSubSet(
-        var raceId: Long,
-        var runnerName: String,
-        var runnerNumber: Int,
-        var riderDriverName: String,
-        var trainerName: String
-    )
+    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
+    suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto>
+
+    @Transaction
+    suspend fun insertTrainersFromDto(trainersDto: List<TrainerDto>) {
+        val lTrainers = mutableListOf<Trainer>()
+        for(trainerDto in trainersDto) {
+            val trainer = trainerDto.toTrainer()
+            lTrainers.add(trainer)
+        }
+        insertTrainers(lTrainers)
+    }
+
+    @Query("select * from Trainer")
+    suspend fun getTrainers(): List<Trainer>
 }
