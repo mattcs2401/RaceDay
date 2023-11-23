@@ -220,6 +220,14 @@ interface IDbRepo {
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
 
-    @Query("select trainerName from Runner where raceId = :raceId")
-    suspend fun getTrainers(raceId: Long): List<String>
+    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
+    suspend fun getTrainers(trainerNames: String): List<TrainerSubSet>
+
+    data class TrainerSubSet(
+        var raceId: Long,
+        var runnerName: String,
+        var runnerNumber: Int,
+        var riderDriverName: String,
+        var trainerName: String
+    )
 }

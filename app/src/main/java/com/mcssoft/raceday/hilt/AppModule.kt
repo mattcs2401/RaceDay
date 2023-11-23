@@ -20,6 +20,7 @@ import com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.domain.usecase.api.SetupBaseFromApi
 import com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi
+import com.mcssoft.raceday.domain.usecase.jockeys.GetJockeysForSummary
 import com.mcssoft.raceday.domain.usecase.local.SetupBaseFromLocal
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
@@ -31,7 +32,7 @@ import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
-import com.mcssoft.raceday.domain.usecase.trainers.GetTrainers
+import com.mcssoft.raceday.domain.usecase.trainers.GetTrainersForSummary
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -133,7 +134,8 @@ object AppModule {
             setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs),
-            getTrainers = GetTrainers(local)
+            getTrainersForSummary = GetTrainersForSummary(local),
+            getJockeysForSummary = GetJockeysForSummary(local)
         )
     }
 

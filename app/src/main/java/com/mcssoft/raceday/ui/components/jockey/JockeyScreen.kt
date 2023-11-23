@@ -1,8 +1,7 @@
-package com.mcssoft.raceday.ui.components.summary
+package com.mcssoft.raceday.ui.components.jockey
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -16,14 +15,16 @@ import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
-import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
+import com.mcssoft.raceday.ui.components.settings.SettingsEvent
+import com.mcssoft.raceday.ui.components.settings.SettingsState
 import com.mcssoft.raceday.ui.components.trainer.TrainerEvent
+import com.mcssoft.raceday.ui.components.trainer.TrainerState
 
 @Composable
-fun SummaryScreen(
-    state: SummaryState,
+fun JockeyScreen(
+    state: JockeyState,
     navController: NavController,
-    onEvent: (SummaryEvent) -> Unit
+    onEvent: (JockeyEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -31,7 +32,7 @@ fun SummaryScreen(
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.label_summary),
+                title = stringResource(id = R.string.label_jockey),
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
@@ -65,15 +66,15 @@ fun SummaryScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(
-                items = state.summaries
-            ) {summary ->
-                SummaryItem(
-                    summary = summary,
-                    onEvent = onEvent,
-                    onItemClick = { }
-                )
-            }
+//            items(
+//                items = state.summaries
+//            ) { summary ->
+//                SummaryItem(
+//                    summary = summary,
+//                    onEvent = onEvent,
+//                    onItemClick = { }
+//                )
+//            }
         }
     }
 }

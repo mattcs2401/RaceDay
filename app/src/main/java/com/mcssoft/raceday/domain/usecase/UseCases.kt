@@ -2,6 +2,7 @@ package com.mcssoft.raceday.domain.usecase
 
 import com.mcssoft.raceday.domain.usecase.api.SetupBaseFromApi
 import com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi
+import com.mcssoft.raceday.domain.usecase.jockeys.GetJockeysForSummary
 import com.mcssoft.raceday.domain.usecase.local.SetupBaseFromLocal
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
@@ -13,7 +14,7 @@ import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
-import com.mcssoft.raceday.domain.usecase.trainers.GetTrainers
+import com.mcssoft.raceday.domain.usecase.trainers.GetTrainersForSummary
 
 data class UseCases(
 
@@ -56,6 +57,9 @@ data class UseCases(
     // Save internal to App preferences.
     val savePreferences: SavePreferences,
 
-    //
-    val getTrainers: GetTrainers
+    // Get trainers from predefined list for Summary.
+    val getTrainersForSummary: GetTrainersForSummary,
+
+    // Get Jockeys from predefined list for Summary.
+    val getJockeysForSummary: GetJockeysForSummary
 )

@@ -1,23 +1,22 @@
 package com.mcssoft.raceday.domain.usecase.trainers
 
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetTrainers @Inject constructor(
+class GetTrainersForSummary @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     /**
      *
      */
-    operator fun invoke(raceId: Long): Flow<DataResult<List<String>>> = flow {
+    operator fun invoke(): Flow<DataResult<List<Any>>> = flow {
         try {
             emit(DataResult.loading())
 
-            val trainers = iDbRepo.getTrainers(raceId)
+            val trainers = iDbRepo.getTrainers("")
 
             emit(DataResult.success(trainers))
 

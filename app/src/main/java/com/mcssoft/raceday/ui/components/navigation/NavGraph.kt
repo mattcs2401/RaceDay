@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.mcssoft.raceday.ui.components.jockey.JockeyScreen
+import com.mcssoft.raceday.ui.components.jockey.JockeyViewModel
 import com.mcssoft.raceday.ui.components.races.RacesViewModel
 import com.mcssoft.raceday.ui.components.runners.RunnersViewModel
 import com.mcssoft.raceday.ui.components.meetings.MeetingsScreen
@@ -17,10 +19,14 @@ import com.mcssoft.raceday.ui.components.races.RacesScreen
 import com.mcssoft.raceday.ui.components.runners.RunnersScreen
 import com.mcssoft.raceday.ui.components.splash.SplashScreen
 import com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel
+import com.mcssoft.raceday.ui.components.settings.SettingsScreen
+import com.mcssoft.raceday.ui.components.settings.SettingsViewModel
 import com.mcssoft.raceday.ui.components.snackbar.SnackbarController
 import com.mcssoft.raceday.ui.components.splash.SplashViewModel
 import com.mcssoft.raceday.ui.components.summary.SummaryScreen
 import com.mcssoft.raceday.ui.components.summary.SummaryViewModel
+import com.mcssoft.raceday.ui.components.trainer.TrainerScreen
+import com.mcssoft.raceday.ui.components.trainer.TrainerViewModel
 
 @Composable
 fun NavGraph() {
@@ -89,6 +95,19 @@ fun NavGraph() {
             )
         }
 
+        // Settings screen.
+        composable(
+            route = Screen.SettingsScreen.route
+        ){
+            val viewModel = hiltViewModel<SettingsViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            SettingsScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent     // TBA
+            )
+        }
+
         // Summary screen (selected Runner items).
         composable(
             route = Screen.SummaryScreen.route
@@ -102,6 +121,31 @@ fun NavGraph() {
             )
         }
 
+        // Trainer screen.
+        composable(
+            route = Screen.TrainerScreen.route
+        ){
+            val viewModel = hiltViewModel<TrainerViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            TrainerScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent     // TBA
+            )
+        }
+
+        // Trainer screen.
+        composable(
+            route = Screen.JockeyScreen.route
+        ){
+            val viewModel = hiltViewModel<JockeyViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            JockeyScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent     // TBA
+            )
+        }
     }
 
 }

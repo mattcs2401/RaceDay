@@ -125,7 +125,7 @@ class DbRepoImpl @Inject constructor(
     }
     //</editor-fold>
 
-    override suspend fun getTrainers(raceId: Long): List<String> {
-        return dao.getTrainers(raceId)
+    override suspend fun getTrainers(trainerNames: String): List<IDbRepo.TrainerSubSet> {
+        return dao.getTrainers(trainerNames)
     }
 }

@@ -17,7 +17,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 
 /**
- * Class to get Trainers, and associated Race/Runner details.
+ * Class to get Trainers, and associated Race/Runner details and add to the Summary.
  * @param context: App context for EntryPoint.
  * @param workerParams:
  */
@@ -40,6 +40,8 @@ class TrainersWorker (
     override suspend fun doWork(): Result {
         return try {
             Log.d("TAG", "[TrainersWorker.doWork] starting.")
+            var trainers = formatTrainerNames(context.resources.getStringArray(R.array.trainerNames))
+
 
             Result.success()
         } catch(ex: Exception) {
@@ -51,4 +53,19 @@ class TrainersWorker (
         }
     }
 
+}
+
+/**
+ * Utility function to format as string of names; e.g. 'name','name','name'
+ * @param names: The (array) list of names.
+ */
+private fun formatTrainerNames(names:Array<String>): String {
+    var temp = ""
+    var trainers = ""
+    for(name in names) {
+        temp = "'$name',"
+        trainers += temp
+    }
+    trainers.dropLast(trainers.length)      // get rid of last comma "'"
+    return trainers
 }

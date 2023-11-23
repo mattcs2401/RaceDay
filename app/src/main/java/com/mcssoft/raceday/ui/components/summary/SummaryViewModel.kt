@@ -4,7 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
-import com.mcssoft.raceday.ui.components.runners.RunnersState
+import com.mcssoft.raceday.ui.components.trainer.TrainerEvent
+import com.mcssoft.raceday.ui.components.trainer.TrainerState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

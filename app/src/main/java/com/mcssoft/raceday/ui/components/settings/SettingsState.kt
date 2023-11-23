@@ -1,13 +1,10 @@
-package com.mcssoft.raceday.ui.components.summary
+package com.mcssoft.raceday.ui.components.settings
 
-import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.ui.components.trainer.TrainerState
-
-data class SummaryState(
+data class SettingsState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
-    val summaries: List<Summary>,
+//    val summaries: List<Summary>,
 //    val race: Race?,
 //    val raceId: Long,
 //    val scratched: Boolean,
@@ -15,20 +12,20 @@ data class SummaryState(
 ) {
 
     companion object {
-        fun initialise(): SummaryState {
-            return SummaryState(
+        fun initialise(): SettingsState {
+            return SettingsState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-                summaries = emptyList(),
+//                summaries = emptyList(),
             )
         }
-        fun loading(): SummaryState {
-            return SummaryState(
+        fun loading(): SettingsState {
+            return SettingsState(
                 exception = null,
                 status = Status.Loading,
                 loading = true,
-                summaries = emptyList(),
+//                summaries = emptyList(),
             )
         }
     }
