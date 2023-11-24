@@ -1,20 +1,20 @@
 package com.mcssoft.raceday.domain.usecase.preferences
 
-import com.mcssoft.raceday.data.repository.preferences.IPreferences
-import com.mcssoft.raceday.data.repository.preferences.Preference
+import com.mcssoft.raceday.data.repository.preferences.app.IAppPreferences
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreference
 import com.mcssoft.raceday.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class SavePreferences @Inject constructor(
-    private val preferences: IPreferences
+    private val preferences: IAppPreferences
 ) {
     /**
      * Save the FromDb preference to the datastore.
      * @param value: The value to save.
      */
-    operator fun invoke(pref: Preference, value: Boolean): Flow<DataResult<Any>> = flow {
+    operator fun invoke(pref: AppPreference, value: Boolean): Flow<DataResult<Any>> = flow {
         try {
             emit(DataResult.loading())
 
@@ -27,7 +27,7 @@ class SavePreferences @Inject constructor(
         }
     }
 
-    operator fun invoke(pref: Preference, value: Long): Flow<DataResult<Any>> = flow {
+    operator fun invoke(pref: AppPreference, value: Long): Flow<DataResult<Any>> = flow {
         try {
             emit(DataResult.loading())
 

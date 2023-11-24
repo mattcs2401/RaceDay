@@ -1,4 +1,4 @@
-package com.mcssoft.raceday.data.repository.preferences
+package com.mcssoft.raceday.data.repository.preferences.app
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 /**
- * Class to set app preferences in a datastore.
+ * Class to get/set non-user specific app preferences in a datastore.
  */
-class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
+class AppPreferencesImpl @Inject constructor(context: Context) : IAppPreferences {
 
     private val Context.dataStore: DataStore<Preferences>
         by preferencesDataStore(name = "settings")
@@ -27,35 +27,38 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
         longPreferencesKey(context.resources.getString(R.string.setting_race_id_key))
 
     /**
-     *
+     * Get an app specific Preference.
+     * @param pref: The Preference type.
      */
-    override suspend fun getPreference(pref: Preference): Any {
+    override suspend fun getPreference(pref: AppPreference): Any {
         return when (pref) {
-            is Preference.MeetingIdPref -> {
+            is AppPreference.MeetingIdPref -> {
                 getMeetingId()
             }
-            is Preference.RaceIdPref -> {
+            is AppPreference.RaceIdPref -> {
                 getRaceId()
             }
         }
     }
 
     /**
-     *
+     * Set an app specific Preference.
+     * @param pref: The Preference type.
+     * @param value: The Preference value.
      */
-    override suspend fun setPreference(pref: Preference, value: Any) {
+    override suspend fun setPreference(pref: AppPreference, value: Any) {
         when (pref) {
-            is Preference.MeetingIdPref -> {
+            is AppPreference.MeetingIdPref -> {
                 setMeetingId(value as Long)
             }
-            is Preference.RaceIdPref -> {
+            is AppPreference.RaceIdPref -> {
                 setRaceId(value as Long)
             }
         }
     }
 
 
-    //<editor-fold default state="collapsed" desc="Region: App settings">
+    //<editor-fold default state="collapsed" desc="Region: Set/Get app specific values.">
     private suspend fun setMeetingId(value: Long) {
         dsPrefs.edit { preferences ->
             preferences[meetingIdKey] = value

@@ -13,8 +13,10 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.datasource.database.RaceDayDb
 import com.mcssoft.raceday.data.datasource.remote.IRaceDay
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.IPreferences
-import com.mcssoft.raceday.data.repository.preferences.PreferencesImpl
+import com.mcssoft.raceday.data.repository.preferences.app.IAppPreferences
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreferencesImpl
+import com.mcssoft.raceday.data.repository.preferences.user.IUserPreferences
+import com.mcssoft.raceday.data.repository.preferences.user.UserPreferencesImpl
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -32,7 +34,7 @@ import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
-import com.mcssoft.raceday.domain.usecase.trainers.GetTrainersForSummary
+import com.mcssoft.raceday.domain.usecase.trainers.GetTrainers
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -103,8 +105,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePreferences(@ApplicationContext context: Context): IPreferences {
-        return PreferencesImpl(context)
+    fun provideAppPreferences(@ApplicationContext context: Context): IAppPreferences {
+        return AppPreferencesImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(@ApplicationContext context: Context): IUserPreferences {
+        return UserPreferencesImpl(context)
     }
 
     @Provides
@@ -117,7 +125,7 @@ object AppModule {
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        prefs: IPreferences,
+        prefs: IAppPreferences,
         context: Context
     ): UseCases {
         return UseCases(
@@ -134,7 +142,7 @@ object AppModule {
             setForSummary = SetForSummary(local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs),
-            getTrainersForSummary = GetTrainersForSummary(local),
+            getTrainers = GetTrainers(local),
             getJockeysForSummary = GetJockeysForSummary(local)
         )
     }
