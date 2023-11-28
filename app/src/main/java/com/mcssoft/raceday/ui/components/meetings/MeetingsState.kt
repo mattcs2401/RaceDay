@@ -6,7 +6,7 @@ data class MeetingsState(
     val response: Int = 0,
     val exception: Exception?,
     val status: Status = Status.NoState,
-    val loadingMsg: String,
+    val message: String,
     val loading: Boolean = false,
     val data: List<Meeting>?,
     val date: String,
@@ -19,7 +19,7 @@ data class MeetingsState(
             return MeetingsState(
                 exception = null,
                 status = Status.Initialise,
-                loadingMsg = "",
+                message = "",
                 loading = false,
                 data = null,
                 date = date

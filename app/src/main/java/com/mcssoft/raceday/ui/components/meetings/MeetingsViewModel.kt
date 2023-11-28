@@ -27,7 +27,6 @@ class MeetingsViewModel @Inject constructor(
 
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
-
     }
 
     fun onEvent(event: MeetingsEvent) {
@@ -79,31 +78,31 @@ class MeetingsViewModel @Inject constructor(
             state.copy(
                 loading = true,
                 status = MeetingsState.Status.Loading,
-                loadingMsg = msg
+                message = msg
             )
         }
     }
 
-    private fun stateError(errorCode: Int) {
+    private fun stateError(errorCode: Int, msg: String) {
         _state.update { state ->
             state.copy(
                 exception = null,
                 response = errorCode,
                 status = MeetingsState.Status.Error,
                 loading = false,
-                loadingMsg = "An error occurred."
+                message = msg
             )
         }
     }
 
-    private fun stateSuccess(code: Int) {
+    private fun stateSuccess(code: Int, msg: String) {
         _state.update { state ->
             state.copy(
                 exception = null,
                 response = code,
                 status = MeetingsState.Status.Success,
                 loading = false,
-                loadingMsg = "Setup Runners from Api success."
+                message = msg
             )
         }
     }
@@ -128,7 +127,7 @@ class MeetingsViewModel @Inject constructor(
                         exception = Exception(exceptionText),
                         status = MeetingsState.Status.Failure,
                         loading = false,
-                        loadingMsg = "An Exception error occurred."
+                        message = "An Exception error occurred."
                     )
                 }
             }

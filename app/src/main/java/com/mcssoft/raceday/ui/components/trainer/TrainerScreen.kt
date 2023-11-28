@@ -2,6 +2,7 @@ package com.mcssoft.raceday.ui.components.trainer
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -15,8 +16,7 @@ import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
-import com.mcssoft.raceday.ui.components.trainer.TrainerEvent
-import com.mcssoft.raceday.ui.components.trainer.TrainerState
+import com.mcssoft.raceday.ui.components.trainer.components.TrainerItem
 
 @Composable
 fun TrainerScreen(
@@ -24,10 +24,10 @@ fun TrainerScreen(
     navController: NavController,
     onEvent: (TrainerEvent) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
+//    val scaffoldState = rememberScaffoldState()
 
     Scaffold(
-        scaffoldState = scaffoldState,
+//        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_trainer),
@@ -64,15 +64,16 @@ fun TrainerScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-//            items(
-//                items = state.summaries
-//            ) { summary ->
-//                SummaryItem(
-//                    summary = summary,
-//                    onEvent = onEvent,
-//                    onItemClick = { }
-//                )
-//            }
+            items(
+                items = state.trainers
+            ) { trainer ->
+                TrainerItem(
+                    trainer = trainer,
+                    onEvent = onEvent,
+                    onItemClick = {}
+                )
+            }
         }
     }
 }
+

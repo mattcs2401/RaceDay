@@ -3,7 +3,7 @@ package com.mcssoft.raceday.ui.components.races
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.Preference
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreference
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,10 +31,10 @@ class RacesViewModel @Inject constructor(
             if (mId > 0) {
                 mtgId = mId
                 // Save the Meeting id to the preferences (for back nav from Runners screen).
-                saveMeetingId(Preference.MeetingIdPref, mtgId)
+                saveMeetingId(AppPreference.MeetingIdPref, mtgId)
             } else {
                 // Get the Meeting id from the preferences.
-                getMeetingId(Preference.MeetingIdPref)
+                getMeetingId(AppPreference.MeetingIdPref)
                 // Meeting id is returned in the state.
                 mtgId = _state.value.mtgId
             }
@@ -130,7 +130,7 @@ class RacesViewModel @Inject constructor(
     /**
      * Save the meeting id to the preferences.
      */
-    private fun saveMeetingId(pref: Preference.MeetingIdPref, meetingId: Long) {
+    private fun saveMeetingId(pref: AppPreference.MeetingIdPref, meetingId: Long) {
         useCases.savePreferences(pref, meetingId).onEach { result ->
             when {
                 result.loading -> {}
@@ -160,7 +160,7 @@ class RacesViewModel @Inject constructor(
     /**
      * Get the meeting id from the preferences.
      */
-    private fun getMeetingId(pref: Preference.MeetingIdPref) {
+    private fun getMeetingId(pref: AppPreference.MeetingIdPref) {
         useCases.getPreferences(pref).onEach { result ->
             when {
                 result.loading -> {}

@@ -11,14 +11,20 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "Trainer",
     indices = [Index(
-        value = ["raceId"]//, "runnerId"]
+        value = ["raceId", "runnerId"]
     )],
 )
 data class Trainer(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
 
-    var raceId: Long,
+    var raceId: Long,        // not displayed.
+    var runnerId: Long,      // not displayed.
+
+    var sellCode: String,              //
+    var venueMnemonic: String,         // venue code.
+    var raceNumber: Int,
+    var raceTime: String,
     var runnerName: String,
     var runnerNumber: Int,
     var riderDriverName: String,

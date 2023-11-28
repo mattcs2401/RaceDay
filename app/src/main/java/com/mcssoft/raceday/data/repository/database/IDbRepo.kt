@@ -9,21 +9,19 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.mcssoft.raceday.domain.dto.MeetingDto
 import com.mcssoft.raceday.domain.dto.RaceDto
+import com.mcssoft.raceday.domain.dto.RunnerDto
+import com.mcssoft.raceday.domain.dto.SummaryDto
 import com.mcssoft.raceday.domain.dto.toMeeting
 import com.mcssoft.raceday.domain.dto.toRace
-import com.mcssoft.raceday.domain.dto.RunnerDto
 import com.mcssoft.raceday.domain.dto.toRunner
 import com.mcssoft.raceday.domain.dto.toScratching
+import com.mcssoft.raceday.domain.dto.toSummary
 import com.mcssoft.raceday.domain.model.Meeting
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.domain.model.SummaryDto
 import com.mcssoft.raceday.domain.model.Trainer
-import com.mcssoft.raceday.domain.model.TrainerDto
-import com.mcssoft.raceday.domain.model.toSummary
-import com.mcssoft.raceday.domain.model.toTrainer
 import com.mcssoft.raceday.utility.DateUtils
 import kotlinx.coroutines.delay
 
@@ -63,6 +61,7 @@ interface IDbRepo {
         deleteMeetings()
         deleteScratchings()
         deleteSummaries()
+        deleteTrainers()
     }
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
@@ -223,22 +222,30 @@ interface IDbRepo {
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
 
+    //<editor-fold default state="collapsed" desc="Region: Trainer related.">
+//    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
+//    suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto>
+
+//    @Transaction
+//    suspend fun insertTrainersFromDto(trainersDto: List<TrainerDto>) {
+//        val lTrainers = mutableListOf<Trainer>()
+//        for(trainerDto in trainersDto) {
+//            val trainer = trainerDto.toTrainer()
+//            lTrainers.add(trainer)
+//        }
+//        insertTrainers(lTrainers)
+//    }
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrainers(trainers: List<Trainer>): List<Long>
-
-    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
-    suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto>
-
-    @Transaction
-    suspend fun insertTrainersFromDto(trainersDto: List<TrainerDto>) {
-        val lTrainers = mutableListOf<Trainer>()
-        for(trainerDto in trainersDto) {
-            val trainer = trainerDto.toTrainer()
-            lTrainers.add(trainer)
-        }
-        insertTrainers(lTrainers)
-    }
+    suspend fun insertTrainer(trainer: Trainer): Long
 
     @Query("select * from Trainer")
     suspend fun getTrainers(): List<Trainer>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrainers(trainers: List<Trainer>): List<Long>
+
+    @Query("delete from Trainer")
+    suspend fun deleteTrainers(): Int
+    //</editor-fold>
 }

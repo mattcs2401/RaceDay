@@ -15,24 +15,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Intent(applicationContext, NotifyService::class.java).also { intent ->
-            intent.action = NotifyService.Actions.START.toString()
-            startService(intent)
-        }
+//        Intent(applicationContext, NotifyService::class.java).also { intent ->
+//            intent.action = NotifyService.Actions.START.toString()
+//            startService(intent)
+//        }
 
         setContent {
             RaceDayBasicTheme {
                 NavGraph()
             }
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        Intent(applicationContext, NotifyService::class.java).also {intent ->
-            intent.action = NotifyService.Actions.STOP.toString()
-            startService(intent)
         }
     }
 

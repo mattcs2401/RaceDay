@@ -1,4 +1,6 @@
-package com.mcssoft.raceday.domain.model
+package com.mcssoft.raceday.domain.dto
+
+import com.mcssoft.raceday.domain.model.Summary
 
 /**
  * Workaround to create a Summary object, but without the Summary._id value as that's not known

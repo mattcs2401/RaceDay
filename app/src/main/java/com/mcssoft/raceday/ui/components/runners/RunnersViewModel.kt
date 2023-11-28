@@ -3,11 +3,10 @@ package com.mcssoft.raceday.ui.components.runners
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.Preference
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreference
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.usecase.UseCases
-import com.mcssoft.raceday.ui.components.snackbar.SnackbarController
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -38,10 +37,10 @@ class RunnersViewModel @Inject constructor(
             if (rceId > 0) {
                 raceId = rceId
                 // Save the Race id to the preferences (for back nav from Runners screen).
-                saveRaceId(Preference.RaceIdPref, raceId)
+                saveRaceId(AppPreference.RaceIdPref, raceId)
             } else {
                 // Get the Race id from the preferences.
-                getRaceId(Preference.RaceIdPref)
+                getRaceId(AppPreference.RaceIdPref)
                 // Race id is returned in the state.
                 raceId = state.value.raceId
             }
@@ -187,7 +186,7 @@ class RunnersViewModel @Inject constructor(
      * @param pref: The Preference type.
      * @param raceId: The Race id value to save.
      */
-    private fun saveRaceId(pref: Preference.RaceIdPref, raceId: Long) {
+    private fun saveRaceId(pref: AppPreference.RaceIdPref, raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.savePreferences(pref, raceId).collect { result ->
                 when {
@@ -220,7 +219,7 @@ class RunnersViewModel @Inject constructor(
      * Get the Race id from the preferences.
      * @param pref: The Preference type.
      */
-    private fun getRaceId(pref: Preference.RaceIdPref) {
+    private fun getRaceId(pref: AppPreference.RaceIdPref) {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.getPreferences(pref).collect { result ->
                 when {

@@ -67,6 +67,7 @@
     <string name="key_meeting_date">key_meeting_date</string>
     <string name="key_meeting_code">key_meeting_code</string>
     <string name="key_num_races">key_num_races</string>
+    <string name="key_trainer_names">key_trainer_names</string>
 
     <!-- TBA -->
     <string-array name="trainerNames">

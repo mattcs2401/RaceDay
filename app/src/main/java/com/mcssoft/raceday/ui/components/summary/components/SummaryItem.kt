@@ -54,7 +54,7 @@ fun SummaryItem(
                 style = textStyle
             )
             Text(
-                "H${summary.runnerNumber.toString()}",
+                "H${summary.runnerNumber}",
                 Modifier.layoutId("idRunnerNumber"),
                 fontSize = fontSize12sp,
                 style = textStyle

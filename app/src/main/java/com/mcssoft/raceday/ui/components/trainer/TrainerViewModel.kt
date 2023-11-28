@@ -31,7 +31,7 @@ class TrainerViewModel @Inject constructor(
 
     private fun getTrainers() {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getTrainersForSummary().collect { result ->
+            useCases.getTrainers().collect { result ->
                 when {
                     result.loading -> {
                         _state.update { state ->

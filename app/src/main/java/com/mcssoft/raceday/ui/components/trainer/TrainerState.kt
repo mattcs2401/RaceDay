@@ -6,16 +6,15 @@ data class TrainerState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
-    val trainers: List<Trainer>,
+    val trainers: List<Trainer>
 ) {
-
     companion object {
         fun initialise(): TrainerState {
             return TrainerState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-                trainers = emptyList(),
+                trainers = emptyList()
             )
         }
         fun loading(): TrainerState {

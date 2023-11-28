@@ -11,17 +11,20 @@ import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
+import com.mcssoft.raceday.domain.dto.TrainerDto
+import com.mcssoft.raceday.domain.dto.toTrainer
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.ui.components.splash.SplashState
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Class to insert the Runners associated with a Race.
+ * Class to insert the Runners associated with a Race, and get Trainers associated with the Runners.
  * @param context: App context for EntryPoint.
  * @param workerParams:
  */
@@ -44,6 +47,7 @@ class RunnersWorker (
     override suspend fun doWork(): Result {
         return try {
             Log.d("TAG", "[RunnersWorker.doWork] starting.")
+            val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
 
             var race: Race
             var  raceId: Long
@@ -66,8 +70,12 @@ class RunnersWorker (
                 race = iDbRepo.getRace(raceId)
 
                 if(race.hasScratchings) {
-                    processScratchings(race)
+                    processForScratchings(race)
                 }
+
+                delay(100)  // TBA required ?
+
+                processForTrainers(race, trainerNames)
             }
             Result.success()
         } catch(ex: Exception) {
@@ -84,7 +92,7 @@ class RunnersWorker (
      * as scratched.
      * @param race: The Race that has associated scratchings.
       */
-    private suspend fun processScratchings(race: Race) {
+    private suspend fun processForScratchings(race: Race) {
         // The list of Runners for the Race.
         val lRunners = iDbRepo.getRunners(race._id)
         // The list of scratchings.
@@ -102,4 +110,30 @@ class RunnersWorker (
             }
         }
     }
+
+    private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
+        val runners = iDbRepo.getRunners(race._id)
+        val lRunners = runners.filter { runner ->
+            !runner.isScratched
+            runner.trainerName in (trainerNames)
+        }
+
+        if (lRunners.isNotEmpty()) {
+            for(runner in lRunners) {
+                val trainerDto = TrainerDto(
+                    raceId = race._id,
+                    runnerId = runner._id,
+                    sellCode = race.sellCode,
+                    venueMnemonic = race.venueMnemonic,
+                    raceNumber = race.raceNumber,
+                    raceTime = race.raceStartTime,
+                    runnerName = runner.runnerName,
+                    runnerNumber = runner.runnerNumber,
+                    riderDriverName = runner.riderDriverName,
+                    trainerName = runner.trainerName
+                )
+                iDbRepo.insertTrainer(trainerDto.toTrainer())            }
+        }
+    }
+
 }

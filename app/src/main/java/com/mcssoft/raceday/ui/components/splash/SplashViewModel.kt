@@ -40,8 +40,8 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.emit(state.value)
                 }
-                setupBaseFromApi(date)
-//                stateSuccess(200, "Setup base from Api success.")
+//                setupBaseFromApi(date)
+                stateSuccess(200, "Setup base from Api success.")
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }
@@ -59,7 +59,9 @@ class SplashViewModel @Inject constructor(
                 event.activity.finishAndRemoveTask()
             }
             is SplashEvent.SetRunners -> {
-                setupRunnersFromApi()
+                // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
+                // background).
+//                setupRunnersFromApi()
             }
         }
     }
@@ -109,7 +111,6 @@ class SplashViewModel @Inject constructor(
      */
     private fun setupRunnersFromApi() {
         viewModelScope.launch {
-//            delay(250) // TBA ?
             useCases.setupRunnersFromApi().collect { result ->
                 when(result.status) {
                     is DataResult.Status.Loading -> {
