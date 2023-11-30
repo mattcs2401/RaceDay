@@ -1,19 +1,22 @@
 package com.mcssoft.raceday.ui.components.races
 
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreference
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RacesViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val appPrefs: DataStore<AppPreferences>
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RacesState.initialise())
@@ -31,10 +34,14 @@ class RacesViewModel @Inject constructor(
             if (mId > 0) {
                 mtgId = mId
                 // Save the Meeting id to the preferences (for back nav from Runners screen).
-                saveMeetingId(AppPreference.MeetingIdPref, mtgId)
+                viewModelScope.launch {
+                    setMeetingId(mtgId)
+                }
             } else {
-                // Get the Meeting id from the preferences.
-                getMeetingId(AppPreference.MeetingIdPref)
+                // Get the Meeting id from the preferences into the State.
+                viewModelScope.launch {
+                    getMeetingId()
+                }
                 // Meeting id is returned in the state.
                 mtgId = _state.value.mtgId
             }
@@ -128,62 +135,19 @@ class RacesViewModel @Inject constructor(
     }
 
     /**
-     * Save the meeting id to the preferences.
+     * Get the Meeting id from the preferences and save into the State.
      */
-    private fun saveMeetingId(pref: AppPreference.MeetingIdPref, meetingId: Long) {
-        useCases.savePreferences(pref, meetingId).onEach { result ->
-            when {
-                result.loading -> {}
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RacesState.Status.Failure,
-                            loading = false
-                        )
-                    }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Success,
-                            loading = false,
-                            mtgId = meetingId
-                        )
-                    }
-                }
-            }
-        }.launchIn(viewModelScope)
+    private suspend fun getMeetingId() {
+        state.value.mtgId = appPrefs.data.first().meetingId
     }
 
     /**
-     * Get the meeting id from the preferences.
+     * Save the meeting id to the preferences.
      */
-    private fun getMeetingId(pref: AppPreference.MeetingIdPref) {
-        useCases.getPreferences(pref).onEach { result ->
-            when {
-                result.loading -> {}
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RacesState.Status.Failure,
-                            loading = false
-                        )
-                    }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Success,
-                            loading = false,
-                            mtgId = result.data as Long
-                        )
-                    }
-                }
-            }
-        }.launchIn(viewModelScope)
+    private suspend fun setMeetingId(newValue: Long) {
+        appPrefs.updateData { pref ->
+            pref.copy(meetingId = newValue)
+        }
     }
+
 }

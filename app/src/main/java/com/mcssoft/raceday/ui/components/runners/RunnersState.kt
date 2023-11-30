@@ -9,7 +9,7 @@ data class RunnersState(
     val loading: Boolean,
     val runners: List<Runner>,
     val race: Race?,
-    val raceId: Long,
+    var raceId: Long,
     val checked: Boolean
 ) {
 

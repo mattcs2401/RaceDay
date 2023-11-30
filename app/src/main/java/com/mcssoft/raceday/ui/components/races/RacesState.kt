@@ -19,7 +19,7 @@ data class RacesState(
     val loading: Boolean = false,
     val lRaces: List<Race> = emptyList(),
     val mtg: Meeting?,
-    val mtgId: Long = 0
+    var mtgId: Long = 0
 ) {
     companion object {
         fun initialise(): RacesState {

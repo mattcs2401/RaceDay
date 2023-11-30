@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JockeyViewModel @Inject constructor(
-    private val useCases: UseCases,
+//    private val useCases: UseCases,
     savedStateHandle: SavedStateHandle      // TBA.
 ) : ViewModel() {
 
@@ -20,48 +20,11 @@ class JockeyViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-//        getSummaries()
+
     }
 
     fun onEvent(event: JockeyEvent) {
         // TBA.
     }
-
-//    private fun getSummaries() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            useCases.getSummaries().collect { result ->
-//                when {
-//                    result.loading -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = null,
-//                                status = TrainerState.Status.Loading,
-//                                loading = true
-//                            )
-//                        }
-//                    }
-//                    result.failed -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = result.exception,
-//                                status = TrainerState.Status.Failure,
-//                                loading = false
-//                            )
-//                        }
-//                    }
-//                    result.successful -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = null,
-//                                status = TrainerState.Status.Success,
-//                                loading = false,
-//                                summaries = result.data ?: emptyList()
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
 }

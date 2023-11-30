@@ -11,8 +11,8 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.datasource.database.RaceDayDb
 import com.mcssoft.raceday.data.datasource.remote.IRaceDay
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.app.IAppPreferences
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreferencesImpl
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
+import com.mcssoft.raceday.data.repository.preferences.app.AppPrefsSerializer
 import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.data.repository.preferences.user.UserPrefsSerializer
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
@@ -24,8 +24,6 @@ import com.mcssoft.raceday.domain.usecase.jockeys.GetJockeysForSummary
 import com.mcssoft.raceday.domain.usecase.local.SetupBaseFromLocal
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
-import com.mcssoft.raceday.domain.usecase.preferences.GetPreferences
-import com.mcssoft.raceday.domain.usecase.preferences.SavePreferences
 import com.mcssoft.raceday.domain.usecase.races.GetRace
 import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
@@ -95,7 +93,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDataStore(@ApplicationContext appContext: Context): DataStore<UserPreferences> {
+    fun provideUserDataStore(@ApplicationContext appContext: Context): DataStore<UserPreferences> {
         return DataStoreFactory.create(
             serializer = UserPrefsSerializer,
             corruptionHandler = ReplaceFileCorruptionHandler(
@@ -112,10 +110,23 @@ object AppModule {
         )
     }
 
-    @Provides
     @Singleton
-    fun provideAppPreferences(@ApplicationContext context: Context): IAppPreferences {
-        return AppPreferencesImpl(context)
+    @Provides
+    fun provideAppDataStore(@ApplicationContext appContext: Context): DataStore<AppPreferences> {
+        return DataStoreFactory.create(
+            serializer = AppPrefsSerializer,
+            corruptionHandler = ReplaceFileCorruptionHandler(
+                produceNewData = {
+                    AppPreferences()
+                }
+            ),
+            scope = CoroutineScope(
+                Dispatchers.IO + SupervisorJob()
+            ),
+            produceFile = {
+                appContext.dataStoreFile("app_prefs.pb")
+            }
+        )
     }
 
     @Provides
@@ -128,7 +139,6 @@ object AppModule {
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        prefs: IAppPreferences,
         context: Context
     ): UseCases {
         return UseCases(
@@ -143,8 +153,6 @@ object AppModule {
             setRunnerChecked = SetRunnerChecked(local),
             getSummaries = GetSummaries(local),
             setForSummary = SetForSummary(local),
-            getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs),
             getTrainers = GetTrainers(local),
             getJockeysForSummary = GetJockeysForSummary(local)
         )

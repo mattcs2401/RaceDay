@@ -1,9 +1,10 @@
 package com.mcssoft.raceday.ui.components.runners
 
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreference
+import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -12,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RunnersViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val appPrefs: DataStore<AppPreferences>
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RunnersState.initialise())
@@ -36,13 +39,17 @@ class RunnersViewModel @Inject constructor(
         savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { rceId ->
             if (rceId > 0) {
                 raceId = rceId
+                viewModelScope.launch {
+                    setRaceId(raceId)
+                }
                 // Save the Race id to the preferences (for back nav from Runners screen).
-                saveRaceId(AppPreference.RaceIdPref, raceId)
             } else {
                 // Get the Race id from the preferences.
-                getRaceId(AppPreference.RaceIdPref)
+                viewModelScope.launch {
+                    getRaceId()
+                }
                 // Race id is returned in the state.
-                raceId = state.value.raceId
+                raceId = _state.value.raceId
             }
             // Get Race and Runner values for the screen.
             getRace(raceId)
@@ -182,69 +189,18 @@ class RunnersViewModel @Inject constructor(
 
     //<editor-fold default state="collapsed" desc="Region: Preferences methods">
     /**
-     * Save the Race id to the preferences.
-     * @param pref: The Preference type.
-     * @param raceId: The Race id value to save.
+     * Get the Race id from the preferences and save into the State.
      */
-    private fun saveRaceId(pref: AppPreference.RaceIdPref, raceId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCases.savePreferences(pref, raceId).collect { result ->
-                when {
-                    result.loading -> {}
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = result.exception,
-                                status = RunnersState.Status.Failure,
-                                loading = false
-                            )
-                        }
-                    }
-                    result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = RunnersState.Status.Success,
-                                loading = false,
-                                raceId = raceId
-                            )
-                        }
-                    }
-                }
-            }
-        }
+    private suspend fun getRaceId() {
+        state.value.raceId = appPrefs.data.first().raceId
     }
 
     /**
-     * Get the Race id from the preferences.
-     * @param pref: The Preference type.
+     * Save the Race id to the preferences.
      */
-    private fun getRaceId(pref: AppPreference.RaceIdPref) {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCases.getPreferences(pref).collect { result ->
-                when {
-                    result.loading -> {}
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = result.exception,
-                                status = RunnersState.Status.Failure,
-                                loading = false
-                            )
-                        }
-                    }
-                    result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = RunnersState.Status.Success,
-                                loading = false,
-                                raceId = result.data as Long
-                            )
-                        }
-                    }
-                }
-            }
+    private suspend fun setRaceId(newValue: Long) {
+        appPrefs.updateData { pref ->
+            pref.copy(raceId = newValue)
         }
     }
     //</editor-fold>
