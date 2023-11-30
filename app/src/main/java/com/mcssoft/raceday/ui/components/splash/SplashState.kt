@@ -9,7 +9,8 @@ data class SplashState(
     val loadingMsg: String = "",
     val customExType: String? = null,
     val customExMsg: String? = null,
-    val hasInternet: Boolean = true
+    val hasInternet: Boolean = true,
+    val sourceFromApi: Boolean = true
 ) {
     companion object {
         // Flow initializer.

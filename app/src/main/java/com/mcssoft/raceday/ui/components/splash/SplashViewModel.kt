@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
@@ -15,14 +17,16 @@ import com.mcssoft.raceday.utility.network.ConnectivityState.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val connectivityObserver: ConnectivityObserver,
-    private val useCases: UseCases
+    private val useCases: UseCases,
+    private val userPrefs: DataStore<UserPreferences>,
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SplashState.initialise())
@@ -36,12 +40,22 @@ class SplashViewModel @Inject constructor(
         when (connectivityState) {
             is Status.Available -> {
                 val date = DateUtils().getDateToday()
-                _state.update { state -> state.copy(date = date, hasInternet = true) }
                 viewModelScope.launch {
+                    _state.update { state ->
+                        state.copy(
+                            date = date,
+                            hasInternet = true,
+                            sourceFromApi = userPrefs.data.first().sourceFromApi
+                        )
+                    }
                     _state.emit(state.value)
+
+                    if(state.value.sourceFromApi) {
+                        setupBaseFromApi(date)
+                    } else {
+                        stateSuccess(200, "")
+                    }
                 }
-//                setupBaseFromApi(date)
-                stateSuccess(200, "Setup base from Api success.")
             }
             is Status.Unavailable -> {
                 _state.update { state -> state.copy(hasInternet = false) }
@@ -61,7 +75,7 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-//                setupRunnersFromApi()
+                setupRunnersFromApi()
             }
         }
     }

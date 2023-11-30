@@ -3,11 +3,9 @@ package com.mcssoft.raceday.hilt
 import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.datastore.dataStoreFile
 import androidx.room.Room
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.datasource.database.RaceDayDb
@@ -15,8 +13,8 @@ import com.mcssoft.raceday.data.datasource.remote.IRaceDay
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.app.IAppPreferences
 import com.mcssoft.raceday.data.repository.preferences.app.AppPreferencesImpl
-import com.mcssoft.raceday.data.repository.preferences.user.IUserPreferences
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferencesImpl
+import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
+import com.mcssoft.raceday.data.repository.preferences.user.UserPrefsSerializer
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -42,6 +40,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -92,14 +93,22 @@ object AppModule {
         return context
     }
 
-    @Provides
     @Singleton
-    fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
-        return PreferenceDataStoreFactory.create(
+    @Provides
+    fun provideDataStore(@ApplicationContext appContext: Context): DataStore<UserPreferences> {
+        return DataStoreFactory.create(
+            serializer = UserPrefsSerializer,
             corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { emptyPreferences() }
+                produceNewData = {
+                    UserPreferences()
+                }
             ),
-            produceFile = { context.preferencesDataStoreFile("settings") }
+            scope = CoroutineScope(
+                Dispatchers.IO + SupervisorJob()
+            ),
+            produceFile = {
+                appContext.dataStoreFile("user_prefs.pb")
+            }
         )
     }
 
@@ -107,12 +116,6 @@ object AppModule {
     @Singleton
     fun provideAppPreferences(@ApplicationContext context: Context): IAppPreferences {
         return AppPreferencesImpl(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserPreferences(@ApplicationContext context: Context): IUserPreferences {
-        return UserPreferencesImpl(context)
     }
 
     @Provides

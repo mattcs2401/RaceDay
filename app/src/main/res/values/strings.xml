@@ -44,6 +44,7 @@
 
     <string name="setting_meeting_id_key">meetingIdKey</string>
     <string name="setting_race_id_key">raceIdKey</string>
+<!--    <string name="setting_source_api_id_key">sourceApiIdKey</string>-->
 
     <!-- TopBar labels. -->
     <string name="label_meetings">Meetings</string>
@@ -68,6 +69,10 @@
     <string name="key_meeting_code">key_meeting_code</string>
     <string name="key_num_races">key_num_races</string>
     <string name="key_trainer_names">key_trainer_names</string>
+
+    <!-- Settings item text. -->
+    <string name="id_source_from_api">Source From API</string>
+    <string name="id_source_from_api_desc">Get the application data from the network.</string>
 
     <!-- TBA -->
     <string-array name="trainerNames">

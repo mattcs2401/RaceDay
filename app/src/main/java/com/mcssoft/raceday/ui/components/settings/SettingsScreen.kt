@@ -1,5 +1,7 @@
 package com.mcssoft.raceday.ui.components.settings
 
+import android.app.Application
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +22,7 @@ import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
+import com.mcssoft.raceday.ui.components.settings.components.SettingsItem
 
 @Composable
 fun SettingsScreen(
@@ -67,31 +70,13 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            // Temporary chintzy under construction.
-            Icon(
-                painterResource(id = R.drawable.ic_under_const_48),
-                stringResource(id = R.string.lbl_icon_home),
-                Modifier.align(Alignment.Center)
-            )
-            Text("Under construction.",
-                modifier = Modifier.align(Alignment.Center)
-                    .padding(top = 64.dp)
+            SettingsItem(
+                settingsState = state,
+                title = stringResource(id = R.string.id_source_from_api) ,
+                description = stringResource(id = R.string.id_source_from_api_desc),
+                enabled = true,
+                onEvent = onEvent
             )
         }
-//        // Summaries listing.
-//        LazyColumn(
-//            modifier = Modifier
-//                .fillMaxSize()
-//        ) {
-//            items(
-//                items = state.summaries
-//            ) { summary ->
-//                SummaryItem(
-//                    summary = summary,
-//                    onEvent = onEvent,
-//                    onItemClick = { }
-//                )
-//            }
-//        }
     }
 }

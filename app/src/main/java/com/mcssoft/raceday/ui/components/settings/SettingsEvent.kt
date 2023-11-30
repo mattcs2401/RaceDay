@@ -2,5 +2,5 @@ package com.mcssoft.raceday.ui.components.settings
 
 sealed class SettingsEvent {
 
-    // TBA.
+    data class Checked(val checked: Boolean): SettingsEvent()
 }
