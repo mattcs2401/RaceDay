@@ -2,6 +2,7 @@ package com.mcssoft.raceday.domain.usecase.api
 
 import android.content.Context
 import android.widget.Toast
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.asFlow
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -9,6 +10,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
+import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.worker.RunnersWorker
 import com.mcssoft.raceday.utility.worker.WorkerState
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
@@ -26,7 +29,8 @@ import javax.inject.Inject
 
 class SetupRunnersFromApi  @Inject constructor(
     private val iDbRepo: IDbRepo,
-    private val context: Context
+    private val context: Context,
+    private val userPrefs: DataStore<UserPreferences>
 ) {
     private val workManager = WorkManager.getInstance(context)
 
@@ -45,10 +49,15 @@ class SetupRunnersFromApi  @Inject constructor(
                 val code = item.venueMnemonic
                 val races = item.numRaces.toString()
 
+                val trainerPref = userPrefs.data.first().autoAddTrainers
+
                 val workData = workDataOf(
                     context.resources.getString(R.string.key_meeting_date) to date,
                     context.resources.getString(R.string.key_meeting_code) to code,
-                    context.resources.getString(R.string.key_num_races) to races
+                    context.resources.getString(R.string.key_num_races) to races,
+                    // Note: Couldn't seem to use this from the context.resources.getBoolean().
+                    // TODO - remove hard coding.
+                    "key_trainer_pref" to trainerPref
                 )
                 val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
                     .addTag("RunnersWorker")

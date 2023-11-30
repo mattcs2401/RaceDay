@@ -3,11 +3,13 @@ package com.mcssoft.raceday.utility.worker
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.datastore.core.DataStore
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
+import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
@@ -22,6 +24,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 
 /**
  * Class to insert the Runners associated with a Race, and get Trainers associated with the Runners.
@@ -47,11 +50,15 @@ class RunnersWorker (
     override suspend fun doWork(): Result {
         return try {
             Log.d("TAG", "[RunnersWorker.doWork] starting.")
+            // Get the list of trainer names.
             val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
 
             var race: Race
             var  raceId: Long
             var response: NetworkResponse<BaseDto2>   // response from Api.
+
+            // Note: Couldn't seem to get this from the context.resources.getBoolean().
+            val trainerPref = inputData.getBoolean("key_trainer_pref", false)
 
             val date = inputData.getString(context.resources.getString(R.string.key_meeting_date))
             val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
@@ -75,7 +82,9 @@ class RunnersWorker (
 
                 delay(100)  // TBA required ?
 
-                processForTrainers(race, trainerNames)
+                if(trainerPref) {
+                    processForTrainers(race, trainerNames)
+                }
             }
             Result.success()
         } catch(ex: Exception) {
@@ -114,8 +123,7 @@ class RunnersWorker (
     private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
         val runners = iDbRepo.getRunners(race._id)
         val lRunners = runners.filter { runner ->
-            !runner.isScratched
-            runner.trainerName in (trainerNames)
+            !runner.isScratched && runner.trainerName in (trainerNames)
         }
 
         if (lRunners.isNotEmpty()) {

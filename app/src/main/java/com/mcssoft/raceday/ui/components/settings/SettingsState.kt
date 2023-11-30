@@ -2,7 +2,8 @@ package com.mcssoft.raceday.ui.components.settings
 
 data class SettingsState(
     val status: Status,
-    var sourceFromApi: Boolean = true
+    var sourceFromApi: Boolean = true,
+    var autoAddTrainers: Boolean = true
 ) {
 
     companion object {

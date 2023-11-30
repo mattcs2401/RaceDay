@@ -34,6 +34,7 @@ val padding64dp = 64.dp
 val stroke2dp = 2.dp
 
 val width2dp = 2.dp
+val width8dp = 8.dp
 val width16dp = 16.dp
 
 const val twentyPercent = 0.2f

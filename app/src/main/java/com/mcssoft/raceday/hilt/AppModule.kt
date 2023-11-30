@@ -139,12 +139,13 @@ object AppModule {
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        context: Context
+        context: Context,
+        store: DataStore<UserPreferences>
     ): UseCases {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
-            setupRunnersFromApi = SetupRunnersFromApi(local, context),
+            setupRunnersFromApi = SetupRunnersFromApi(local, context, store),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),

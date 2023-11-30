@@ -11,6 +11,7 @@ import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -47,9 +48,10 @@ class RunnersViewModel @Inject constructor(
                 // Get the Race id from the preferences.
                 viewModelScope.launch {
                     getRaceId()
+                    delay(50)     // TBA ? from testing.
                 }
                 // Race id is returned in the state.
-                raceId = _state.value.raceId
+                raceId = state.value.raceId
             }
             // Get Race and Runner values for the screen.
             getRace(raceId)

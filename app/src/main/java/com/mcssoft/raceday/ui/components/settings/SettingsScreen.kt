@@ -1,8 +1,11 @@
 package com.mcssoft.raceday.ui.components.settings
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -17,6 +20,7 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.settings.components.SettingsItem
+import com.mcssoft.raceday.ui.theme.width8dp
 
 @Composable
 fun SettingsScreen(
@@ -64,13 +68,26 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            SettingsItem(
-                settingsState = state,
-                title = stringResource(id = R.string.id_source_from_api) ,
-                description = stringResource(id = R.string.id_source_from_api_desc),
-                enabled = true,
-                onEvent = onEvent
-            )
+            Column {
+                SettingsItem(
+                    settingsState = state,
+                    title = stringResource(id = R.string.id_source_from_api) ,
+                    description = stringResource(id = R.string.id_source_from_api_desc),
+                    enabled = true,
+                    onEvent = onEvent,
+                    eventType = SettingsEvent.EventType.SOURCEFROMAPI
+                )
+                Spacer(modifier = Modifier.width(width8dp))
+                SettingsItem(
+                    settingsState = state,
+                    title = stringResource(id = R.string.id_auto_add_trainers) ,
+                    description = stringResource(id = R.string.id_auto_add_trainers_desc),
+                    enabled = true,
+                    onEvent = onEvent,
+                    eventType = SettingsEvent.EventType.AUTOADDTRAINER
+                )
+            }
+
         }
     }
 }

@@ -43,7 +43,7 @@ class RacesViewModel @Inject constructor(
                     getMeetingId()
                 }
                 // Meeting id is returned in the state.
-                mtgId = _state.value.mtgId
+                mtgId = state.value.mtgId
             }
             // Get Meeting and Races values for the screen.
             getMeeting(mtgId)

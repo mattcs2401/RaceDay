@@ -38,7 +38,8 @@ fun SettingsItem(
     title: String,
     description: String,
     enabled: Boolean,
-    onEvent: (SettingsEvent) -> Unit
+    onEvent: (SettingsEvent) -> Unit,
+    eventType: SettingsEvent.EventType
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
@@ -74,7 +75,9 @@ fun SettingsItem(
                 onCheckedChange = { state ->
                     isChecked = state
                     settingsState.sourceFromApi = state
-                    onEvent(SettingsEvent.Checked(state))  // for datastore update.
+                    onEvent(
+                        SettingsEvent.Checked(state, eventType)
+                    )
                 },
                 Modifier.layoutId("idSwitch"),
                 enabled = enabled
