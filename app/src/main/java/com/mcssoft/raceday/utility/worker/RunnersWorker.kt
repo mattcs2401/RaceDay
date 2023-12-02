@@ -118,6 +118,7 @@ class RunnersWorker (
                 }
             }
         }
+
     }
 
     private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
@@ -140,7 +141,9 @@ class RunnersWorker (
                     riderDriverName = runner.riderDriverName,
                     trainerName = runner.trainerName
                 )
-                iDbRepo.insertTrainer(trainerDto.toTrainer())            }
+                iDbRepo.insertTrainer(trainerDto.toTrainer())
+                iDbRepo.updateRunnerChecked(runner._id, true)
+            }
         }
     }
 

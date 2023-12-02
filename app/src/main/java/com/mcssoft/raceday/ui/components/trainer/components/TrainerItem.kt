@@ -36,7 +36,7 @@ fun TrainerItem(
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
-    var isChecked by remember { mutableStateOf(false) }
+//    var isChecked by remember { mutableStateOf(false) }
 //    isChecked = trainer.isChecked
 
     Card(
@@ -91,20 +91,20 @@ fun TrainerItem(
                 fontSize = fontSize12sp,
                 style = textStyle
             )
-            Checkbox(
-                checked = isChecked,
-                onCheckedChange = { checked ->
-                    isChecked = checked
-//                    trainer.isChecked = isChecked
-//                    onEvent(TrainersEvent.Check(race, runner))
-                },
-                Modifier.layoutId("idCheckBox"),
-                enabled = true,
-                colors = CheckboxDefaults.colors(
-                    checkedColor = Color.Magenta,
-                    uncheckedColor = Color.Gray
-                )
-            )
+//            Checkbox(
+//                checked = isChecked,
+//                onCheckedChange = { checked ->
+//                    isChecked = checked
+////                    trainer.isChecked = isChecked
+////                    onEvent(TrainersEvent.Check(race, runner))
+//                },
+//                Modifier.layoutId("idCheckBox"),
+//                enabled = true,
+//                colors = CheckboxDefaults.colors(
+//                    checkedColor = Color.Magenta,
+//                    uncheckedColor = Color.Gray
+//                )
+//            )
         }
     }
 }
@@ -118,7 +118,7 @@ private val constraintSet = ConstraintSet {
     val idRunnerNumberName = createRefFor("idRunnerNumberName")
     val idRiderDriverName = createRefFor("idRiderDriverName")
     val idTrainerName = createRefFor("idTrainerName")
-    val idCheckBox = createRefFor("idCheckBox")
+//    val idCheckBox = createRefFor("idCheckBox")
 
     // 1st (top) line.
     constrain(idSellCode) {
@@ -151,10 +151,10 @@ private val constraintSet = ConstraintSet {
         top.linkTo(idRaceTime.top, margin = margin0dp)
         start.linkTo(idRaceTime.end, margin = margin8dp)
     }
-    constrain(idCheckBox) {
-        top.linkTo(parent.top, margin = margin0dp)
-        end.linkTo(parent.absoluteRight, margin = margin8dp)
-    }
+//    constrain(idCheckBox) {
+//        top.linkTo(parent.top, margin = margin0dp)
+//        end.linkTo(parent.absoluteRight, margin = margin8dp)
+//    }
 }
 /*
     var raceNumber: Int,

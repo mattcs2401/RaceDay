@@ -85,6 +85,18 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getSummaryByRunner(rName: String, rNumber: Int): Summary? {
         return dao.getSummaryByRunner(rName, rNumber)
     }
+
+    override suspend fun getRunnersNotScratched(raceId: Long): List<Runner> {
+        return dao.getRunnersNotScratched(raceId)
+    }
+
+    override suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int {
+        return dao.updateRunnerChecked(runnerId, newValue)
+    }
+
+    override suspend fun getCheckedRunners(): List<Runner> {
+        return dao.getCheckedRunners()
+    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">

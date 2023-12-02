@@ -179,6 +179,9 @@ interface IDbRepo {
         }
     }
 
+    @Query("update Runner set isChecked= :newValue where _id = :runnerId")
+    suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int
+
     @Update
     suspend fun updateRunnerAsScratched(runner: Runner) {
         updateRunner(runner)
@@ -186,6 +189,12 @@ interface IDbRepo {
 
     @Update
     suspend fun updateRunner(runner: Runner)
+
+    @Query("select * from Runner where isScratched = 0 and isChecked = 0 and raceId = :raceId")
+    suspend fun getRunnersNotScratched(raceId: Long): List<Runner>
+
+    @Query("select * from Runner where isScratched = 0 and isChecked = 1")
+    suspend fun getCheckedRunners(): List<Runner>
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
@@ -209,6 +218,22 @@ interface IDbRepo {
 
     @Delete
     suspend fun deleteSummary(summary: Summary)
+
+    @Transaction
+    suspend fun setForSummary(runner: Runner) {
+        val race = getRace(runner.raceId)
+        val summaryDto = SummaryDto(
+            race._id,
+            runner._id,
+            race.sellCode,
+            race.venueMnemonic,
+            race.raceNumber,
+            race.raceStartTime,
+            runner.runnerNumber,
+            runner.runnerName
+        )
+        insertSummary(summaryDto.toSummary())
+    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">
@@ -223,19 +248,6 @@ interface IDbRepo {
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Trainer related.">
-//    @Query("select raceId, runnerName, runnerNumber, riderDriverName, trainerName from Runner where trainerName in (:trainerNames)")
-//    suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto>
-
-//    @Transaction
-//    suspend fun insertTrainersFromDto(trainersDto: List<TrainerDto>) {
-//        val lTrainers = mutableListOf<Trainer>()
-//        for(trainerDto in trainersDto) {
-//            val trainer = trainerDto.toTrainer()
-//            lTrainers.add(trainer)
-//        }
-//        insertTrainers(lTrainers)
-//    }
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrainer(trainer: Trainer): Long
 

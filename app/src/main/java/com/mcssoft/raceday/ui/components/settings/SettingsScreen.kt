@@ -21,6 +21,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.settings.components.SettingsItem
 import com.mcssoft.raceday.ui.theme.width8dp
+import com.mcssoft.raceday.ui.components.settings.SettingsEvent.EventType
 
 @Composable
 fun SettingsScreen(
@@ -75,7 +76,7 @@ fun SettingsScreen(
                     description = stringResource(id = R.string.id_source_from_api_desc),
                     enabled = true,
                     onEvent = onEvent,
-                    eventType = SettingsEvent.EventType.SOURCEFROMAPI
+                    eventType = EventType.SOURCEFROMAPI
                 )
                 Spacer(modifier = Modifier.width(width8dp))
                 SettingsItem(
@@ -84,7 +85,7 @@ fun SettingsScreen(
                     description = stringResource(id = R.string.id_auto_add_trainers_desc),
                     enabled = true,
                     onEvent = onEvent,
-                    eventType = SettingsEvent.EventType.AUTOADDTRAINER
+                    eventType = EventType.AUTOADDTRAINER
                 )
             }
 

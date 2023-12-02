@@ -80,6 +80,11 @@ class SetupRunnersFromApi  @Inject constructor(
                     }
                 }
             }
+            // Update the Summary with any checked Runners.
+            val lRunners = iDbRepo.getCheckedRunners()
+            lRunners.forEach { runner ->
+                iDbRepo.setForSummary(runner)
+            }
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }
