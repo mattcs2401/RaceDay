@@ -29,11 +29,10 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 Not really in any strict order:
 -------------------------------
 
--> Race/Runner details from Trainer to the Summary.
-
 -> App refresh value where all the data is refreshed, i.e from Api ?
   ->  at a certain interval ?
-  -> manual option
+  -> manual option ?
+  -> what about existing Summary detail (rebuild) ?
 
 -> Foreground ? service for Notifications.
 

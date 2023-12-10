@@ -41,8 +41,9 @@ class RunnersWorker (
     override suspend fun doWork(): Result {
         return try {
             Log.d("TAG", "[RunnersWorker.doWork] starting.")
-            // Get the list of trainer names.
+            // Get the list of Trainer and Jockey names.
             val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
+            val jockeyNames = context.resources.getStringArray(R.array.jockeyNames).toList()
 
             var race: Race
             var  raceId: Long
@@ -75,6 +76,7 @@ class RunnersWorker (
 
                 if(trainerPref) {
                     processForTrainers(race, trainerNames)
+                    processForJockeys(race, jockeyNames)
                 }
             }
             Result.success()
@@ -112,7 +114,6 @@ class RunnersWorker (
 
     }
 
-    // TODO - Update for Jockey as well ?
     private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
         val runners = iDbRepo.getRunners(race._id)
         val lRunners = runners.filter { runner ->
@@ -126,4 +127,16 @@ class RunnersWorker (
         }
     }
 
+    private suspend fun processForJockeys(race: Race, jockeyNames: List<String>) {
+        val runners = iDbRepo.getRunners(race._id)
+        val lRunners = runners.filter { runner ->
+            !runner.isScratched && runner.riderDriverName in (jockeyNames)
+        }
+
+        if (lRunners.isNotEmpty()) {
+            for(runner in lRunners) {
+                iDbRepo.updateRunnerChecked(runner._id, true)
+            }
+        }
+    }
 }
