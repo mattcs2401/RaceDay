@@ -17,9 +17,7 @@ fun BottomBar(
 ) {
     val bottomNavItems = listOf(
         BottomNavItem.Settings,
-        BottomNavItem.Summary,
-        BottomNavItem.Trainer,
-        BottomNavItem.Jockey
+        BottomNavItem.Summary
     )
 
     BottomNavigation(

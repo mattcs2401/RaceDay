@@ -49,15 +49,6 @@ fun RunnersScreen(
             TopBar(
                 title = stringResource(id = R.string.label_runners),
                 backgroundColour = MaterialTheme.colors.primary,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    // As yet, haven't been able to make the meetingId param optional.
-                    navController.navigate(Screen.RacesScreen.route + "meetingId=${0L}") {
-                        popUpTo(route = Screen.RacesScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                },
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.

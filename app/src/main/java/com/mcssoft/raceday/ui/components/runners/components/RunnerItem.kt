@@ -35,6 +35,7 @@ import com.mcssoft.raceday.ui.theme.margin48dp
 import com.mcssoft.raceday.ui.theme.margin4dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
+import com.mcssoft.raceday.utility.Constants
 
 @Composable
 fun RunnerItem(
@@ -69,11 +70,7 @@ fun RunnerItem(
             constraintSet,
             if(!scratched) {
                 Modifier.clickable { onItemClick(runner) }
-//                Modifier.background(color = Color.Red)
-//            } else {
-//                Modifier.clickable { onItemClick(runner) }
             } else {
-//                Modifier.clickable { }
                 Modifier.clickable(enabled = false, onClick = {})
             }
         ) {
@@ -100,16 +97,29 @@ fun RunnerItem(
                 Modifier.layoutId("idBarrier"),
                 fontSize = fontSize10sp
             )
-            Text(
-                runner.trainerName,
-                Modifier.layoutId("idTrainerName"),
-                fontSize = fontSize10sp
-            )
-            Text(
-                runner.riderDriverName,
-                Modifier.layoutId("idRider"),
-                fontSize = fontSize10sp
-            )
+//            Text(
+//                runner.trainerName,
+//                Modifier.layoutId("idTrainerName"),
+//                fontSize = fontSize10sp
+//            )
+            if(!runner.isScratched) {
+                var riderDriver = runner.riderDriverName
+                if(riderDriver.length > Constants.JOCKEY_MAX) {
+                    riderDriver = "${riderDriver.take(Constants.JOCKEY_TAKE)}..."
+                }
+                Text(
+                    riderDriver,//runner.riderDriverName,
+                    Modifier.layoutId("idRider"),
+                    fontSize = fontSize10sp
+                )
+            } else {
+                Text(
+                "N/A",
+                    Modifier.layoutId("idArrow")     // move to right.
+                    .padding(end = margin16dp),
+                    fontSize = fontSize10sp
+                )
+            }
             if (!scratched) {
                 IconButton(
                     onClick = {

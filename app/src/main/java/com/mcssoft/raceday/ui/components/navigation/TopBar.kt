@@ -16,8 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
  * Implement a custom TopAppBar component.
  * @param title: TopBar title.
  * @param backgroundColour: The background colour.
- * @param onBackPressed: A handler to simulate on back pressed.
- * @param backNavIcon: Associated on back pressed icon.
  * @param actions: Other actions associated with the top bar.
  * @note onBackPressed and backNavIcon need to be implemented together.
  */
@@ -25,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 fun TopBar(
     title: String,
     backgroundColour: Color,
-    onBackPressed: () -> Unit = {},
-    backNavIcon: Int? = null,
+//    onBackPressed: () -> Unit = {},
+//    backNavIcon: Int? = null,
     actions: @Composable (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
@@ -36,16 +34,6 @@ fun TopBar(
             })
         },
         backgroundColor = backgroundColour,
-        navigationIcon = {
-            if (onBackPressed != {} && backNavIcon != null) {
-                IconButton(onClick = onBackPressed) {
-                    Icon(
-                        painterResource(backNavIcon),
-                        backNavIcon.toString()
-                    )
-                }
-            }
-        },
         actions = actions
     )
 }

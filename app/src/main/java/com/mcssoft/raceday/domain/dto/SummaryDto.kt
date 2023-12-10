@@ -16,7 +16,9 @@ data class SummaryDto(
     var raceStartTime: String,    // e.g. 12:30 (from Race).
     var runnerNumber: Int,        // e.g. 2 (from Runner).
     var runnerName: String,        // e.g. "name" (from Runner).
-)
+    var riderDriverName: String,
+    var trainerName: String
+    )
 
 fun SummaryDto.toSummary(): Summary {
     return Summary(
@@ -27,6 +29,8 @@ fun SummaryDto.toSummary(): Summary {
         raceNumber = raceNumber,
         raceStartTime = raceStartTime,
         runnerNumber = runnerNumber,
-        runnerName = runnerName
+        runnerName = runnerName,
+        riderDriverName = riderDriverName,
+        trainerName = trainerName
     )
 }

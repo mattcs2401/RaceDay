@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -18,13 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
-import com.mcssoft.raceday.ui.components.trainer.TrainerEvent
 
 @Composable
 fun SummaryScreen(
@@ -40,15 +37,6 @@ fun SummaryScreen(
             TopBar(
                 title = stringResource(id = R.string.label_summary),
                 backgroundColour = MaterialTheme.colors.primary,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    // As yet, haven't been able to make the meetingId param optional.
-                    navController.navigate(Screen.MeetingsScreen.route) {
-                        popUpTo(route = Screen.MeetingsScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                },
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.
@@ -84,7 +72,9 @@ fun SummaryScreen(
                     .fillMaxSize()
             ) {
                 items(
-                    items = state.summaries
+                    items = state.summaries.sortedBy { summary ->
+                        summary.raceStartTime
+                    }
                 ) { summary ->
                     SummaryItem(
                         summary = summary,

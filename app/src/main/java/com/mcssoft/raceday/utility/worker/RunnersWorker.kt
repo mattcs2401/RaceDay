@@ -2,29 +2,20 @@ package com.mcssoft.raceday.utility.worker
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import androidx.datastore.core.DataStore
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
-import com.mcssoft.raceday.domain.dto.TrainerDto
-import com.mcssoft.raceday.domain.dto.toTrainer
 import com.mcssoft.raceday.domain.model.Race
-import com.mcssoft.raceday.ui.components.splash.SplashState
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 
 /**
  * Class to insert the Runners associated with a Race, and get Trainers associated with the Runners.
@@ -121,6 +112,7 @@ class RunnersWorker (
 
     }
 
+    // TODO - Update for Jockey as well ?
     private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
         val runners = iDbRepo.getRunners(race._id)
         val lRunners = runners.filter { runner ->
@@ -129,19 +121,6 @@ class RunnersWorker (
 
         if (lRunners.isNotEmpty()) {
             for(runner in lRunners) {
-                val trainerDto = TrainerDto(
-                    raceId = race._id,
-                    runnerId = runner._id,
-                    sellCode = race.sellCode,
-                    venueMnemonic = race.venueMnemonic,
-                    raceNumber = race.raceNumber,
-                    raceTime = race.raceStartTime,
-                    runnerName = runner.runnerName,
-                    runnerNumber = runner.runnerNumber,
-                    riderDriverName = runner.riderDriverName,
-                    trainerName = runner.trainerName
-                )
-                iDbRepo.insertTrainer(trainerDto.toTrainer())
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }

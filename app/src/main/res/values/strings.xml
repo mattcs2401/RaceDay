@@ -76,8 +76,6 @@
     <string name="id_auto_add_trainers">Auto Add Trainers</string>
     <string name="id_auto_add_trainers_desc">Auto update the Summary with Trainer data.</string>
 
-
-
     <!-- TBA -->
     <string-array name="trainerNames">
         <item>M Smith</item>
@@ -88,7 +86,8 @@
         <item>J Hanna</item>
     </string-array>
 
+    <!-- TBA -->
     <string-array name="jockeyNames">
-        <!-- TBA -->
+        <item>K Crowther</item>
     </string-array>
 </resources>

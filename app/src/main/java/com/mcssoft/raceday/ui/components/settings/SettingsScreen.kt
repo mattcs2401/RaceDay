@@ -37,15 +37,6 @@ fun SettingsScreen(
             TopBar(
                 title = stringResource(id = R.string.label_settings),
                 backgroundColour = MaterialTheme.colors.primary,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    // As yet, haven't been able to make the meetingId param optional.
-                    navController.navigate(Screen.MeetingsScreen.route) {
-                        popUpTo(route = Screen.MeetingsScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                },
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.

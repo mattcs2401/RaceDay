@@ -25,17 +25,17 @@ data class RunnersState(
                 checked = false
             )
         }
-        fun loading(): RunnersState {
-            return RunnersState(
-                exception = null,
-                status = Status.Loading,
-                loading = true,
-                runners = emptyList(),
-                race = null,
-                raceId = 0,
-                checked = false
-            )
-        }
+//        fun loading(): RunnersState {
+//            return RunnersState(
+//                exception = null,
+//                status = Status.Loading,
+//                loading = true,
+//                runners = emptyList(),
+//                race = null,
+//                raceId = 0,
+//                checked = false
+//            )
+//        }
     }
 
     sealed class Status {

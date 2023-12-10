@@ -5,8 +5,6 @@ import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.domain.model.Trainer
-import com.mcssoft.raceday.domain.dto.TrainerDto
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -139,25 +137,4 @@ class DbRepoImpl @Inject constructor(
     }
     //</editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Trainer related.">
-    override suspend fun insertTrainer(trainer: Trainer): Long {
-        return dao.insertTrainer(trainer)
-    }
-    override suspend fun getTrainers(): List<Trainer> {
-        return dao.getTrainers()
-    }
-
-    override suspend fun insertTrainers(trainers: List<Trainer>): List<Long> {
-        return dao.insertTrainers(trainers)
-    }
-
-//    override suspend fun getTrainersAsDto(trainerNames: String): List<TrainerDto> {
-//        return dao.getTrainersAsDto(trainerNames)
-//    }
-
-    override suspend fun deleteTrainers(): Int {
-        return dao.deleteTrainers()
-    }
-
-    //</editor-fold>
 }

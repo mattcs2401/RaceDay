@@ -29,14 +29,14 @@ data class RacesState(
                 mtg = null,
             )
         }
-        fun loading(): RacesState {
-            return RacesState(
-                exception = null,
-                status = Status.Loading,
-                mtg = null,
-                // TBA mtg ?
-            )
-        }
+//        fun loading(): RacesState {
+//            return RacesState(
+//                exception = null,
+//                status = Status.Loading,
+//                mtg = null,
+//                // TBA mtg ?
+//            )
+//        }
 //        fun failure(): RacesState {
 //
 //        }

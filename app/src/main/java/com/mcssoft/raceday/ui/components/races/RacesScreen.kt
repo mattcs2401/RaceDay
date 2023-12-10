@@ -41,14 +41,6 @@ fun RacesScreen(
             TopBar(
                 title = stringResource(id = R.string.label_races),
                 backgroundColour = MaterialTheme.colors.primary,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    navController.navigate(Screen.MeetingsScreen.route) {
-                        popUpTo(route = Screen.MeetingsScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                },
                 actions = {
                     IconButton(onClick = {
                         navController.navigate(Screen.MeetingsScreen.route) {
@@ -96,7 +88,9 @@ fun RacesScreen(
                     RaceItem(
                         race = race,
                         onItemClick = {
-                            navController.navigate(Screen.RunnersScreen.route + "raceId=${race._id}")
+                            navController.navigate(
+                                Screen.RunnersScreen.route + "raceId=${race._id}"
+                            )
                         }
                     )
                 }

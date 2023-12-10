@@ -1,17 +1,13 @@
 package com.mcssoft.raceday.ui.components.summary
 
 import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.ui.components.trainer.TrainerState
 
 data class SummaryState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
     val summaries: List<Summary>,
-//    val race: Race?,
-//    val raceId: Long,
-//    val scratched: Boolean,
-//    val checked: Boolean
+
 ) {
 
     companion object {

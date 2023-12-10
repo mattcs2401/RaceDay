@@ -14,6 +14,7 @@ import com.mcssoft.raceday.ui.theme.fontSize10sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
+import com.mcssoft.raceday.utility.Constants
 
 /**
  * Additional display of Meeting details (the 'expanded' state).
@@ -52,8 +53,12 @@ fun MeetingItemExtra(
                 fontSize = fontSize10sp
             )
         }
+        var rail = meeting.railPosition.toString()
+        if(rail.length > Constants.RAIL_MAX) {
+            rail = "${rail.take(Constants.RAIL_TAKE)} ..."
+        }
         Text(
-            "Rail: ${meeting.railPosition.toString()}",
+            "Rail: $rail",
             Modifier.layoutId("idRailPos"),
             fontSize = fontSize10sp
         )

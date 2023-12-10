@@ -21,7 +21,6 @@ import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.domain.model.Trainer
 import com.mcssoft.raceday.utility.DateUtils
 import kotlinx.coroutines.delay
 
@@ -47,7 +46,11 @@ interface IDbRepo {
         racesDto.forEach { raceDto ->
             // One set of Scratching for one Race.
             raceDto.scratchings.forEach { scratchDto ->
-                val scratch = scratchDto.toScratching(meetingDto.venueMnemonic!!, raceDto.raceNumber, scratchDto)
+                val scratch = scratchDto.toScratching(
+                    meetingDto.venueMnemonic!!,
+                    raceDto.raceNumber,
+                    scratchDto
+                )
                 lScratches.add(scratch)
             }
             insertScratchings(lScratches)
@@ -61,7 +64,6 @@ interface IDbRepo {
         deleteMeetings()
         deleteScratchings()
         deleteSummaries()
-        deleteTrainers()
     }
 
     //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
@@ -169,7 +171,9 @@ interface IDbRepo {
                 race.raceNumber,
                 race.raceStartTime,
                 runner.runnerNumber,
-                runner.runnerName
+                runner.runnerName,
+                runner.riderDriverName,
+                runner.trainerName
             )
             insertSummary(summaryDto.toSummary())
         } else {
@@ -219,6 +223,7 @@ interface IDbRepo {
     @Delete
     suspend fun deleteSummary(summary: Summary)
 
+    // TODO - do setForSummary() elsewhere.
     @Transaction
     suspend fun setForSummary(runner: Runner) {
         val race = getRace(runner.raceId)
@@ -230,7 +235,9 @@ interface IDbRepo {
             race.raceNumber,
             race.raceStartTime,
             runner.runnerNumber,
-            runner.runnerName
+            runner.runnerName,
+            runner.riderDriverName,
+            runner.trainerName
         )
         insertSummary(summaryDto.toSummary())
     }
@@ -247,17 +254,4 @@ interface IDbRepo {
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
     //</editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Trainer related.">
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrainer(trainer: Trainer): Long
-
-    @Query("select * from Trainer")
-    suspend fun getTrainers(): List<Trainer>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrainers(trainers: List<Trainer>): List<Long>
-
-    @Query("delete from Trainer")
-    suspend fun deleteTrainers(): Int
-    //</editor-fold>
 }

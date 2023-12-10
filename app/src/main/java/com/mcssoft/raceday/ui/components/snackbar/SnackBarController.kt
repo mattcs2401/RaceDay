@@ -6,8 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 // https://www.youtube.com/watch?v=2FOShgaQk-I
-class SnackbarController
-constructor(
+class SnackbarController(
     private val scope: CoroutineScope
 ){
 
