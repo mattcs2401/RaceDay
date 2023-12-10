@@ -73,7 +73,7 @@ class SetupRunnersFromApi  @Inject constructor(
                             throw Exception("Observe runnerWorker failure.")
                         }
                         Status.Succeeded -> {
-                            Toast.makeText(context, "Runners for: $code Ok.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Runners for: $code", Toast.LENGTH_SHORT).show()
                             emit(DataResult.success(""))
                         }
                         else -> {}

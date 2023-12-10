@@ -31,13 +31,10 @@ import com.mcssoft.raceday.R
 /**
  * @param state: Meetings state.
  * @param navController: The Navigation.
- * @param onEvent: Call up to MeetingsEvent in ViewModel.
-
  */
 fun MeetingsScreen(
     state: MeetingsState,
-    navController: NavController,
-    onEvent: (MeetingsEvent) -> Unit   // TBA
+    navController: NavController
 ) {
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
@@ -79,10 +76,7 @@ fun MeetingsScreen(
                     MeetingItem(
                         meeting = meeting,
                         onItemClick = {
-                            onEvent(MeetingsEvent.NavToRaces(meeting._id))
-//                            if (!meeting.abandoned) {
-                                navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
-//                            }
+                            navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
                         }
                     )
                 }

@@ -135,8 +135,7 @@ class SplashViewModel @Inject constructor(
                         stateError(result.errorCode)
                     }
                     is DataResult.Status.Success -> {
-                        Log.d("TAG",
-                            "[SplashViewModel] setupRunnersFromApi result.successful")
+                        Log.d("TAG","[SplashViewModel] setupRunnersFromApi result.successful")
                         stateSuccess(result.errorCode, "Setup Runners from Api success.")
                     }
                     is DataResult.Status.Failure -> {

@@ -1,12 +1,10 @@
 package com.mcssoft.raceday.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mcssoft.raceday.ui.components.navigation.NavGraph
 import com.mcssoft.raceday.ui.theme.RaceDayBasicTheme
-import com.mcssoft.raceday.utility.services.NotifyService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

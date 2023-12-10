@@ -29,12 +29,6 @@ class MeetingsViewModel @Inject constructor(
         getMeetingsFromLocal()
     }
 
-    fun onEvent(event: MeetingsEvent) {
-//        when(event) {
-//            else -> {}
-//        }
-    }
-
     /**
      * Use case: GetMeetings.
      * Get a list of Meetings from the database.

@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.domain.model
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 

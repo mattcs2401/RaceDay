@@ -17,7 +17,6 @@ import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
-import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
@@ -25,7 +24,6 @@ import com.mcssoft.raceday.ui.theme.padding4dp
 @Composable
 fun SummaryItem(
     summary: Summary,
-    onEvent: (SummaryEvent) -> Unit,   // TBA
     onItemClick: (Summary) -> Unit     // TBA
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)

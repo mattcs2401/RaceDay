@@ -48,8 +48,7 @@ fun NavGraph() {
             val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
                 navController = navController,
-                state = state,
-                onEvent = viewModel::onEvent
+                state = state
             )
         }
 
@@ -110,8 +109,7 @@ fun NavGraph() {
             val state by viewModel.state.collectAsStateWithLifecycle()
             SummaryScreen(
                 navController = navController,
-                state = state,
-                onEvent = viewModel::onEvent     // TBA
+                state = state
             )
         }
 

@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.data.repository.preferences.app
 
 import androidx.datastore.core.Serializer
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException

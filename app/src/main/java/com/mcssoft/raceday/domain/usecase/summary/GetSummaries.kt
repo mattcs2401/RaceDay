@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.domain.usecase.summary
 
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.utility.DataResult
 import kotlinx.coroutines.flow.Flow

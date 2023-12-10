@@ -26,8 +26,7 @@ import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
 @Composable
 fun SummaryScreen(
     state: SummaryState,
-    navController: NavController,
-    onEvent: (SummaryEvent) -> Unit
+    navController: NavController
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -78,7 +77,6 @@ fun SummaryScreen(
                 ) { summary ->
                     SummaryItem(
                         summary = summary,
-                        onEvent = onEvent,
                         onItemClick = { }
                     )
                 }

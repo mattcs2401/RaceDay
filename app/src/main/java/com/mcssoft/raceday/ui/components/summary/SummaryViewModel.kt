@@ -25,10 +25,6 @@ class SummaryViewModel @Inject constructor(
         getSummaries()
     }
 
-    fun onEvent(event: SummaryEvent) {
-        // TBA.
-    }
-
     private fun getSummaries() {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.getSummaries().collect { result ->

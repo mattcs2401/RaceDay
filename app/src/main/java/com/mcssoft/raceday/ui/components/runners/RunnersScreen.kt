@@ -31,20 +31,17 @@ import com.mcssoft.raceday.ui.theme.padding64dp
 /**
  * @param state: Runners state.
  * @param navController: The Navigation.
- * @param snackbarController: For when show a SnackBar.
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
-//    snackbarController: SnackbarController,
     onEvent: (RunnersEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         scaffoldState = scaffoldState,
-//        snackbarHost = { scaffoldState.snackbarHostState },
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),

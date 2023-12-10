@@ -55,7 +55,7 @@ interface IDbRepo {
             }
             insertScratchings(lScratches)
             // Reset for next iteration (i.e. different Race and Scratchings).
-            lScratches.removeAll(lScratches)
+            lScratches.removeAll(lScratches.toSet())
         }
     }
 
