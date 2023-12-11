@@ -223,6 +223,9 @@ interface IDbRepo {
     @Delete
     suspend fun deleteSummary(summary: Summary)
 
+    @Update
+    suspend fun updateSummary(summary: Summary): Int
+
     // TODO - do setForSummary() elsewhere.
     @Transaction
     suspend fun setForSummary(runner: Runner) {

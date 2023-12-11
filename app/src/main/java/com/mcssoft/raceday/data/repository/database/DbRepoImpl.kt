@@ -121,6 +121,10 @@ class DbRepoImpl @Inject constructor(
     override suspend fun deleteSummary(summary: Summary) {
         return dao.deleteSummary(summary)
     }
+
+    override suspend fun updateSummary(summary: Summary): Int {
+        return dao.updateSummary(summary)
+    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">

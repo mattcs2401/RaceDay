@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,12 +23,13 @@ class SummaryViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        getSummaries()
+        val time = DateUtils().getCurrentTimeFormatted().toString()
+        getSummaries(time)
     }
 
-    private fun getSummaries() {
+    private fun getSummaries(time: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getSummaries().collect { result ->
+            useCases.getSummaries(time).collect { result ->
                 when {
                     result.loading -> {
                         _state.update { state ->

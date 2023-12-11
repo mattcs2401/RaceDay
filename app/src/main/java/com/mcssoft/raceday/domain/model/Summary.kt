@@ -22,7 +22,8 @@ data class Summary(
     var raceNumber: Int,          // e.g. 1 (from Race).
     var raceStartTime: String,    // e.g. 12:30 (from Race).
     var runnerNumber: Int,        // e.g. 2 (from Runner).
-    var runnerName: String,        // e.g. "name" (from Runner).
+    var runnerName: String,       // e.g. "name" (from Runner).
     var riderDriverName: String,
-    var trainerName: String
+    var trainerName: String,
+    var isPastRaceTime: Boolean   // meta data, raceStartTime is now in the past.
 )

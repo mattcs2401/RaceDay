@@ -1,6 +1,9 @@
 package com.mcssoft.raceday.utility
 
 import java.util.*
+import java.util.Calendar.HOUR
+import java.util.Calendar.HOUR_OF_DAY
+import java.util.Calendar.MINUTE
 
 class DateUtils {
 
@@ -36,6 +39,66 @@ class DateUtils {
         }
 
         return "${timeAll[0]}:${timeAll[1]}"
+    }
+
+    fun getCurrentTimeFormatted(): String {
+        var hourOfDay: Int
+        var minutes: Int
+        Calendar.getInstance(Locale.getDefault()).apply {
+            hourOfDay = get(HOUR_OF_DAY)
+            minutes = get(MINUTE)
+        }
+        return formatHourMinutes(hourOfDay, minutes)
+    }
+
+    fun getCurrentTimeFormatted(millis: Long): String {
+        var hourOfDay: Int
+        var minutes: Int
+        Calendar.getInstance(Locale.getDefault()).apply {
+            timeInMillis = millis
+            hourOfDay = get(HOUR_OF_DAY)
+            minutes = get(MINUTE)
+        }
+        return formatHourMinutes(hourOfDay, minutes)
+    }
+
+    fun getCurrentTimeMillis(): Long {
+        val time = getCurrentTimeFormatted().split(":")
+        return timeToMillis(time[0].toInt(), time[1].toInt())
+    }
+
+    fun getCurrentTimeMillis(formattedTime: String): Long {
+        val time = formattedTime.split(":")
+        return timeToMillis(time[0].toInt(), time[1].toInt())
+    }
+
+//    /**
+//     * Is the current time after the given (Race) time.
+//     * @param givenTime: The time to compare against.
+//     */
+//    fun isAfter(givenTime: Long) : Boolean {
+//        return Calendar.getInstance(Locale.getDefault()).timeInMillis > givenTime
+//    }
+
+    /**
+     * Utility method to return a formatted String.
+     */
+    private fun formatHourMinutes(hourOfDay: Int, minutes: Int): String {
+        return if(minutes < 10) {
+            "$hourOfDay:0$minutes"
+        } else {
+            "$hourOfDay:$minutes"
+        }
+    }
+
+    /**
+     * Utility method to return time in millis from a format string ("HH:MM").
+     */
+    private fun timeToMillis(hourOfDay: Int, minute: Int) : Long {
+        return Calendar.getInstance(Locale.getDefault()).apply {
+            set(HOUR_OF_DAY, hourOfDay)
+            set(MINUTE, minute)
+        }.timeInMillis
     }
 }
 /*
