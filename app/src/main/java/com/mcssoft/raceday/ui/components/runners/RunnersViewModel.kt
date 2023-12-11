@@ -23,36 +23,18 @@ import javax.inject.Inject
 class RunnersViewModel @Inject constructor(
     private val useCases: UseCases,
     savedStateHandle: SavedStateHandle,
-    private val appPrefs: DataStore<AppPreferences>
+//    private val appPrefs: DataStore<AppPreferences>
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RunnersState.initialise())
     val state = _state.asStateFlow()
 
-    private var raceId = 0L
-
     init {
         /*
           The Runners screen expects a "raceId" (supplied in the navigation from the RacesScreen
-          to the RunnersScreen). However, when navigating back from the Runners screen, there is no
-           need to supply one, so the original is saved into the preferences and reused.
+          to the RunnersScreen).
          */
-        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { rceId ->
-            if (rceId > 0) {
-                raceId = rceId
-                viewModelScope.launch {
-                    setRaceId(raceId)
-                }
-                // Save the Race id to the preferences (for back nav from Runners screen).
-            } else {
-                // Get the Race id from the preferences.
-                viewModelScope.launch {
-                    getRaceId()
-                    delay(50)     // TBA ? from testing.
-                }
-                // Race id is returned in the state.
-                raceId = state.value.raceId
-            }
+        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { raceId ->
             // Get Race and Runner values for the screen.
             getRace(raceId)
             getRunners(raceId)
@@ -189,22 +171,5 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
-    //<editor-fold default state="collapsed" desc="Region: Preferences methods">
-    /**
-     * Get the Race id from the preferences and save into the State.
-     */
-    private suspend fun getRaceId() {
-        state.value.raceId = appPrefs.data.first().raceId
-    }
-
-    /**
-     * Save the Race id to the preferences.
-     */
-    private suspend fun setRaceId(newValue: Long) {
-        appPrefs.updateData { pref ->
-            pref.copy(raceId = newValue)
-        }
-    }
-    //</editor-fold>
 
 }

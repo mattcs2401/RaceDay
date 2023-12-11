@@ -30,7 +30,7 @@ import com.mcssoft.raceday.ui.theme.padding64dp
 fun RacesScreen(
     state: RacesState,
     navController: NavController,
-    onEvent: (RacesEvent) -> Unit
+//    onEvent: (RacesEvent) -> Unit = {}
 ) {
     val scaffoldState = rememberScaffoldState()
     val showErrorDialog = remember { mutableStateOf(false) }
@@ -104,41 +104,42 @@ fun RacesScreen(
                         onDismiss = {}
                     )
                 }
-                is Failure -> {
-                    showErrorDialog.value = true
-                    ShowErrorDialog(
-                        showErrorDialog = showErrorDialog,
-                        mtgId = state.mtgId,
-                        onEvent = onEvent
-                    )
-                }
-                is Success -> {/* TBA */}
+//                is Failure -> {
+//                    showErrorDialog.value = true
+//                    ShowErrorDialog(
+//                        showErrorDialog = showErrorDialog,
+////                        mtgId = state.mtgId,
+//                        onEvent = onEvent
+//                    )
+//                }
+//                is Success -> {/* TBA */}
                 else -> {}
             }
         }
     }
 }
 
-@Composable
-private fun ShowErrorDialog(
-    mtgId: Long,
-    onEvent: (RacesEvent) -> Unit,
-    showErrorDialog: MutableState<Boolean>
-) {
-    if (showErrorDialog.value) {
-        showErrorDialog.value = !showErrorDialog.value
-        CommonDialog(
-            icon = R.drawable.ic_error_48,
-            dialogTitle = stringResource(id = R.string.dlg_error_title),
-            dialogText = "Unable to get the Races listing.",
-            dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
-            onDismissClicked = {
-                onEvent(RacesEvent.Cancel)
-            },
-            confirmButtonText = stringResource(id = R.string.lbl_btn_retry),
-            onConfirmClicked = {
-                onEvent(RacesEvent.Retry(mtgId))
-            }
-        )
-    }
-}
+//@Composable
+//private fun ShowErrorDialog(
+////    mtgId: Long,
+//    onEvent: (RacesEvent) -> Unit,
+//    showErrorDialog: MutableState<Boolean>
+//) {
+//    if (showErrorDialog.value) {
+//        showErrorDialog.value = !showErrorDialog.value
+//        CommonDialog(
+//            icon = R.drawable.ic_error_48,
+//            dialogTitle = stringResource(id = R.string.dlg_error_title),
+//            dialogText = "Unable to get the Races listing.",
+//            dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
+//            onDismissClicked = {
+//                onEvent(RacesEvent.Cancel)
+//            },
+//            confirmButtonText = stringResource(id = R.string.lbl_btn_retry),
+//            onConfirmClicked = {
+//                // TODO - TBA, do we really need this.
+////                onEvent(RacesEvent.Retry(mtgId))
+//            }
+//        )
+//    }
+//}

@@ -49,8 +49,8 @@ fun RunnersScreen(
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(Screen.RacesScreen.route + "meetingId=${0L}") {
-                            popUpTo(route = Screen.RacesScreen.route) {
+                        navController.navigate(Screen.MeetingsScreen.route) {
+                            popUpTo(route = Screen.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }
@@ -101,14 +101,6 @@ fun RunnersScreen(
                     }
                 }
             }
-//            RaceDaySnackbar(
-//                snackbarHostState = scaffoldState.snackbarHostState,
-//                modifier = Modifier.align(Alignment.BottomCenter),
-//                onDismiss = {
-//                    // TODO - some RunnerEvent ?
-//                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-//                },
-//            )
         }
     }
 }

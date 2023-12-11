@@ -77,7 +77,7 @@ fun SummaryScreen(
                 ) { summary ->
                     SummaryItem(
                         summary = summary,
-                        onItemClick = { }
+                        onItemClick = { /* TBA */ }
                     )
                 }
             }

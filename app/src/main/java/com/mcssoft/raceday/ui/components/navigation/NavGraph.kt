@@ -66,7 +66,7 @@ fun NavGraph() {
             RacesScreen(
                 navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent
+//                onEvent = viewModel::onEvent
             )
         }
 
@@ -79,10 +79,8 @@ fun NavGraph() {
         ) {
             val viewModel = hiltViewModel<RunnersViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
-//            val snackbarController = SnackbarController(viewModel.viewModelScope)
             RunnersScreen(
                 navController = navController,
-//                snackbarController = snackbarController,
                 state = state,
                 onEvent = viewModel::onEvent
             )

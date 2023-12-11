@@ -14,14 +14,15 @@ class GetSummaries @Inject constructor(
     /**
      *
      */
-    operator fun invoke(time: String): Flow<DataResult<List<Summary>>> = flow {
+    operator fun invoke(): Flow<DataResult<List<Summary>>> = flow {
         try {
             emit(DataResult.loading())
 
-            val summaries = iDbRepo.getSummaries()
+            val lSummaries = iDbRepo.getSummaries()
 
-            for(summary in summaries) {
-                val currentTimeMillis = DateUtils().getCurrentTimeMillis()
+            val currentTimeMillis = DateUtils().getCurrentTimeMillis()
+
+            for(summary in lSummaries) {
                 val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
 
                 if(!summary.isPastRaceTime) {
@@ -33,7 +34,7 @@ class GetSummaries @Inject constructor(
                 }
             }
 
-            emit(DataResult.success(summaries))
+            emit(DataResult.success(lSummaries))
 
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
