@@ -108,24 +108,24 @@ object AppModule {
         )
     }
 
-    @Singleton
-    @Provides
-    fun provideAppDataStore(@ApplicationContext appContext: Context): DataStore<AppPreferences> {
-        return DataStoreFactory.create(
-            serializer = AppPrefsSerializer,
-            corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = {
-                    AppPreferences()
-                }
-            ),
-            scope = CoroutineScope(
-                Dispatchers.IO + SupervisorJob()
-            ),
-            produceFile = {
-                appContext.dataStoreFile("app_prefs.pb")
-            }
-        )
-    }
+//    @Singleton
+//    @Provides
+//    fun provideAppDataStore(@ApplicationContext appContext: Context): DataStore<AppPreferences> {
+//        return DataStoreFactory.create(
+//            serializer = AppPrefsSerializer,
+//            corruptionHandler = ReplaceFileCorruptionHandler(
+//                produceNewData = {
+//                    AppPreferences()
+//                }
+//            ),
+//            scope = CoroutineScope(
+//                Dispatchers.IO + SupervisorJob()
+//            ),
+//            produceFile = {
+//                appContext.dataStoreFile("app_prefs.pb")
+//            }
+//        )
+//    }
 
     @Provides
     @Singleton

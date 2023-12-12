@@ -7,7 +7,7 @@ data class RunnersState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
-    val runners: List<Runner>,
+    val lRunners: List<Runner>?,
     val race: Race?,
     var raceId: Long,
     val checked: Boolean
@@ -19,7 +19,7 @@ data class RunnersState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-                runners = emptyList(),
+                lRunners = emptyList(),
                 race = null,
                 raceId = 0,
                 checked = false
@@ -34,4 +34,7 @@ data class RunnersState(
         data object Success : Status()
         data object Failure : Status()
     }
+
+    val runners: List<Runner>
+        get() = lRunners ?: emptyList()
 }

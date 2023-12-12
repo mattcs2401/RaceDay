@@ -1,6 +1,5 @@
 package com.mcssoft.raceday.ui.components.summary
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
-    private val useCases: UseCases,
-//    savedStateHandle: SavedStateHandle      // TBA.
+    private val useCases: UseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SummaryState.initialise())

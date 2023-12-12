@@ -22,8 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RunnersViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle,
-//    private val appPrefs: DataStore<AppPreferences>
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RunnersState.initialise())
@@ -120,7 +119,7 @@ class RunnersViewModel @Inject constructor(
                                 exception = null,
                                 status = RunnersState.Status.Success,
                                 loading = false,
-                                runners = result.data ?: emptyList()
+                                lRunners = result.data
                             )
                         }
                     }

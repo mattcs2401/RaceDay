@@ -1,21 +1,25 @@
 package com.mcssoft.raceday.ui.components.races
 
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RacesViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle,
-//    private val appPrefs: DataStore<AppPreferences>
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RacesState.initialise())
@@ -34,78 +38,72 @@ class RacesViewModel @Inject constructor(
 
     }
 
-    fun onEvent(event: RacesEvent) {
-    }
-
     private fun getRaces(mId: Long) {
-        useCases.getRaces(mId).onEach { result ->
-            when {
-                result.loading -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Loading,
-                            loading = true
-                        )
+        viewModelScope.launch(Dispatchers.IO) {
+            useCases.getRaces(mId).collect { result ->
+                when {
+                    result.loading -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RacesState.Status.Loading
+                            )
+                        }
                     }
-                }
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RacesState.Status.Failure,
-                            loading = false
-                        )
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RacesState.Status.Failure
+                            )
+                        }
                     }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Success,
-                            loading = false,
-                            lRaces = result.data ?: emptyList()
-                        )
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RacesState.Status.Success,
+                                lRaces = result.data
+                            )
+                        }
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun getMeeting(mId: Long) {
-        useCases.getMeeting(mId).onEach { result ->
-            when {
-                result.loading -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Loading,
-                            loading = true
-                        )
+        viewModelScope.launch(Dispatchers.IO) {
+            useCases.getMeeting(mId).collect { result ->
+                when {
+                    result.loading -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RacesState.Status.Loading
+                            )
+                        }
                     }
-                }
-                result.failed -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = result.exception,
-                            status = RacesState.Status.Failure,
-                            loading = false
-                        )
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = result.exception,
+                                status = RacesState.Status.Failure
+                            )
+                        }
                     }
-                }
-                result.successful -> {
-                    _state.update { state ->
-                        state.copy(
-                            exception = null,
-                            status = RacesState.Status.Success,
-                            loading = false,
-                            mtg = result.data,
-                            //mtgId = mId
-                        )
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = RacesState.Status.Success,
+                                mtg = result.data,
+                            )
+                        }
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
 }

@@ -20,10 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
 import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
+import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
 
@@ -70,37 +72,54 @@ fun RunnersScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.secondary)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(height64dp)
-            ) {
-                state.race?.let { race ->
-                    RacesHeader(
-                        race = race,
-                        MaterialTheme.colors.background
+            when(state.status) {
+                is Status.Loading -> {
+                    LoadingDialog(
+                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        msgText = stringResource(id = R.string.dlg_loading_msg),
+                        onDismiss = {}
                     )
                 }
-            }
-            // Races listing.
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = padding64dp)
-            ) {
-                items(
-                    items = state.runners
-                ) { runner ->
-                    state.race?.let { race ->
-                        RunnerItem(
-                            race = race,
-                            runner = runner,
-                            onEvent = onEvent,
-                            onItemClick = { }
-                        )
+                is Status.Failure -> {
+                    // TBA
+                }
+                is Status.Success -> {
+                    // Race header row.
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(height64dp)
+                    ) {
+                        state.race?.let { race ->
+                            RacesHeader(
+                                race = race,
+                                MaterialTheme.colors.background
+                            )
+                        }
+                    }
+                    // Runners listing.
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = padding64dp)
+                    ) {
+                        items(
+                            items = state.runners
+                        ) { runner ->
+                            state.race?.let { race ->
+                                RunnerItem(
+                                    race = race,
+                                    runner = runner,
+                                    onEvent = onEvent,
+                                    onItemClick = { }
+                                )
+                            }
+                        }
                     }
                 }
+                else -> {}
             }
+
         }
     }
 }

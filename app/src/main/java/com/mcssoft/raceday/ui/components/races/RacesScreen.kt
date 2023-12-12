@@ -1,22 +1,35 @@
 package com.mcssoft.raceday.ui.components.races
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.components.dialog.CommonDialog
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
+import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
+import com.mcssoft.raceday.ui.components.races.RacesState.Status.Initialise
+import com.mcssoft.raceday.ui.components.races.RacesState.Status.Loading
+import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
-import com.mcssoft.raceday.ui.components.races.RacesState.Status.*
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
@@ -25,15 +38,12 @@ import com.mcssoft.raceday.ui.theme.padding64dp
 /**
  * @param state: Races state.
  * @param navController: The Navigation.
- * @param onEvent: Call up to RacesEvent in ViewModel.
  */
 fun RacesScreen(
     state: RacesState,
-    navController: NavController,
-//    onEvent: (RacesEvent) -> Unit = {}
+    navController: NavController
 ) {
     val scaffoldState = rememberScaffoldState()
-    val showErrorDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -64,39 +74,7 @@ fun RacesScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.secondary)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(height64dp)
-            ) {
-                state.mtg?.let { meeting ->
-                    MeetingHeader(
-                        meeting = meeting,
-                        MaterialTheme.colors.background
-                    )
-                }
-            }
-            // Races listing.
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = padding64dp)
-            ) {
-                items(
-                    items = state.races
-                ) { race ->
-                    RaceItem(
-                        race = race,
-                        onItemClick = {
-                            navController.navigate(
-                                Screen.RunnersScreen.route + "raceId=${race._id}"
-                            )
-                        }
-                    )
-                }
-            }
             when (state.status) {
-                is Initialise -> {}
                 is Loading -> {
                     LoadingDialog(
                         titleText = stringResource(id = R.string.dlg_loading_title),
@@ -104,42 +82,47 @@ fun RacesScreen(
                         onDismiss = {}
                     )
                 }
-//                is Failure -> {
-//                    showErrorDialog.value = true
-//                    ShowErrorDialog(
-//                        showErrorDialog = showErrorDialog,
-////                        mtgId = state.mtgId,
-//                        onEvent = onEvent
-//                    )
-//                }
-//                is Success -> {/* TBA */}
+                is Failure -> {
+                    // TBA.
+                }
+                is Success -> {
+                    // Meeting details header.
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(height64dp)
+                    ) {
+                        state.mtg?.let { meeting ->
+                            MeetingHeader(
+                                meeting = meeting,
+                                MaterialTheme.colors.background
+                            )
+                        }
+                    }
+                    // Races listing.
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = padding64dp)
+                    ) {
+                        items(
+                            items = state.races
+                        ) { race ->
+                            RaceItem(
+                                race = race,
+                                onItemClick = {
+                                    navController.navigate(
+                                        Screen.RunnersScreen.route + "raceId=${race._id}"
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
                 else -> {}
             }
         }
     }
+
 }
 
-//@Composable
-//private fun ShowErrorDialog(
-////    mtgId: Long,
-//    onEvent: (RacesEvent) -> Unit,
-//    showErrorDialog: MutableState<Boolean>
-//) {
-//    if (showErrorDialog.value) {
-//        showErrorDialog.value = !showErrorDialog.value
-//        CommonDialog(
-//            icon = R.drawable.ic_error_48,
-//            dialogTitle = stringResource(id = R.string.dlg_error_title),
-//            dialogText = "Unable to get the Races listing.",
-//            dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
-//            onDismissClicked = {
-//                onEvent(RacesEvent.Cancel)
-//            },
-//            confirmButtonText = stringResource(id = R.string.lbl_btn_retry),
-//            onConfirmClicked = {
-//                // TODO - TBA, do we really need this.
-////                onEvent(RacesEvent.Retry(mtgId))
-//            }
-//        )
-//    }
-//}

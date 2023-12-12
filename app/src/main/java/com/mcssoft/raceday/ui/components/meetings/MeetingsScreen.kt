@@ -26,6 +26,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 
 @Composable
 /**
@@ -69,39 +70,38 @@ fun MeetingsScreen(
                 .background(MaterialTheme.colors.background)
                 .padding(bottom = 64.dp)                        // TBA - allow for bottom bar.
         ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(
-                    items = state.body
-                ) { meeting ->
-                    MeetingItem(
-                        meeting = meeting,
-                        onItemClick = {
-                            navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
-                        }
-                    )
-                }
-            }
             if (showRefreshDialog.value) {
                 ShowRefreshDialog(show = showRefreshDialog, navController = navController)
             }
             when(state.status) {
-                is MeetingsState.Status.Initialise -> {}
-                is MeetingsState.Status.Loading -> {
+                is Status.Initialise -> {}
+                is Status.Loading -> {
                     LoadingDialog(
                         titleText = stringResource(id = R.string.dlg_loading_title),
                         msgText = stringResource(id = R.string.dlg_loading_msg),
                         onDismiss = {}
                     )
                 }
-                is MeetingsState.Status.Failure -> {
+                is Status.Failure -> {
                     showRefreshDialog.value = false
                     showErrorDialog.value = true
                     ShowErrorDialog(show = showErrorDialog, state.exception)
                 }
-                is MeetingsState.Status.Success -> {
-                    // TBA.
+                is Status.Success -> {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(
+                            items = state.body
+                        ) { meeting ->
+                            MeetingItem(
+                                meeting = meeting,
+                                onItemClick = {
+                                    navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
+                                }
+                            )
+                        }
+                    }
                 }
-                else -> {}
+                else -> {} // ??
             }
         }
     }

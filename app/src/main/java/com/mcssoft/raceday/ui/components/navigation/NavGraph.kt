@@ -65,8 +65,7 @@ fun NavGraph() {
 
             RacesScreen(
                 navController = navController,
-                state = state,
-//                onEvent = viewModel::onEvent
+                state = state
             )
         }
 

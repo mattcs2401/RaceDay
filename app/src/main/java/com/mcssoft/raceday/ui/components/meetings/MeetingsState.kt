@@ -3,24 +3,19 @@ package com.mcssoft.raceday.ui.components.meetings
 import com.mcssoft.raceday.domain.model.Meeting
 
 data class MeetingsState(
-    val response: Int = 0,
     val exception: Exception?,
-    val status: Status = Status.NoState,
+    val status: Status?,
     val message: String,
-    val loading: Boolean = false,
     val data: List<Meeting>?,
-    val date: String,
-    val customExType: String? = null,
-    val customExMsg: String? = null,
+    val date: String
 ) {
     companion object {
-        // Simply a Flow initializer.
+        // Flow initializer.
         fun initialise(date: String): MeetingsState {
             return MeetingsState(
                 exception = null,
                 status = Status.Initialise,
                 message = "",
-                loading = false,
                 data = null,
                 date = date
             )
@@ -32,8 +27,6 @@ data class MeetingsState(
         data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
-        data object Error: Status()
-        data object NoState: Status()
     }
 
     val body: List<Meeting>
