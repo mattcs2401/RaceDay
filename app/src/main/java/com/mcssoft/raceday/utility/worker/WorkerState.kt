@@ -1,18 +1,14 @@
 package com.mcssoft.raceday.utility.worker
 
 data class WorkerState(
-    var status: Status,
-//    val isRunnerWorker: Boolean,
-//    val isTrainerWorker: Boolean
+    var status: Status
 ) {
 
     companion object {
         // Flow initializer.
         fun initialise(): WorkerState {
             return WorkerState(
-                status = Status.Initialise,
-//                isRunnerWorker = false,
-//                isTrainerWorker = false
+                status = Status.Initialise
             )
         }
     }

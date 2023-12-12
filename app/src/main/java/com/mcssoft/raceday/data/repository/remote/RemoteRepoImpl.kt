@@ -20,12 +20,6 @@ class RemoteRepoImpl @Inject constructor(
                     NetworkResponse.success(result)
                 }
                 else -> {
-//                    Log.d("TAG","Code: ${result.code()}")
-//                    Log.d("TAG","Body: ${result.body()}")
-//                    Log.d("TAG","Message: ${result.message()}")
-//                    Log.d("TAG","Error: ${result.errorBody()}")
-//                    Log.d("TAG","Headers: ${result.headers()}")
-//                    Log.d("TAG","Raw: ${result.raw()}")
                     NetworkResponse.error(result.code())
                 }
             }

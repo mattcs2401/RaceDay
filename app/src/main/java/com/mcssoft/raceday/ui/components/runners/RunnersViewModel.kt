@@ -1,20 +1,17 @@
 package com.mcssoft.raceday.ui.components.runners
 
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -67,7 +64,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = result.exception,
-                                status = RunnersState.Status.Failure,
+                                status = Status.Failure,
                                 loading = false
                             )
                         }
@@ -76,7 +73,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = null,
-                                status = RunnersState.Status.Success,
+                                status = Status.Success,
                                 loading = false,
                                 checked = result.data.toBoolean()
                             )
@@ -99,7 +96,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = null,
-                                status = RunnersState.Status.Loading,
+                                status = Status.Loading,
                                 loading = true
                             )
                         }
@@ -108,7 +105,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = result.exception,
-                                status = RunnersState.Status.Failure,
+                                status = Status.Failure,
                                 loading = false
                             )
                         }
@@ -117,7 +114,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = null,
-                                status = RunnersState.Status.Success,
+                                status = Status.Success,
                                 loading = false,
                                 lRunners = result.data
                             )
@@ -141,7 +138,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = null,
-                                status = RunnersState.Status.Loading,
+                                status = Status.Loading,
                                 loading = true
                             )
                         }
@@ -150,7 +147,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = result.exception,
-                                status = RunnersState.Status.Failure,
+                                status = Status.Failure,
                                 loading = false
                             )
                         }
@@ -159,7 +156,7 @@ class RunnersViewModel @Inject constructor(
                         _state.update { state ->
                             state.copy(
                                 exception = null,
-                                status = RunnersState.Status.Success,
+                                status = Status.Success,
                                 loading = false,
                                 race = result.data
                             )

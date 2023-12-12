@@ -15,8 +15,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,7 +24,6 @@ import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
-import com.mcssoft.raceday.ui.components.races.RacesState.Status.Initialise
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Loading
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
@@ -92,7 +89,7 @@ fun RacesScreen(
                             .fillMaxWidth()
                             .height(height64dp)
                     ) {
-                        state.mtg?.let { meeting ->
+                        state.meeting?.let { meeting ->
                             MeetingHeader(
                                 meeting = meeting,
                                 MaterialTheme.colors.background
