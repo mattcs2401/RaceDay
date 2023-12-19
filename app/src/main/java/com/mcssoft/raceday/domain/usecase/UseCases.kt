@@ -10,7 +10,6 @@ import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
-import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
 
 data class UseCases(
 
@@ -44,6 +43,4 @@ data class UseCases(
     // Get the Summary.
     val getSummaries: GetSummaries,
 
-    // Update the Summary.
-    val setForSummary: SetForSummary,
 )

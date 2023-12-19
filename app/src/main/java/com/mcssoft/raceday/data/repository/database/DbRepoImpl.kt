@@ -76,14 +76,6 @@ class DbRepoImpl @Inject constructor(
         dao.updateRunnerAsScratched(runner)
     }
 
-    override suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
-        return dao.updateRunnerForChecked(race, runner)
-    }
-
-    override suspend fun getSummaryByRunner(rName: String, rNumber: Int): Summary? {
-        return dao.getSummaryByRunner(rName, rNumber)
-    }
-
     override suspend fun getRunnersNotScratched(raceId: Long): List<Runner> {
         return dao.getRunnersNotScratched(raceId)
     }
@@ -98,6 +90,9 @@ class DbRepoImpl @Inject constructor(
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    override suspend fun getSummary(raceId: Long, runnerId: Long): Summary {
+        return dao.getSummary(raceId, runnerId)
+    }
     override suspend fun getSummaries(): List<Summary> {
         return dao.getSummaries()
     }
@@ -116,10 +111,6 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun deleteSummaries(): Int {
         return dao.deleteSummaries()
-    }
-
-    override suspend fun deleteSummary(summary: Summary) {
-        return dao.deleteSummary(summary)
     }
 
     override suspend fun updateSummary(summary: Summary): Int {

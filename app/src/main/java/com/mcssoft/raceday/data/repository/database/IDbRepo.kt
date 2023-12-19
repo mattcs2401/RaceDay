@@ -158,31 +158,6 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Transaction
-    suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
-        updateRunner(runner)
-        delay(50)       // TBA
-        if(runner.isChecked) {
-            val summaryDto = SummaryDto(
-                race._id,
-                runner._id,
-                race.sellCode,
-                race.venueMnemonic,
-                race.raceNumber,
-                race.raceStartTime,
-                runner.runnerNumber,
-                runner.runnerName,
-                runner.riderDriverName,
-                runner.trainerName
-            )
-            insertSummary(summaryDto.toSummary())
-        } else {
-            getSummaryByRunner(race.raceName, runner.runnerNumber)?.let { summary ->
-                deleteSummary(summary)
-            }
-        }
-    }
-
     @Query("update Runner set isChecked= :newValue where _id = :runnerId")
     suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int
 
@@ -202,6 +177,9 @@ interface IDbRepo {
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    @Query("select * from Summary where raceId = :raceId and runnerId = :runnerId")
+    suspend fun getSummary(raceId: Long, runnerId: Long): Summary
+
     @Query("select * from Summary")
     suspend fun getSummaries(): List<Summary>
 
@@ -211,39 +189,14 @@ interface IDbRepo {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
 
-    @Query("select * from Summary where runnerName = :rName and runnerNumber = :rNumber")
-    suspend fun getSummaryByRunner(rName: String, rNumber: Int): Summary?
-
     @Query("delete from Summary")
     suspend fun deleteSummaries(): Int
 
     @Query("delete from Summary where _id = :id")
     suspend fun deleteSummary(id: Long): Int
 
-    @Delete
-    suspend fun deleteSummary(summary: Summary)
-
     @Update
     suspend fun updateSummary(summary: Summary): Int
-
-    // TODO - do setForSummary() elsewhere.
-    @Transaction
-    suspend fun setForSummary(runner: Runner) {
-        val race = getRace(runner.raceId)
-        val summaryDto = SummaryDto(
-            race._id,
-            runner._id,
-            race.sellCode,
-            race.venueMnemonic,
-            race.raceNumber,
-            race.raceStartTime,
-            runner.runnerNumber,
-            runner.runnerName,
-            runner.riderDriverName,
-            runner.trainerName
-        )
-        insertSummary(summaryDto.toSummary())
-    }
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Scratching related.">

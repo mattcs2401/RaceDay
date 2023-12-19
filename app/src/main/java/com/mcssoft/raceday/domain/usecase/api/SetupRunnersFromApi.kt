@@ -11,6 +11,9 @@ import androidx.work.workDataOf
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
+import com.mcssoft.raceday.domain.dto.SummaryDto
+import com.mcssoft.raceday.domain.dto.toSummary
+import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.worker.RunnersWorker
 import com.mcssoft.raceday.utility.worker.WorkerState
@@ -83,11 +86,29 @@ class SetupRunnersFromApi  @Inject constructor(
             // Update the Summary with any checked Runners.
             val lRunners = iDbRepo.getCheckedRunners()
             lRunners.forEach { runner ->
-                iDbRepo.setForSummary(runner)
+                setForSummary(runner)
+//                iDbRepo.setForSummary(runner)
             }
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }
+    }
+
+    private suspend fun setForSummary(runner: Runner) {
+        val race = iDbRepo.getRace(runner.raceId)
+        val summaryDto = SummaryDto(
+            race._id,
+            runner._id,
+            race.sellCode,
+            race.venueMnemonic,
+            race.raceNumber,
+            race.raceStartTime,
+            runner.runnerNumber,
+            runner.runnerName,
+            runner.riderDriverName,
+            runner.trainerName
+        )
+        iDbRepo.insertSummary(summaryDto.toSummary())
     }
 
     private fun observeRunnerWorker(workerId: UUID): Flow<Status> {
