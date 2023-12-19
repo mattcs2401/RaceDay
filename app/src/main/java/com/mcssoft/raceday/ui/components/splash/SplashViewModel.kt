@@ -16,8 +16,10 @@ import com.mcssoft.raceday.utility.network.ConnectivityState
 import com.mcssoft.raceday.utility.network.ConnectivityState.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,8 +37,11 @@ class SplashViewModel @Inject constructor(
     private var connectivityState by mutableStateOf(ConnectivityState.initialise())
 
     init {
-        getConnectivity()
-
+        viewModelScope.launch {
+            connectivityObserver.observe().collect { status ->
+                connectivityState = status
+            }
+        }
         when (connectivityState) {
             is Status.Available -> {
                 val date = DateUtils().getDateToday()
@@ -78,14 +83,6 @@ class SplashViewModel @Inject constructor(
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
                 setupRunnersFromApi()
-            }
-        }
-    }
-
-    private fun getConnectivity() {
-        viewModelScope.launch {
-            connectivityObserver.observe().collect { status ->
-                connectivityState = status
             }
         }
     }

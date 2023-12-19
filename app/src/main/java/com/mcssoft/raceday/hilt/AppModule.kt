@@ -1,7 +1,9 @@
 package com.mcssoft.raceday.hilt
 
+import android.app.AlarmManager
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
@@ -128,10 +130,20 @@ object AppModule {
 //        )
 //    }
 
+    @Singleton
+    @Provides
+    fun provideConnectivityManager(
+        @ApplicationContext context: Context
+    ): ConnectivityManager {
+        return context.getSystemService(ConnectivityManager::class.java)
+    }
+
     @Provides
     @Singleton
-    fun provideConnectivityObserver(@ApplicationContext context: Context): IConnectivityObserver {
-        return ConnectivityObserver(context)
+    fun provideConnectivityObserver(
+        @ApplicationContext context: Context,
+        connectivityManager: ConnectivityManager): IConnectivityObserver {
+        return ConnectivityObserver(context, connectivityManager)
     }
 
     @Provides

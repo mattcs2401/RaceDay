@@ -1,6 +1,8 @@
 package com.mcssoft.raceday.utility.network
 
-sealed class ConnectivityState {
+data class ConnectivityState(
+    val status: Status
+) {
 
     companion object {
         // Flow/State initializer. Assuming connectivity is available.

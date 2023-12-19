@@ -27,9 +27,6 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 = TO DO:
 ==================================
 
--> Can we implement the recommendations here ?
-   -> https://medium.com/adidoescode/the-viewmodels-leaked-flow-collectors-problem-239a327f4b56
-
 -> Race time in the Summary is displaying incorrectly for evening/night races.
   -> Manually check data from API ?
 

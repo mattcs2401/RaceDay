@@ -17,11 +17,12 @@ import javax.inject.Inject
 TBA - Based largely on https://www.youtube.com/watch?v=TzV0oCRDNfM
  */
 class ConnectivityObserver @Inject constructor(
-    val context: Context
+    val context: Context,
+    private val connectivityManager: ConnectivityManager
 ): IConnectivityObserver {
 
-    private val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//    private val connectivityManager =
+//        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     override fun observe(): Flow<ConnectivityState.Status> {
         return callbackFlow {
