@@ -68,6 +68,7 @@
     <string name="key_meeting_date">key_meeting_date</string>
     <string name="key_meeting_code">key_meeting_code</string>
     <string name="key_num_races">key_num_races</string>
+    <string name="key_trainer_pref">key_trainer_pref</string>
     <string name="key_trainer_names">key_trainer_names</string>
 
     <!-- Settings item text. -->
@@ -89,5 +90,7 @@
     <!-- TBA -->
     <string-array name="jockeyNames">
         <item>K Crowther</item>
+        <item>J Eaton</item> <!-- Manually check what's coming from Api. -->
+        <item>J Kah</item>   <!-- Manually check what's coming from Api. -->
     </string-array>
 </resources>
