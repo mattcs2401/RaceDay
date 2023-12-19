@@ -11,8 +11,6 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.datasource.database.RaceDayDb
 import com.mcssoft.raceday.data.datasource.remote.IRaceDay
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.app.AppPreferences
-import com.mcssoft.raceday.data.repository.preferences.app.AppPrefsSerializer
 import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.data.repository.preferences.user.UserPrefsSerializer
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
@@ -28,7 +26,6 @@ import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
-import com.mcssoft.raceday.domain.usecase.summary.SetForSummary
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -48,6 +45,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @Singleton
     @Provides
     fun provideDatabase(app: Application): RaceDayDb {
         return Room.databaseBuilder(
@@ -57,11 +55,13 @@ object AppModule {
         ).build()
     }
 
+    @Singleton
     @Provides
     fun provideRaceDayDao(db: RaceDayDb): IDbRepo {
         return db.getRaceDayDao()
     }
 
+    @Singleton
     @Provides
     fun provideApi(app: Application): IRaceDay {
 //        val nwInterceptor = NetworkInterceptor()
@@ -79,6 +79,7 @@ object AppModule {
             .create(IRaceDay::class.java)
     }
 
+    @Singleton
     @Provides
     fun provideRepository(api: IRaceDay): IRemoteRepo {
         return RemoteRepoImpl(api)
@@ -150,8 +151,7 @@ object AppModule {
             getRace = GetRace(local),
             getRunners = GetRunners(local),
             setRunnerChecked = SetRunnerChecked(local),
-            getSummaries = GetSummaries(local),
-            setForSummary = SetForSummary(local)
+            getSummaries = GetSummaries(local)
         )
     }
 

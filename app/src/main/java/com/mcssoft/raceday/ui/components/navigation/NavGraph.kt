@@ -22,6 +22,11 @@ import com.mcssoft.raceday.ui.components.splash.SplashViewModel
 import com.mcssoft.raceday.ui.components.summary.SummaryScreen
 import com.mcssoft.raceday.ui.components.summary.SummaryViewModel
 
+// TBA **
+const val MY_URI = "https://mcssoft.com"
+const val MY_ARG = "message"
+// *****
+
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
@@ -113,3 +118,17 @@ fun NavGraph() {
     }
 
 }
+/*
+        composable(
+            route = Screen.Details.route,
+            arguments = listOf(
+                navArgument(MY_ARG) { type = NavType.StringType }
+            ),
+            deepLinks = listOf(navDeepLink { uriPattern = "$MY_URI/$MY_ARG={$MY_ARG}" })
+        ) {
+            val arguments = it.arguments
+            arguments?.getString(MY_ARG)?.let { message ->
+                DetailsScreen(message = message)
+            }
+        }
+ */

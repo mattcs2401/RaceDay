@@ -1,4 +1,4 @@
-package com.mcssoft.raceday.utility.services
+package com.mcssoft.raceday.utility.notification
 
 import android.app.Notification
 import android.app.Service
@@ -8,7 +8,7 @@ import androidx.core.app.NotificationCompat
 import com.mcssoft.raceday.R
 
 // Based largely on: https://www.youtube.com/watch?v=YZL-_XJSClc
-class NotifyService: Service() {
+class NotificationService: Service() {
 
     private lateinit var notification: Notification
 

@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".utility.services.NotifyService" />
+        <receiver android:name=".utility.RaceDayReceiver"/>
+        <service android:name=".utility.notification.NotificationService" />
     </application>
 
 </manifest>
