@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -38,8 +39,18 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            connectivityObserver.observe().collect { status ->
-                connectivityState = status
+            connectivityObserver.observe()
+                .catch { exception ->
+                    _state.update { state ->
+                        state.copy(
+                            exception = exception as Exception,
+                            hasInternet = false,
+                        )
+                    }
+                    _state.emit(state.value)
+                }
+                .collect { status ->
+                    connectivityState = status
             }
         }
         when (connectivityState) {

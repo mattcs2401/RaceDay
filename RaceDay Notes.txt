@@ -27,20 +27,24 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 = TO DO:
 ==================================
 
--> Race time in the Summary is displaying incorrectly for evening/night races.
-  -> Manually check data from API ?
+--> Meetings loading indicator (like for Splash).
 
--> App refresh value where all the data is refreshed, i.e from Api ?
-  ->  at a certain interval ?
-  -> manual option ?
-  -> what about existing Summary detail (rebuild) ?
+--> Race time in the Summary is displaying incorrectly for evening/night races.
+   -> Manually check data from API ?
 
--> Better error notification back to Splash screen.
-   - some work done.
+--> App refresh value where all the data is refreshed, i.e from Api ?
+   -> at a certain interval ?
+      -> coroutine worker with delay start probably good choice here
+   -> manual option ?
+   -> what about existing Summary detail
+      -> don't touch or
+      -> rebuild, how ?
 
--> Better error notification from Worker back to ... ?
+--> Better error notification back to Splash screen.
+    -> some work done.
 
--> Meetings loading indicator (like for Splash).
+--> Better error notification from Worker back to ... ?
+
 
 --------------
 Notifications:

@@ -42,6 +42,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -142,8 +143,15 @@ object AppModule {
     @Singleton
     fun provideConnectivityObserver(
         @ApplicationContext context: Context,
-        connectivityManager: ConnectivityManager): IConnectivityObserver {
+        connectivityManager: ConnectivityManager
+    ): IConnectivityObserver {
         return ConnectivityObserver(context, connectivityManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoroutineScope(): CoroutineScope {
+        return CoroutineScope(Dispatchers.IO)
     }
 
     @Provides
@@ -151,14 +159,15 @@ object AppModule {
         remote: IRemoteRepo,
         local: IDbRepo,
         context: Context,
+        scope: CoroutineScope,
         store: DataStore<UserPreferences>
     ): UseCases {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupBaseFromLocal = SetupBaseFromLocal(local),
             setupRunnersFromApi = SetupRunnersFromApi(local, context, store),
-            getMeeting = GetMeeting(local),
-            getMeetings = GetMeetings(local),
+            getMeeting = GetMeeting(local, scope),
+            getMeetings = GetMeetings(local, scope),
             getRaces = GetRaces(local),
             getRace = GetRace(local),
             getRunners = GetRunners(local),

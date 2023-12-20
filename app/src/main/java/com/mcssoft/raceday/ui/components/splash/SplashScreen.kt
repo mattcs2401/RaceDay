@@ -122,7 +122,7 @@ fun ShowExceptionErrorDialog (
     if (state.exception != null) {
         ExceptionErrorDialog(
             dialogTitle = "An Exception occurred",
-            exceptionMsg = state.exception.localizedMessage ?: "An unknown errorDto occurred.",
+            exceptionMsg = state.exception.localizedMessage ?: "An unknown error occurred.",
             dismissButtonText = "OK",
             onDismissClicked = {
                 onEvent(SplashEvent.Error(activity))

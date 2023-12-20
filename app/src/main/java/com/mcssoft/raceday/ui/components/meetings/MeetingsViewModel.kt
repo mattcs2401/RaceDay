@@ -1,19 +1,19 @@
 package com.mcssoft.raceday.ui.components.meetings
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
@@ -35,38 +35,51 @@ class MeetingsViewModel @Inject constructor(
      */
     private fun getMeetingsFromLocal() {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getMeetings().collect { result ->
-                when {
-                    result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Loading,
-                                message = "Loading Meetings listing."
-                            )
-                        }
-                    }
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = Exception(result.exception),
-                                status = Status.Failure,
-                            )
-                        }
-                    }
-                    result.successful -> {
-//                        Log.d("TAG", "getMeetingsFromLocal() result.successful")
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Success,
-                                data = result.data ?: emptyList()
-                            )
-                        }
-                    }
+            useCases.getMeetings()
+                .catch { exception ->
+                    // Note 1 below.
+                    emit(DataResult.failure(exception as Exception))
                 }
+                .collect { result ->
+                    when {
+                        result.loading -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Loading,
+                                    message = "Loading Meetings listing."
+                                )
+                            }
+                        }
+                        result.failed -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = Exception(result.exception),
+                                    status = Status.Failure,
+                                )
+                            }
+                            _state.emit(state.value)
+                        }
+                        result.successful -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Success,
+                                    data = result.data ?: emptyList()
+                                )
+                            }
+                            _state.emit(state.value)
+                        }
+                    }
             }
         }
+
     }
 
 }
+/*
+Notes:
+1. When an exception occurs, the collect lambda is called, as a new item has been emitted to the
+   stream because of the exception
+   Ref: https://developer.android.com/kotlin/flow
+ */

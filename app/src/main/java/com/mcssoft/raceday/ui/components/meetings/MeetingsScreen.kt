@@ -95,7 +95,9 @@ fun MeetingsScreen(
                             MeetingItem(
                                 meeting = meeting,
                                 onItemClick = {
-                                    navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
+                                    navController.navigate(
+                                        Screen.RacesScreen.route + "meetingId=${meeting._id}"
+                                    )
                                 }
                             )
                         }

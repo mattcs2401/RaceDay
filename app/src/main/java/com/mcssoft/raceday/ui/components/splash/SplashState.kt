@@ -4,7 +4,7 @@ data class SplashState(
     val date: String = "",
     val response: Int = 0,
     val exception: Exception? = null,
-    val status: Status = Status.NoState,
+    val status: Status? = null,
     val loading: Boolean = false,
     val loadingMsg: String = "",
     val customExType: String? = null,
@@ -29,6 +29,5 @@ data class SplashState(
         data object Success : Status()
         data object Failure : Status()
         data object Error: Status()
-        data object NoState: Status()
     }
 }
