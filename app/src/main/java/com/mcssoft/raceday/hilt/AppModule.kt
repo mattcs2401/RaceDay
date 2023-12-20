@@ -112,25 +112,6 @@ object AppModule {
         )
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideAppDataStore(@ApplicationContext appContext: Context): DataStore<AppPreferences> {
-//        return DataStoreFactory.create(
-//            serializer = AppPrefsSerializer,
-//            corruptionHandler = ReplaceFileCorruptionHandler(
-//                produceNewData = {
-//                    AppPreferences()
-//                }
-//            ),
-//            scope = CoroutineScope(
-//                Dispatchers.IO + SupervisorJob()
-//            ),
-//            produceFile = {
-//                appContext.dataStoreFile("app_prefs.pb")
-//            }
-//        )
-//    }
-
     @Singleton
     @Provides
     fun provideConnectivityManager(
@@ -139,8 +120,8 @@ object AppModule {
         return context.getSystemService(ConnectivityManager::class.java)
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideConnectivityObserver(
         @ApplicationContext context: Context,
         connectivityManager: ConnectivityManager
@@ -148,8 +129,8 @@ object AppModule {
         return ConnectivityObserver(context, connectivityManager)
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideCoroutineScope(): CoroutineScope {
         return CoroutineScope(Dispatchers.IO)
     }
@@ -168,10 +149,10 @@ object AppModule {
             setupRunnersFromApi = SetupRunnersFromApi(local, context, store),
             getMeeting = GetMeeting(local, scope),
             getMeetings = GetMeetings(local, scope),
-            getRaces = GetRaces(local),
-            getRace = GetRace(local),
-            getRunners = GetRunners(local),
-            setRunnerChecked = SetRunnerChecked(local),
+            getRaces = GetRaces(local, scope),
+            getRace = GetRace(local, scope),
+            getRunners = GetRunners(local, scope),
+            setRunnerChecked = SetRunnerChecked(local, scope),
             getSummaries = GetSummaries(local)
         )
     }

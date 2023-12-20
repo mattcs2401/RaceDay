@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
 import com.mcssoft.raceday.utility.Constants
+import com.mcssoft.raceday.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,68 +40,76 @@ class RacesViewModel @Inject constructor(
 
     private fun getRaces(mId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getRaces(mId).collect { result ->
-                when {
-                    result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Loading
-                            )
-                        }
-                    }
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = result.exception,
-                                status = Status.Failure
-                            )
-                        }
-                    }
-                    result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Success,
-                                lRaces = result.data
-                            )
-                        }
-                    }
+            useCases.getRaces(mId)
+                .catch { exception ->
+                    emit(DataResult.failure(exception as Exception))
                 }
+                .collect { result ->
+                    when {
+                        result.loading -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Loading
+                                )
+                            }
+                        }
+                        result.failed -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = result.exception,
+                                    status = Status.Failure
+                                )
+                            }
+                        }
+                        result.successful -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Success,
+                                    lRaces = result.data
+                                )
+                            }
+                        }
+                    }
             }
         }
     }
 
     private fun getMeeting(mId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getMeeting(mId).collect { result ->
-                when {
-                    result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Loading
-                            )
-                        }
-                    }
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = result.exception,
-                                status = Status.Failure
-                            )
-                        }
-                    }
-                    result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Success,
-                                meeting = result.data,
-                            )
-                        }
-                    }
+            useCases.getMeeting(mId)
+                .catch { exception ->
+                    emit(DataResult.failure(exception as Exception))
                 }
+                .collect { result ->
+                    when {
+                        result.loading -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Loading
+                                )
+                            }
+                        }
+                        result.failed -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = result.exception,
+                                    status = Status.Failure
+                                )
+                            }
+                        }
+                        result.successful -> {
+                            _state.update { state ->
+                                state.copy(
+                                    exception = null,
+                                    status = Status.Success,
+                                    meeting = result.data,
+                                )
+                            }
+                        }
+                    }
             }
         }
     }
