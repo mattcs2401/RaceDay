@@ -66,11 +66,11 @@ class SplashViewModel @Inject constructor(
                     }
                     _state.emit(state.value)
 
-                    if(state.value.sourceFromApi) {
-                        setupBaseFromApi(date)
-                    } else {
+                   if(state.value.sourceFromApi) {
+                       setupBaseFromApi(date)
+                   } else {
                         stateSuccess(200, "")
-                    }
+                   }
                 }
             }
             is Status.Unavailable -> {

@@ -3,21 +3,12 @@ package com.mcssoft.raceday.hilt
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.Context
-import android.content.Intent
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.VISIBILITY_PRIVATE
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.net.toUri
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.MainActivity
-import com.mcssoft.raceday.ui.components.navigation.MY_ARG
-import com.mcssoft.raceday.ui.components.navigation.MY_URI
-import com.mcssoft.raceday.utility.RaceDayReceiver
-import com.mcssoft.raceday.utility.notification.AlarmSchedulerImpl
-import com.mcssoft.raceday.utility.notification.IAlarmScheduler
+import com.mcssoft.raceday.utility.notification.INotification
+import com.mcssoft.raceday.utility.notification.NotificationImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,6 +28,54 @@ object NotifyModule {
         return context.getSystemService(AlarmManager::class.java)
     }
 
+    // Large part based on:
+    // https://medium.com/@stevdza-san/create-a-basic-notification-in-android-b0d4fd29ad89
+
+    @Singleton
+    @Provides
+    fun provideNotificationChannel(@ApplicationContext context: Context): NotificationChannel {
+        return NotificationChannel(
+            context.resources.getString(R.string.notify_channel_id),
+            context.resources.getString(R.string.notify_channel_name),
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = context.resources.getString(R.string.notify_channel_desc)
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationManager(
+        @ApplicationContext context: Context
+    ): NotificationManagerCompat {
+        val notificationManager = NotificationManagerCompat.from(context)
+            val channel = provideNotificationChannel(context)
+            notificationManager.createNotificationChannel(channel)
+        return notificationManager
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationManager2(
+        @ApplicationContext context: Context
+    ): INotification {
+        return NotificationImpl(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationBuilder(
+        @ApplicationContext context: Context
+    ): NotificationCompat.Builder {
+        return NotificationCompat.Builder(
+            context,
+            context.resources.getString(R.string.notify_channel_id)
+        )
+            //.setContentTitle("Welcome")
+            //.setContentText("YouTube Channel: Stevdza-San")
+            .setSmallIcon(R.drawable.ic_notifications_24)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    }
     // TODO - provideNotificationBuilder ?
 //    @Singleton
 //    @Provides
@@ -79,20 +118,5 @@ object NotifyModule {
 //            .addAction(0, "ACTION", pendingIntent)
 //            .setContentIntent(clickPendingIntent)
 //    }
-
-    @Singleton
-    @Provides
-    fun provideNotificationManager(
-        @ApplicationContext context: Context
-    ): NotificationManagerCompat {
-        val notificationManager = NotificationManagerCompat.from(context)
-        val channel = NotificationChannel(
-            context.resources.getString(R.string.notify_channel_id),
-            context.resources.getString(R.string.notify_channel_name),
-            NotificationManager.IMPORTANCE_HIGH
-        )
-        notificationManager.createNotificationChannel(channel)
-        return notificationManager
-    }
 
 }

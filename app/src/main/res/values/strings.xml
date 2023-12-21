@@ -8,6 +8,7 @@
     <!-- Notification. -->
     <string name="notify_channel_id">notify_channel_id</string>
     <string name="notify_channel_name">Notification</string>
+    <string name="notify_channel_desc">Notification Description</string>
 
     <!-- Icon labels. -->
     <string name="lbl_icon_refresh">Refresh</string>

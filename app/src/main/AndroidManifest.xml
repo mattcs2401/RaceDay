@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
         android:name=".RaceDayApp"
@@ -26,7 +27,8 @@
             </intent-filter>
         </activity>
         <receiver android:name=".utility.RaceDayReceiver"/>
-        <service android:name=".utility.notification.NotificationService" />
+        <service android:name=".utility.notification.NotificationService"
+            android:foregroundServiceType="specialUse"/>
     </application>
 
 </manifest>
