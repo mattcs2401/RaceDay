@@ -75,6 +75,7 @@ class RunnersViewModel @Inject constructor(
                                     loading = false
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.successful -> {
                             _state.update { state ->
@@ -85,6 +86,7 @@ class RunnersViewModel @Inject constructor(
                                     checked = result.data.toBoolean()
                                 )
                             }
+                            _state.emit(state.value)
                         }
                     }
             }
@@ -111,6 +113,7 @@ class RunnersViewModel @Inject constructor(
                                     loading = true
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.failed -> {
                             _state.update { state ->
@@ -120,6 +123,7 @@ class RunnersViewModel @Inject constructor(
                                     loading = false
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.successful -> {
                             _state.update { state ->
@@ -130,6 +134,7 @@ class RunnersViewModel @Inject constructor(
                                     lRunners = result.data
                                 )
                             }
+                            _state.emit(state.value)
                         }
                     }
             }
@@ -153,6 +158,7 @@ class RunnersViewModel @Inject constructor(
                                 loading = true
                             )
                         }
+                        _state.emit(state.value)
                     }
                     result.failed -> {
                         _state.update { state ->
@@ -162,6 +168,7 @@ class RunnersViewModel @Inject constructor(
                                 loading = false
                             )
                         }
+                        _state.emit(state.value)
                     }
                     result.successful -> {
                         _state.update { state ->
@@ -172,6 +179,7 @@ class RunnersViewModel @Inject constructor(
                                 race = result.data
                             )
                         }
+                        _state.emit(state.value)
                     }
                 }
             }

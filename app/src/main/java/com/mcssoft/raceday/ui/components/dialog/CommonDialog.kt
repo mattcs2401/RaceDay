@@ -150,14 +150,14 @@ fun CommonDialog(
     }
 }
 
-@Preview
-@Composable
-fun ShowCommonDialog() {
-    CommonDialog(
-        icon = R.drawable.ic_error_48,
-        dialogTitle = "An errorDto occurred",
-        dialogText = "Some common dialog text.",
-        dismissButtonText = "Ok",
-        onDismissClicked = {}
-    )
-} 
+//@Preview
+//@Composable
+//fun ShowCommonDialog() {
+//    CommonDialog(
+//        icon = R.drawable.ic_error_48,
+//        dialogTitle = "An errorDto occurred",
+//        dialogText = "Some common dialog text.",
+//        dismissButtonText = "Ok",
+//        onDismissClicked = {}
+//    )
+//}

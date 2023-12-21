@@ -30,6 +30,12 @@ import kotlinx.coroutines.flow.update
 import java.util.UUID
 import javax.inject.Inject
 
+/**
+ * Download and save the Runner related data.
+ * @param iDbRepo: Local DB access.
+ * @param context: For string resources.
+ * @param userPrefs: Access to app preferences.
+ */
 class SetupRunnersFromApi  @Inject constructor(
     private val iDbRepo: IDbRepo,
     private val context: Context,
@@ -63,7 +69,7 @@ class SetupRunnersFromApi  @Inject constructor(
                     "key_trainer_pref" to trainerPref
                 )
                 val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
-                    .addTag("RunnersWorker")
+                    .addTag(context.resources.getString(R.string.tag_runners_worker))
                     .setInputData(workData)
                     .build()
                 workManager.enqueue(runnersWorker)
@@ -73,10 +79,14 @@ class SetupRunnersFromApi  @Inject constructor(
                         Status.Scheduled -> {}
                         Status.Cancelled -> {}
                         Status.Failed -> {
-                            throw Exception("Observe runnerWorker failure.")
+                            throw Exception(context.resources.getString(R.string.failure_runners_worker))
                         }
                         Status.Succeeded -> {
-                            Toast.makeText(context, "Runners for: $code", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "${context.resources.getString(R.string.toast_runners_for)} $code",
+                                Toast.LENGTH_SHORT)
+                                .show()
                             emit(DataResult.success(""))
                         }
                         else -> {}
@@ -87,8 +97,10 @@ class SetupRunnersFromApi  @Inject constructor(
             val lRunners = iDbRepo.getCheckedRunners()
             lRunners.forEach { runner ->
                 setForSummary(runner)
-//                iDbRepo.setForSummary(runner)
             }
+            // Turn off user prefs.
+            userPrefs.data.first().sourceFromApi = false
+            userPrefs.data.first().autoAddTrainers = false
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }

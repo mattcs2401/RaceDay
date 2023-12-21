@@ -53,6 +53,7 @@ class RacesViewModel @Inject constructor(
                                     status = Status.Loading
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.failed -> {
                             _state.update { state ->
@@ -61,6 +62,7 @@ class RacesViewModel @Inject constructor(
                                     status = Status.Failure
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.successful -> {
                             _state.update { state ->
@@ -70,6 +72,7 @@ class RacesViewModel @Inject constructor(
                                     lRaces = result.data
                                 )
                             }
+                            _state.emit(state.value)
                         }
                     }
             }
@@ -91,6 +94,7 @@ class RacesViewModel @Inject constructor(
                                     status = Status.Loading
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.failed -> {
                             _state.update { state ->
@@ -99,6 +103,7 @@ class RacesViewModel @Inject constructor(
                                     status = Status.Failure
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.successful -> {
                             _state.update { state ->
@@ -108,6 +113,7 @@ class RacesViewModel @Inject constructor(
                                     meeting = result.data,
                                 )
                             }
+                            _state.emit(state.value)
                         }
                     }
             }

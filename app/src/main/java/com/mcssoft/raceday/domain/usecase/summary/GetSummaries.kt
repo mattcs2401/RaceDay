@@ -4,12 +4,21 @@ import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
+/**
+ * Class to get/update Summary data.
+ * @param iDbRepo: Local DB access.
+ * @param externalScope: Coroutine scope.
+ */
 class GetSummaries @Inject constructor(
-    private val iDbRepo: IDbRepo
+    private val iDbRepo: IDbRepo,
+    private val externalScope: CoroutineScope
 ) {
     /**
      *
@@ -39,5 +48,8 @@ class GetSummaries @Inject constructor(
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }
-    }
+    }.shareIn(
+        scope = externalScope,
+        started = SharingStarted.WhileSubscribed() // ,replay = 1
+    )
 }

@@ -85,7 +85,10 @@ fun MeetingsScreen(
                 is Status.Failure -> {
                     showRefreshDialog.value = false
                     showErrorDialog.value = true
-                    ShowErrorDialog(show = showErrorDialog, state.exception)
+                    ShowErrorDialog(
+                        show = showErrorDialog,
+                        state.exception
+                    )
                 }
                 is Status.Success -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {

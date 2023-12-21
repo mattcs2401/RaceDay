@@ -27,8 +27,6 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 = TO DO:
 ==================================
 
---> Meetings loading indicator (like for Splash).
-
 --> Race time in the Summary is displaying incorrectly for evening/night races.
    -> Manually check data from API ?
 

@@ -144,7 +144,7 @@ object AppModule {
         store: DataStore<UserPreferences>
     ): UseCases {
         return UseCases(
-            setupBaseFromApi = SetupBaseFromApi(remote, local),
+            setupBaseFromApi = SetupBaseFromApi(remote, local, context),
             setupBaseFromLocal = SetupBaseFromLocal(local),
             setupRunnersFromApi = SetupRunnersFromApi(local, context, store),
             getMeeting = GetMeeting(local, scope),
@@ -153,7 +153,7 @@ object AppModule {
             getRace = GetRace(local, scope),
             getRunners = GetRunners(local, scope),
             setRunnerChecked = SetRunnerChecked(local, scope),
-            getSummaries = GetSummaries(local)
+            getSummaries = GetSummaries(local, scope)
         )
     }
 

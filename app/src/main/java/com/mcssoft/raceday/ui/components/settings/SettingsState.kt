@@ -2,15 +2,16 @@ package com.mcssoft.raceday.ui.components.settings
 
 data class SettingsState(
     val status: Status,
-    var sourceFromApi: Boolean = true,
-    var autoAddTrainers: Boolean = true
+    var sourceFromApi: Boolean,
+    var autoAddTrainers: Boolean
 ) {
-
     companion object {
         // Flow initializer.
         fun initialise(): SettingsState {
             return SettingsState(
-                status = Status.Initialise
+                status = Status.Initialise,
+                sourceFromApi = true,
+                autoAddTrainers = true
             )
         }
     }

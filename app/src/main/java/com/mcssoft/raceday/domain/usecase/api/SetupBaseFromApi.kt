@@ -1,6 +1,8 @@
 package com.mcssoft.raceday.domain.usecase.api
 
+import android.content.Context
 import android.util.Log
+import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse.Status
@@ -14,10 +16,13 @@ import javax.inject.Inject
 /**
  * Class to GET details from the Api.
  * @param iRemoteRepo: Api access.
+ * @param iDbRepo: Local DB access.
+ * @param context: For string resources.
  */
 class SetupBaseFromApi @Inject constructor(
     private val iRemoteRepo: IRemoteRepo,
     private val iDbRepo: IDbRepo,
+    private val context: Context
 ) {
     /**
      * @param mtgDate: The date to use in the Api Url.
@@ -36,7 +41,10 @@ class SetupBaseFromApi @Inject constructor(
                 is Status.Exception -> {
                     when(response.ex) {
                         is UnknownHostException -> {
-                            emit(DataResult.failure("Unknown Host","Check the network connection."))
+                            emit(DataResult.failure(
+                                context.resources.getString(R.string.unknown_host),
+                                context.resources.getString(R.string.check_network_conn))
+                            )
                             return@flow
                         }
                         else -> {

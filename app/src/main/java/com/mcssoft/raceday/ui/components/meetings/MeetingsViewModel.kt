@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.meetings
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -47,9 +48,10 @@ class MeetingsViewModel @Inject constructor(
                                 state.copy(
                                     exception = null,
                                     status = Status.Loading,
-                                    message = "Loading Meetings listing."
+                                    message = "Loading Meetings ..."
                                 )
                             }
+                            _state.emit(state.value)
                         }
                         result.failed -> {
                             _state.update { state ->

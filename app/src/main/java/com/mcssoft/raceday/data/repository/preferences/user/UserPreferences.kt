@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserPreferences(
-    val sourceFromApi: Boolean = true,      // source app data from the Api.
-    val autoAddTrainers: Boolean = true     // auto update Summary from Trainer info collected.
+    var sourceFromApi: Boolean = true,      // source app data from the Api.
+    var autoAddTrainers: Boolean = true     // auto update Summary from Trainer info collected.
 )

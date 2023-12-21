@@ -72,7 +72,7 @@ class RunnersWorker (
                     processForScratchings(race)
                 }
 
-                delay(100)  // TBA required ?
+                delay(50)  // TBA required ?
 
                 if(trainerPref) {
                     processForTrainers(race, trainerNames)

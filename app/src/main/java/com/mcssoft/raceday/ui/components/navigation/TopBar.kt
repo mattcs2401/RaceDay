@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 fun TopBar(
     title: String,
     backgroundColour: Color,
-//    onBackPressed: () -> Unit = {},
-//    backNavIcon: Int? = null,
     actions: @Composable (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
