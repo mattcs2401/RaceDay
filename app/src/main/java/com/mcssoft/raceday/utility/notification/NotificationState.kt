@@ -1,12 +1,8 @@
 package com.mcssoft.raceday.utility.notification
 
-data class NotificationState(
-    val status: Status
-) {
+sealed class NotificationState {
 
-    sealed class Status {
-        data object Notified: Status()
-        data object NotNotified: Status()
-        data object NotApplicable: Status()
-    }
+    data object START_SERVICE: NotificationState()
+
+    data object STOP_SERVICE: NotificationState()
 }

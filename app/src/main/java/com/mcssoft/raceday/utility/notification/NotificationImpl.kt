@@ -10,7 +10,9 @@ import com.mcssoft.raceday.R
 /**
  * Class used to parameter inject NotificationManager and Builder.
  */
-class NotificationImpl(private val context: Context): INotification {
+class NotificationImpl(
+    private val context: Context
+): INotification {
 
     override fun getNotificationManager(): NotificationManagerCompat {
         val notificationManager = NotificationManagerCompat.from(context)
