@@ -34,7 +34,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
     packagingOptions {
         resources {
@@ -74,7 +74,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_ver"
 
     /* Hilt DI. */
-    def hilt_ver = '2.49'
+    def hilt_ver = '2.50'
     ksp "androidx.hilt:hilt-compiler:1.1.0"
     ksp "com.google.dagger:hilt-compiler:$hilt_ver"
     implementation "com.google.dagger:hilt-core:$hilt_ver"
@@ -83,7 +83,7 @@ dependencies {
 
     /* Retrofit. */
     def retrofit_ver = '2.9.0'
-    def okhttp_ver = '5.0.0-alpha.11'
+    def okhttp_ver = '5.0.0-alpha.12'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_ver"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
