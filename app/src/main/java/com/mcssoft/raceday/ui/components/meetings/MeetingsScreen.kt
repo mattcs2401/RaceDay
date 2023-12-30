@@ -13,20 +13,26 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.CommonDialog
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
-import com.mcssoft.raceday.ui.components.navigation.BottomBar
-import com.mcssoft.raceday.ui.components.navigation.Screen
+import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
-import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
+import com.mcssoft.raceday.ui.components.navigation.BottomBar
+import com.mcssoft.raceday.ui.components.navigation.Screen
 
 @Composable
 /**
@@ -77,7 +83,7 @@ fun MeetingsScreen(
                 is Status.Initialise -> {}
                 is Status.Loading -> {
                     LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        titleText = stringResource(id = R.string.dlg_loading_meetings),
                         msgText = stringResource(id = R.string.dlg_loading_msg),
                         onDismiss = {}
                     )
@@ -93,7 +99,10 @@ fun MeetingsScreen(
                 is Status.Success -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(
-                            items = state.body
+                            items = state.body,
+                            key = { mtg ->
+                                mtg._id
+                            }
                         ) { meeting ->
                             MeetingItem(
                                 meeting = meeting,
@@ -143,7 +152,7 @@ private fun ShowErrorDialog(
         CommonDialog(
             icon = R.drawable.ic_error_48,
             dialogTitle = stringResource(id = R.string.dlg_error_title),
-            dialogText = stringResource(id = R.string.dlg_error_msg_unknown),
+            dialogText = exception?.message ?: stringResource(id = R.string.dlg_error_msg_unknown),
             dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             // TODO - exit the app ?
             onDismissClicked = {

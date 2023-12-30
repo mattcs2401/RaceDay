@@ -2,7 +2,14 @@ package com.mcssoft.raceday.ui.components.dialog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -14,11 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mcssoft.raceday.ui.theme.*
-import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.eightyPercent
+import com.mcssoft.raceday.ui.theme.height16dp
+import com.mcssoft.raceday.ui.theme.padding16dp
+import com.mcssoft.raceday.ui.theme.twentyPercent
+import com.mcssoft.raceday.ui.theme.width16dp
 
 /**
  * A generic dialog with 8dp rounded corners..

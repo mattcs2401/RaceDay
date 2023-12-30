@@ -75,7 +75,7 @@ fun RunnersScreen(
             when(state.status) {
                 is Status.Loading -> {
                     LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        titleText = stringResource(id = R.string.dlg_loading_runners),
                         msgText = stringResource(id = R.string.dlg_loading_msg),
                         onDismiss = {}
                     )
@@ -104,7 +104,10 @@ fun RunnersScreen(
                             .padding(top = padding64dp)
                     ) {
                         items(
-                            items = state.runners
+                            items = state.runners,
+                            key = { rnr ->
+                                rnr._id
+                            }
                         ) { runner ->
                             state.race?.let { race ->
                                 RunnerItem(

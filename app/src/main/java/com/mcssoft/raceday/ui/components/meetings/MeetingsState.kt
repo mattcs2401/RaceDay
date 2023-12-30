@@ -5,7 +5,6 @@ import com.mcssoft.raceday.domain.model.Meeting
 data class MeetingsState(
     val exception: Exception?,
     val status: Status?,
-    val message: String,
     val data: List<Meeting>?,
     val date: String
 ) {
@@ -15,7 +14,6 @@ data class MeetingsState(
             return MeetingsState(
                 exception = null,
                 status = Status.Initialise,
-                message = "",
                 data = null,
                 date = date
             )

@@ -74,7 +74,7 @@ fun RacesScreen(
             when (state.status) {
                 is Loading -> {
                     LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_title),
+                        titleText = stringResource(id = R.string.dlg_loading_races),
                         msgText = stringResource(id = R.string.dlg_loading_msg),
                         onDismiss = {}
                     )
@@ -103,7 +103,10 @@ fun RacesScreen(
                             .padding(top = padding64dp)
                     ) {
                         items(
-                            items = state.races
+                            items = state.races,
+                            key = { rce ->
+                                rce._id
+                            }
                         ) { race ->
                             RaceItem(
                                 race = race,

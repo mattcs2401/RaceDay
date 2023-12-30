@@ -4,10 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.telephony.ServiceState
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.utility.notification.NotificationState.START_SERVICE
+import com.mcssoft.raceday.utility.notification.NotificationState.STOP_SERVICE
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -60,8 +61,8 @@ class NotificationService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action) {
-            NotificationState.START_SERVICE.toString() -> start()         // defined below.
-            NotificationState.STOP_SERVICE.toString() -> stopSelf()       //in-built.
+            START_SERVICE.toString() -> start()         // defined below.
+            STOP_SERVICE.toString() -> stopSelf()       //in-built.
 
         }
         return super.onStartCommand(intent, flags, startId)
@@ -69,8 +70,8 @@ class NotificationService: Service() {
 
     private fun start() {
         val notification = notificationBldr
-            .setContentTitle("Notification Service")
-            .setContentText("The Notification service is active.")
+            .setContentTitle(resources.getString(R.string.notification_service))
+            .setContentText(resources.getString(R.string.notification_service_text))
             .setAutoCancel(true)
             .setSilent(true)
             .build()

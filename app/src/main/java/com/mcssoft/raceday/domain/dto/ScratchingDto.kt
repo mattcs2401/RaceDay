@@ -8,7 +8,7 @@ data class ScratchingDto(
     val runnerNumber: Int
 )
 
-fun ScratchingDto.toScratching(
+fun toScratching(
     venueMnemonic: String,
     raceNumber: Int,
     scratchingDto: ScratchingDto

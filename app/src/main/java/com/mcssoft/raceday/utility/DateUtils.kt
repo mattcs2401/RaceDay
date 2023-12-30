@@ -1,9 +1,9 @@
 package com.mcssoft.raceday.utility
 
-import java.util.*
-import java.util.Calendar.HOUR
+import java.util.Calendar
 import java.util.Calendar.HOUR_OF_DAY
 import java.util.Calendar.MINUTE
+import java.util.Locale
 
 class DateUtils {
 

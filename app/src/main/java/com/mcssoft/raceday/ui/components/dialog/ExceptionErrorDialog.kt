@@ -2,7 +2,6 @@ package com.mcssoft.raceday.ui.components.dialog
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.mcssoft.raceday.R
 
 @Composable

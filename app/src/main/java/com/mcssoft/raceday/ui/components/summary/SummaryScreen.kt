@@ -73,6 +73,9 @@ fun SummaryScreen(
                 items(
                     items = state.summaries.sortedBy { summary ->
                         summary.raceStartTime
+                    },
+                    key = { smry ->
+                        smry._id
                     }
                 ) { summary ->
                     SummaryItem(

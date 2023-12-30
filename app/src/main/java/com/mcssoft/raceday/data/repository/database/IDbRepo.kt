@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.data.repository.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -10,19 +9,16 @@ import androidx.room.Update
 import com.mcssoft.raceday.domain.dto.MeetingDto
 import com.mcssoft.raceday.domain.dto.RaceDto
 import com.mcssoft.raceday.domain.dto.RunnerDto
-import com.mcssoft.raceday.domain.dto.SummaryDto
 import com.mcssoft.raceday.domain.dto.toMeeting
 import com.mcssoft.raceday.domain.dto.toRace
 import com.mcssoft.raceday.domain.dto.toRunner
 import com.mcssoft.raceday.domain.dto.toScratching
-import com.mcssoft.raceday.domain.dto.toSummary
 import com.mcssoft.raceday.domain.model.Meeting
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.model.Scratching
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.utility.DateUtils
-import kotlinx.coroutines.delay
 
 @Dao
 interface IDbRepo {
@@ -46,7 +42,7 @@ interface IDbRepo {
         racesDto.forEach { raceDto ->
             // One set of Scratching for one Race.
             raceDto.scratchings.forEach { scratchDto ->
-                val scratch = scratchDto.toScratching(
+                val scratch = toScratching(
                     meetingDto.venueMnemonic!!,
                     raceDto.raceNumber,
                     scratchDto
