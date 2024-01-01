@@ -22,6 +22,7 @@ import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding32dp
+import com.mcssoft.raceday.utility.Constants
 
 @Composable
 fun RunnerItemExtra(
@@ -43,8 +44,12 @@ fun RunnerItemExtra(
             Modifier.layoutId("idTcdwIndicators"),
             fontSize = fontSize10sp
         )
+        var trainer = runner.trainerFullName
+        if (trainer.length > Constants.TRAINER_MAX) {
+            trainer = "${trainer.take(Constants.TRAINER_TAKE)}..."
+        }
         Text(
-            "Trainer: ${runner.trainerFullName}",
+            "Trainer: $trainer",
             Modifier.layoutId("idTrainerName"),
             fontSize = fontSize10sp
         )

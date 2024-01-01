@@ -35,6 +35,7 @@ class SummaryViewModel @Inject constructor(
                                 loading = true
                             )
                         }
+                        _state.emit(state.value)
                     }
                     result.failed -> {
                         _state.update { state ->
@@ -44,6 +45,7 @@ class SummaryViewModel @Inject constructor(
                                 loading = false
                             )
                         }
+                        _state.emit(state.value)
                     }
                     result.successful -> {
                         _state.update { state ->
@@ -54,6 +56,7 @@ class SummaryViewModel @Inject constructor(
                                 summaries = result.data ?: emptyList()
                             )
                         }
+                        _state.emit(state.value)
                     }
                 }
             }

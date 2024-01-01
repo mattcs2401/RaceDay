@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
@@ -54,35 +55,46 @@ fun SummaryScreen(
             )
         }
     ) {
+        when(state.status) {
+            is SummaryState.Status.Initialise -> {}
+            is SummaryState.Status.Loading -> {
+                LoadingDialog(
+                    titleText = stringResource(id = R.string.dlg_loading_summaries),
+                    msgText = stringResource(id = R.string.dlg_loading_msg),
+                    onDismiss = {}
+                )
+            }
+            is SummaryState.Status.Failure -> {}
+            is SummaryState.Status.Success -> {
+                // Summaries listing.
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    items(
+                        items = state.summaries.sortedBy { summary ->
+                            summary.raceStartTime
+                        },
+                        key = { it._id }
+                    ) { summary ->
+                        SummaryItem(
+                            summary = summary,
+//                        onItemClick = {}
+                        )
+                    }
+                }
+            }
+        }
         if (state.summaries.isEmpty()) {
             Box(
                 Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
             ) {
-                Text("Nothing to show yet.",
+                Text(
+                    stringResource(id = R.string.nothing_to_show),
                     modifier = Modifier.align(Alignment.Center)
                 )
-            }
-        } else {
-            // Summaries listing.
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(
-                    items = state.summaries.sortedBy { summary ->
-                        summary.raceStartTime
-                    },
-                    key = { smry ->
-                        smry._id
-                    }
-                ) { summary ->
-                    SummaryItem(
-                        summary = summary,
-                        onItemClick = { /* TBA */ }
-                    )
-                }
             }
         }
     }

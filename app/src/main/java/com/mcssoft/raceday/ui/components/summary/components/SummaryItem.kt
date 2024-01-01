@@ -19,14 +19,16 @@ import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
+import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
+import com.mcssoft.raceday.utility.Constants
 
 @Composable
 fun SummaryItem(
     summary: Summary,
-    onItemClick: (Summary) -> Unit = {}     // TBA
+//    onItemClick: (Summary) -> Unit = {}
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
@@ -80,14 +82,25 @@ fun SummaryItem(
                 fontSize = fontSize12sp,
                 style = textStyle
             )
+            // 2nd row.
+            Text(
+                summary.venueMnemonic,
+                Modifier.layoutId("idVenueMnemonic"),
+                fontSize = fontSize12sp,
+                style = textStyle
+            )
             Text(
                 "(J) ${summary.riderDriverName}",
                 Modifier.layoutId("idRiderDriverName"),
                 fontSize = fontSize12sp,
                 style = textStyle
             )
+            var trainer = summary.trainerName
+            if (trainer.length > Constants.TRAINER_MAX) {
+                trainer = "${trainer.take(Constants.TRAINER_TAKE)}..."
+            }
             Text(
-                "(T) ${summary.trainerName}",
+                "(T) $trainer",
                 Modifier.layoutId("idTrainerName"),
                 fontSize = fontSize12sp,
                 style = textStyle
@@ -102,17 +115,17 @@ private val constraintSet = ConstraintSet {
     val idRunnerNumber = createRefFor("idRunnerNumber")
     val idRunnerName = createRefFor("idRunnerName")
     val idRaceStartTime = createRefFor("idRaceStartTime")
+    val idVenueMnemonic = createRefFor("idVenueMnemonic")
     val idRiderDriverName = createRefFor("idRiderDriverName")
     val idTrainerName = createRefFor("idTrainerName")
 
     constrain(idSellCode) {
         top.linkTo(parent.top, margin = margin8dp)
         start.linkTo(parent.start, margin = margin8dp)
-//        bottom.linkTo(parent.bottom, margin = margin16dp)
     }
     constrain(idRaceNumber) {
         top.linkTo(idSellCode.top, margin = margin0dp)
-        start.linkTo(idSellCode.end, margin = margin4dp)
+        start.linkTo(idRiderDriverName.start, margin = margin0dp)//idSellCode.end, margin = margin4dp)
     }
     constrain(idRunnerNumber) {
         top.linkTo(idRaceNumber.top, margin = margin0dp)
@@ -120,26 +133,24 @@ private val constraintSet = ConstraintSet {
     }
     constrain(idRunnerName) {
         top.linkTo(idRunnerNumber.top, margin = margin0dp)
-        start.linkTo(idRunnerNumber.end, margin = margin4dp)
+        start.linkTo(idRunnerNumber.end, margin = margin8dp)
     }
     constrain(idRaceStartTime) {
         top.linkTo(idRunnerName.top, margin = margin0dp)
-        start.linkTo(idRunnerName.end, margin = margin4dp)
+        end.linkTo(parent.absoluteRight, margin = margin16dp)
     }
-    constrain(idRiderDriverName) {
+    // 2nd row.
+    constrain(idVenueMnemonic) {
         start.linkTo(parent.start, margin8dp)
         top.linkTo(idSellCode.bottom, margin8dp)
         bottom.linkTo(parent.bottom, margin8dp)
+    }
+    constrain(idRiderDriverName) {
+        start.linkTo(idVenueMnemonic.end, margin8dp)
+        top.linkTo(idVenueMnemonic.top, margin0dp)
     }
     constrain(idTrainerName) {
         top.linkTo(idRiderDriverName.top, margin0dp)
         start.linkTo(idRiderDriverName.end, margin8dp)
     }
 }
-/*
-    var venueMnemonic: String,    // e.g. BR (from Race).
-    var raceNumber: Int,          // e.g. 1 (from Race).
-    var runnerNumber: Int,        // e.g. 2 (from Runner).
-    var runnerName: String,       // e.g. "name" (from Runner).
-    var raceStartTime: String     // e.g. 12:30 (from Race).
- */

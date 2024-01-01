@@ -11,19 +11,12 @@ data class SummaryState(
 ) {
 
     companion object {
+        // Flow initializer.
         fun initialise(): SummaryState {
             return SummaryState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-                summaries = emptyList(),
-            )
-        }
-        fun loading(): SummaryState {
-            return SummaryState(
-                exception = null,
-                status = Status.Loading,
-                loading = true,
                 summaries = emptyList(),
             )
         }

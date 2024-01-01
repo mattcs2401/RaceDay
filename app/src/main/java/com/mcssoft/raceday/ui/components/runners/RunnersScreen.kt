@@ -23,9 +23,9 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
+import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
 import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
-import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
 
@@ -80,9 +80,7 @@ fun RunnersScreen(
                         onDismiss = {}
                     )
                 }
-                is Status.Failure -> {
-                    // TBA
-                }
+                is Status.Failure -> { /* TBA */ }
                 is Status.Success -> {
                     // Race header row.
                     Row(
@@ -105,9 +103,7 @@ fun RunnersScreen(
                     ) {
                         items(
                             items = state.runners,
-                            key = { rnr ->
-                                rnr._id
-                            }
+                            key = { it._id }
                         ) { runner ->
                             state.race?.let { race ->
                                 RunnerItem(

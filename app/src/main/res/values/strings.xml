@@ -32,6 +32,7 @@
     <string name="dlg_loading_meetings">Loading Meetings</string>
     <string name="dlg_loading_races">Loading Races</string>
     <string name="dlg_loading_runners">Loading Runners</string>
+    <string name="dlg_loading_summaries">Loading Summaries</string>
     <string name="dlg_loading_msg">Please wait ...</string>
     <string name="dlg_error_title">An Error Occurred</string>
     <string name="dlg_error_msg_unknown">An unknown error occurred</string>
@@ -61,6 +62,7 @@
     <string name="tag_runners_worker">RunnersWorker</string>
     <string name="failure_runners_worker">Observe runnerWorker failure.</string>
     <string name="toast_runners_for">Runners for: </string>
+    <string name="nothing_to_show">Nothing to show yet.</string>
 
     <!-- Notifications. -->
     <string name="notification_service">Notification Service</string>

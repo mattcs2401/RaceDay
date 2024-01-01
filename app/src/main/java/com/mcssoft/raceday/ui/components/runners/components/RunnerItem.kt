@@ -97,11 +97,6 @@ fun RunnerItem(
                 Modifier.layoutId("idBarrier"),
                 fontSize = fontSize10sp
             )
-//            Text(
-//                runner.trainerName,
-//                Modifier.layoutId("idTrainerName"),
-//                fontSize = fontSize10sp
-//            )
             if(!runner.isScratched) {
                 var riderDriver = runner.riderDriverName
                 if(riderDriver.length > Constants.JOCKEY_MAX) {

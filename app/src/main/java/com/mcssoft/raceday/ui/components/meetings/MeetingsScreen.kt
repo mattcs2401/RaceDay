@@ -100,9 +100,7 @@ fun MeetingsScreen(
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(
                             items = state.body,
-                            key = { mtg ->
-                                mtg._id
-                            }
+                            key = { it._id }
                         ) { meeting ->
                             MeetingItem(
                                 meeting = meeting,
