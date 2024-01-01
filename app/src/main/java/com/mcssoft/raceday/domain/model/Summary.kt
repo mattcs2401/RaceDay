@@ -25,5 +25,8 @@ data class Summary(
     var runnerName: String,       // e.g. "name" (from Runner).
     var riderDriverName: String,
     var trainerName: String,
-    var isPastRaceTime: Boolean   // meta data, raceStartTime is now in the past.
+
+    // Meta data.
+    var isPastRaceTime: Boolean,  // raceStartTime is now in the past.
+    var isWagered: Boolean        // A bet/wager has been made.
 )
