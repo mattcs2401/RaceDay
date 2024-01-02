@@ -14,9 +14,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 
-// Ref: https://www.youtube.com/watch?v=YZL-_XJSClc
-// Ref: https://medium.com/@stevdza-san/create-a-basic-notification-in-android-b0d4fd29ad89
-
 class NotificationService: Service() {
 // Note: Can't constructor inject here.
 
@@ -30,19 +27,35 @@ class NotificationService: Service() {
     private var binder = LocalBinder()
     private var allowRebind: Boolean = true
 
-    private lateinit var builder: INotification
+    private lateinit var iNotification: INotification
     private lateinit var notificationMgr: NotificationManagerCompat
     private lateinit var notificationBldr: NotificationCompat.Builder
 
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface IAlarmScheduleEntryPoint {
+        fun scheduleAlarm(): IAlarmScheduler
+        fun cancelAlarm(): IAlarmScheduler
+    }
+
+    private lateinit var iScheduleAlarm: IAlarmScheduler
+    private lateinit var iCancelAlarm: IAlarmScheduler
+
     override fun onCreate() {
 //    super.onCreate()
-    val entryPoints =
-        EntryPointAccessors.fromApplication(this, INotifyEntryPoint::class.java)
-        val notification = entryPoints.getNotificationManager()
-        builder = entryPoints.getNotificationBuilder()
+        val notifyEntryPoints =
+            EntryPointAccessors.fromApplication(this, INotifyEntryPoint::class.java)
+        val notification = notifyEntryPoints.getNotificationManager()
+        iNotification = notifyEntryPoints.getNotificationBuilder()
 
         notificationMgr = notification.getNotificationManager()
-        notificationBldr = builder.getNotificationBuilder()
+        notificationBldr = iNotification.getNotificationBuilder()
+
+        val schedulerEntryPoints =
+            EntryPointAccessors.fromApplication(this, IAlarmScheduleEntryPoint::class.java)
+        iScheduleAlarm = schedulerEntryPoints.scheduleAlarm()
+        iCancelAlarm = schedulerEntryPoints.cancelAlarm()
+
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -61,14 +74,16 @@ class NotificationService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action) {
-            START_SERVICE.toString() -> start()         // defined below.
-            STOP_SERVICE.toString() -> stopSelf()       //in-built.
+            START_SERVICE.toString() -> start()       // defined below.
+            STOP_SERVICE.toString() -> stop()         //
 
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
     private fun start() {
+        iScheduleAlarm.scheduleAlarm(null)
+
         val notification = notificationBldr
             .setContentTitle(resources.getString(R.string.notification_service))
             .setContentText(resources.getString(R.string.notification_service_text))
@@ -76,6 +91,11 @@ class NotificationService: Service() {
             .setSilent(true)
             .build()
         startForeground(1, notification)
+    }
+
+    private fun stop() {
+        iCancelAlarm.cancelAlarm()
+        stopSelf()
     }
 
     /**

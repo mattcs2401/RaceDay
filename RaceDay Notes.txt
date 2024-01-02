@@ -61,6 +61,7 @@ Notifications:
 -----------------------
 Other updates based on:
 -----------------------
-https://www.youtube.com/watch?v=s8h7GJTZa4E
-
+-> Lazy column lag - https://www.youtube.com/watch?v=s8h7GJTZa4E
+-> Foreground Services -  https://www.youtube.com/watch?v=YZL-_XJSClc
+-> https://medium.com/@stevdza-san/create-a-basic-notification-in-android-b0d4fd29ad89
 

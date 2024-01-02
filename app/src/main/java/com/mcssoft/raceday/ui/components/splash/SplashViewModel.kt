@@ -64,11 +64,11 @@ class SplashViewModel @Inject constructor(
                     }
                     _state.emit(state.value)
 
-                   if(state.value.sourceFromApi) {
-                       setupBaseFromApi(date)
-                   } else {
+//                   if(state.value.sourceFromApi) {
+//                       setupBaseFromApi(date)
+//                   } else {
                         stateSuccess(200, "")
-                   }
+//                   }
                 }
             }
             is Status.Unavailable -> {
@@ -91,7 +91,7 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-                setupRunnersFromApi()
+//                setupRunnersFromApi()
             }
         }
     }

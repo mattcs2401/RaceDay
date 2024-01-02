@@ -8,7 +8,8 @@ import androidx.activity.compose.setContent
 import com.mcssoft.raceday.ui.components.navigation.NavGraph
 import com.mcssoft.raceday.ui.theme.RaceDayBasicTheme
 import com.mcssoft.raceday.utility.notification.NotificationService
-import com.mcssoft.raceday.utility.notification.NotificationState
+import com.mcssoft.raceday.utility.notification.NotificationState.START_SERVICE
+import com.mcssoft.raceday.utility.notification.NotificationState.STOP_SERVICE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         Log.d("TAG","Start service.")
         Intent(applicationContext, NotificationService::class.java).also { intent ->
-            intent.action = NotificationState.START_SERVICE.toString()
+            intent.action = START_SERVICE.toString()
             startService(intent)
         }
     }
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onStop()
         Log.d("TAG","Stop service.")
         Intent(applicationContext, NotificationService::class.java).also { intent ->
-            intent.action = NotificationState.STOP_SERVICE.toString()
+            intent.action = STOP_SERVICE.toString()
             startService(intent)
         }
     }

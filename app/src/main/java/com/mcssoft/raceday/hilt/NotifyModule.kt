@@ -7,6 +7,8 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.utility.notification.AlarmSchedulerImpl
+import com.mcssoft.raceday.utility.notification.IAlarmScheduler
 import com.mcssoft.raceday.utility.notification.INotification
 import com.mcssoft.raceday.utility.notification.NotificationImpl
 import dagger.Module
@@ -28,8 +30,14 @@ object NotifyModule {
         return context.getSystemService(AlarmManager::class.java)
     }
 
-    // Large part based on:
-    // https://medium.com/@stevdza-san/create-a-basic-notification-in-android-b0d4fd29ad89
+    @Singleton
+    @Provides
+    fun provideAlarmScheduler(
+        @ApplicationContext context: Context,
+        alarmManger: AlarmManager
+    ): IAlarmScheduler {
+        return AlarmSchedulerImpl(context, alarmManger)
+    }
 
     @Singleton
     @Provides
@@ -54,9 +62,11 @@ object NotifyModule {
         return notificationManager
     }
 
+    // For Field injection in NotificationService.
+    // (NotificationManagerCompat && NotificationCompat.Builder)
     @Singleton
     @Provides
-    fun provideNotificationManager2(
+    fun provideFieldNotificationManager(
         @ApplicationContext context: Context
     ): INotification {
         return NotificationImpl(context)

@@ -1,6 +1,10 @@
 package com.mcssoft.raceday.utility.notification
 
 interface IAlarmScheduler {
-    fun schedule(alarmItem: AlarmItem)
-    fun cancel(alarmItem: AlarmItem)
+
+    fun scheduleAlarm(alarmItem: AlarmItem?)
+
+    fun cancelAlarm()
+
+    fun cancelAlarm(alarmItem: AlarmItem?)
 }
