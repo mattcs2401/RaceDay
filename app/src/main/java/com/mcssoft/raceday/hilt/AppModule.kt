@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.hilt
 
+import android.app.AlarmManager
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
@@ -27,6 +28,8 @@ import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
+import com.mcssoft.raceday.utility.alarm.AlarmSchedulerImpl
+import com.mcssoft.raceday.utility.alarm.IAlarmScheduler
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -150,4 +153,21 @@ object AppModule {
         )
     }
 
+    @Singleton
+    @Provides
+    fun provideAlarmManager(
+        @ApplicationContext context: Context
+    ): AlarmManager {
+        return context.getSystemService(AlarmManager::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmScheduler(
+        @ApplicationContext context: Context,
+        alarmManger: AlarmManager,
+        userPrefs: DataStore<UserPreferences>
+    ): IAlarmScheduler {
+        return AlarmSchedulerImpl(context, alarmManger, userPrefs)
+    }
 }

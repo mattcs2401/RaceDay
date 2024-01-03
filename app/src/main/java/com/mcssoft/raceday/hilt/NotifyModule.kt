@@ -1,14 +1,11 @@
 package com.mcssoft.raceday.hilt
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.utility.notification.AlarmSchedulerImpl
-import com.mcssoft.raceday.utility.notification.IAlarmScheduler
 import com.mcssoft.raceday.utility.notification.INotification
 import com.mcssoft.raceday.utility.notification.NotificationImpl
 import dagger.Module
@@ -22,22 +19,22 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NotifyModule {
 
-    @Singleton
-    @Provides
-    fun provideAlarmManager(
-        @ApplicationContext context: Context
-    ): AlarmManager {
-        return context.getSystemService(AlarmManager::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAlarmScheduler(
-        @ApplicationContext context: Context,
-        alarmManger: AlarmManager
-    ): IAlarmScheduler {
-        return AlarmSchedulerImpl(context, alarmManger)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideAlarmManager(
+//        @ApplicationContext context: Context
+//    ): AlarmManager {
+//        return context.getSystemService(AlarmManager::class.java)
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideAlarmScheduler(
+//        @ApplicationContext context: Context,
+//        alarmManger: AlarmManager
+//    ): IAlarmScheduler {
+//        return AlarmSchedulerImpl(context, alarmManger)
+//    }
 
     @Singleton
     @Provides

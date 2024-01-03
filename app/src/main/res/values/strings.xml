@@ -55,6 +55,8 @@
     <string name="id_source_from_api_desc">Get the application data from the network.</string>
     <string name="id_auto_add_trainers">Auto Add Trainers</string>
     <string name="id_auto_add_trainers_desc">Auto update the Summary with Trainer/Jockey data.</string>
+    <string name="id_use_notifications">Use Notifications</string>
+    <string name="id_use_notifications_desc">Use Notifications to display upcoming Summary details.</string>
 
     <!-- General text. -->
     <string name="unknown_host">Unknown Host</string>

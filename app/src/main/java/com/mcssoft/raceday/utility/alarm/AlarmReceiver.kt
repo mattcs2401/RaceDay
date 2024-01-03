@@ -1,10 +1,11 @@
-package com.mcssoft.raceday.utility.notification
+package com.mcssoft.raceday.utility.alarm
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.mcssoft.raceday.utility.notification.INotification
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors

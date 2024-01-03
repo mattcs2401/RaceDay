@@ -19,9 +19,9 @@ import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screen
 import com.mcssoft.raceday.ui.components.navigation.TopBar
+import com.mcssoft.raceday.ui.components.settings.SettingsEvent.EventType
 import com.mcssoft.raceday.ui.components.settings.components.SettingsItem
 import com.mcssoft.raceday.ui.theme.width8dp
-import com.mcssoft.raceday.ui.components.settings.SettingsEvent.EventType
 
 @Composable
 fun SettingsScreen(
@@ -62,21 +62,30 @@ fun SettingsScreen(
         ) {
             Column {
                 SettingsItem(
-                    settingsState = state,
+                    settingsState = state.sourceFromApi,
                     title = stringResource(id = R.string.id_source_from_api) ,
                     description = stringResource(id = R.string.id_source_from_api_desc),
                     enabled = true,
                     onEvent = onEvent,
-                    eventType = EventType.SOURCEFROMAPI
+                    eventType = EventType.SOURCE_FROM_API
                 )
                 Spacer(modifier = Modifier.width(width8dp))
                 SettingsItem(
-                    settingsState = state,
+                    settingsState = state.autoAddTrainers,
                     title = stringResource(id = R.string.id_auto_add_trainers) ,
                     description = stringResource(id = R.string.id_auto_add_trainers_desc),
                     enabled = true,
                     onEvent = onEvent,
-                    eventType = EventType.AUTOADDTRAINER
+                    eventType = EventType.AUTO_ADD_TRAINERS
+                )
+                Spacer(modifier = Modifier.width(width8dp))
+                SettingsItem(
+                    settingsState = state.useNotifications,
+                    title = stringResource(id = R.string.id_use_notifications) ,
+                    description = stringResource(id = R.string.id_use_notifications_desc),
+                    enabled = true,
+                    onEvent = onEvent,
+                    eventType = EventType.USE_NOTIFICATIONS
                 )
             }
 

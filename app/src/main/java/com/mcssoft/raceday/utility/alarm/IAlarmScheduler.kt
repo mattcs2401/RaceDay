@@ -1,4 +1,4 @@
-package com.mcssoft.raceday.utility.notification
+package com.mcssoft.raceday.utility.alarm
 
 interface IAlarmScheduler {
 

@@ -21,7 +21,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.ui.components.settings.SettingsEvent
-import com.mcssoft.raceday.ui.components.settings.SettingsState
 import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
@@ -34,7 +33,7 @@ import com.mcssoft.raceday.ui.theme.padding4dp
 
 @Composable
 fun SettingsItem(
-    settingsState: SettingsState,
+    settingsState: Boolean,
     title: String,
     description: String,
     enabled: Boolean,
@@ -44,7 +43,7 @@ fun SettingsItem(
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
     var isChecked by remember { mutableStateOf(false) }
-    isChecked = settingsState.sourceFromApi
+    isChecked = settingsState//.sourceFromApi
 
     Card(
         modifier = Modifier
@@ -74,7 +73,6 @@ fun SettingsItem(
                 checked = isChecked,
                 onCheckedChange = { state ->
                     isChecked = state
-                    settingsState.sourceFromApi = state
                     onEvent(
                         SettingsEvent.Checked(state, eventType)
                     )
