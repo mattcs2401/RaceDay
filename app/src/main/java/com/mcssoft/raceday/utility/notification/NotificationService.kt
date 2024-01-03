@@ -51,22 +51,7 @@ class NotificationService: Service() {
             EntryPointAccessors.fromApplication(this, IAlarmScheduleEntryPoint::class.java)
         schedule = schedulerEntryPoints.schedule()
         cancel = schedulerEntryPoints.cancel()
-
     }
-
-    override fun onBind(intent: Intent): IBinder? {
-        return null //binder
-    }
-
-//    override fun onUnbind(intent: Intent): Boolean {
-//        // All clients have unbound with unbindService()
-//        return true //allowRebind
-//    }
-
-//    override fun onRebind(intent: Intent) {
-//        // A client is binding to the service with bindService(),
-//        // after onUnbind() has already been called
-//    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action) {
@@ -78,7 +63,7 @@ class NotificationService: Service() {
     }
 
     private fun start() {
-        schedule.scheduleAlarm(null)
+        schedule.scheduleAlarm()
 
         notificationBldr
             .setContentTitle(resources.getString(R.string.notification_service))
@@ -93,6 +78,18 @@ class NotificationService: Service() {
         cancel.cancelAlarm()
         stopSelf()
     }
+
+    override fun onBind(intent: Intent): IBinder? { return null }
+
+//    override fun onUnbind(intent: Intent): Boolean {
+//        // All clients have unbound with unbindService()
+//        return true //allowRebind
+//    }
+
+//    override fun onRebind(intent: Intent) {
+//        // A client is binding to the service with bindService(),
+//        // after onUnbind() has already been called
+//    }
 
 //    /**
 //     * Doco: Class used for the client Binder. Because we know this service always runs in the same

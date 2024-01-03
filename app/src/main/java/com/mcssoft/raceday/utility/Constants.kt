@@ -28,4 +28,9 @@ object Constants {
     // Base set of Meeting locations.
     val LOCATIONS = listOf("ACT","QLD","NSW","VIC","SA","WA","NT","NZL")
 
+    // Alarm values.
+    const val ONE_MINUTE = (1000 * 60).toLong()
+
+    const val FIVE_MINUTES = (1000 * 60 * 5).toLong()
+
 }
