@@ -31,14 +31,14 @@ class AlarmSchedulerImpl @Inject constructor(
         // Trigger in about 1 minute.
         val alarmTriggerTime = DateUtils().getCurrentTimeMillis() + (1000 * 60).toLong()
         // Recur approx every 5 minutes.
-        val alarmIntervalTime = (1000 * 60 * 5).toLong()
+        val alarmIntervalTime = (1000 * 60).toLong()// * 5).toLong()
 
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            alarmTriggerTime,
-//            alarmIntervalTime,
-//            pIntent
-//        )
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            alarmTriggerTime,
+            alarmIntervalTime,
+            pIntent
+        )
     }
 
     override fun cancelAlarm() {

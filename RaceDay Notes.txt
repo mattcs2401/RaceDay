@@ -55,8 +55,15 @@ Notifications:
 --------------
 
 -> Alarm is inexact repeating every 5 ? minutes (while the Summary is populated).
+
 -> Don't start until after the Summary is populated.
-->
+
+-> New notification adds to the list of others there:
+   -> Pops up for a few seconds on initial display.
+   -> Don't want sound.
+
+-> Need a notification actions button:
+   -> go to ... ?
 
 -----------------------
 Other updates based on:

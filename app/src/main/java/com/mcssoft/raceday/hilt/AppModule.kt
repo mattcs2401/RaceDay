@@ -65,17 +65,12 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApi(app: Application): IRaceDay {
-//        val nwInterceptor = NetworkInterceptor()
-//        val logging = HttpLoggingInterceptor()
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
-//            .addInterceptor(nwInterceptor)
             .build()
         return Retrofit.Builder()
             .client(client)
             .baseUrl(app.resources.getString(R.string.base_url))
             .addConverterFactory(GsonConverterFactory.create())
-//            .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()
             .create(IRaceDay::class.java)
     }
