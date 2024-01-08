@@ -168,6 +168,10 @@ object AppModule {
         alarmManger: AlarmManager,
         userPrefs: DataStore<UserPreferences>
     ): IAlarmScheduler {
-        return AlarmSchedulerImpl(context, alarmManger, userPrefs)
+        return AlarmSchedulerImpl(
+            context,
+            alarmManger,
+            userPrefs
+        )
     }
 }

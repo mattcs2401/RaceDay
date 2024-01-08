@@ -90,11 +90,20 @@ class DbRepoImpl @Inject constructor(
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    override suspend fun getSummaryCount(): Int {
+        return dao.getSummaryCount()
+    }
+
     override suspend fun getSummary(raceId: Long, runnerId: Long): Summary {
         return dao.getSummary(raceId, runnerId)
     }
+
     override suspend fun getSummaries(): List<Summary> {
         return dao.getSummaries()
+    }
+
+    override suspend fun getCurrentSummaries(): List<Summary> {
+        return dao.getCurrentSummaries()
     }
 
     override suspend fun insertSummary(summary: Summary): Long {

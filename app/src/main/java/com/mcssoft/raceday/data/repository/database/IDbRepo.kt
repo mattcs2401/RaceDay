@@ -154,7 +154,7 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Query("update Runner set isChecked= :newValue where _id = :runnerId")
+    @Query("update Runner set isChecked = :newValue where _id = :runnerId")
     suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int
 
     @Update
@@ -173,11 +173,17 @@ interface IDbRepo {
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    @Query("select count(*) from Summary")
+    suspend fun getSummaryCount(): Int
+
     @Query("select * from Summary where raceId = :raceId and runnerId = :runnerId")
     suspend fun getSummary(raceId: Long, runnerId: Long): Summary
 
     @Query("select * from Summary")
     suspend fun getSummaries(): List<Summary>
+
+    @Query("select * from Summary where isPastRaceTime = 0")
+    suspend fun getCurrentSummaries(): List<Summary>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummary(summary: Summary): Long

@@ -40,7 +40,7 @@ class RunnersWorker (
 
     override suspend fun doWork(): Result {
         return try {
-            Log.d("TAG", "[RunnersWorker.doWork] starting.")
+//            Log.d("TAG", "[RunnersWorker.doWork] starting.")
             // Get the list of Trainer and Jockey names.
             val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
             val jockeyNames = context.resources.getStringArray(R.array.jockeyNames).toList()
@@ -57,7 +57,7 @@ class RunnersWorker (
             val races = inputData.getString(context.resources.getString(R.string.key_num_races))
 
             for(raceNum in 1..(races?.toInt() ?: -1)) {
-                Log.d("TAG", "Process for Runners - Race: $raceNum")
+//                Log.d("TAG", "Process for Runners - Race: $raceNum")
 
                 // Get the Runners for a Race. Parameter raceNum as string for Url construct.
                 response = iRemoteRepo.getRaceDayRunners(date!!, code!!, raceNum.toString())

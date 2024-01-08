@@ -6,6 +6,32 @@ import java.util.Calendar.MINUTE
 import java.util.Locale
 
 class DateUtils {
+/*
+    getDateToday(): String  - Get today's date in format "YYYY-M(M)-D(D)".
+    getTime(String): String - Get the time component (HH:MM) from the given date/time value.
+    getCurrentTimeFormatted(): Sting - Get the current time formatted as HH:MM.
+    getCurrentTimeFormatted(Long): String - Get the current time formatted as HH:MM from the millis param.
+    getCurrentTimeMillis(): Long - Get the current time as a millis value.
+    getCurrentTimeMillis(String): Long - Get the current time as a millis value from the format param HH:MM.
+ */
+
+    /**
+     * Compare the given time value as greater than the current time but less than the window time.
+     * @param time: The given time formatted as HH:MI.
+     * @param window: A time value in millis that represents a future time.
+     * @return [1] The given time is within the window, else [0].
+     */
+    fun compareToWindowTime(time: String, window: Long?): Int {
+        val windowTime: Long
+        val givenTime = getCurrentTimeMillis(time)
+        val currentTime = getCurrentTimeMillis()
+        windowTime = window ?: (currentTime + (1000 * 60 * 5).toLong())
+
+        if ((givenTime > currentTime) && (givenTime < windowTime)) {
+            return 1
+        }
+        return 0
+    }
 
     /**
      * Get today's date in format "YYYY-M(M)-D(D)".
@@ -41,6 +67,9 @@ class DateUtils {
         return "${timeAll[0]}:${timeAll[1]}"
     }
 
+    /**
+     * Get the current time formatted as HH:MM.
+     */
     fun getCurrentTimeFormatted(): String {
         var hourOfDay: Int
         var minutes: Int
@@ -51,6 +80,10 @@ class DateUtils {
         return formatHourMinutes(hourOfDay, minutes)
     }
 
+    /**
+     * Get the current time formatted as HH:MM from the parameter.
+     * @param millis: A date/time value in millis.
+     */
     fun getCurrentTimeFormatted(millis: Long): String {
         var hourOfDay: Int
         var minutes: Int
@@ -62,26 +95,27 @@ class DateUtils {
         return formatHourMinutes(hourOfDay, minutes)
     }
 
+    /**
+     * Get the current time as a millis value.
+     */
     fun getCurrentTimeMillis(): Long {
         val time = getCurrentTimeFormatted().split(":")
         return timeToMillis(time[0].toInt(), time[1].toInt())
     }
 
+    /**
+     * Get the current time as a millis value from the formatted param.
+     * @param formattedTime: A time value HH:MM.
+     */
     fun getCurrentTimeMillis(formattedTime: String): Long {
         val time = formattedTime.split(":")
         return timeToMillis(time[0].toInt(), time[1].toInt())
     }
 
-//    /**
-//     * Is the current time after the given (Race) time.
-//     * @param givenTime: The time to compare against.
-//     */
-//    fun isAfter(givenTime: Long) : Boolean {
-//        return Calendar.getInstance(Locale.getDefault()).timeInMillis > givenTime
-//    }
-
     /**
      * Utility method to return a formatted String.
+     * @param hourOfDay: An hour value.
+     * @param minutes: A minutes value.
      */
     private fun formatHourMinutes(hourOfDay: Int, minutes: Int): String {
         return if(minutes < 10) {
@@ -92,12 +126,14 @@ class DateUtils {
     }
 
     /**
-     * Utility method to return time in millis from a format string ("HH:MM").
+     * Utility method to return time in millis.
+     * @param hourOfDay: An hour value.
+     * @param minutes: A minutes value.
      */
-    private fun timeToMillis(hourOfDay: Int, minute: Int) : Long {
+    private fun timeToMillis(hourOfDay: Int, minutes: Int) : Long {
         return Calendar.getInstance(Locale.getDefault()).apply {
             set(HOUR_OF_DAY, hourOfDay)
-            set(MINUTE, minute)
+            set(MINUTE, minutes)
         }.timeInMillis
     }
 }

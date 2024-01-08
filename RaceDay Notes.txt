@@ -54,9 +54,7 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 Notifications:
 --------------
 
--> Alarm is inexact repeating every 5 ? minutes (while the Summary is populated).
-
--> Don't start until after the Summary is populated.
+-> Alarm is inexact repeating every 5 ? minutes.
 
 -> New notification adds to the list of others there:
    -> Pops up for a few seconds on initial display.

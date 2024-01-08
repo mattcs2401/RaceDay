@@ -1,5 +1,4 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools"
+<resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="TypographyEllipsis">
 
     <string name="app_name">RaceDay</string>
@@ -50,7 +49,7 @@
     <string name="key_meeting_code">key_meeting_code</string>
     <string name="key_num_races">key_num_races</string>
 
-    <!-- Settings item text. -->
+    <!-- Settings items text. -->
     <string name="id_source_from_api">Source From API</string>
     <string name="id_source_from_api_desc">Get the application data from the network.</string>
     <string name="id_auto_add_trainers">Auto Add Trainers</string>
