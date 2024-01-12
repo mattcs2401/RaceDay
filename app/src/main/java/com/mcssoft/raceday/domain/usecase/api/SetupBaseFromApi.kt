@@ -29,8 +29,7 @@ class SetupBaseFromApi @Inject constructor(
      * @return A Flow of DataResult<Any>.
      */
     operator fun invoke(mtgDate: String): Flow<DataResult<Any>> = flow {
-        Log.d("TAG", "SetupBaseFromApi.invoke()")
-
+//        Log.d("TAG", "SetupBaseFromApi.invoke()")
         try {
             emit(DataResult.loading())
 

@@ -22,8 +22,8 @@ class AlarmSchedulerImpl @Inject constructor(
 ): IAlarmScheduler {
 /*
   Note:
-  -> The AlarmReceiver does the actual check if there are Summaries or not, e.g. Summary items may
-     not exist initially, but they could be added manually later.
+  The AlarmReceiver does the actual check if there are Summaries or not, e.g. Summary items may not
+  exist initially, or added automatically,  but they could be added manually later.
  */
     override fun scheduleAlarm() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -31,9 +31,7 @@ class AlarmSchedulerImpl @Inject constructor(
             if (userPrefs.data.first().useNotifications) {
                 Log.d("TAG", "Alarm scheduled.")
 
-                val intent = Intent(context, AlarmReceiver::class.java).apply {
-//                    putExtra("EXTRA_MESSAGE", "The message of the Intent.")
-                }
+                val intent = Intent(context, AlarmReceiver::class.java)
 
                 val pIntent = PendingIntent.getBroadcast(
                     context,
@@ -43,9 +41,9 @@ class AlarmSchedulerImpl @Inject constructor(
                 )
 
                 // TODO - trigger times from app prefs ?
-                // Trigger in about 1 minute.
-                val alarmTriggerTime = DateUtils().getCurrentTimeMillis() + Constants.ONE_MINUTE
-                // Recur approx every 5 minutes.
+                // Trigger in about 30 seconds.
+                val alarmTriggerTime = DateUtils().getCurrentTimeMillis() + Constants.THIRTY_SECONDS
+                // Recur about every 5 minutes.
                 val alarmIntervalTime = Constants.FIVE_MINUTES
 
                 alarmManager.setInexactRepeating(

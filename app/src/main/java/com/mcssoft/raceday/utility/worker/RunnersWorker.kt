@@ -57,26 +57,31 @@ class RunnersWorker (
             val races = inputData.getString(context.resources.getString(R.string.key_num_races))
 
             for(raceNum in 1..(races?.toInt() ?: -1)) {
-//                Log.d("TAG", "Process for Runners - Race: $raceNum")
-
-                // Get the Runners for a Race. Parameter raceNum as string for Url construct.
-                response = iRemoteRepo.getRaceDayRunners(date!!, code!!, raceNum.toString())
                 // Get the Race id for the Race.
-                raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code, raceNum)
-                // Insert records.
-                iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
+                raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code!!, raceNum)
+
                 // Get the Race. Need Race info to get Scratchings.
                 race = iDbRepo.getRace(raceId)
 
-                if(race.hasScratchings) {
-                    processForScratchings(race)
-                }
+                // If the Race is Abandoned, don't waste resources getting Runner detail.
+                if(race.raceStatus != context.resources.getString(R.string.race_status_abandoned)) {
 
-                delay(50)  // TBA required ?
+                    // Get the Runners for a Race. Parameter raceNum as string for Url construct.
+                    response = iRemoteRepo.getRaceDayRunners(date!!, code, raceNum.toString())
 
-                if(trainerPref) {
-                    processForTrainers(race, trainerNames)
-                    processForJockeys(race, jockeyNames)
+                    // Insert records.
+                    iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
+
+                    if (race.hasScratchings) {
+                        processForScratchings(race)
+                    }
+
+                    delay(50)  // TBA required ?
+
+                    if (trainerPref) {
+                        processForTrainers(race, trainerNames)
+                        processForJockeys(race, jockeyNames)
+                    }
                 }
             }
             Result.success()

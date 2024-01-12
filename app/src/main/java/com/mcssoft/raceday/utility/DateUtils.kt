@@ -21,16 +21,13 @@ class DateUtils {
      * @param window: A time value in millis that represents a future time.
      * @return [1] The given time is within the window, else [0].
      */
-    fun compareToWindowTime(time: String, window: Long?): Int {
+    fun compareToWindowTime(time: String, window: Long?): Boolean {
         val windowTime: Long
         val givenTime = getCurrentTimeMillis(time)
         val currentTime = getCurrentTimeMillis()
         windowTime = window ?: (currentTime + (1000 * 60 * 5).toLong())
 
-        if ((givenTime > currentTime) && (givenTime < windowTime)) {
-            return 1
-        }
-        return 0
+        return (givenTime > currentTime) && (givenTime < windowTime)
     }
 
     /**

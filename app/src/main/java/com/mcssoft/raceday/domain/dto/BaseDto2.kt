@@ -1,7 +1,7 @@
 package com.mcssoft.raceday.domain.dto
 
 data class BaseDto2(
-    val runners: List<RunnerDto>,
+    val runners: List<RunnerDto>
 )
 //    val allIn: Boolean,
 //    val allowBundle: Boolean,

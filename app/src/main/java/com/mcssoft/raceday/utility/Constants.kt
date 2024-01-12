@@ -31,6 +31,8 @@ object Constants {
     // Alarm values.
     const val ONE_MINUTE = (1000 * 60).toLong()
 
+    const val THIRTY_SECONDS = (1000 * 30).toLong()
+
     const val FIVE_MINUTES = (1000 * 60 * 5).toLong()
 
 }

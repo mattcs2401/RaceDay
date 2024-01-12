@@ -12,6 +12,10 @@ class RemoteRepoImpl @Inject constructor(
     private val api: IRaceDay
 ) : IRemoteRepo {
 
+    /**
+     * Get the base Meeting and Race details.
+     * @param date: Today's date format YYYY-MM-DD.
+     */
     override suspend fun getRaceDay(date: String): NetworkResponse<BaseDto> {
         return try {
             val result = api.getRaceDay(date)
@@ -28,6 +32,12 @@ class RemoteRepoImpl @Inject constructor(
         }
     }
 
+    /**
+     * Get the Runner details.
+     * @param date: Today's date.
+     * @param venueCode: Code for the venue.
+     * @param raceNum: The Race number.
+     */
     override suspend fun getRaceDayRunners(date: String, venueCode: String, raceNum: String): NetworkResponse<BaseDto2> {
         return try {
             val result = api.getRunners(date, venueCode, raceNum)

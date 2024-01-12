@@ -127,7 +127,7 @@ class SetupRunnersFromApi  @Inject constructor(
         return workManager.getWorkInfoByIdLiveData(workerId)
             .asFlow()
             .map { workInfo ->
-                mapWorkInfoStateToTaskState(workInfo.state)
+                mapWorkInfoStateToWorkerState(workInfo.state)
             }
             .transformWhile { workerState ->
                 _state.update { state -> state.copy(status = workerState) }
@@ -137,7 +137,7 @@ class SetupRunnersFromApi  @Inject constructor(
             }.distinctUntilChanged()
     }
 
-    private fun mapWorkInfoStateToTaskState(state: WorkInfo.State): Status = when (state) {
+    private fun mapWorkInfoStateToWorkerState(state: WorkInfo.State): Status = when (state) {
         WorkInfo.State.ENQUEUED,
         WorkInfo.State.RUNNING,
         WorkInfo.State.BLOCKED -> Status.Scheduled

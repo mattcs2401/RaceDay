@@ -2,10 +2,13 @@ package com.mcssoft.raceday.hilt
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.utility.alarm.AlarmReceiver
 import com.mcssoft.raceday.utility.notification.INotification
 import com.mcssoft.raceday.utility.notification.NotificationImpl
 import dagger.Module
@@ -18,7 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NotifyModule {
-
+//    * TBA *
 //    @Singleton
 //    @Provides
 //    fun provideAlarmManager(
@@ -51,11 +54,11 @@ object NotifyModule {
     @Singleton
     @Provides
     fun provideNotificationManager(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): NotificationManagerCompat {
         val notificationManager = NotificationManagerCompat.from(context)
-            val channel = provideNotificationChannel(context)
-            notificationManager.createNotificationChannel(channel)
+        val channel = provideNotificationChannel(context)
+        notificationManager.createNotificationChannel(channel)
         return notificationManager
     }
 
@@ -64,26 +67,31 @@ object NotifyModule {
     @Singleton
     @Provides
     fun provideFieldNotificationManager(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): INotification {
         return NotificationImpl(context)
     }
 
+    // This provides for commonality of the Notifications.
     @Singleton
     @Provides
     fun provideNotificationBuilder(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): NotificationCompat.Builder {
-        return NotificationCompat.Builder(
-            context,
-            context.resources.getString(R.string.notify_channel_id)
-        )
-            //.setContentTitle("Welcome")
-            //.setContentText("YouTube Channel: Stevdza-San")
-            .setSmallIcon(R.drawable.ic_notifications_24)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = "INTENT_ACTION"
+        }
+        val pIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val ncb = NotificationCompat.Builder(context, context.resources.getString(R.string.notify_channel_id)).also {
+            it.setAutoCancel(false)
+            it.setGroup("key_notifications_group")
+            it.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            it.addAction(0, context.resources.getString(R.string.action_btn_label), pIntent)
+        }
+        return ncb
     }
-    // TODO - provideNotificationBuilder ?
+}
 //    @Singleton
 //    @Provides
 //    fun provideNotificationBuilder(
@@ -125,5 +133,3 @@ object NotifyModule {
 //            .addAction(0, "ACTION", pendingIntent)
 //            .setContentIntent(clickPendingIntent)
 //    }
-
-}

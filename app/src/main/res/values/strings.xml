@@ -7,11 +7,6 @@
 
     <string name="base_url">https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/</string>
 
-    <!-- Notification. -->
-    <string name="notify_channel_id">notify_channel_id</string>
-    <string name="notify_channel_name">Notification</string>
-    <string name="notify_channel_desc">Notification Description</string>
-
     <!-- Icon labels. -->
     <string name="lbl_icon_refresh">Refresh</string>
 <!--    <string name="lbl_icon_settings">Settings</string>-->
@@ -27,7 +22,6 @@
     <string name="dlg_refresh_text">Delete all backing data and recreate ?</string>
 
     <string name="dlg_init_title">Initialising</string>
-<!--    <string name="dlg_loading_title">Loading</string>-->
     <string name="dlg_loading_meetings">Loading Meetings</string>
     <string name="dlg_loading_races">Loading Races</string>
     <string name="dlg_loading_runners">Loading Runners</string>
@@ -66,8 +60,15 @@
     <string name="nothing_to_show">Nothing to show yet.</string>
 
     <!-- Notifications. -->
+    <string name="notify_channel_id">notify_channel_id</string>
+    <string name="notify_channel_name">Notification</string>
+    <string name="notify_channel_desc">Notification Description</string>
     <string name="notification_service">Notification Service</string>
     <string name="notification_service_text">The Notification service is active.</string>
+    <string name="action_btn_label">Action</string>
+
+    <!-- Status. -->
+    <string name="race_status_abandoned">Abandoned</string>
 
     <!-- TBA -->
     <string-array name="trainerNames">
