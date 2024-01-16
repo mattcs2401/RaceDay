@@ -46,7 +46,7 @@ class AlarmSchedulerImpl @Inject constructor(
                 // Recur about every 5 minutes.
                 val alarmIntervalTime = Constants.FIVE_MINUTES
 
-                alarmManager.setInexactRepeating(
+                alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     alarmTriggerTime,
                     alarmIntervalTime,

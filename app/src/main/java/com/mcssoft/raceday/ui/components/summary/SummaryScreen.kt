@@ -27,7 +27,8 @@ import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
 @Composable
 fun SummaryScreen(
     state: SummaryState,
-    navController: NavController
+    navController: NavController,
+    onEvent: (SummaryEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -38,6 +39,14 @@ fun SummaryScreen(
                 title = stringResource(id = R.string.label_summary),
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
+                    IconButton(onClick = {
+                        onEvent(SummaryEvent.Refresh)
+                    }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_refresh_24),
+                            stringResource(id = R.string.lbl_icon_refresh)
+                        )
+                    }
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.
                         navController.navigate(Screen.MeetingsScreen.route) {

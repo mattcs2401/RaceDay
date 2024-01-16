@@ -22,11 +22,6 @@ import com.mcssoft.raceday.ui.components.splash.SplashViewModel
 import com.mcssoft.raceday.ui.components.summary.SummaryScreen
 import com.mcssoft.raceday.ui.components.summary.SummaryViewModel
 
-// TBA **
-const val MY_URI = "https://mcssoft.com"
-const val MY_ARG = "message"
-// *****
-
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
@@ -41,9 +36,9 @@ fun NavGraph() {
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SplashScreen(
-                navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent
+                onEvent = viewModel::onEvent,
+                navController = navController
             )
         }
 
@@ -52,8 +47,8 @@ fun NavGraph() {
             val viewModel = hiltViewModel<MeetingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
-                navController = navController,
-                state = state
+                state = state,
+                navController = navController
             )
         }
 
@@ -69,8 +64,8 @@ fun NavGraph() {
             val state by viewModel.state.collectAsStateWithLifecycle()
 
             RacesScreen(
-                navController = navController,
-                state = state
+                state = state,
+                navController = navController
             )
         }
 
@@ -84,9 +79,9 @@ fun NavGraph() {
             val viewModel = hiltViewModel<RunnersViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             RunnersScreen(
-                navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent
+                onEvent = viewModel::onEvent,
+                navController = navController
             )
         }
 
@@ -97,9 +92,9 @@ fun NavGraph() {
             val viewModel = hiltViewModel<SettingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SettingsScreen(
-                navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent     // TBA
+                onEvent = viewModel::onEvent,
+                navController = navController
             )
         }
 
@@ -110,8 +105,9 @@ fun NavGraph() {
             val viewModel = hiltViewModel<SummaryViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SummaryScreen(
-                navController = navController,
-                state = state
+                state = state,
+                onEvent = viewModel::onEvent,
+                navController = navController
             )
         }
 

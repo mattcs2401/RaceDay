@@ -23,13 +23,21 @@ class SummaryViewModel @Inject constructor(
         getSummaries()
     }
 
+    fun onEvent(event: SummaryEvent) {
+        when (event) {
+            is SummaryEvent.Refresh -> {
+                getSummaries()
+            }
+        }
+    }
+
     private fun getSummaries() {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.getSummaries().collect { result ->
                 when {
                     result.loading -> {
-                        _state.update { state ->
-                            state.copy(
+                        _state.update {
+                            it.copy(
                                 exception = null,
                                 status = SummaryState.Status.Loading,
                                 loading = true
@@ -38,8 +46,8 @@ class SummaryViewModel @Inject constructor(
                         _state.emit(state.value)
                     }
                     result.failed -> {
-                        _state.update { state ->
-                            state.copy(
+                        _state.update {
+                            it.copy(
                                 exception = result.exception,
                                 status = SummaryState.Status.Failure,
                                 loading = false
@@ -48,8 +56,8 @@ class SummaryViewModel @Inject constructor(
                         _state.emit(state.value)
                     }
                     result.successful -> {
-                        _state.update { state ->
-                            state.copy(
+                        _state.update {
+                            it.copy(
                                 exception = null,
                                 status = SummaryState.Status.Success,
                                 loading = false,

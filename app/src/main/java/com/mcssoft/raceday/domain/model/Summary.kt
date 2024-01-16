@@ -28,5 +28,6 @@ data class Summary(
 
     // Meta data.
     var isPastRaceTime: Boolean,  // raceStartTime is now in the past.
-    var isWagered: Boolean        // A bet/wager has been made.
+    var isNotified: Boolean,      // Summary has been picked up for notifications.
+    var isWagered: Boolean        // TBA - A bet/wager has been made.
 )

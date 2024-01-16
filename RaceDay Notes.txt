@@ -29,6 +29,9 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
   TO DO:
 ==========
 
+--> Better use of SavedStateHandle. Refer Point 2 of:
+    https://www.youtube.com/watch?v=JfCivo5qJkI
+
 --> Don't do Summary items for Races that are abandoned.
 
 --> Something that indicates a bet has been made for a Summary item.
@@ -55,8 +58,6 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 --------------
 Notifications:
 --------------
-
--> Alarm is inexact repeating every 5 ? minutes.
 
 -> New notification adds to the list of others there:
    -> Pops up for a few seconds on initial display.

@@ -1,6 +1,7 @@
 package com.mcssoft.raceday.utility.alarm
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -72,7 +73,11 @@ class AlarmReceiver: BroadcastReceiver() {
                 notifyList.add(summary)
             }
         }
+        // Send out notifications and update the Summary as having been notified.
         if(notifyList.isEmpty()) return else for (summary in notifyList) {
+            summary.isNotified = true
+            dataAccess.updateSummary(summary)
+            delay(25) // TBA
             sendNotification(context, summary)
         }
     }
@@ -82,32 +87,38 @@ class AlarmReceiver: BroadcastReceiver() {
         val bundle = Bundle().also {
             it.putLong("key_summary_id", summary._id)
         }
-        val view = buildView(context, summary)
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = "INTENT_ACTION"
+        }
+        val pIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val view = buildView(context, summary, pIntent)
         notificationBuilder.also { ncb ->
-            ncb.setCustomContentView(view)
             ncb.setExtras(bundle)
+            ncb.setCustomContentView(view)
         }
         notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 
-    /**
-     * Build the Notification's view from Summary details.
-     * @param context: For system string resources.
-     * @param summary: The Summary to draw data from.
-     */
-    private fun buildView(context: Context, summary: Summary): RemoteViews {
+//    /**
+//     * Build the Notification's view from Summary details.
+//     * @param context: For system string resources.
+//     * @param summary: The Summary to draw data from.
+//     */
+    private fun buildView(context: Context, summary: Summary, pendingIntent: PendingIntent): RemoteViews {
         return RemoteViews(context.packageName, R.layout.layout_notification).also { rvs ->
             rvs.setTextViewText(R.id.id_sellCode, summary.sellCode)
             rvs.setTextViewText(R.id.id_raceTime, summary.raceStartTime)
             rvs.setTextViewText(R.id.id_raceNumber, summary.raceNumber.toString())
             rvs.setTextViewText(R.id.id_runnerNumber, summary.runnerNumber.toString())
             rvs.setTextViewText(R.id.id_runnerName, summary.runnerName)
+            rvs.setOnClickPendingIntent(R.id.id_action_button, pendingIntent)
         }
     }
 
     /**
      * Utility class.
-     * Check for Summaries whose race time is now in the past, and update accordingly.
+     * Check for Summaries whose race time is now in the past, and update accordingly. We want to
+     * discount these from any Summary notifications.
      * @param currentTime: The current time in millis.
      */
     private suspend fun checkSummaries(currentTime: Long) {

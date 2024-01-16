@@ -2,13 +2,10 @@ package com.mcssoft.raceday.hilt
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.utility.alarm.AlarmReceiver
 import com.mcssoft.raceday.utility.notification.INotification
 import com.mcssoft.raceday.utility.notification.NotificationImpl
 import dagger.Module
@@ -78,16 +75,15 @@ object NotifyModule {
     fun provideNotificationBuilder(
         @ApplicationContext context: Context,
     ): NotificationCompat.Builder {
-        val intent = Intent(context, AlarmReceiver::class.java).apply {
-            action = "INTENT_ACTION"
-        }
-        val pIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_IMMUTABLE)
+//        val intent = Intent(context, AlarmReceiver::class.java).apply {
+//            action = "INTENT_ACTION"
+//        }
+//        val pIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_IMMUTABLE)
         val ncb = NotificationCompat.Builder(context, context.resources.getString(R.string.notify_channel_id)).also {
             it.setAutoCancel(false)
-            it.setGroup("key_notifications_group")
             it.setPriority(NotificationCompat.PRIORITY_DEFAULT)
             it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            it.addAction(0, context.resources.getString(R.string.action_btn_label), pIntent)
+//            it.addAction(0, context.resources.getString(R.string.action_btn_label), pIntent)
         }
         return ncb
     }

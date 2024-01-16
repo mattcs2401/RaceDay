@@ -182,7 +182,7 @@ interface IDbRepo {
     @Query("select * from Summary")
     suspend fun getSummaries(): List<Summary>
 
-    @Query("select * from Summary where isPastRaceTime = 0")
+    @Query("select * from Summary where isPastRaceTime = 0 and isNotified = 0")
     suspend fun getCurrentSummaries(): List<Summary>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

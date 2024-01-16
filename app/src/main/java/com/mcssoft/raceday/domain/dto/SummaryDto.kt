@@ -19,6 +19,7 @@ data class SummaryDto(
     var riderDriverName: String,
     var trainerName: String,
     var isPastRaceTime: Boolean = false,
+    var isNotified: Boolean = false,
     var isWagered: Boolean = false
     )
 
@@ -35,6 +36,7 @@ fun SummaryDto.toSummary(): Summary {
         riderDriverName = riderDriverName,
         trainerName = trainerName,
         isPastRaceTime = isPastRaceTime,
+        isNotified = isNotified,
         isWagered = isWagered
     )
 }
