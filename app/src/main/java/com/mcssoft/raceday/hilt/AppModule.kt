@@ -25,6 +25,7 @@ import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
 import com.mcssoft.raceday.domain.usecase.races.GetRace
 import com.mcssoft.raceday.domain.usecase.races.GetRaces
+import com.mcssoft.raceday.domain.usecase.runners.GetRunner
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
@@ -148,6 +149,7 @@ object AppModule {
             getRaces = GetRaces(local, scope),
             getRace = GetRace(local, scope),
             getRunners = GetRunners(local, scope),
+            getRunner = GetRunner(local, scope),
             setRunnerChecked = SetRunnerChecked(local, scope),
             getSummaries = GetSummaries(local, scope)
         )

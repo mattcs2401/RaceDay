@@ -25,6 +25,7 @@
     <string name="dlg_loading_meetings">Loading Meetings</string>
     <string name="dlg_loading_races">Loading Races</string>
     <string name="dlg_loading_runners">Loading Runners</string>
+    <string name="dlg_loading_runner">Loading Runner</string>
     <string name="dlg_loading_summaries">Loading Summaries</string>
     <string name="dlg_loading_msg">Please wait ...</string>
     <string name="dlg_error_title">An Error Occurred</string>
@@ -34,6 +35,7 @@
     <string name="label_meetings">Meetings</string>
     <string name="label_races">Races</string>
     <string name="label_runners">Runners</string>
+    <string name="label_runner">Runner</string>
     <string name="label_summary">Summary</string>
     <string name="label_settings">Settings</string>
 

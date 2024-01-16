@@ -13,6 +13,8 @@ import com.mcssoft.raceday.ui.components.meetings.MeetingsScreen
 import com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel
 import com.mcssoft.raceday.ui.components.races.RacesScreen
 import com.mcssoft.raceday.ui.components.races.RacesViewModel
+import com.mcssoft.raceday.ui.components.runner.RunnerScreen
+import com.mcssoft.raceday.ui.components.runner.RunnerViewModel
 import com.mcssoft.raceday.ui.components.runners.RunnersScreen
 import com.mcssoft.raceday.ui.components.runners.RunnersViewModel
 import com.mcssoft.raceday.ui.components.settings.SettingsScreen
@@ -28,10 +30,10 @@ fun NavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = Screens.SplashScreen.route
     ) {
         // Splash screen.
-        composable(route = Screen.SplashScreen.route
+        composable(route = Screens.SplashScreen.route
         ){
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -43,7 +45,7 @@ fun NavGraph() {
         }
 
         // Meetings screen.
-        composable(route = Screen.MeetingsScreen.route) {
+        composable(route = Screens.MeetingsScreen.route) {
             val viewModel = hiltViewModel<MeetingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
@@ -55,7 +57,7 @@ fun NavGraph() {
         // Races screen.
         composable(
             // As yet, haven't been able to make the meetingId param optional.
-            route = Screen.RacesScreen.route + "meetingId={meetingId}",
+            route = Screens.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType
             })
@@ -71,7 +73,7 @@ fun NavGraph() {
 
         // Runners screen.
         composable(
-            route = Screen.RunnersScreen.route + "raceId={raceId}",
+            route = Screens.RunnersScreen.route + "raceId={raceId}",
             arguments = listOf(navArgument("raceId") {
                 type = NavType.LongType
             })
@@ -85,9 +87,25 @@ fun NavGraph() {
             )
         }
 
+        // Runner screen.
+        composable(
+            route = Screens.RunnerScreen.route + "runnerId={runnerId}",
+            arguments = listOf(navArgument("runnerId") {
+                type = NavType.LongType
+            })
+        ) {
+            val viewModel = hiltViewModel<RunnerViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            RunnerScreen(
+                state = state,
+//                onEvent = viewModel::onEvent,
+                navController = navController
+            )
+        }
+
         // Settings screen.
         composable(
-            route = Screen.SettingsScreen.route
+            route = Screens.SettingsScreen.route
         ){
             val viewModel = hiltViewModel<SettingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -100,7 +118,7 @@ fun NavGraph() {
 
         // Summary screen (selected Runner items).
         composable(
-            route = Screen.SummaryScreen.route
+            route = Screens.SummaryScreen.route
         ){
             val viewModel = hiltViewModel<SummaryViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()

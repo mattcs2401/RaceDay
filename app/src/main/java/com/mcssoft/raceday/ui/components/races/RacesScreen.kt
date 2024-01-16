@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
-import com.mcssoft.raceday.ui.components.navigation.Screen
+import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Loading
@@ -50,8 +50,8 @@ fun RacesScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.MeetingsScreen.route) {
-                            popUpTo(route = Screen.MeetingsScreen.route) {
+                        navController.navigate(Screens.MeetingsScreen.route) {
+                            popUpTo(route = Screens.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }
@@ -104,15 +104,13 @@ fun RacesScreen(
                     ) {
                         items(
                             items = state.races,
-                            key = { rce ->
-                                rce._id
-                            }
+                            key = { it._id  }
                         ) { race ->
                             RaceItem(
                                 race = race,
                                 onItemClick = {
                                     navController.navigate(
-                                        Screen.RunnersScreen.route + "raceId=${race._id}"
+                                        Screens.RunnersScreen.route + "raceId=${race._id}"
                                     )
                                 }
                             )

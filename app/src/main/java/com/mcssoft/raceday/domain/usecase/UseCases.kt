@@ -7,6 +7,7 @@ import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
 import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
 import com.mcssoft.raceday.domain.usecase.races.GetRace
 import com.mcssoft.raceday.domain.usecase.races.GetRaces
+import com.mcssoft.raceday.domain.usecase.runners.GetRunner
 import com.mcssoft.raceday.domain.usecase.runners.GetRunners
 import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
 import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
@@ -37,10 +38,13 @@ data class UseCases(
     // Get a list of the Runners from the database.
     val getRunners: GetRunners,
 
+    // Get a list of the Runners from the database.
+    val getRunner: GetRunner,
+
     // Check/uncheck the "checked" metadata element on the Runner record.
     val setRunnerChecked: SetRunnerChecked,
 
     // Get the Summary.
     val getSummaries: GetSummaries,
 
-)
+    )

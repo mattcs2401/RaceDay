@@ -32,7 +32,7 @@ import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
-import com.mcssoft.raceday.ui.components.navigation.Screen
+import com.mcssoft.raceday.ui.components.navigation.Screens
 
 @Composable
 /**
@@ -106,7 +106,7 @@ fun MeetingsScreen(
                                 meeting = meeting,
                                 onItemClick = {
                                     navController.navigate(
-                                        Screen.RacesScreen.route + "meetingId=${meeting._id}"
+                                        Screens.RacesScreen.route + "meetingId=${meeting._id}"
                                     )
                                 }
                             )
@@ -133,7 +133,7 @@ private fun ShowRefreshDialog(
         dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
         onConfirmClicked = {
             show.value = !show.value
-            navController.navigate(Screen.SplashScreen.route)
+            navController.navigate(Screens.SplashScreen.route)
         },
         onDismissClicked = {
             show.value = !show.value

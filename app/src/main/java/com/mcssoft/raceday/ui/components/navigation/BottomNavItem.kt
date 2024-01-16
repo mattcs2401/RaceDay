@@ -8,13 +8,13 @@ sealed class BottomNavItem(
     var title: String
 ) {
     data object Settings: BottomNavItem(
-        Screen.SettingsScreen.route,
+        Screens.SettingsScreen.route,
         R.drawable.ic_settings_24,
         "Settings"
     )
 
     data object Summary: BottomNavItem(
-        Screen.SummaryScreen.route,
+        Screens.SummaryScreen.route,
         R.drawable.ic_summary_24,
         "Summary"
     )

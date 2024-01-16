@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.components.navigation.Screen
+import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.settings.SettingsEvent.EventType
 import com.mcssoft.raceday.ui.components.settings.components.SettingsItem
@@ -40,8 +40,8 @@ fun SettingsScreen(
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(Screen.MeetingsScreen.route) {
-                            popUpTo(route = Screen.MeetingsScreen.route) {
+                        navController.navigate(Screens.MeetingsScreen.route) {
+                            popUpTo(route = Screens.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }

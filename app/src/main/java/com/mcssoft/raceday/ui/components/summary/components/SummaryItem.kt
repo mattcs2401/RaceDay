@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.summary.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -28,7 +29,7 @@ import com.mcssoft.raceday.utility.Constants
 @Composable
 fun SummaryItem(
     summary: Summary,
-//    onItemClick: (Summary) -> Unit = {}
+    onItemClick: (Summary) -> Unit
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
@@ -48,7 +49,10 @@ fun SummaryItem(
         //backgroundColor = backgroundColour
     ) {
         ConstraintLayout(
-            constraintSet
+            constraintSet,
+            modifier = Modifier.clickable {
+                onItemClick(summary)
+            }
         ){
             Text(
                 summary.sellCode,

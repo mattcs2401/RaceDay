@@ -16,7 +16,7 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.ErrorDialog
 import com.mcssoft.raceday.ui.components.dialog.ExceptionErrorDialog
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
-import com.mcssoft.raceday.ui.components.navigation.Screen
+import com.mcssoft.raceday.ui.components.navigation.Screens
 
 /**
  * App UI starting point.
@@ -63,7 +63,7 @@ fun SplashScreen(
                     }
                     is SplashState.Status.Success -> {
                         LaunchedEffect(key1 = true) {
-                            navController.navigate(Screen.MeetingsScreen.route)
+                            navController.navigate(Screens.MeetingsScreen.route)
                         }
                         if(state.sourceFromApi) {
                             onEvent(SplashEvent.SetRunners)
