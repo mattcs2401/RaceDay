@@ -26,34 +26,15 @@ class RunnerViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        /*
-          The Runners screen expects a "raceId" (supplied in the navigation from the RacesScreen
-          to the RunnersScreen).
-         */
-        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { runnerId ->
+        savedStateHandle.get<Long>(Constants.KEY_RUNNER_ID)?.let { runnerId ->
             // Get Race and Runner values for the screen.
             getRunner(runnerId)
         }
     }
 
-//    /**
-//     * Events raised from the UI.
-//     * @param event: The event type.
-//     */
-//    fun onEvent(event: RunnersEvent) {
-//        when(event) {
-//            is RunnersEvent.Check -> {
-//                // TODO - create/update Summary record.
-//                // Note: Room will update the Runner database record with the isChecked status of
-//                // this Runner object.
-//                setRunnerChecked(event.race, event.runner)
-//            }
-//        }
-//    }
-
     /**
      * Get the Runners associated with a Race from the database.
-     * @param raceId: The Race id (_id value).
+     * @param runnerId: The Runner id (_id value).
      */
     private fun getRunner(runnerId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -95,7 +76,7 @@ class RunnerViewModel @Inject constructor(
                             _state.emit(state.value)
                         }
                     }
-            }
+                }
 
         }
     }

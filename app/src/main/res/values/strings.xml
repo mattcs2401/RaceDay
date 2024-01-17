@@ -35,7 +35,7 @@
     <string name="label_meetings">Meetings</string>
     <string name="label_races">Races</string>
     <string name="label_runners">Runners</string>
-    <string name="label_runner">Runner</string>
+    <string name="label_runner">Runner Details</string>
     <string name="label_summary">Summary</string>
     <string name="label_settings">Settings</string>
 

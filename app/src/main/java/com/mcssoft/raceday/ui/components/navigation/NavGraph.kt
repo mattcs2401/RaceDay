@@ -99,7 +99,7 @@ fun NavGraph() {
             RunnerScreen(
                 state = state,
 //                onEvent = viewModel::onEvent,
-                navController = navController
+//                navController = navController
             )
         }
 

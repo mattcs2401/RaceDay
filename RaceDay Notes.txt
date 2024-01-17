@@ -78,3 +78,9 @@ Other updates based on:
 -> Lazy column lag - https://www.youtube.com/watch?v=s8h7GJTZa4E
 -> Foreground Services -  https://www.youtube.com/watch?v=YZL-_XJSClc
 -> https://stackoverflow.com/questions/22741202/how-to-use-goasync-for-broadcastreceiver
+
+
+-------------------
+Performance Issues:
+-------------------
+--> https://www.youtube.com/watch?v=EVVFhyuVV5g

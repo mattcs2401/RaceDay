@@ -27,6 +27,7 @@ data class Runner(
     var tcdwIndicators: String,
     var last5Starts: String,
     var riderDriverName: String,
+    var riderDriverFullName: String,
     var trainerName: String,
     var trainerFullName: String,
     var dfsFormRating: Int,

@@ -22,6 +22,8 @@ object Constants {
     // The "key" for the ...
     const val KEY_RACE_ID: String = "raceId"
 
+    const val KEY_RUNNER_ID: String = "runnerId"
+
     // Base meeting type. Only Meetings of this type will be displayed (ATT).
     const val MEETING_TYPE: String = "R"    // (R)ace.
 
