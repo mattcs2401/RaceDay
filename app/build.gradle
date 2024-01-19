@@ -52,9 +52,9 @@ dependencies {
     /* Compose.
      * Not sure all these actually required (at this time).
      */
-    def compose_ver = '1.6.0-beta03'
+    def compose_ver = '1.6.0-rc01'
     implementation "androidx.compose.ui:ui:$compose_ver"
-    implementation "androidx.activity:activity-compose:1.8.2"
+    implementation "androidx.activity:activity-compose:1.9.0-alpha01"
     implementation "androidx.compose.ui:ui-tooling:$compose_ver"
     implementation "androidx.navigation:navigation-compose:2.7.6"
     implementation "androidx.compose.material:material:$compose_ver"
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
 // TODO - convert to material3 https://developer.android.com/jetpack/compose/designsystems/material2-material3#m3_1.
-//    implementation "androidx.compose.material3:material3:1.2.0-alpha11"
+//    implementation "androidx.compose.material3:material3:1.2.0-beta02"
 
     /* Room database. */
     def room_ver = '2.6.1'
@@ -89,7 +89,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
 
     /* DataStore. */
-    def datastore_ver = '1.1.0-alpha07'
+    def datastore_ver = '1.1.0-beta01'
     implementation "androidx.datastore:datastore:$datastore_ver"
     implementation "androidx.datastore:datastore-preferences:$datastore_ver"
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2'
@@ -100,6 +100,6 @@ dependencies {
     /* Leak Canary.
      * debugImplementation because LeakCanary should only run in debug builds.
      */
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:3.0-alpha-1'//2.13'
 }
 
