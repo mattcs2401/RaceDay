@@ -31,6 +31,7 @@ fun SummaryScreen(
     onEvent: (SummaryEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
+//    val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -40,6 +41,7 @@ fun SummaryScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
+//                        Toast.makeText(context,"Summary refresh.", Toast.LENGTH_SHORT).show()
                         onEvent(SummaryEvent.Refresh)
                     }) {
                         Icon(

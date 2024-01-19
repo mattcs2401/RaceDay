@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -17,8 +16,10 @@ import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.borderStroke
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
+import com.mcssoft.raceday.ui.theme.fontSize14sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp
@@ -37,7 +38,7 @@ fun SummaryItem(
     val backgroundColour = if (summary.isPastRaceTime) {
         colorResource(id = R.color.colourAccent)
     } else {
-        colorResource(id = R.color.colourPrimary)
+        colorResource(id = R.color.colourAccentComp)
     }
 
     Card(
@@ -46,7 +47,8 @@ fun SummaryItem(
             .padding(padding4dp),
         shape = RoundedCornerShapes.medium,
         elevation = elevation4dp,
-        //backgroundColor = backgroundColour
+        backgroundColor = backgroundColour,
+        border = borderStroke
     ) {
         ConstraintLayout(
             constraintSet,
@@ -57,33 +59,31 @@ fun SummaryItem(
             Text(
                 summary.sellCode,
                 Modifier.layoutId("idSellCode"),
-                color = backgroundColour,
-                fontSize = fontSize12sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = fontSize14sp,
                 style = textStyle
             )
             Text(
-                "R${summary.raceNumber}",
+                "${summary.raceNumber}",
                 Modifier.layoutId("idRaceNumber"),
-                fontSize = fontSize12sp,
+                fontSize = fontSize14sp,
                 style = textStyle
             )
             Text(
                 "H${summary.runnerNumber}",
                 Modifier.layoutId("idRunnerNumber"),
-                fontSize = fontSize12sp,
+                fontSize = fontSize14sp,
                 style = textStyle
             )
             Text(
                 summary.runnerName,
                 Modifier.layoutId("idRunnerName"),
-                fontSize = fontSize12sp,
+                fontSize = fontSize14sp,
                 style = textStyle
             )
             Text(
                 summary.raceStartTime,
                 Modifier.layoutId("idRaceStartTime"),
-                fontSize = fontSize12sp,
+                fontSize = fontSize14sp,
                 style = textStyle
             )
             // 2nd row.
@@ -129,11 +129,11 @@ private val constraintSet = ConstraintSet {
     }
     constrain(idRaceNumber) {
         top.linkTo(idSellCode.top, margin = margin0dp)
-        start.linkTo(idRiderDriverName.start, margin = margin0dp)//idSellCode.end, margin = margin4dp)
+        start.linkTo(idSellCode.end, margin = margin4dp)
     }
     constrain(idRunnerNumber) {
         top.linkTo(idRaceNumber.top, margin = margin0dp)
-        start.linkTo(idRaceNumber.end, margin = margin4dp)
+        start.linkTo(idRaceNumber.end, margin = margin8dp)
     }
     constrain(idRunnerName) {
         top.linkTo(idRunnerNumber.top, margin = margin0dp)

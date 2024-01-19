@@ -40,12 +40,11 @@ class AlarmReceiver: BroadcastReceiver() {
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private lateinit var dataAccess: IDbRepo
 
-    // TODO - how do we determine which Summary items require a Notification ?
-
     override fun onReceive(context: Context, intent: Intent?) {
 //        Log.d("TAG", "BroadcastReceiver.onReceive")
 //        val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
 
+        // Setup the notification and database accessors.
         setEntryPoints(context)
 
         goAsync {
@@ -84,8 +83,8 @@ class AlarmReceiver: BroadcastReceiver() {
 
     @SuppressLint("MissingPermission") // Permission is in the manifest, but still complains.
     private fun sendNotification(context: Context, summary: Summary) {
-        val bundle = Bundle().also {
-            it.putLong("key_summary_id", summary._id)
+        val bundle = Bundle().also { bndl ->
+            bndl.putLong("key_summary_id", summary._id)
         }
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             action = "INTENT_ACTION"
@@ -96,20 +95,24 @@ class AlarmReceiver: BroadcastReceiver() {
             ncb.setExtras(bundle)
             ncb.setCustomContentView(view)
         }
-        notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+        notificationManager.notify(
+            System.currentTimeMillis().toInt(),
+            notificationBuilder.build()
+        )
     }
 
-//    /**
-//     * Build the Notification's view from Summary details.
-//     * @param context: For system string resources.
-//     * @param summary: The Summary to draw data from.
-//     */
+    /**
+     * Build the Notification's view from Summary details.
+     * @param context: For system string resources.
+     * @param summary: The Summary to draw data from.
+     * @param pendingIntent: The intent associated with the notification.
+     */
     private fun buildView(context: Context, summary: Summary, pendingIntent: PendingIntent): RemoteViews {
         return RemoteViews(context.packageName, R.layout.layout_notification).also { rvs ->
             rvs.setTextViewText(R.id.id_sellCode, summary.sellCode)
-            rvs.setTextViewText(R.id.id_raceTime, summary.raceStartTime)
             rvs.setTextViewText(R.id.id_raceNumber, summary.raceNumber.toString())
-            rvs.setTextViewText(R.id.id_runnerNumber, summary.runnerNumber.toString())
+            rvs.setTextViewText(R.id.id_runnerNumber, "(H${summary.runnerNumber})")
+            rvs.setTextViewText(R.id.id_raceTime, summary.raceStartTime)
             rvs.setTextViewText(R.id.id_runnerName, summary.runnerName)
             rvs.setOnClickPendingIntent(R.id.id_action_button, pendingIntent)
         }

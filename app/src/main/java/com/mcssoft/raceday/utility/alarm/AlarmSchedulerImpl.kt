@@ -31,14 +31,14 @@ class AlarmSchedulerImpl @Inject constructor(
             if (userPrefs.data.first().useNotifications) {
                 Log.d("TAG", "Alarm scheduled.")
 
-                val intent = Intent(context, AlarmReceiver::class.java)
-
-                val pIntent = PendingIntent.getBroadcast(
-                    context,
-                    this.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
+                val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+                    PendingIntent.getBroadcast(
+                        context,
+                        this.hashCode(),
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                }
 
                 // TODO - trigger times from app prefs ?
                 // Trigger in about 30 seconds.
@@ -50,7 +50,7 @@ class AlarmSchedulerImpl @Inject constructor(
                     AlarmManager.RTC_WAKEUP,
                     alarmTriggerTime,
                     alarmIntervalTime,
-                    pIntent
+                    alarmIntent
                 )
             }
         }

@@ -16,16 +16,16 @@ import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 
 /**
-A dialog with a title on the 1st line, and a circular progress indicator and message text on the
-2nd line.
-@param titleText: The dialog "Title" on the 1st line. e.g. "Loading".
-@param msgText: A message to display on the right of a circular progress indicator (2nd line).
+  A dialog with a title on the 1st line, and a circular progress indicator and message text on the
+  2nd line.
+  @param titleText: The dialog "Title" on the 1st line. e.g. "Loading".
+  @param msgText: A message to display on the right of a circular progress indicator (2nd line).
  */
 @Composable
 fun LoadingDialog(
     titleText: String,
     msgText: String,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit = {},
 ) {
     Dialog(
         onDismissRequest = {
@@ -79,7 +79,6 @@ private val constraintSet = ConstraintSet {
         top.linkTo(idDialogIndicator.top, margin = 8.dp)       // bring down a bit.
         start.linkTo(idDialogIndicator.end, margin = 16.dp)
         end.linkTo(parent.end, margin = 16.dp)                  // padding match start.
-//        bottom.linkTo(parent.bottom, margin = 16.dp)            // padding match top.
     }
 }
 

@@ -22,7 +22,8 @@ import com.mcssoft.raceday.utility.DateUtils
 
 @Dao
 interface IDbRepo {
-
+// TODO - Can we make better use of joins between tables ?
+    
     @Transaction
     // Note: Any Scratchings are also processed.
     suspend fun insertMeetingAndRaces(meetingDto: MeetingDto, racesDto: List<RaceDto>) {
@@ -57,7 +58,7 @@ interface IDbRepo {
 
     @Transaction
     suspend fun deleteAll() {
-        deleteMeetings()
+        deleteMeetings()     // cascade should take care of Race and Runner.
         deleteScratchings()
         deleteSummaries()
     }

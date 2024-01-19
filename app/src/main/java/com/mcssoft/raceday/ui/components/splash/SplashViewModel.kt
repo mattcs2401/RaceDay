@@ -55,8 +55,8 @@ class SplashViewModel @Inject constructor(
             is Status.Available -> {
                 val date = DateUtils().getDateToday()
                 viewModelScope.launch {
-                    _state.update { state ->
-                        state.copy(
+                    _state.update {
+                        it.copy(
                             date = date,
                             hasInternet = true,
                             sourceFromApi = userPrefs.data.first().sourceFromApi
@@ -65,15 +65,15 @@ class SplashViewModel @Inject constructor(
                     _state.emit(state.value)
 
                    if(state.value.sourceFromApi) {
-//                       setupBaseFromApi(date)
-//                   } else {
+                       setupBaseFromApi(date)
+                   } else {
                         stateSuccess(200, "")
                    }
                 }
             }
             is Status.Unavailable -> {
-                _state.update { state ->
-                    state.copy(hasInternet = false)
+                _state.update {
+                    it.copy(hasInternet = false)
                 }
                 viewModelScope.launch {
                     _state.emit(state.value)
@@ -91,7 +91,7 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-//                setupRunnersFromApi()
+                setupRunnersFromApi()
             }
         }
     }
@@ -157,8 +157,8 @@ class SplashViewModel @Inject constructor(
 
     //<editor-fold default state="collapsed" desc="Region: Utility methods">
     private fun stateLoading(msg: String) {
-        _state.update { state ->
-            state.copy(
+        _state.update {
+            it.copy(
                 loading = true,
                 status = SplashState.Status.Loading,
                 loadingMsg = msg
@@ -167,8 +167,8 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun stateError(errorCode: Int) {
-        _state.update { state ->
-            state.copy(
+        _state.update {
+            it.copy(
                 exception = null,
                 response = errorCode,
                 status = SplashState.Status.Error,
@@ -179,8 +179,8 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun stateSuccess(code: Int, msg: String) {
-        _state.update { state ->
-            state.copy(
+        _state.update {
+            it.copy(
                 exception = null,
                 response = code,
                 status = SplashState.Status.Success,
@@ -193,8 +193,8 @@ class SplashViewModel @Inject constructor(
     private fun stateFailure(result: DataResult<Any>) {
         if (state.value.response == 0) {
             if (result.exception == null) {
-                _state.update { state ->
-                    state.copy(
+                _state.update {
+                    it.copy(
                         customExType = result.customExType,
                         customExMsg = result.customExMsg,
                         status = SplashState.Status.Failure,
@@ -205,8 +205,8 @@ class SplashViewModel @Inject constructor(
                 val exceptionText = result.exception.message ?: "Exception"
                 Log.d("TAG", "[SplashViewModel] result.failed: $exceptionText")
 
-                _state.update { state ->
-                    state.copy(
+                _state.update {
+                    it.copy(
                         exception = Exception(exceptionText),
                         status = SplashState.Status.Failure,
                         loading = false,
@@ -215,8 +215,8 @@ class SplashViewModel @Inject constructor(
                 }
             }
         } else {
-            _state.update { state ->
-                state.copy(
+            _state.update {
+                it.copy(
                     exception = null,
                     status = SplashState.Status.Failure,
                     loading = false,

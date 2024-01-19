@@ -40,6 +40,8 @@ val width16dp = 16.dp
 
 const val twentyPercent = 0.2f
 const val thirtyPercent = 0.3f
+const val thirty3Percent = 0.33f
+const val sixty7Percent = 0.67f
 const val seventyPercent = 0.7f
 const val eightyPercent = 0.8f
 const val ninetyPercent = 0.9f

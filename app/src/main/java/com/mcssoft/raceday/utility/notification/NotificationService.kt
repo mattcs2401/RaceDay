@@ -17,8 +17,9 @@ import dagger.hilt.components.SingletonComponent
 class NotificationService: Service() {
 // Note: Can't constructor inject here.
 // Ref: https://dagger.dev/hilt/entry-points.html
+//      https://developer.android.com/develop/background-work/services/alarms/schedule
 
-//    private var binder = LocalBinder()
+    //    private var binder = LocalBinder()
 //    private var allowRebind: Boolean = true
 
     @EntryPoint
