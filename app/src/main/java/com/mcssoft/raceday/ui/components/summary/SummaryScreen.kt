@@ -66,7 +66,7 @@ fun SummaryScreen(
             )
         }
     ) {
-        when(state.status) {
+        when (state.status) {
             is SummaryState.Status.Initialise -> {}
             is SummaryState.Status.Loading -> {
                 LoadingDialog(
@@ -99,6 +99,7 @@ fun SummaryScreen(
                     }
                 }
             }
+            else -> {}
         }
         if (state.summaries.isEmpty()) {
             Box(

@@ -28,6 +28,7 @@ class SummaryViewModel @Inject constructor(
             is SummaryEvent.Refresh -> {
                 getSummaries()
             }
+            else -> {}
         }
     }
 

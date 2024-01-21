@@ -1,0 +1,178 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:Meeting.kt$Meeting$@PrimaryKey(autoGenerate = true) var _id: Long = 0L</ID>
+    <ID>ConstructorParameterNaming:Race.kt$Race$@PrimaryKey(autoGenerate = true) var _id: Long = 0L</ID>
+    <ID>ConstructorParameterNaming:RaceDto.kt$RaceDto$val _links: LinksXDto?</ID>
+    <ID>ConstructorParameterNaming:Runner.kt$Runner$@PrimaryKey(autoGenerate = true) var _id: Long = 0L</ID>
+    <ID>ConstructorParameterNaming:Scratching.kt$Scratching$@PrimaryKey(autoGenerate = true) var _id: Long = 0L</ID>
+    <ID>ConstructorParameterNaming:Summary.kt$Summary$@PrimaryKey(autoGenerate = true) var _id: Long = 0L</ID>
+    <ID>FunctionNaming:BottomBar.kt$@Composable fun BottomBar( navController: NavController )</ID>
+    <ID>FunctionNaming:CommonDialog.kt$@Composable fun CommonDialog( icon: Int? = null, dialogTitle: String, dialogText: String, dismissButtonText: String, onDismissClicked: () -&gt; Unit, confirmButtonText: String = "", onConfirmClicked: (() -&gt; Unit)? = null, backgroundColour: Color = Color.White )</ID>
+    <ID>FunctionNaming:ErrorDialog.kt$@Composable fun ErrorDialog( dialogTitle: String, message: String, // message from any error TBA. dismissButtonText: String, onDismissClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:ExceptionErrorDialog.kt$@Composable fun ExceptionErrorDialog( dialogTitle: String, exceptionMsg: String, // message from any exception. dismissButtonText: String, onDismissClicked: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:LoadingDialog.kt$@Composable fun LoadingDialog( titleText: String, msgText: String, onDismiss: () -&gt; Unit = {}, )</ID>
+    <ID>FunctionNaming:MeetingHeader.kt$@Composable fun MeetingHeader( meeting: Meeting, bkgColour: Color )</ID>
+    <ID>FunctionNaming:MeetingItem.kt$@Composable fun MeetingItem( meeting: Meeting, onItemClick: (Meeting) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:MeetingItemExtra.kt$@Composable fun MeetingItemExtra( meeting: Meeting, onItemClick: (Meeting) -&gt; Unit )</ID>
+    <ID>FunctionNaming:MeetingsScreen.kt$@Composable /** * @param state: Meetings state. * @param navController: The Navigation. */ fun MeetingsScreen( state: MeetingsState, navController: NavController )</ID>
+    <ID>FunctionNaming:MeetingsScreen.kt$@Composable //https://www.valueof.io/blog/intercept-back-press-button-in-jetpack-compose fun BackPressHandler( backPressedDispatcher: OnBackPressedDispatcher? = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher, onBackPressed: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:MeetingsScreen.kt$@Composable private fun ShowErrorDialog( show: MutableState&lt;Boolean&gt;, exception: Exception?, // message from any exception. )</ID>
+    <ID>FunctionNaming:MeetingsScreen.kt$@Composable private fun ShowRefreshDialog( show: MutableState&lt;Boolean&gt;, navController: NavController, )</ID>
+    <ID>FunctionNaming:MeetingsTopBar.kt$@Composable fun MeetingsTopBar( title: String, title2: String?, backgroundColour: Color, actions: @Composable (RowScope.() -&gt; Unit) = {} )</ID>
+    <ID>FunctionNaming:MeetingsTopBar.kt$@Preview @Composable fun ShowTopBar(title: String = "Meetings", title2: String = "2023-08-28")</ID>
+    <ID>FunctionNaming:NavGraph.kt$@Composable fun NavGraph()</ID>
+    <ID>FunctionNaming:RaceDaySnackbar.kt$@Composable fun RaceDaySnackbar( snackbarHostState: SnackbarHostState, modifier: Modifier = Modifier, onDismiss: () -&gt; Unit? )</ID>
+    <ID>FunctionNaming:RaceItem.kt$@Composable fun RaceItem( race: Race, onItemClick: (Race) -&gt; Unit )</ID>
+    <ID>FunctionNaming:RacesHeader.kt$@Composable fun RacesHeader( race: Race, bkgColour: Color )</ID>
+    <ID>FunctionNaming:RacesScreen.kt$@Composable /** * @param state: Races state. * @param navController: The Navigation. */ fun RacesScreen( state: RacesState, navController: NavController )</ID>
+    <ID>FunctionNaming:RunnerItem.kt$@Composable fun RunnerItem( race: Race, // for if/when Runner is checked, need Race info to create Summary record. runner: Runner, onEvent: (RunnersEvent) -&gt; Unit, onItemClick: (Runner) -&gt; Unit )</ID>
+    <ID>FunctionNaming:RunnerItemExtra.kt$@Composable fun RunnerItemExtra( race: Race, runner: Runner, onEvent: (RunnersEvent) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:RunnerScreen.kt$@Composable /** * @param state: Runner state. */ fun RunnerScreen( state: RunnerState )</ID>
+    <ID>FunctionNaming:RunnerScreen.kt$@Composable /** * Build a Row with two Columns. * @param label: Text to display in the left hand column. * @param value: Value to display in the right hand column. */ fun BuildRow(label: String, value: String)</ID>
+    <ID>FunctionNaming:RunnersScreen.kt$@Composable /** * @param state: Runners state. * @param navController: The Navigation. * @param onEvent: Call up to RunnersEvent in ViewModel. */ fun RunnersScreen( state: RunnersState, navController: NavController, onEvent: (RunnersEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SettingsItem.kt$@Composable fun SettingsItem( settingsState: Boolean, title: String, description: String, enabled: Boolean, onEvent: (SettingsEvent) -&gt; Unit, eventType: SettingsEvent.EventType )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable fun SettingsScreen( state: SettingsState, navController: NavController, onEvent: (SettingsEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun ShowErrorDialog( state: SplashState, onEvent: (SplashEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun ShowErrorDialog( title: String, msg: String, onEvent: (SplashEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun ShowExceptionErrorDialog ( state: SplashState, onEvent: (SplashEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun SplashScreen( state: SplashState, navController: NavController, onEvent: (SplashEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryItem.kt$@Composable fun SummaryItem( summary: Summary, onItemClick: (Summary) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SummaryScreen.kt$@Composable fun SummaryScreen( state: SummaryState, navController: NavController, onEvent: (SummaryEvent) -&gt; Unit )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun RaceDayBasicTheme( //darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -&gt; Unit )</ID>
+    <ID>FunctionNaming:TopBar.kt$@Composable fun TopBar( title: String, backgroundColour: Color, actions: @Composable (RowScope.() -&gt; Unit) = {} )</ID>
+    <ID>FunctionNaming:TopBar.kt$@Preview @Composable fun ShowTopBar(title: String = "Meetings")</ID>
+    <ID>LongMethod:CommonDialog.kt$@Composable fun CommonDialog( icon: Int? = null, dialogTitle: String, dialogText: String, dismissButtonText: String, onDismissClicked: () -&gt; Unit, confirmButtonText: String = "", onConfirmClicked: (() -&gt; Unit)? = null, backgroundColour: Color = Color.White )</ID>
+    <ID>LongMethod:MeetingsScreen.kt$@Composable /** * @param state: Meetings state. * @param navController: The Navigation. */ fun MeetingsScreen( state: MeetingsState, navController: NavController )</ID>
+    <ID>LongMethod:NavGraph.kt$@Composable fun NavGraph()</ID>
+    <ID>LongMethod:RacesScreen.kt$@Composable /** * @param state: Races state. * @param navController: The Navigation. */ fun RacesScreen( state: RacesState, navController: NavController )</ID>
+    <ID>LongMethod:RunnerItem.kt$@Composable fun RunnerItem( race: Race, // for if/when Runner is checked, need Race info to create Summary record. runner: Runner, onEvent: (RunnersEvent) -&gt; Unit, onItemClick: (Runner) -&gt; Unit )</ID>
+    <ID>LongMethod:RunnersScreen.kt$@Composable /** * @param state: Runners state. * @param navController: The Navigation. * @param onEvent: Call up to RunnersEvent in ViewModel. */ fun RunnersScreen( state: RunnersState, navController: NavController, onEvent: (RunnersEvent) -&gt; Unit )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable fun SettingsScreen( state: SettingsState, navController: NavController, onEvent: (SettingsEvent) -&gt; Unit )</ID>
+    <ID>LongMethod:SummaryItem.kt$@Composable fun SummaryItem( summary: Summary, onItemClick: (Summary) -&gt; Unit )</ID>
+    <ID>LongMethod:SummaryScreen.kt$@Composable fun SummaryScreen( state: SummaryState, navController: NavController, onEvent: (SummaryEvent) -&gt; Unit )</ID>
+    <ID>LongParameterList:CommonDialog.kt$( icon: Int? = null, dialogTitle: String, dialogText: String, dismissButtonText: String, onDismissClicked: () -&gt; Unit, confirmButtonText: String = "", onConfirmClicked: (() -&gt; Unit)? = null, backgroundColour: Color = Color.White )</ID>
+    <ID>LongParameterList:SettingsItem.kt$( settingsState: Boolean, title: String, description: String, enabled: Boolean, onEvent: (SettingsEvent) -&gt; Unit, eventType: SettingsEvent.EventType )</ID>
+    <ID>MagicNumber:AlarmReceiver.kt$AlarmReceiver$1000</ID>
+    <ID>MagicNumber:AlarmReceiver.kt$AlarmReceiver$25</ID>
+    <ID>MagicNumber:AlarmReceiver.kt$AlarmReceiver$5</ID>
+    <ID>MagicNumber:AlarmReceiver.kt$AlarmReceiver$60</ID>
+    <ID>MagicNumber:BottomBar.kt$0.5f</ID>
+    <ID>MagicNumber:Color.kt$0xFF000000</ID>
+    <ID>MagicNumber:Color.kt$0xFF03DAC5</ID>
+    <ID>MagicNumber:Color.kt$0xFF1565C0</ID>
+    <ID>MagicNumber:Color.kt$0xFF1976D2</ID>
+    <ID>MagicNumber:Color.kt$0xFF1AC6FF</ID>
+    <ID>MagicNumber:Color.kt$0xFF1E88E5</ID>
+    <ID>MagicNumber:Color.kt$0xFF2196F3</ID>
+    <ID>MagicNumber:Color.kt$0xFF222222</ID>
+    <ID>MagicNumber:Color.kt$0xFF3700B3</ID>
+    <ID>MagicNumber:Color.kt$0xFF42A5F5</ID>
+    <ID>MagicNumber:Color.kt$0xFF6200EE</ID>
+    <ID>MagicNumber:Color.kt$0xFF64B5F6</ID>
+    <ID>MagicNumber:Color.kt$0xFFB00020</ID>
+    <ID>MagicNumber:Color.kt$0xFFBB86FC</ID>
+    <ID>MagicNumber:Color.kt$0xFFEF5350</ID>
+    <ID>MagicNumber:Color.kt$0xFFF2F2F2</ID>
+    <ID>MagicNumber:DateUtils.kt$DateUtils$10</ID>
+    <ID>MagicNumber:DateUtils.kt$DateUtils$1000</ID>
+    <ID>MagicNumber:DateUtils.kt$DateUtils$5</ID>
+    <ID>MagicNumber:DateUtils.kt$DateUtils$60</ID>
+    <ID>MagicNumber:MeetingItem.kt$300</ID>
+    <ID>MagicNumber:RunnersWorker.kt$RunnersWorker$50</ID>
+    <ID>MagicNumber:SplashViewModel.kt$SplashViewModel$200</ID>
+    <ID>MatchingDeclarationName:SnackBarController.kt$SnackbarController</ID>
+    <ID>MaxLineLength:RemoteRepoImpl.kt$RemoteRepoImpl$override suspend</ID>
+    <ID>MaxLineLength:Runner.kt$/* { "runnerName": "STORM FORCE TEN", "runnerNumber": 1, "fixedOdds": { "returnWin": 3, "returnWinTime": "2023-09-24T03:10:50.000Z", "returnWinOpen": 2.9, "returnWinOpenDaily": 3.1, "returnPlace": 1.24, "isFavouriteWin": false, "isFavouritePlace": false, "bettingStatus": "Loser", "propositionNumber": 169391, "differential": null, "flucs": [ { "returnWin": 3.1, "returnWinTime": "2023-09-24T03:02:05.000Z" }, { "returnWin": 3, "returnWinTime": "2023-09-24T03:00:42.000Z" }, { "returnWin": 2.9, "returnWinTime": "2023-09-24T03:00:03.000Z" }, { "returnWin": 2.8, "returnWinTime": "2023-09-24T02:59:35.000Z" } ], "returnHistory": [ { "returnWin": 3.2, "returnWinTime": "2023-09-23T23:44:31.546Z" }, { "returnWin": 3.4, "returnWinTime": "2023-09-24T02:20:34.454Z" }, { "returnWin": 3.5, "returnWinTime": "2023-09-24T02:22:05.276Z" }, { "returnWin": 3.4, "returnWinTime": "2023-09-24T02:24:07.165Z" }, { "returnWin": 3.5, "returnWinTime": "2023-09-24T02:30:32.266Z" }, { "returnWin": 3.4, "returnWinTime": "2023-09-24T02:31:52.956Z" }, { "returnWin": 3.6, "returnWinTime": "2023-09-24T02:34:35.232Z" }, { "returnWin": 3.4, "returnWinTime": "2023-09-24T02:34:56.229Z" }, { "returnWin": 3.6, "returnWinTime": "2023-09-24T02:35:16.254Z" }, { "returnWin": 3.8, "returnWinTime": "2023-09-24T02:38:05.134Z" }, { "returnWin": 3.9, "returnWinTime": "2023-09-24T02:48:48.963Z" }, { "returnWin": 3.5, "returnWinTime": "2023-09-24T02:49:16.688Z" }, { "returnWin": 3.3, "returnWinTime": "2023-09-24T02:50:02.351Z" }, { "returnWin": 3.2, "returnWinTime": "2023-09-24T02:51:54.016Z" }, { "returnWin": 3.1, "returnWinTime": "2023-09-24T02:53:37.049Z" }, { "returnWin": 2.7, "returnWinTime": "2023-09-24T02:54:19.875Z" }, { "returnWin": 2.6, "returnWinTime": "2023-09-24T02:56:49.686Z" }, { "returnWin": 2.8, "returnWinTime": "2023-09-24T02:57:50.226Z" }, { "returnWin": 2.7, "returnWinTime": "2023-09-24T02:58:20.325Z" }, { "returnWin": 2.8, "returnWinTime": "2023-09-24T02:59:34.580Z" }, { "returnWin": 2.9, "returnWinTime": "2023-09-24T03:00:02.828Z" }, { "returnWin": 3, "returnWinTime": "2023-09-24T03:00:42.136Z" }, { "returnWin": 3.1, "returnWinTime": "2023-09-24T03:02:04.934Z" }, { "returnWin": 3, "returnWinTime": "2023-09-24T03:10:49.654Z" }, { "returnWin": 2.9, "returnWinTime": "2023-09-23T02:38:41.829Z" }, { "returnWin": 3.1, "returnWinTime": "2023-09-23T06:45:42.544Z" } ], "percentageChange": -3, "allowPlace": true }, "parimutuel": { "returnWin": 3, "returnPlace": 1.3, "returnExact2": 0, "isFavouriteWin": false, "isFavouritePlace": true, "isFavouriteExact2": false, "bettingStatus": "Closed", "marketMovers": [ { "returnWin": 3, "returnWinTime": "2023-09-24T03:16:01.000Z", "specialDisplayIndicator": false }, { "returnWin": 3, "returnWinTime": "2023-09-24T03:14:55.000Z", "specialDisplayIndicator": false }, { "returnWin": 3.1, "returnWinTime": "2023-09-24T03:14:07.000Z", "specialDisplayIndicator": false }, { "returnWin": 3.1, "returnWinTime": "2023-09-24T03:13:22.000Z", "specialDisplayIndicator": false }, { "returnWin": 3.6, "returnWinTime": "2023-09-24T02:44:36.000Z", "specialDisplayIndicator": true } ], "percentageChange": 0 }, "silkURL": "https://api.beta.tab.com.au/v1/tab-info-service/racing/silk/GREY%2C%20KREW%20RACING%20LOGO%2C%20RED%20ARMBANDS%20AND%20CAP%2C%20GREY%20POM%20POM", "trainerName": "S Kendrick", "vacantBox": false, "trainerFullName": "Stuart Kendrick", "barrierNumber": 3, "riderDriverName": "B Wheeler", "riderDriverFullName": "BAILEY WHEELER", "handicapWeight": 59, "harnessHandicap": null, "blinkers": false, "claimAmount": 0, "last5Starts": "x4362", "tcdwIndicators": "tc", "emergency": false, "penalty": null, "dfsFormRating": 89, "techFormRating": 0, "totalRatingPoints": 13, "earlySpeedRating": 89, "earlySpeedRatingBand": "LEADER", "_links": { "form": "https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-09-24/meetings/R/SSC/races/1/form/1?jurisdiction=QLD" } }, */</ID>
+    <ID>NestedBlockDepth:RunnersWorker.kt$RunnersWorker$override suspend fun doWork(): Result</ID>
+    <ID>NewLineAtEndOfFile:AppPrefsSerializer.kt$com.mcssoft.raceday.data.repository.preferences.app.AppPrefsSerializer.kt</ID>
+    <ID>NewLineAtEndOfFile:BaseDto.kt$com.mcssoft.raceday.domain.dto.BaseDto.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt$com.mcssoft.raceday.ui.theme.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:CommonDialog.kt$com.mcssoft.raceday.ui.components.dialog.CommonDialog.kt</ID>
+    <ID>NewLineAtEndOfFile:ConnectivityObserver.kt$com.mcssoft.raceday.utility.network.ConnectivityObserver.kt</ID>
+    <ID>NewLineAtEndOfFile:Constants.kt$com.mcssoft.raceday.utility.Constants.kt</ID>
+    <ID>NewLineAtEndOfFile:DbRepoImpl.kt$com.mcssoft.raceday.data.repository.database.DbRepoImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:DetailDto.kt$com.mcssoft.raceday.domain.dto.DetailDto.kt</ID>
+    <ID>NewLineAtEndOfFile:ErrorDialog.kt$com.mcssoft.raceday.ui.components.dialog.ErrorDialog.kt</ID>
+    <ID>NewLineAtEndOfFile:ErrorDto.kt$com.mcssoft.raceday.domain.dto.ErrorDto.kt</ID>
+    <ID>NewLineAtEndOfFile:ExceptionErrorDialog.kt$com.mcssoft.raceday.ui.components.dialog.ExceptionErrorDialog.kt</ID>
+    <ID>NewLineAtEndOfFile:GetMeeting.kt$com.mcssoft.raceday.domain.usecase.meetings.GetMeeting.kt</ID>
+    <ID>NewLineAtEndOfFile:GetMeetings.kt$com.mcssoft.raceday.domain.usecase.meetings.GetMeetings.kt</ID>
+    <ID>NewLineAtEndOfFile:GetRunner.kt$com.mcssoft.raceday.domain.usecase.runners.GetRunner.kt</ID>
+    <ID>NewLineAtEndOfFile:GetRunners.kt$com.mcssoft.raceday.domain.usecase.runners.GetRunners.kt</ID>
+    <ID>NewLineAtEndOfFile:GetSummaries.kt$com.mcssoft.raceday.domain.usecase.summary.GetSummaries.kt</ID>
+    <ID>NewLineAtEndOfFile:IAlarmScheduler.kt$com.mcssoft.raceday.utility.alarm.IAlarmScheduler.kt</ID>
+    <ID>NewLineAtEndOfFile:IConnectivityObserver.kt$com.mcssoft.raceday.utility.network.IConnectivityObserver.kt</ID>
+    <ID>NewLineAtEndOfFile:IDbRepo.kt$com.mcssoft.raceday.data.repository.database.IDbRepo.kt</ID>
+    <ID>NewLineAtEndOfFile:INotification.kt$com.mcssoft.raceday.utility.notification.INotification.kt</ID>
+    <ID>NewLineAtEndOfFile:IRaceDay.kt$com.mcssoft.raceday.data.datasource.remote.IRaceDay.kt</ID>
+    <ID>NewLineAtEndOfFile:IRemoteRepo.kt$com.mcssoft.raceday.data.repository.remote.IRemoteRepo.kt</ID>
+    <ID>NewLineAtEndOfFile:LinksXDto.kt$com.mcssoft.raceday.domain.dto.LinksXDto.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingDto.kt$com.mcssoft.raceday.domain.dto.MeetingDto.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingItem.kt$com.mcssoft.raceday.ui.components.meetings.components.MeetingItem.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingItemExtra.kt$com.mcssoft.raceday.ui.components.meetings.components.MeetingItemExtra.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingsState.kt$com.mcssoft.raceday.ui.components.meetings.MeetingsState.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingsTopBar.kt$com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar.kt</ID>
+    <ID>NewLineAtEndOfFile:MeetingsViewModel.kt$com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:NetworkResponse.kt$com.mcssoft.raceday.data.repository.remote.NetworkResponse.kt</ID>
+    <ID>NewLineAtEndOfFile:NotificationService.kt$com.mcssoft.raceday.utility.notification.NotificationService.kt</ID>
+    <ID>NewLineAtEndOfFile:NotificationState.kt$com.mcssoft.raceday.utility.notification.NotificationState.kt</ID>
+    <ID>NewLineAtEndOfFile:RaceDayDb.kt$com.mcssoft.raceday.data.datasource.database.RaceDayDb.kt</ID>
+    <ID>NewLineAtEndOfFile:RaceDto.kt$com.mcssoft.raceday.domain.dto.RaceDto.kt</ID>
+    <ID>NewLineAtEndOfFile:RaceItem.kt$com.mcssoft.raceday.ui.components.races.components.RaceItem.kt</ID>
+    <ID>NewLineAtEndOfFile:RacesState.kt$com.mcssoft.raceday.ui.components.races.RacesState.kt</ID>
+    <ID>NewLineAtEndOfFile:RemoteRepoImpl.kt$com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl.kt</ID>
+    <ID>NewLineAtEndOfFile:Runner.kt$com.mcssoft.raceday.domain.model.Runner.kt</ID>
+    <ID>NewLineAtEndOfFile:RunnerDto.kt$com.mcssoft.raceday.domain.dto.RunnerDto.kt</ID>
+    <ID>NewLineAtEndOfFile:RunnerScreen.kt$com.mcssoft.raceday.ui.components.runner.RunnerScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:RunnerViewModel.kt$com.mcssoft.raceday.ui.components.runner.RunnerViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:RunnersScreen.kt$com.mcssoft.raceday.ui.components.runners.RunnersScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:RunnersViewModel.kt$com.mcssoft.raceday.ui.components.runners.RunnersViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Scratching.kt$com.mcssoft.raceday.domain.model.Scratching.kt</ID>
+    <ID>NewLineAtEndOfFile:SellCodeDto.kt$com.mcssoft.raceday.domain.dto.SellCodeDto.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsViewModel.kt$com.mcssoft.raceday.ui.components.settings.SettingsViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:SetupBaseFromLocal.kt$com.mcssoft.raceday.domain.usecase.local.SetupBaseFromLocal.kt</ID>
+    <ID>NewLineAtEndOfFile:SetupRunnersFromApi.kt$com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi.kt</ID>
+    <ID>NewLineAtEndOfFile:Shape.kt$com.mcssoft.raceday.ui.theme.Shape.kt</ID>
+    <ID>NewLineAtEndOfFile:SnackBarController.kt$com.mcssoft.raceday.ui.components.snackbar.SnackBarController.kt</ID>
+    <ID>NewLineAtEndOfFile:SplashViewModel.kt$com.mcssoft.raceday.ui.components.splash.SplashViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Summary.kt$com.mcssoft.raceday.domain.model.Summary.kt</ID>
+    <ID>NewLineAtEndOfFile:SummaryViewModel.kt$com.mcssoft.raceday.ui.components.summary.SummaryViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.mcssoft.raceday.ui.theme.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:TopBar.kt$com.mcssoft.raceday.ui.components.navigation.TopBar.kt</ID>
+    <ID>NewLineAtEndOfFile:Type.kt$com.mcssoft.raceday.ui.theme.Type.kt</ID>
+    <ID>NewLineAtEndOfFile:UseCases.kt$com.mcssoft.raceday.domain.usecase.UseCases.kt</ID>
+    <ID>NewLineAtEndOfFile:UserPrefsSerializer.kt$com.mcssoft.raceday.data.repository.preferences.user.UserPrefsSerializer.kt</ID>
+    <ID>NewLineAtEndOfFile:WorkerState.kt$com.mcssoft.raceday.utility.worker.WorkerState.kt</ID>
+    <ID>PrintStackTrace:UserPrefsSerializer.kt$UserPrefsSerializer$e</ID>
+    <ID>TooGenericExceptionCaught:AlarmReceiver.kt$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetMeeting.kt$GetMeeting$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetMeetings.kt$GetMeetings$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetRace.kt$GetRace$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetRaces.kt$GetRaces$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetRunner.kt$GetRunner$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetRunners.kt$GetRunners$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:GetSummaries.kt$GetSummaries$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:RemoteRepoImpl.kt$RemoteRepoImpl$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:RunnersWorker.kt$RunnersWorker$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:SetRunnerChecked.kt$SetRunnerChecked$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:SetupBaseFromApi.kt$SetupBaseFromApi$exception: Exception</ID>
+    <ID>TooGenericExceptionCaught:SetupRunnersFromApi.kt$SetupRunnersFromApi$ex: Exception</ID>
+    <ID>TooGenericExceptionThrown:SetupRunnersFromApi.kt$SetupRunnersFromApi$throw Exception(context.resources.getString(R.string.failure_runners_worker))</ID>
+    <ID>TooManyFunctions:AppModule.kt$AppModule</ID>
+    <ID>TooManyFunctions:DbRepoImpl.kt$DbRepoImpl : IDbRepo</ID>
+    <ID>TooManyFunctions:IDbRepo.kt$IDbRepo</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val eightyPercent = 0.8f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val ninetyPercent = 0.9f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val seventyPercent = 0.7f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val sixty7Percent = 0.67f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val thirty3Percent = 0.33f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val thirtyPercent = 0.3f</ID>
+    <ID>TopLevelPropertyNaming:Dimen.kt$const val twentyPercent = 0.2f</ID>
+    <ID>UnusedPrivateProperty:SetupBaseFromLocal.kt$SetupBaseFromLocal$private val iDbRepo: IDbRepo</ID>
+    <ID>UnusedPrivateProperty:Theme.kt$@SuppressLint("ConflictingOnColor") private val LightThemeColors = lightColors( primary = Blue600, primaryVariant = Blue400, onPrimary = Black2, secondary = Color.White, secondaryVariant = Teal300, onSecondary = Color.Black, error = RedErrorDark, onError = RedErrorLight, background = Grey1, onBackground = Color.Black, surface = Color.White, onSurface = Black2, )</ID>
+    <ID>WildcardImport:MeetingItem.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:MeetingItem.kt$import androidx.compose.runtime.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

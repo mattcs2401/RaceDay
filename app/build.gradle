@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
+//    id("io.gitlab.arturbosch.detekt")
 }
 android {
     compileSdk 34
@@ -46,6 +47,17 @@ android {
         disable 'UnusedMaterialScaffoldPaddingParameter'
         quiet false
     }
+//    detekt {
+//        enableCompilerPlugin = true
+//        source.setFrom("src/main/java", "src/main/kotlin")
+//        basePath = projectDir.absolutePath
+//        parallel = true
+//        allRules = false
+//        baseline = file($rootDir/detekt-baseline.xml)
+//        disableDefaultRuleSets = false
+//        debug = false
+//        ignoreFailures = false
+//    }
 }
 
 dependencies {

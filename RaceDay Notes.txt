@@ -29,14 +29,37 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
   TO DO:
 ==========
 
+------------
+--> Summary
+------------
+    Races past time to end of list so next to go always on top.
+    Tech: Probably need to do as two lists then join.
+
+--------------
+--> Scratching
+--------------
+    Scratchings to end of the list. See similar for Summaries.
+
+----------
+--> Horses
+----------
+    Names starting with "Mr" or "Mister".
+
+-----------------
+--> Notifications
+-----------------
+    Popup when on another screen, i.e. app is in background.
+    Silent (as an option?).
+
+-----
+Other
+-----
 --> Better use of SavedStateHandle. Refer Point 2 of:
     https://www.youtube.com/watch?v=JfCivo5qJkI
 
 --> Don't do Summary items for Races that are abandoned.
 
 --> Something that indicates a bet has been made for a Summary item.
-
---> A Summary refresh button ?
 
 --> Race time in the Summary is displaying incorrectly for evening/night races.
    -> Manually check data from API ?
