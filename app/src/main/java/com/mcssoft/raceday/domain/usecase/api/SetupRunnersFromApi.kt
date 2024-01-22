@@ -36,7 +36,7 @@ import javax.inject.Inject
  * @param context: For string resources.
  * @param userPrefs: Access to app preferences.
  */
-class SetupRunnersFromApi  @Inject constructor(
+class SetupRunnersFromApi @Inject constructor(
     private val iDbRepo: IDbRepo,
     private val context: Context,
     private val userPrefs: DataStore<UserPreferences>
@@ -85,7 +85,8 @@ class SetupRunnersFromApi  @Inject constructor(
                             Toast.makeText(
                                 context,
                                 "${context.resources.getString(R.string.toast_runners_for)} $code",
-                                Toast.LENGTH_SHORT)
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                             emit(DataResult.success(""))
                         }

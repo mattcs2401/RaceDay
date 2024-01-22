@@ -1,22 +1,39 @@
 package com.mcssoft.raceday.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mcssoft.raceday.ui.components.navigation.NavGraph
 import com.mcssoft.raceday.ui.theme.RaceDayBasicTheme
-import com.mcssoft.raceday.utility.notification.NotificationService
-import com.mcssoft.raceday.utility.notification.NotificationState.START_SERVICE
-import com.mcssoft.raceday.utility.notification.NotificationState.STOP_SERVICE
+import com.mcssoft.raceday.utility.alarm.IAlarmScheduler
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface IEntryPoints {
+        fun schedule(): IAlarmScheduler
+        fun cancel(): IAlarmScheduler
+    }
+
+    private lateinit var schedule: IAlarmScheduler
+    private lateinit var cancel: IAlarmScheduler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val entryPoints =
+            EntryPointAccessors.fromApplication(this, IEntryPoints::class.java)
+        schedule = entryPoints.schedule()
+        cancel = entryPoints.cancel()
+
+        schedule.scheduleAlarm()
 
         setContent {
             RaceDayBasicTheme {
@@ -25,21 +42,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("TAG", "Start service.")
-        Intent(applicationContext, NotificationService::class.java).also { intent ->
-            intent.action = START_SERVICE.toString()
-            startService(intent)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("TAG", "Stop service.")
-        Intent(applicationContext, NotificationService::class.java).also { intent ->
-            intent.action = STOP_SERVICE.toString()
-            startService(intent)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel.cancelAlarm()
     }
 }

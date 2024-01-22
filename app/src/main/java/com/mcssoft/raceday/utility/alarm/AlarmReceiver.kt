@@ -8,12 +8,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.utility.Constants.FIVE
+import com.mcssoft.raceday.utility.Constants.INTENT_ACTION
 import com.mcssoft.raceday.utility.Constants.SIXTY
 import com.mcssoft.raceday.utility.Constants.THOUSAND
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
@@ -45,9 +47,12 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var dataAccess: IDbRepo
 
     override fun onReceive(context: Context, intent: Intent?) {
-//        Log.d("TAG", "BroadcastReceiver.onReceive")
-//        val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
-
+        when (intent?.action) {
+            INTENT_ACTION -> {
+                Toast.makeText(context, "TBA - Notification clicked.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
         // Setup the notification and database accessors.
         setEntryPoints(context)
 
@@ -99,7 +104,7 @@ class AlarmReceiver : BroadcastReceiver() {
             bndl.putLong("key_summary_id", summary._id)
         }
         val intent = Intent(context, AlarmReceiver::class.java).apply {
-            action = "INTENT_ACTION"
+            action = INTENT_ACTION
         }
         val pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val view = buildView(context, summary, pIntent)

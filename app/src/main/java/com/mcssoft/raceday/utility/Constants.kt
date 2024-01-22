@@ -39,6 +39,9 @@ object Constants {
     // Base set of Meeting locations.
     val LOCATIONS = listOf("ACT", "QLD", "NSW", "VIC", "SA", "WA", "NT", "NZL")
 
+    // Intent action.
+    const val INTENT_ACTION = "INTENT_ACTION"
+
     // Alarm values.
     const val ONE_MINUTE = (THOUSAND * SIXTY).toLong()
 
