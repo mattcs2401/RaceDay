@@ -9,10 +9,11 @@ import com.mcssoft.raceday.R
 
 /**
  * Class used to parameter inject NotificationManager and Builder.
+ * @param context: Context for String resources and NotificationManager.
  */
 class NotificationImpl(
     private val context: Context
-): INotification {
+) : INotification {
 
     override fun getNotificationManager(): NotificationManagerCompat {
         val notificationManager = NotificationManagerCompat.from(context)
@@ -48,6 +49,4 @@ class NotificationImpl(
             .setSmallIcon(R.drawable.ic_notifications_24)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }
-
-
 }

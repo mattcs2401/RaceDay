@@ -19,7 +19,7 @@ class AlarmSchedulerImpl @Inject constructor(
     private val context: Context,
     private val alarmManager: AlarmManager,
     private val userPrefs: DataStore<UserPreferences>
-): IAlarmScheduler {
+) : IAlarmScheduler {
 /*
   Note:
   The AlarmReceiver does the actual check if there are Summaries or not, e.g. Summary items may not
@@ -67,5 +67,4 @@ class AlarmSchedulerImpl @Inject constructor(
             )
         )
     }
-
 }

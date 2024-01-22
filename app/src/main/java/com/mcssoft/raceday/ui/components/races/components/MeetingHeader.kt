@@ -40,7 +40,7 @@ fun MeetingHeader(
                 width = width2dp,
                 color = Color.Blue
             )
-    ){
+    ) {
         ConstraintLayout(
             constraintSet
         ) {

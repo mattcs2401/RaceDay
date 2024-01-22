@@ -26,7 +26,6 @@ class GetRaces @Inject constructor(
             val races = iDbRepo.getRaces(mId)
 
             emit(DataResult.success(races))
-
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
@@ -34,5 +33,4 @@ class GetRaces @Inject constructor(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1
     )
-
 }

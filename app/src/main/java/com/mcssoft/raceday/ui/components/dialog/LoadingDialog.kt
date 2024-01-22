@@ -16,10 +16,10 @@ import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 
 /**
-  A dialog with a title on the 1st line, and a circular progress indicator and message text on the
-  2nd line.
-  @param titleText: The dialog "Title" on the 1st line. e.g. "Loading".
-  @param msgText: A message to display on the right of a circular progress indicator (2nd line).
+A dialog with a title on the 1st line, and a circular progress indicator and message text on the
+2nd line.
+@param titleText: The dialog "Title" on the 1st line. e.g. "Loading".
+@param msgText: A message to display on the right of a circular progress indicator (2nd line).
  */
 @Composable
 fun LoadingDialog(
@@ -73,19 +73,17 @@ private val constraintSet = ConstraintSet {
     constrain(idDialogIndicator) {
         top.linkTo(idDialogTitle.bottom, margin = 16.dp)
         start.linkTo(idDialogTitle.start, margin = 0.dp)
-        bottom.linkTo(parent.bottom, margin = 16.dp)            // padding match top.
+        bottom.linkTo(parent.bottom, margin = 16.dp)
     }
     constrain(idDialogText) {
-        top.linkTo(idDialogIndicator.top, margin = 8.dp)       // bring down a bit.
+        top.linkTo(idDialogIndicator.top, margin = 8.dp)
         start.linkTo(idDialogIndicator.end, margin = 16.dp)
-        end.linkTo(parent.end, margin = 16.dp)                  // padding match start.
+        end.linkTo(parent.end, margin = 16.dp)
     }
 }
 
-//@Preview
-//@Composable
-//fun ShowDialog() {
+// @Preview
+// @Composable
+// fun ShowDialog() {
 //    LoadingDialog(titleText = "Initialising", msgText = "Setup base from API.") {}
-//}
-
-
+// }

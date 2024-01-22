@@ -7,10 +7,18 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.layoutId
@@ -23,13 +31,14 @@ import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
+import com.mcssoft.raceday.utility.Constants.THREE_HUNDRED
 
 @Composable
 fun MeetingItem(
     meeting: Meeting,
     onItemClick: (Meeting) -> Unit,
 ) {
-    val backgroundColour = /*if (meeting.abandoned) {
+    val backgroundColour = /* if (meeting.abandoned) {
         MaterialTheme.colors.errorDto
     } else {*/
         MaterialTheme.colors.primaryVariant
@@ -38,7 +47,8 @@ fun MeetingItem(
     var expandedState by remember { mutableStateOf(false) }
 
     val rotationState by animateFloatAsState(
-        targetValue = if (expandedState) 180f else 0f, label = ""
+        targetValue = if (expandedState) 180f else 0f,
+        label = ""
     )
 
     Card(
@@ -46,7 +56,7 @@ fun MeetingItem(
             .fillMaxWidth()
             .padding(padding4dp)
             .animateContentSize(
-                animationSpec = tween(300, easing = LinearOutSlowInEasing)
+                animationSpec = tween(THREE_HUNDRED, easing = LinearOutSlowInEasing)
             ),
         shape = RoundedCornerShapes.small,
         backgroundColor = backgroundColour
@@ -83,10 +93,10 @@ fun MeetingItem(
                     .rotate(rotationState)
             ) {
 //                if (!meeting.abandoned) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Drop-Down Arrow"
-                    )
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = "Drop-Down Arrow"
+                )
 //                }
             }
         }
@@ -95,7 +105,6 @@ fun MeetingItem(
             MeetingItemExtra(meeting, onItemClick)
         }
     }
-
 }
 
 private val constraintSet = ConstraintSet {

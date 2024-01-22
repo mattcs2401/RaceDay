@@ -99,7 +99,6 @@ fun SummaryScreen(
                     }
                 }
             }
-            else -> {}
         }
         if (state.summaries.isEmpty()) {
             Box(

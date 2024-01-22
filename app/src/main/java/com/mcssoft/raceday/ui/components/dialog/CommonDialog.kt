@@ -80,7 +80,7 @@ fun CommonDialog(
                         .fillMaxWidth()
                         .padding(start = padding16dp),
                     verticalAlignment = Alignment.CenterVertically
-                    //horizontalArrangement = Arrangement.Start
+                    // horizontalArrangement = Arrangement.Start
                 ) {
                     if (icon != null) {
                         Column(
@@ -138,14 +138,12 @@ fun CommonDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
-                    OutlinedButton(onClick = onDismissClicked)
-                    {
+                    OutlinedButton(onClick = onDismissClicked) {
                         Text(text = dismissButtonText)
                     }
                     if (onConfirmClicked != null) {
                         Spacer(modifier = Modifier.width(width16dp))
-                        OutlinedButton(onClick = onConfirmClicked)
-                        {
+                        OutlinedButton(onClick = onConfirmClicked) {
                             Text(text = confirmButtonText)
                         }
                     }
@@ -160,9 +158,9 @@ fun CommonDialog(
     }
 }
 
-//@Preview
-//@Composable
-//fun ShowCommonDialog() {
+// @Preview
+// @Composable
+// fun ShowCommonDialog() {
 //    CommonDialog(
 //        icon = R.drawable.ic_error_48,
 //        dialogTitle = "An errorDto occurred",
@@ -170,4 +168,4 @@ fun CommonDialog(
 //        dismissButtonText = "Ok",
 //        onDismissClicked = {}
 //    )
-//}
+// }

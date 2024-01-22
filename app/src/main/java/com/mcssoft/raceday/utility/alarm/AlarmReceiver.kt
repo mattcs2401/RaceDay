@@ -13,6 +13,10 @@ import androidx.core.app.NotificationManagerCompat
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.domain.model.Summary
+import com.mcssoft.raceday.utility.Constants.FIVE
+import com.mcssoft.raceday.utility.Constants.SIXTY
+import com.mcssoft.raceday.utility.Constants.THOUSAND
+import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import com.mcssoft.raceday.utility.DateUtils
 import com.mcssoft.raceday.utility.notification.INotification
 import dagger.hilt.EntryPoint
@@ -26,7 +30,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -52,8 +56,8 @@ class AlarmReceiver: BroadcastReceiver() {
         }
     }
 
-    private suspend fun processReceive(context: Context) {//pendingResult: PendingResult, context: Context) {
-        Log.d("TAG","AlarmReceiver.processReceive()")
+    private suspend fun processReceive(context: Context) {
+        Log.d("TAG", "AlarmReceiver.processReceive()")
         // The current time in millis.
         val currentTime = DateUtils().getCurrentTimeMillis()
         // List of Summaries that are notification candidates.
@@ -61,23 +65,31 @@ class AlarmReceiver: BroadcastReceiver() {
         // Check for any Summaries where the race time is now in the past and update accordingly.
         checkSummaries(currentTime)
         // A time "window" of the current time -> (current time + five minutes).
-        val windowTime = currentTime + (1000 * 60 * 5).toLong()
+        val windowTime = currentTime + (THOUSAND * SIXTY * FIVE).toLong()
         // Get a list of Summaries whose race time is still in the future.
-        delay(25) // TBA ?
+        delay(TWENTY_FIVE) // TBA ?
         val baseNotifyList = dataAccess.getCurrentSummaries()
-        delay(25) // TBA
+        delay(TWENTY_FIVE) // TBA
         // Create a list of Summaries whose race time is within the time window.
-        if(baseNotifyList.isEmpty()) return else for (summary in baseNotifyList) {
-            if(DateUtils().compareToWindowTime(summary.raceStartTime, windowTime)) {
-                notifyList.add(summary)
+        if (baseNotifyList.isEmpty()) {
+            return
+        } else {
+            for (summary in baseNotifyList) {
+                if (DateUtils().compareToWindowTime(summary.raceStartTime, windowTime)) {
+                    notifyList.add(summary)
+                }
             }
         }
         // Send out notifications and update the Summary as having been notified.
-        if(notifyList.isEmpty()) return else for (summary in notifyList) {
-            summary.isNotified = true
-            dataAccess.updateSummary(summary)
-            delay(25) // TBA
-            sendNotification(context, summary)
+        if (notifyList.isEmpty()) {
+            return
+        } else {
+            for (summary in notifyList) {
+                summary.isNotified = true
+                dataAccess.updateSummary(summary)
+                delay(TWENTY_FIVE) // TBA
+                sendNotification(context, summary)
+            }
         }
     }
 
@@ -89,7 +101,7 @@ class AlarmReceiver: BroadcastReceiver() {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             action = "INTENT_ACTION"
         }
-        val pIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val view = buildView(context, summary, pIntent)
         notificationBuilder.also { ncb ->
             ncb.setExtras(bundle)
@@ -129,11 +141,11 @@ class AlarmReceiver: BroadcastReceiver() {
 
         val lSummaries = dataAccess.getSummaries()
 
-        for(summary in lSummaries) {
+        for (summary in lSummaries) {
             raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
 
-            if(!summary.isPastRaceTime) {
-                if(currentTime > raceTime) {
+            if (!summary.isPastRaceTime) {
+                if (currentTime > raceTime) {
                     summary.isPastRaceTime = true
                     dataAccess.updateSummary(summary)
                 }
@@ -164,8 +176,8 @@ private fun BroadcastReceiver.goAsync(
     CoroutineScope(SupervisorJob()).launch(context) {
         try {
             codeBlock()
-        } catch(ex: Exception) {
-            Log.e("TAG","Exception in BroadcastReceiver.goAsync: ${ex.message}")
+        } catch (ex: Exception) {
+            Log.e("TAG", "Exception in BroadcastReceiver.goAsync: ${ex.message}")
         } finally {
             pendingResult.finish()
         }

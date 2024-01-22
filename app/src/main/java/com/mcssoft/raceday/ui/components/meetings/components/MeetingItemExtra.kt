@@ -54,7 +54,7 @@ fun MeetingItemExtra(
             )
         }
         var rail = meeting.railPosition.toString()
-        if(rail.length > Constants.RAIL_MAX) {
+        if (rail.length > Constants.RAIL_MAX) {
             rail = "${rail.take(Constants.RAIL_TAKE)} ..."
         }
         Text(

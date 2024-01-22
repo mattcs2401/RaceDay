@@ -15,7 +15,7 @@ class DbRepoImpl @Inject constructor(
         return dao.deleteAll()
     }
 
-    //<editor-fold default state="collapsed" desc="Region: Meeting related.">
+    // <editor-fold default state="collapsed" desc="Region: Meeting related.">
     override suspend fun insertMeeting(meeting: Meeting): Long {
         return dao.insertMeeting(meeting)
     }
@@ -35,9 +35,9 @@ class DbRepoImpl @Inject constructor(
     override suspend fun deleteMeetings(): Int {
         return dao.deleteMeetings()
     }
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Race related.">
+    // <editor-fold default state="collapsed" desc="Region: Race related.">
     override suspend fun insertRaces(races: List<Race>): List<Long> {
         return dao.insertRaces(races)
     }
@@ -53,9 +53,9 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long {
         return dao.getRaceIdByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
     }
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Runner related.">
+    // <editor-fold default state="collapsed" desc="Region: Runner related.">
     override suspend fun insertRunners(runners: List<Runner>): List<Long> {
         return dao.insertRunners(runners)
     }
@@ -87,9 +87,9 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getCheckedRunners(): List<Runner> {
         return dao.getCheckedRunners()
     }
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    // <editor-fold default state="collapsed" desc="Region: Summary related.">
     override suspend fun getSummaryCount(): Int {
         return dao.getSummaryCount()
     }
@@ -125,9 +125,9 @@ class DbRepoImpl @Inject constructor(
     override suspend fun updateSummary(summary: Summary): Int {
         return dao.updateSummary(summary)
     }
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Scratching related.">
+    // <editor-fold default state="collapsed" desc="Region: Scratching related.">
     override suspend fun insertScratchings(scratchings: List<Scratching>): List<Long> {
         return dao.insertScratchings(scratchings)
     }
@@ -139,6 +139,5 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching> {
         return dao.getScratchingsForRace(venueMnemonic, raceNumber)
     }
-    //</editor-fold>
-
+    // </editor-fold>
 }

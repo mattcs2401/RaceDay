@@ -34,11 +34,11 @@ import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
 
-@Composable
 /**
  * @param state: Meetings state.
  * @param navController: The Navigation.
  */
+@Composable
 fun MeetingsScreen(
     state: MeetingsState,
     navController: NavController
@@ -74,12 +74,12 @@ fun MeetingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
-                .padding(bottom = 64.dp)                        // TBA - allow for bottom bar.
+                .padding(bottom = 64.dp) // TBA - allow for bottom bar.
         ) {
             if (showRefreshDialog.value) {
                 ShowRefreshDialog(show = showRefreshDialog, navController = navController)
             }
-            when(state.status) {
+            when (state.status) {
                 is Status.Initialise -> {}
                 is Status.Loading -> {
                     LoadingDialog(
@@ -144,7 +144,7 @@ private fun ShowRefreshDialog(
 @Composable
 private fun ShowErrorDialog(
     show: MutableState<Boolean>,
-    exception: Exception?,  // message from any exception.
+    exception: Exception?, // message from any exception.
 ) {
     if (show.value) {
         CommonDialog(
@@ -165,8 +165,8 @@ private fun ShowErrorDialog(
     }
 }
 
+// https://www.valueof.io/blog/intercept-back-press-button-in-jetpack-compose
 @Composable
-//https://www.valueof.io/blog/intercept-back-press-button-in-jetpack-compose
 fun BackPressHandler(
     backPressedDispatcher: OnBackPressedDispatcher? =
         LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
@@ -190,6 +190,7 @@ fun BackPressHandler(
         }
     }
 }
+
 /*
   SnackBar example:
   -----------------

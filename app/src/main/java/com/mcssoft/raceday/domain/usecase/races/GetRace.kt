@@ -34,5 +34,4 @@ class GetRace @Inject constructor(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1
     )
-
 }

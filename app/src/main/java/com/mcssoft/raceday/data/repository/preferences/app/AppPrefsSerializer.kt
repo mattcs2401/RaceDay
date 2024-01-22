@@ -1,7 +1,7 @@
 package com.mcssoft.raceday.data.repository.preferences.app
 
 /** TBA **/
-//object AppPrefsSerializer : Serializer<AppPreferences> {
+// object AppPrefsSerializer : Serializer<AppPreferences> {
 //
 //    override val defaultValue: AppPreferences
 //        get() = AppPreferences()
@@ -28,4 +28,4 @@ package com.mcssoft.raceday.data.repository.preferences.app
 //            )
 //        }
 //    }
-//}
+// }

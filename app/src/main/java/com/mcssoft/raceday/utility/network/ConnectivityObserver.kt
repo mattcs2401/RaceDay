@@ -19,7 +19,7 @@ TBA - Based largely on https://www.youtube.com/watch?v=TzV0oCRDNfM
 class ConnectivityObserver @Inject constructor(
     val context: Context,
     private val connectivityManager: ConnectivityManager
-): IConnectivityObserver {
+) : IConnectivityObserver {
 
 //    private val connectivityManager =
 //        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -56,7 +56,7 @@ class ConnectivityObserver @Inject constructor(
                 connectivityManager.unregisterNetworkCallback(callBack)
             }
         }
-        .distinctUntilChanged()
-        .flowOn(Dispatchers.IO)
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.IO)
     }
 }

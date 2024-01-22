@@ -26,7 +26,6 @@ class GetMeeting @Inject constructor(
             val meeting = iDbRepo.getMeeting(mId)
 
             emit(DataResult.success(meeting))
-
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
@@ -34,6 +33,6 @@ class GetMeeting @Inject constructor(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1
     )
-
 }
+
 // https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#sharein

@@ -23,15 +23,15 @@ import com.mcssoft.raceday.utility.DateUtils
 @Dao
 interface IDbRepo {
 // TODO - Can we make better use of joins between tables ?
-    
+
     @Transaction
     // Note: Any Scratchings are also processed.
     suspend fun insertMeetingAndRaces(meetingDto: MeetingDto, racesDto: List<RaceDto>) {
         // Meeting and Race info.
-        val meeting = meetingDto.toMeeting()     // for sellCode concat.
+        val meeting = meetingDto.toMeeting() // for sellCode concat.
         val meetingId = insertMeeting(meeting)
 
-        val racesWithMeetingId  = racesDto.map { raceDto ->
+        val racesWithMeetingId = racesDto.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
             raceDto.toRace(meetingId, meeting.sellCode!!, meeting.venueMnemonic!!)
         }
@@ -58,12 +58,12 @@ interface IDbRepo {
 
     @Transaction
     suspend fun deleteAll() {
-        deleteMeetings()     // cascade should take care of Race and Runner.
+        deleteMeetings() // cascade should take care of Race and Runner.
         deleteScratchings()
         deleteSummaries()
     }
 
-    //<editor-fold default state="collapsed" desc="Region: MeetingDto related.">
+    // <editor-fold default state="collapsed" desc="Region: MeetingDto related.">
     data class MeetingSubset(
         val meetingDate: String,
         val venueMnemonic: String,
@@ -100,10 +100,10 @@ interface IDbRepo {
      * Delete all from Meetings.
      */
     @Query("delete from Meeting")
-    suspend fun deleteMeetings(): Int       // CASCADE should take care of Races/Runners etc.
-    //</editor-fold>
+    suspend fun deleteMeetings(): Int // CASCADE should take care of Races/Runners etc.
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Race related.">
+    // <editor-fold default state="collapsed" desc="Region: Race related.">
     /**
      * Insert a list of Races.
      * @param races: The list of Races.
@@ -125,9 +125,9 @@ interface IDbRepo {
 
     @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Runner related.">
+    // <editor-fold default state="collapsed" desc="Region: Runner related.">
     /**
      * Insert a list of Runners.
      * @param runners: The list of Runners.
@@ -171,9 +171,9 @@ interface IDbRepo {
 
     @Query("select * from Runner where isScratched = 0 and isChecked = 1")
     suspend fun getCheckedRunners(): List<Runner>
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    // <editor-fold default state="collapsed" desc="Region: Summary related.">
     @Query("select count(*) from Summary")
     suspend fun getSummaryCount(): Int
 
@@ -200,10 +200,10 @@ interface IDbRepo {
 
     @Update
     suspend fun updateSummary(summary: Summary): Int
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold default state="collapsed" desc="Region: Scratching related.">
-    @Insert//(onConflict = OnConflictStrategy.REPLACE)
+    // <editor-fold default state="collapsed" desc="Region: Scratching related.">
+    @Insert // (onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertScratchings(scratchings: List<Scratching>): List<Long>
 
     @Query("delete from Scratching")
@@ -211,6 +211,5 @@ interface IDbRepo {
 
     @Query("select * from Scratching where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getScratchingsForRace(venueMnemonic: String, raceNumber: Int): List<Scratching>
-    //</editor-fold>
-
+    // </editor-fold>
 }

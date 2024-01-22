@@ -1,6 +1,15 @@
 package com.mcssoft.raceday.utility
 
 object Constants {
+    // Basics (used in calculations).
+    const val FIVE = 5
+    const val TEN = 10
+    const val TWENTY_FIVE = 25.toLong()
+    const val THIRTY = 30
+    const val SIXTY = 60
+    const val THREE_HUNDRED = 300
+    const val THOUSAND = 1000 // representing 1000 milli seconds.
+
     // For long strings, e.g. Race names, just take 1st 30 characters.
     const val TAKE = 30
 
@@ -25,16 +34,15 @@ object Constants {
     const val KEY_RUNNER_ID: String = "runnerId"
 
     // Base meeting type. Only Meetings of this type will be displayed (ATT).
-    const val MEETING_TYPE: String = "R"    // (R)ace.
+    const val MEETING_TYPE: String = "R" // (R)ace.
 
     // Base set of Meeting locations.
-    val LOCATIONS = listOf("ACT","QLD","NSW","VIC","SA","WA","NT","NZL")
+    val LOCATIONS = listOf("ACT", "QLD", "NSW", "VIC", "SA", "WA", "NT", "NZL")
 
     // Alarm values.
-    const val ONE_MINUTE = (1000 * 60).toLong()
+    const val ONE_MINUTE = (THOUSAND * SIXTY).toLong()
 
-    const val THIRTY_SECONDS = (1000 * 30).toLong()
+    const val THIRTY_SECONDS = (THOUSAND * THIRTY).toLong()
 
-    const val FIVE_MINUTES = (1000 * 60 * 5).toLong()
-
+    const val FIVE_MINUTES = (THOUSAND * SIXTY * FIVE).toLong()
 }

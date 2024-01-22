@@ -14,7 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 
-class NotificationService: Service() {
+class NotificationService : Service() {
 // Note: Can't constructor inject here.
 // Ref: https://dagger.dev/hilt/entry-points.html
 //      https://developer.android.com/develop/background-work/services/alarms/schedule
@@ -56,10 +56,9 @@ class NotificationService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when(intent?.action) {
-            START_SERVICE.toString() -> start()       // defined below.
-            STOP_SERVICE.toString() -> stop()         //
-
+        when (intent?.action) {
+            START_SERVICE.toString() -> start() // defined below.
+            STOP_SERVICE.toString() -> stop() //
         }
         return super.onStartCommand(intent, flags, startId)
     }

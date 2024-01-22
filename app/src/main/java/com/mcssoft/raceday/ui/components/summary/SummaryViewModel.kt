@@ -28,7 +28,6 @@ class SummaryViewModel @Inject constructor(
             is SummaryEvent.Refresh -> {
                 getSummaries()
             }
-            else -> {}
         }
     }
 
@@ -71,5 +70,4 @@ class SummaryViewModel @Inject constructor(
             }
         }
     }
-
 }

@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("TAG","Start service.")
+        Log.d("TAG", "Start service.")
         Intent(applicationContext, NotificationService::class.java).also { intent ->
             intent.action = START_SERVICE.toString()
             startService(intent)
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d("TAG","Stop service.")
+        Log.d("TAG", "Stop service.")
         Intent(applicationContext, NotificationService::class.java).also { intent ->
             intent.action = STOP_SERVICE.toString()
             startService(intent)

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 /**
- * Class to get/update Summary data.
+ * Get a list of the current Summaries and update flag isPastRaceTime as applicable.
  * @param iDbRepo: Local DB access.
  * @param externalScope: Coroutine scope.
  */
@@ -20,9 +20,6 @@ class GetSummaries @Inject constructor(
     private val iDbRepo: IDbRepo,
     private val externalScope: CoroutineScope
 ) {
-    /**
-     *
-     */
     operator fun invoke(): Flow<DataResult<List<Summary>>> = flow {
         try {
             emit(DataResult.loading())
@@ -31,20 +28,18 @@ class GetSummaries @Inject constructor(
 
             val currentTimeMillis = DateUtils().getCurrentTimeMillis()
 
-            for(summary in lSummaries) {
+            for (summary in lSummaries) {
                 val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
 
-                if(!summary.isPastRaceTime) {
-                    if(currentTimeMillis > raceTime) {
+                if (!summary.isPastRaceTime) {
+                    if (currentTimeMillis > raceTime) {
                         summary.isPastRaceTime = true
 
                         iDbRepo.updateSummary(summary)
                     }
                 }
             }
-
             emit(DataResult.success(lSummaries))
-
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }

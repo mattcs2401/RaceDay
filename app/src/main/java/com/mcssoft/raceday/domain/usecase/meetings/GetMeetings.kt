@@ -30,7 +30,6 @@ class GetMeetings @Inject constructor(
             }
 
             emit(DataResult.success(meetings))
-
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
@@ -38,6 +37,6 @@ class GetMeetings @Inject constructor(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1
     )
-
 }
+
 // https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#sharein

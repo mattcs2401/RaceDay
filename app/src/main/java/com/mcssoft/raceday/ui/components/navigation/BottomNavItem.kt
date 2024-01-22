@@ -7,13 +7,13 @@ sealed class BottomNavItem(
     var icon: Int,
     var title: String
 ) {
-    data object Settings: BottomNavItem(
+    data object Settings : BottomNavItem(
         Screens.SettingsScreen.route,
         R.drawable.ic_settings_24,
         "Settings"
     )
 
-    data object Summary: BottomNavItem(
+    data object Summary : BottomNavItem(
         Screens.SummaryScreen.route,
         R.drawable.ic_summary_24,
         "Summary"

@@ -1,5 +1,9 @@
 package com.mcssoft.raceday.utility
 
+import com.mcssoft.raceday.utility.Constants.FIVE
+import com.mcssoft.raceday.utility.Constants.SIXTY
+import com.mcssoft.raceday.utility.Constants.TEN
+import com.mcssoft.raceday.utility.Constants.THOUSAND
 import java.util.Calendar
 import java.util.Calendar.HOUR_OF_DAY
 import java.util.Calendar.MINUTE
@@ -25,7 +29,7 @@ class DateUtils {
         val windowTime: Long
         val givenTime = getCurrentTimeMillis(time)
         val currentTime = getCurrentTimeMillis()
-        windowTime = window ?: (currentTime + (1000 * 60 * 5).toLong())
+        windowTime = window ?: (currentTime + (THOUSAND * SIXTY * FIVE).toLong())
 
         return (givenTime > currentTime) && (givenTime < windowTime)
     }
@@ -37,11 +41,11 @@ class DateUtils {
     fun getDateToday(): String {
         val calendar = Calendar.getInstance(Locale.getDefault())
         val year = calendar.get(Calendar.YEAR).toString()
-        var month = ((calendar.get(Calendar.MONTH)) + 1).toString()  // Note (1) below.
+        var month = ((calendar.get(Calendar.MONTH)) + 1).toString() // Note (1) below.
         var day = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
-        if(((calendar.get(Calendar.MONTH)) + 1) < 10) month = "0$month"
-        if(((calendar.get(Calendar.DAY_OF_MONTH)) + 1) <= 10) day = "0$day"
+        if (((calendar.get(Calendar.MONTH)) + 1) < TEN) month = "0$month"
+        if (((calendar.get(Calendar.DAY_OF_MONTH)) + 1) <= TEN) day = "0$day"
 
         return "$year-$month-$day"
     }
@@ -56,7 +60,7 @@ class DateUtils {
 
         // Sometimes hour value is, e.g. 02:14 when should be 12:14.
         val timeHour = timeAll[0].toCharArray()
-        if(timeHour[0] == '0') {
+        if (timeHour[0] == '0') {
             timeHour[0] = '1'
             timeAll[0] = "${timeHour[0]}${timeHour[1]}"
         }
@@ -115,7 +119,7 @@ class DateUtils {
      * @param minutes: A minutes value.
      */
     private fun formatHourMinutes(hourOfDay: Int, minutes: Int): String {
-        return if(minutes < 10) {
+        return if (minutes < TEN) {
             "$hourOfDay:0$minutes"
         } else {
             "$hourOfDay:$minutes"
@@ -127,7 +131,7 @@ class DateUtils {
      * @param hourOfDay: An hour value.
      * @param minutes: A minutes value.
      */
-    private fun timeToMillis(hourOfDay: Int, minutes: Int) : Long {
+    private fun timeToMillis(hourOfDay: Int, minutes: Int): Long {
         return Calendar.getInstance(Locale.getDefault()).apply {
             set(HOUR_OF_DAY, hourOfDay)
             set(MINUTE, minutes)
@@ -139,4 +143,3 @@ Notes:
 (1) - https://developer.android.com/reference/java/util/Calendar:
       The first month of the year in the Gregorian and Julian calendars is JANUARY which is 0.
  */
-
