@@ -55,7 +55,7 @@ fun SummaryItem(
             modifier = Modifier.clickable {
                 onItemClick(summary)
             }
-        ){
+        ) {
             Text(
                 summary.sellCode,
                 Modifier.layoutId("idSellCode"),

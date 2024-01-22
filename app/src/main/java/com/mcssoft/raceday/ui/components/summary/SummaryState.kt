@@ -29,4 +29,3 @@ data class SummaryState(
         data object Failure : Status()
     }
 }
-

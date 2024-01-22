@@ -3,7 +3,6 @@ package com.mcssoft.raceday.utility.worker
 data class WorkerState(
     var status: Status
 ) {
-
     companion object {
         // Flow initializer.
         fun initialise(): WorkerState {
@@ -14,7 +13,7 @@ data class WorkerState(
     }
 
     sealed class Status {
-        data object Initialise: Status()
+        data object Initialise : Status()
         data object Scheduled : Status()
         data object Cancelled : Status()
         data object Failed : Status()
@@ -25,3 +24,4 @@ data class WorkerState(
         return state in listOf(Status.Cancelled, Status.Failed, Status.Succeeded)
     }
 }
+

@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.data.repository.preferences.user
 
+import android.util.Log
 import androidx.datastore.core.Serializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,8 +20,10 @@ object UserPrefsSerializer : Serializer<UserPreferences> {
                 deserializer = UserPreferences.serializer(),
                 string = input.readBytes().decodeToString()
             )
-        } catch (e: SerializationException) {
-            e.printStackTrace()
+        } catch (ex: SerializationException) {
+            ex.message?.let {
+                Log.d("TAG", "UserPrefsSerializer::readFrom $it")
+            }
             defaultValue
         }
     }

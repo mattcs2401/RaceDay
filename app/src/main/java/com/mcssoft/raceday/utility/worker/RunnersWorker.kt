@@ -11,6 +11,7 @@ import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
 import com.mcssoft.raceday.domain.model.Race
+import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -22,7 +23,7 @@ import kotlinx.coroutines.delay
  * @param context: App context for EntryPoint.
  * @param workerParams:
  */
-class RunnersWorker (
+class RunnersWorker(
     private val context: Context,
     workerParams: WorkerParameters,
 ) : CoroutineWorker(context, workerParams) {
@@ -46,8 +47,8 @@ class RunnersWorker (
             val jockeyNames = context.resources.getStringArray(R.array.jockeyNames).toList()
 
             var race: Race
-            var  raceId: Long
-            var response: NetworkResponse<BaseDto2>   // response from Api.
+            var raceId: Long
+            var response: NetworkResponse<BaseDto2> // response from Api.
 
             // Note: Couldn't seem to get this from the context.resources.getBoolean().
             val trainerPref = inputData.getBoolean("key_trainer_pref", false)
@@ -56,7 +57,7 @@ class RunnersWorker (
             val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
             val races = inputData.getString(context.resources.getString(R.string.key_num_races))
 
-            for(raceNum in 1..(races?.toInt() ?: -1)) {
+            for (raceNum in 1..(races?.toInt() ?: -1)) {
                 // Get the Race id for the Race.
                 raceId = iDbRepo.getRaceIdByVenueCodeAndRaceNo(code!!, raceNum)
 
@@ -64,8 +65,7 @@ class RunnersWorker (
                 race = iDbRepo.getRace(raceId)
 
                 // If the Race is Abandoned, don't waste resources getting Runner detail.
-                if(race.raceStatus != context.resources.getString(R.string.race_status_abandoned)) {
-
+                if (race.raceStatus != context.resources.getString(R.string.race_status_abandoned)) {
                     // Get the Runners for a Race. Parameter raceNum as string for Url construct.
                     response = iRemoteRepo.getRaceDayRunners(date!!, code, raceNum.toString())
 
@@ -76,7 +76,7 @@ class RunnersWorker (
                         processForScratchings(race)
                     }
 
-                    delay(50)  // TBA required ?
+                    delay(TWENTY_FIVE) // TBA required ?
 
                     if (trainerPref) {
                         processForTrainers(race, trainerNames)
@@ -85,7 +85,7 @@ class RunnersWorker (
                 }
             }
             Result.success()
-        } catch(ex: Exception) {
+        } catch (ex: Exception) {
             Log.d("TAG", "[RunnersWorker.doWork] exception: $ex")
             val key = context.resources.getString(R.string.key_exception)
             val output = workDataOf(key to ex.localizedMessage)
@@ -94,21 +94,21 @@ class RunnersWorker (
         }
     }
 
-    /**
-     * Function to marry up the current list of scratchings (for a Race) with Runners and set them
-     * as scratched.
-     * @param race: The Race that has associated scratchings.
-      */
+/**
+* Function to marry up the current list of scratchings (for a Race) with Runners and set them
+* as scratched.
+* @param race: The Race that has associated scratchings.
+*/
     private suspend fun processForScratchings(race: Race) {
         // The list of Runners for the Race.
         val lRunners = iDbRepo.getRunners(race._id)
         // The list of scratchings.
         val lScratches = iDbRepo.getScratchingsForRace(race.venueMnemonic, race.raceNumber)
 
-       lRunners.forEach { runner ->
+        lRunners.forEach { runner ->
             lScratches.forEach { scratch ->
                 // Same name and runner number should be enough to be unique.
-                if(scratch.runnerName == runner.runnerName &&
+                if (scratch.runnerName == runner.runnerName &&
                     scratch.runnerNumber == runner.runnerNumber
                 ) {
                     runner.isScratched = true
@@ -116,7 +116,6 @@ class RunnersWorker (
                 }
             }
         }
-
     }
 
     private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
@@ -126,7 +125,7 @@ class RunnersWorker (
         }
 
         if (lRunners.isNotEmpty()) {
-            for(runner in lRunners) {
+            for (runner in lRunners) {
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }
@@ -139,7 +138,7 @@ class RunnersWorker (
         }
 
         if (lRunners.isNotEmpty()) {
-            for(runner in lRunners) {
+            for (runner in lRunners) {
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }
