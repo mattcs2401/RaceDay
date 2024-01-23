@@ -89,12 +89,16 @@
         <item>J Kah</item>   <!-- Manually check what's coming from Api. -->
     </string-array>
 
-    <!-- TBA. -->
+    <!-- TBA - horse names that start with these. -->
+    <string-array name="runnerNamesPrefix">
+        <item>Mr</item>
+        <item>Mister</item>
+    </string-array>
+
+    <!-- TBA - RemoteViews usage. -->
     <array name="auto_text_sizes">
         <item>10sp</item>
         <item>12sp</item>
 <!--        <item>20sp</item>-->
-<!--        <item>40sp</item>-->
-<!--        <item>100sp</item>-->
     </array>
 </resources>

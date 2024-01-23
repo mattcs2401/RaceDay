@@ -23,7 +23,6 @@ class SettingsViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             state.value.sourceFromApi = getSourceFromApi()
-            state.value.autoAddTrainers = getAutoAddTrainers()
             state.value.useNotifications = getUseNotifications()
         }
     }
@@ -35,11 +34,6 @@ class SettingsViewModel @Inject constructor(
                     is SettingsEvent.EventType.SOURCE_FROM_API -> {
                         viewModelScope.launch(Dispatchers.IO) {
                             setSourceFromApi(event.checked)
-                        }
-                    }
-                    is SettingsEvent.EventType.AUTO_ADD_TRAINERS -> {
-                        viewModelScope.launch(Dispatchers.IO) {
-                            setAutoAddTrainers(event.checked)
                         }
                     }
                     is SettingsEvent.EventType.USE_NOTIFICATIONS -> {
@@ -60,16 +54,6 @@ class SettingsViewModel @Inject constructor(
     private suspend fun setSourceFromApi(newValue: Boolean) {
         userPrefs.updateData { pref ->
             pref.copy(sourceFromApi = newValue)
-        }
-    }
-
-    private suspend fun getAutoAddTrainers(): Boolean {
-        return userPrefs.data.first().autoAddTrainers
-    }
-
-    private suspend fun setAutoAddTrainers(newValue: Boolean) {
-        userPrefs.updateData { pref ->
-            pref.copy(autoAddTrainers = newValue)
         }
     }
 

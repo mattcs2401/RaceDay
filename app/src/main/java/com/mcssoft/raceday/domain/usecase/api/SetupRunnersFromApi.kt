@@ -58,15 +58,10 @@ class SetupRunnersFromApi @Inject constructor(
                 val code = item.venueMnemonic
                 val races = item.numRaces.toString()
 
-                val trainerPref = userPrefs.data.first().autoAddTrainers
-
                 val workData = workDataOf(
                     context.resources.getString(R.string.key_meeting_date) to date,
                     context.resources.getString(R.string.key_meeting_code) to code,
                     context.resources.getString(R.string.key_num_races) to races,
-                    // Note: Couldn't seem to use this from the context.resources.getBoolean().
-                    // TODO - remove hard coding.
-                    "key_trainer_pref" to trainerPref
                 )
                 val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
                     .addTag(context.resources.getString(R.string.tag_runners_worker))
@@ -103,7 +98,6 @@ class SetupRunnersFromApi @Inject constructor(
             }
             // Turn off user prefs.
             userPrefs.data.first().sourceFromApi = false
-            userPrefs.data.first().autoAddTrainers = false
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }

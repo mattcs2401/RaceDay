@@ -45,13 +45,11 @@ class RunnersWorker(
             // Get the list of Trainer and Jockey names.
             val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
             val jockeyNames = context.resources.getStringArray(R.array.jockeyNames).toList()
+            val runnerNames = context.resources.getStringArray(R.array.runnerNamesPrefix).toList()
 
             var race: Race
             var raceId: Long
             var response: NetworkResponse<BaseDto2> // response from Api.
-
-            // Note: Couldn't seem to get this from the context.resources.getBoolean().
-            val trainerPref = inputData.getBoolean("key_trainer_pref", false)
 
             val date = inputData.getString(context.resources.getString(R.string.key_meeting_date))
             val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
@@ -78,10 +76,9 @@ class RunnersWorker(
 
                     delay(TWENTY_FIVE) // TBA required ?
 
-                    if (trainerPref) {
-                        processForTrainers(race, trainerNames)
-                        processForJockeys(race, jockeyNames)
-                    }
+                    processForTrainers(race, trainerNames)
+                    processForJockeys(race, jockeyNames)
+                    processForRunners(race, runnerNames)
                 }
             }
             Result.success()
@@ -142,5 +139,20 @@ class RunnersWorker(
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }
+    }
+
+    private suspend fun processForRunners(race: Race, runnerNames: List<String>) {
+        val runners = iDbRepo.getRunners(race._id)
+//        val lRunners = runners.filter { runner ->
+//            for (horse in runnerNames) {
+//                !runner.isScratched && runner.runnerName.startsWith(prefix = horse, ignoreCase = true)
+//            }
+//        }
+//
+//        if (lRunners.isNotEmpty()) {
+//            for (runner in lRunners) {
+//                iDbRepo.updateRunnerChecked(runner._id, true)
+//            }
+//        }
     }
 }

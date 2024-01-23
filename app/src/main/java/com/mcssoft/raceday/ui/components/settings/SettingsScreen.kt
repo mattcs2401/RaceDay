@@ -71,15 +71,6 @@ fun SettingsScreen(
                 )
                 Spacer(modifier = Modifier.width(width8dp))
                 SettingsItem(
-                    settingsState = state.autoAddTrainers,
-                    title = stringResource(id = R.string.id_auto_add_trainers),
-                    description = stringResource(id = R.string.id_auto_add_trainers_desc),
-                    enabled = true,
-                    onEvent = onEvent,
-                    eventType = EventType.AUTO_ADD_TRAINERS
-                )
-                Spacer(modifier = Modifier.width(width8dp))
-                SettingsItem(
                     settingsState = state.useNotifications,
                     title = stringResource(id = R.string.id_use_notifications),
                     description = stringResource(id = R.string.id_use_notifications_desc),

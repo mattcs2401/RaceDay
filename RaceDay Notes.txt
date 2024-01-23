@@ -29,7 +29,6 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
   TO DO:
 ==========
 
-*** A "local" AlarmManager class ? ***
 *** Turn off alarm if no Summaries to notify. ***
 
 ------------
@@ -37,12 +36,10 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 ------------
     Races past time to end of list so next to go always on top.
     Tech: Probably need to do as two lists then join.
-
 --------------
 --> Scratching
 --------------
     Scratchings to end of the list. See similar for Summaries.
-
 ----------
 --> Horses
 ----------
