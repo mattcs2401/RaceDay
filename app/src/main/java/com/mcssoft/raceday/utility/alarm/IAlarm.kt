@@ -1,6 +1,6 @@
 package com.mcssoft.raceday.utility.alarm
 
-interface IAlarmScheduler {
+interface IAlarm {
 
     fun scheduleAlarm()
 

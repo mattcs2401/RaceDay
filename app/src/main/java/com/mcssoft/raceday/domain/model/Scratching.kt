@@ -8,8 +8,9 @@ import androidx.room.PrimaryKey
     tableName = "Scratching",
     indices = [
         Index(
-            value = ["venueMnemonic","raceNumber"]
-        )],
+            value = ["venueMnemonic", "raceNumber"]
+        )
+    ],
 )
 data class Scratching(
     @PrimaryKey(autoGenerate = true)
@@ -19,6 +20,6 @@ data class Scratching(
     val runnerName: String,
     val runnerNumber: Int,
 
-    var venueMnemonic: String,         // venue code (not in ScratchingDto).
-    var raceNumber: Int                // Race number (not in ScratchingDto).
+    var venueMnemonic: String,
+    var raceNumber: Int
 )

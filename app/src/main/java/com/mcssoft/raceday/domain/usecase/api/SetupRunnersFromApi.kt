@@ -79,7 +79,9 @@ class SetupRunnersFromApi @Inject constructor(
                         Status.Scheduled -> {}
                         Status.Cancelled -> {}
                         Status.Failed -> {
-                            throw Exception(context.resources.getString(R.string.failure_runners_worker))
+                            throw Exception(
+                                context.resources.getString(R.string.failure_runners_worker)
+                            )
                         }
                         Status.Succeeded -> {
                             Toast.makeText(

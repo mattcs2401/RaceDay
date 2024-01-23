@@ -63,7 +63,7 @@ fun SettingsScreen(
             Column {
                 SettingsItem(
                     settingsState = state.sourceFromApi,
-                    title = stringResource(id = R.string.id_source_from_api) ,
+                    title = stringResource(id = R.string.id_source_from_api),
                     description = stringResource(id = R.string.id_source_from_api_desc),
                     enabled = true,
                     onEvent = onEvent,
@@ -72,7 +72,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.width(width8dp))
                 SettingsItem(
                     settingsState = state.autoAddTrainers,
-                    title = stringResource(id = R.string.id_auto_add_trainers) ,
+                    title = stringResource(id = R.string.id_auto_add_trainers),
                     description = stringResource(id = R.string.id_auto_add_trainers_desc),
                     enabled = true,
                     onEvent = onEvent,
@@ -81,14 +81,13 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.width(width8dp))
                 SettingsItem(
                     settingsState = state.useNotifications,
-                    title = stringResource(id = R.string.id_use_notifications) ,
+                    title = stringResource(id = R.string.id_use_notifications),
                     description = stringResource(id = R.string.id_use_notifications_desc),
                     enabled = true,
                     onEvent = onEvent,
                     eventType = EventType.USE_NOTIFICATIONS
                 )
             }
-
         }
     }
 }

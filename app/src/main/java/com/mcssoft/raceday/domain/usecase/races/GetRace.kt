@@ -26,7 +26,6 @@ class GetRace @Inject constructor(
             val race = iDbRepo.getRace(raceId)
 
             emit(DataResult.success(race))
-
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }

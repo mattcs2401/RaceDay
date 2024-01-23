@@ -11,31 +11,34 @@ import androidx.room.PrimaryKey
         Index(
             value = ["mtgId", "venueMnemonic", "raceNumber"],
             unique = true
-        )],
+        )
+    ],
     foreignKeys = [
         ForeignKey(
             entity = Meeting::class,
             parentColumns = ["_id"],
             childColumns = ["mtgId"],
             onDelete = ForeignKey.CASCADE
-        )]
+        )
+    ]
 )
 data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
-    var mtgId: Long,                   // "foreign" key (_id of the Meeting record).
+    var mtgId: Long,
 
-    var sellCode: String,              //
-    var venueMnemonic: String,         // venue code.
+    var sellCode: String,
+    var venueMnemonic: String,
 
-    var raceNumber: Int,               // e.g. 1
-    var raceClassConditions: String?,  // e.g. "3YO MDN"
-    var raceName: String,              // e.g. "THE LAKEHOUSE QTIS 3YO MAIDEN HANDICAP"
-    var raceStartTime: String,         // e.g. "2023-09-24T03:10:00.000Z"
-    var raceDistance: Int,             // e.g. 1600
-    var raceStatus: String,            // for anything Abandoned.
-    var hasScratchings: Boolean        // flag for Scratchings exist.
+    var raceNumber: Int,
+    var raceClassConditions: String?,
+    var raceName: String,
+    var raceStartTime: String,
+    var raceDistance: Int,
+    var raceStatus: String,
+    var hasScratchings: Boolean
 )
+
 /*
 DTO class:
 data class RaceDto(

@@ -43,7 +43,7 @@ fun SettingsItem(
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
     var isChecked by remember { mutableStateOf(false) }
-    isChecked = settingsState//.sourceFromApi
+    isChecked = settingsState
 
     Card(
         modifier = Modifier
@@ -55,7 +55,7 @@ fun SettingsItem(
     ) {
         ConstraintLayout(
             constraintSet
-        ){
+        ) {
             Text(
                 text = title,
                 Modifier.layoutId("idLabel"),
@@ -102,5 +102,4 @@ private val constraintSet = ConstraintSet {
         start.linkTo(idLabel.start, margin = margin0dp)
         bottom.linkTo(parent.bottom, margin = margin16dp)
     }
-
 }

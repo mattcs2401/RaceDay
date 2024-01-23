@@ -40,11 +40,15 @@ class AlarmReceiver : BroadcastReceiver() {
         fun notificationManager(): INotification
         fun notificationBuilder(): INotification
         fun dbAccess(): IDbRepo
+        fun scheduleAlarm(): IAlarm
+        fun cancelAlarm(): IAlarm
     }
 
     private lateinit var notificationManager: NotificationManagerCompat
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private lateinit var dataAccess: IDbRepo
+    private lateinit var scheduleAlarm: IAlarm
+    private lateinit var cancelAlarm: IAlarm
 
     override fun onReceive(context: Context, intent: Intent?) {
         when (intent?.action) {
@@ -164,13 +168,14 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun setEntryPoints(context: Context) {
         val entryPoints =
             EntryPointAccessors.fromApplication(context, IEntryPoints::class.java)
+        // Notification.
         notificationManager = entryPoints.notificationManager().getNotificationManager()
-
-        notificationBuilder =
-            entryPoints.notificationBuilder()
-                .getNotificationBuilder()
-
+        notificationBuilder = entryPoints.notificationBuilder().getNotificationBuilder()
+        // Database access.
         dataAccess = entryPoints.dbAccess()
+        // Alarm Schedule and Cancel.
+        scheduleAlarm = entryPoints.scheduleAlarm()
+        cancelAlarm = entryPoints.cancelAlarm()
     }
 }
 private fun BroadcastReceiver.goAsync(

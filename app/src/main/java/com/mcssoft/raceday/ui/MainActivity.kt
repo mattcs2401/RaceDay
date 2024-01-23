@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mcssoft.raceday.ui.components.navigation.NavGraph
 import com.mcssoft.raceday.ui.theme.RaceDayBasicTheme
-import com.mcssoft.raceday.utility.alarm.IAlarmScheduler
+import com.mcssoft.raceday.utility.alarm.IAlarm
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,15 +18,17 @@ class MainActivity : ComponentActivity() {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface IEntryPoints {
-        fun schedule(): IAlarmScheduler
-        fun cancel(): IAlarmScheduler
+        fun schedule(): IAlarm
+        fun cancel(): IAlarm
     }
 
-    private lateinit var schedule: IAlarmScheduler
-    private lateinit var cancel: IAlarmScheduler
+    private lateinit var schedule: IAlarm
+    private lateinit var cancel: IAlarm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         val entryPoints =
             EntryPointAccessors.fromApplication(this, IEntryPoints::class.java)

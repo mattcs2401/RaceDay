@@ -7,14 +7,19 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Runner",
-    indices = [Index(value = ["raceId", "isScratched", "isChecked"])],
+    indices = [
+        Index(
+            value = ["raceId", "isScratched", "isChecked"]
+        )
+    ],
     foreignKeys = [
         ForeignKey(
             entity = Race::class,
             parentColumns = ["_id"],
             childColumns = ["raceId"],
             onDelete = ForeignKey.CASCADE
-        )]
+        )
+    ]
 )
 data class Runner(
     @PrimaryKey(autoGenerate = true)
@@ -34,9 +39,10 @@ data class Runner(
     var handicapWeight: Double,
 
     // Additional, not in the Dto.
-    var isScratched: Boolean,          // Flag, Runner is a scratching.
-    var isChecked: Boolean             // For Summary use.
+    var isScratched: Boolean,
+    var isChecked: Boolean
 )
+
 /*
     {
       "runnerName": "STORM FORCE TEN",

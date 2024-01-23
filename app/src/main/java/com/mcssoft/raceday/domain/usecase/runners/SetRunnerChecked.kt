@@ -29,7 +29,6 @@ class SetRunnerChecked @Inject constructor(
             updateRunnerForChecked(race, runner)
 
             emit(DataResult.success(""))
-
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
@@ -41,7 +40,7 @@ class SetRunnerChecked @Inject constructor(
     private suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
         iDbRepo.updateRunner(runner)
 
-        if(runner.isChecked) {
+        if (runner.isChecked) {
             val summaryDto = SummaryDto(
                 race._id,
                 runner._id,
@@ -62,5 +61,4 @@ class SetRunnerChecked @Inject constructor(
             }
         }
     }
-
 }

@@ -29,9 +29,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onEvent(event: SettingsEvent) {
-        when(event) {
+        when (event) {
             is SettingsEvent.Checked -> {
-                when(event.type) {
+                when (event.type) {
                     is SettingsEvent.EventType.SOURCE_FROM_API -> {
                         viewModelScope.launch(Dispatchers.IO) {
                             setSourceFromApi(event.checked)
@@ -48,12 +48,11 @@ class SettingsViewModel @Inject constructor(
                         }
                     }
                 }
-
             }
         }
     }
 
-    //<editor-fold default state="collapsed" desc="Region: Preferences methods">
+    // <editor-fold default state="collapsed" desc="Region: Preferences methods">
     private suspend fun getSourceFromApi(): Boolean {
         return userPrefs.data.first().sourceFromApi
     }
@@ -83,5 +82,5 @@ class SettingsViewModel @Inject constructor(
             pref.copy(useNotifications = newValue)
         }
     }
-    //</editor-fold>
+    // </editor-fold>
 }

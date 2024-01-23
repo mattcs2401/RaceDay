@@ -36,13 +36,15 @@ class SetupBaseFromApi @Inject constructor(
             // GET from the Api (as BaseDto).
             val response = iRemoteRepo.getRaceDay(mtgDate)
 
-            when(response.status) {
+            when (response.status) {
                 is Status.Exception -> {
-                    when(response.ex) {
+                    when (response.ex) {
                         is UnknownHostException -> {
-                            emit(DataResult.failure(
-                                context.resources.getString(R.string.unknown_host),
-                                context.resources.getString(R.string.check_network_conn))
+                            emit(
+                                DataResult.failure(
+                                    context.resources.getString(R.string.unknown_host),
+                                    context.resources.getString(R.string.check_network_conn)
+                                )
                             )
                             return@flow
                         }
@@ -53,7 +55,10 @@ class SetupBaseFromApi @Inject constructor(
                     }
                 }
                 is Status.Error -> {
-                    Log.d("TAG","[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}")
+                    Log.d(
+                        "TAG",
+                        "[SetupBaseFromApi] NetworkResponse.Status.Error: ${response.errorCode}"
+                    )
                     emit(DataResult.error(response.errorCode))
                     return@flow
                 }
@@ -61,23 +66,19 @@ class SetupBaseFromApi @Inject constructor(
                     // Simply delete whatever is there.
                     iDbRepo.deleteAll()
                 }
-                //else -> {}
             }
-
             // Save Meeting/Race info.
             response.body.meetings.filter { type ->
                 (type.raceType == Constants.MEETING_TYPE) &&
-                (type.location in Constants.LOCATIONS) &&
-                (!type.venueMnemonic.isNullOrBlank())      // from testing.
+                    (type.location in Constants.LOCATIONS) &&
+                    (!type.venueMnemonic.isNullOrBlank()) // from testing.
             }.forEach { meetingDto ->
                 // Note: Any Scratchings also processed here.
                 iDbRepo.insertMeetingAndRaces(meetingDto, meetingDto.races)
             }
-
             emit(DataResult.success(response.errorCode))
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }
-
 }

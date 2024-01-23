@@ -1,7 +1,6 @@
 package com.mcssoft.raceday.hilt
 
 import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -25,7 +24,7 @@ object NotifyModule {
         return NotificationChannel(
             context.resources.getString(R.string.notify_channel_id),
             context.resources.getString(R.string.notify_channel_name),
-            NotificationManager.IMPORTANCE_DEFAULT
+            android.app.NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = context.resources.getString(R.string.notify_channel_desc)
         }
