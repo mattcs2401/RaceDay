@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
+//    id("androidx.room")
 }
 android {
     compileSdk 34
@@ -46,6 +47,9 @@ android {
         disable 'UnusedMaterialScaffoldPaddingParameter'
         quiet false
     }
+//    room {
+//        schemaDirectory("$projectDir/schemas")
+//    }
 }
 
 dependencies {

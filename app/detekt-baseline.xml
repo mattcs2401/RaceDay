@@ -131,7 +131,7 @@
     <ID>NewLineAtEndOfFile:RunnersViewModel.kt$com.mcssoft.raceday.ui.components.runners.RunnersViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:Scratching.kt$com.mcssoft.raceday.domain.model.Scratching.kt</ID>
     <ID>NewLineAtEndOfFile:SellCodeDto.kt$com.mcssoft.raceday.domain.dto.SellCodeDto.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsViewModel.kt$com.mcssoft.raceday.ui.components.settings.SettingsViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsViewModel.kt$com.mcssoft.raceday.ui.components.preferences.SettingsViewModel.kt</ID>
     <ID>NewLineAtEndOfFile:SetupBaseFromLocal.kt$com.mcssoft.raceday.domain.usecase.local.SetupBaseFromLocal.kt</ID>
     <ID>NewLineAtEndOfFile:SetupRunnersFromApi.kt$com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi.kt</ID>
     <ID>NewLineAtEndOfFile:Shape.kt$com.mcssoft.raceday.ui.theme.Shape.kt</ID>

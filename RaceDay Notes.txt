@@ -28,26 +28,23 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 ==========
   TO DO:
 ==========
+--> General
+    Use Date() or equivalent instead of converting to/from millis.
 
-*** Turn off alarm if no Summaries to notify. ***
+--> Alarm
+    Turn off alarm if no Summaries to notify.
 
-------------
 --> Summary
-------------
     Races past time to end of list so next to go always on top.
     Tech: Probably need to do as two lists then join.
---------------
+
 --> Scratching
---------------
     Scratchings to end of the list. See similar for Summaries.
-----------
+
 --> Horses
-----------
     Names starting with "Mr" or "Mister".
 
------------------
 --> Notifications
------------------
     Popup when on another screen, i.e. app is in background.
     Silent (as an option?).
 
