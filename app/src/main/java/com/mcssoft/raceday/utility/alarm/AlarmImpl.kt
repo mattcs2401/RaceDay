@@ -5,20 +5,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.datastore.core.DataStore
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.DateUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AlarmImpl @Inject constructor(
     private val context: Context,
-    private val alarmManager: AlarmManager,
-    private val userPrefs: DataStore<UserPreferences>
+    private val alarmManager: AlarmManager
 ) : IAlarm {
 /*
   Note:
@@ -28,9 +24,7 @@ class AlarmImpl @Inject constructor(
     override fun scheduleAlarm() {
         CoroutineScope(Dispatchers.IO).launch {
             // Only if the Preference is set.
-            if (userPrefs.data.first().useNotifications) {
                 Log.d("TAG", "Alarm scheduled.")
-
                 val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
                     PendingIntent.getBroadcast(
                         context,
@@ -52,7 +46,6 @@ class AlarmImpl @Inject constructor(
                     alarmIntervalTime,
                     alarmIntent
                 )
-            }
         }
     }
 

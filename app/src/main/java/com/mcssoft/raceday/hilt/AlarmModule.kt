@@ -2,8 +2,6 @@ package com.mcssoft.raceday.hilt
 
 import android.app.AlarmManager
 import android.content.Context
-import androidx.datastore.core.DataStore
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.utility.alarm.AlarmImpl
 import com.mcssoft.raceday.utility.alarm.IAlarm
 import dagger.Module
@@ -28,13 +26,11 @@ object AlarmModule {
     @Provides
     fun provideAlarmScheduler(
         @ApplicationContext context: Context,
-        alarmManger: AlarmManager,
-        userPrefs: DataStore<UserPreferences>
+        alarmManger: AlarmManager
     ): IAlarm {
         return AlarmImpl(
             context,
-            alarmManger,
-            userPrefs
+            alarmManger
         )
     }
 }

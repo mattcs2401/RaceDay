@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
@@ -18,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val useCases: UseCases,
-    private val userPrefs: DataStore<UserPreferences>,
     private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
@@ -49,7 +45,7 @@ class SplashViewModel @Inject constructor(
                 }
                 .collect { status ->
                     connectivityState = status
-            }
+                }
         }
         when (connectivityState) {
             is Status.Available -> {
@@ -58,17 +54,12 @@ class SplashViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             date = date,
-                            hasInternet = true,
-                            sourceFromApi = userPrefs.data.first().sourceFromApi
+                            hasInternet = true
                         )
                     }
                     _state.emit(state.value)
 
-                   if(state.value.sourceFromApi) {
-                       setupBaseFromApi(date)
-                   } else {
-                        stateSuccess(200, "")
-                   }
+                    setupBaseFromApi(date)
                 }
             }
             is Status.Unavailable -> {
@@ -84,7 +75,7 @@ class SplashViewModel @Inject constructor(
     }
 
     fun onEvent(event: SplashEvent) {
-        when(event) {
+        when (event) {
             is SplashEvent.Error -> {
                 event.activity.finishAndRemoveTask()
             }
@@ -124,7 +115,6 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-
     /**
      * Use case: SetupRunnersFromApi.
      * Get the raw data from the Api (Runners).
@@ -134,7 +124,7 @@ class SplashViewModel @Inject constructor(
     private fun setupRunnersFromApi() {
         viewModelScope.launch {
             useCases.setupRunnersFromApi().collect { result ->
-                when(result.status) {
+                when (result.status) {
                     is DataResult.Status.Loading -> {
                         stateLoading("Loading Runners from API.")
                     }
@@ -143,7 +133,7 @@ class SplashViewModel @Inject constructor(
                         stateError(result.errorCode)
                     }
                     is DataResult.Status.Success -> {
-                        Log.d("TAG","[SplashViewModel] setupRunnersFromApi result.successful")
+                        Log.d("TAG", "[SplashViewModel] setupRunnersFromApi result.successful")
                         stateSuccess(result.errorCode, "Setup Runners from Api success.")
                     }
                     is DataResult.Status.Failure -> {
@@ -155,7 +145,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    //<editor-fold default state="collapsed" desc="Region: Utility methods">
+    // <editor-fold default state="collapsed" desc="Region: Utility methods">
     private fun stateLoading(msg: String) {
         _state.update {
             it.copy(
@@ -225,5 +215,5 @@ class SplashViewModel @Inject constructor(
             }
         }
     }
-    //</editor-fold>
+    // </editor-fold>
 }

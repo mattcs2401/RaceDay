@@ -1,9 +1,0 @@
- package com.mcssoft.raceday.data.repository.preferences.user
-
- import kotlinx.serialization.Serializable
-
- @Serializable
- data class UserPreferences(
-    var sourceFromApi: Boolean = true, // source app data from the Api.
-    var useNotifications: Boolean = true // use notifications to display upcoming Summary.
- )

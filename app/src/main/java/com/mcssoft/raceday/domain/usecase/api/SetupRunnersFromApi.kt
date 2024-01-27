@@ -2,7 +2,6 @@ package com.mcssoft.raceday.domain.usecase.api
 
 import android.content.Context
 import android.widget.Toast
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.asFlow
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -10,7 +9,6 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.user.UserPreferences
 import com.mcssoft.raceday.domain.dto.SummaryDto
 import com.mcssoft.raceday.domain.dto.toSummary
 import com.mcssoft.raceday.domain.model.Runner
@@ -22,7 +20,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
@@ -34,12 +31,10 @@ import javax.inject.Inject
  * Download and save the Runner related data.
  * @param iDbRepo: Local DB access.
  * @param context: For string resources.
- * @param userPrefs: Access to app preferences.
  */
 class SetupRunnersFromApi @Inject constructor(
     private val iDbRepo: IDbRepo,
-    private val context: Context,
-    private val userPrefs: DataStore<UserPreferences>
+    private val context: Context
 ) {
     private val workManager = WorkManager.getInstance(context)
 
@@ -96,8 +91,6 @@ class SetupRunnersFromApi @Inject constructor(
             lRunners.forEach { runner ->
                 setForSummary(runner)
             }
-            // Turn off user prefs.
-            userPrefs.data.first().sourceFromApi = false
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }

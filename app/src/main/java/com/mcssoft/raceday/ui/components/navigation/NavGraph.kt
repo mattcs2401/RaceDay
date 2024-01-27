@@ -17,8 +17,6 @@ import com.mcssoft.raceday.ui.components.runner.RunnerScreen
 import com.mcssoft.raceday.ui.components.runner.RunnerViewModel
 import com.mcssoft.raceday.ui.components.runners.RunnersScreen
 import com.mcssoft.raceday.ui.components.runners.RunnersViewModel
-import com.mcssoft.raceday.ui.components.settings.SettingsScreen
-import com.mcssoft.raceday.ui.components.settings.SettingsViewModel
 import com.mcssoft.raceday.ui.components.splash.SplashScreen
 import com.mcssoft.raceday.ui.components.splash.SplashViewModel
 import com.mcssoft.raceday.ui.components.summary.SummaryScreen
@@ -100,19 +98,6 @@ fun NavGraph() {
                 state = state,
 //                onEvent = viewModel::onEvent,
 //                navController = navController
-            )
-        }
-
-        // Settings screen.
-        composable(
-            route = Screens.SettingsScreen.route
-        ){
-            val viewModel = hiltViewModel<SettingsViewModel>()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            SettingsScreen(
-                state = state,
-                onEvent = viewModel::onEvent,
-                navController = navController
             )
         }
 
