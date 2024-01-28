@@ -28,9 +28,6 @@ object AlarmModule {
         @ApplicationContext context: Context,
         alarmManger: AlarmManager
     ): IAlarm {
-        return AlarmImpl(
-            context,
-            alarmManger
-        )
+        return AlarmImpl(context, alarmManger)
     }
 }

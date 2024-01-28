@@ -7,6 +7,7 @@ import com.mcssoft.raceday.utility.DateUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
@@ -21,28 +22,26 @@ class GetSummaries @Inject constructor(
     private val externalScope: CoroutineScope
 ) {
     operator fun invoke(): Flow<DataResult<List<Summary>>> = flow {
-        try {
-            emit(DataResult.loading())
+        emit(DataResult.loading())
 
-            val lSummaries = iDbRepo.getSummaries()
+        val lSummaries = iDbRepo.getSummaries()
 
-            val currentTimeMillis = DateUtils().getCurrentTimeMillis()
+        val currentTimeMillis = DateUtils().getCurrentTimeMillis()
 
-            for (summary in lSummaries) {
-                val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
+        for (summary in lSummaries) {
+            val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
 
-                if (!summary.isPastRaceTime) {
-                    if (currentTimeMillis > raceTime) {
-                        summary.isPastRaceTime = true
+            if (!summary.isPastRaceTime) {
+                if (currentTimeMillis > raceTime) {
+                    summary.isPastRaceTime = true
 
-                        iDbRepo.updateSummary(summary)
-                    }
+                    iDbRepo.updateSummary(summary)
                 }
             }
-            emit(DataResult.success(lSummaries))
-        } catch (ex: Exception) {
-            emit(DataResult.failure(ex))
         }
+        emit(DataResult.success(lSummaries))
+    }.catch { ex ->
+        emit(DataResult.failure(ex as Exception))
     }.shareIn(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1

@@ -19,6 +19,7 @@ import com.mcssoft.raceday.utility.worker.WorkerState.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -64,33 +65,39 @@ class SetupRunnersFromApi @Inject constructor(
                     .build()
                 workManager.enqueue(runnersWorker)
 
-                observeRunnerWorker(runnersWorker.id).collect { result ->
-                    when (result) {
-                        Status.Scheduled -> {}
-                        Status.Cancelled -> {}
-                        Status.Failed -> {
-                            throw Exception(
-                                context.resources.getString(R.string.failure_runners_worker)
-                            )
-                        }
-                        Status.Succeeded -> {
-                            Toast.makeText(
-                                context,
-                                "${context.resources.getString(R.string.toast_runners_for)} $code",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                            emit(DataResult.success(""))
-                        }
-                        else -> {}
+                observeRunnerWorker(runnersWorker.id)
+                    .catch { ex ->
+                        throw ex
                     }
-                }
+                    .collect { result ->
+                        when (result) {
+                            Status.Scheduled -> {}
+                            Status.Cancelled -> {}
+                            Status.Failed -> {
+                                val ex = Exception(
+                                    context.resources.getString(R.string.failure_runners_worker)
+                                )
+                                emit(DataResult.failure(ex))
+                            }
+                            Status.Succeeded -> {
+                                Toast.makeText(
+                                    context,
+                                    "${context.resources.getString(R.string.toast_runners_for)} $code",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                                emit(DataResult.success(""))
+                            }
+                            else -> {}
+                        }
+                    }
             }
             // Update the Summary with any checked Runners.
             val lRunners = iDbRepo.getCheckedRunners()
             lRunners.forEach { runner ->
                 setForSummary(runner)
             }
+            emit(DataResult.success(""))
         } catch (ex: Exception) {
             emit(DataResult.failure(ex))
         }

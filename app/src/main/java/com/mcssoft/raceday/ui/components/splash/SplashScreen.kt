@@ -27,7 +27,6 @@ fun SplashScreen(
     navController: NavController,
     onEvent: (SplashEvent) -> Unit
 ) {
-
     Scaffold {
         Box(
             modifier = Modifier
@@ -111,7 +110,7 @@ fun ShowErrorDialog(
  * This is basically for unrecoverable errors, as exits application.
  */
 @Composable
-fun ShowExceptionErrorDialog (
+fun ShowExceptionErrorDialog(
     state: SplashState,
     onEvent: (SplashEvent) -> Unit
 ) {

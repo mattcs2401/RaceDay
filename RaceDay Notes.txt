@@ -44,13 +44,12 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 --> Horses
     Names starting with "Mr" or "Mister".
 
---> Notifications
-    Popup when on another screen, i.e. app is in background.
-    Silent (as an option?).
-
 -----
 Other
 -----
+--> Create/save a "cache" to emit into the flow when an exception occurs.
+    i.e. getting data but an exception occurs so just reload existing data.
+
 --> Better use of SavedStateHandle. Refer Point 2 of:
     https://www.youtube.com/watch?v=JfCivo5qJkI
 
@@ -74,13 +73,12 @@ Other
 
 --> Better error notification from Worker back to ... ?
 
-
 --------------
 Notifications:
 --------------
 
 -> New notification adds to the list of others there:
-   -> Pops up for a few seconds on initial display.
+   -> Pops up for a few seconds on initial display (heads up ?).
    -> Don't want sound.
 
 -> Need a notification actions button:
@@ -98,7 +96,6 @@ Other updates based on:
 -> Lazy column lag - https://www.youtube.com/watch?v=s8h7GJTZa4E
 -> Foreground Services -  https://www.youtube.com/watch?v=YZL-_XJSClc
 -> https://stackoverflow.com/questions/22741202/how-to-use-goasync-for-broadcastreceiver
-
 
 -------------------
 Performance Issues:

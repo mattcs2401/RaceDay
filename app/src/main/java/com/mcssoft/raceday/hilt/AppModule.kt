@@ -3,7 +3,6 @@ package com.mcssoft.raceday.hilt
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.datastore.core.DataStore
 import androidx.room.Room
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.data.datasource.database.RaceDayDb
@@ -112,7 +111,6 @@ object AppModule {
     ): UseCases {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local, context),
-//            setupBaseFromLocal = SetupBaseFromLocal(local),
             setupRunnersFromApi = SetupRunnersFromApi(local, context),
             getMeeting = GetMeeting(local, scope),
             getMeetings = GetMeetings(local, scope),

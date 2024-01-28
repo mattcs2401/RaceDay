@@ -6,6 +6,7 @@ import com.mcssoft.raceday.utility.DataResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
@@ -20,15 +21,13 @@ class GetRunners @Inject constructor(
     private val externalScope: CoroutineScope
 ) {
     operator fun invoke(raceId: Long): Flow<DataResult<List<Runner>>> = flow {
-        try {
-            emit(DataResult.loading())
+        emit(DataResult.loading())
 
-            val runners = iDbRepo.getRunners(raceId)
+        val runners = iDbRepo.getRunners(raceId)
 
-            emit(DataResult.success(runners))
-        } catch (exception: Exception) {
-            emit(DataResult.failure(exception))
-        }
+        emit(DataResult.success(runners))
+    }.catch { ex ->
+        emit(DataResult.failure(ex as Exception))
     }.shareIn(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1

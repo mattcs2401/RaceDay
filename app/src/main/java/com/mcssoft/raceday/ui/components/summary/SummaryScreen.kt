@@ -75,41 +75,42 @@ fun SummaryScreen(
                     onDismiss = {}
                 )
             }
-            is SummaryState.Status.Failure -> {}
+            is SummaryState.Status.Failure -> { /* TBA */}
             is SummaryState.Status.Success -> {
-                // Summaries listing.
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    items(
-                        items = state.summaries.sortedBy { summary ->
-                            summary.raceStartTime
-                        },
-                        key = { it._id }
-                    ) { summary ->
-                        SummaryItem(
-                            summary = summary,
-                            onItemClick = {
-                                navController.navigate(
-                                    Screens.RunnerScreen.route + "runnerId=${summary.runnerId}"
-                                )
-                            }
+                if (state.summaries.isEmpty()) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                    ) {
+                        Text(
+                            stringResource(id = R.string.nothing_to_show),
+                            modifier = Modifier.align(Alignment.Center)
                         )
                     }
+                } else {
+                    // Summaries listing.
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        items(
+                            items = state.summaries.sortedBy { summary ->
+                                summary.raceStartTime
+                            },
+                            key = { it._id }
+                        ) { summary ->
+                            SummaryItem(
+                                summary = summary,
+                                onItemClick = {
+                                    navController.navigate(
+                                        Screens.RunnerScreen.route + "runnerId=${summary.runnerId}"
+                                    )
+                                }
+                            )
+                        }
+                    }
                 }
-            }
-        }
-        if (state.summaries.isEmpty()) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-                Text(
-                    stringResource(id = R.string.nothing_to_show),
-                    modifier = Modifier.align(Alignment.Center)
-                )
             }
         }
     }
