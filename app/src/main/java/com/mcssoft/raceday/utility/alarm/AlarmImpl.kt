@@ -23,29 +23,28 @@ class AlarmImpl @Inject constructor(
  */
     override fun scheduleAlarm() {
         CoroutineScope(Dispatchers.IO).launch {
-            // Only if the Preference is set.
-                Log.d("TAG", "Alarm scheduled.")
-                val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-                    PendingIntent.getBroadcast(
-                        context,
-                        this.hashCode(),
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
-                }
-
-                // TODO - trigger times from app prefs ?
-                // Trigger in about 30 seconds.
-                val alarmTriggerTime = DateUtils().getCurrentTimeMillis() + Constants.THIRTY_SECONDS
-                // Recur about every 5 minutes.
-                val alarmIntervalTime = Constants.FIVE_MINUTES
-
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    alarmTriggerTime,
-                    alarmIntervalTime,
-                    alarmIntent
+            Log.d("TAG", "Alarm scheduled.")
+            val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+                PendingIntent.getBroadcast(
+                    context,
+                    this.hashCode(),
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
+            }
+
+            // TODO - trigger times from app prefs ?
+            // Trigger in about 30 seconds.
+            val alarmTriggerTime = DateUtils().getCurrentTimeMillis() + Constants.THIRTY_SECONDS
+            // Recur about every 5 minutes.
+            val alarmIntervalTime = Constants.FIVE_MINUTES
+
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                alarmTriggerTime,
+                alarmIntervalTime,
+                alarmIntent
+            )
         }
     }
 

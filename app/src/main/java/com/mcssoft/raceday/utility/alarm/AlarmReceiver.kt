@@ -131,6 +131,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun buildView(context: Context, summary: Summary, pendingIntent: PendingIntent): RemoteViews {
         return RemoteViews(context.packageName, R.layout.layout_notification).also { rvs ->
             rvs.setTextViewText(R.id.id_sellCode, summary.sellCode)
+            rvs.setTextViewText(R.id.id_venueMnemonic, summary.venueMnemonic)
             rvs.setTextViewText(R.id.id_raceNumber, summary.raceNumber.toString())
             rvs.setTextViewText(R.id.id_runnerNumber, "(H${summary.runnerNumber})")
             rvs.setTextViewText(R.id.id_raceTime, summary.raceStartTime)
@@ -178,6 +179,7 @@ class AlarmReceiver : BroadcastReceiver() {
         cancelAlarm = entryPoints.cancelAlarm()
     }
 }
+
 private fun BroadcastReceiver.goAsync(
     context: CoroutineContext = EmptyCoroutineContext,
     codeBlock: suspend CoroutineScope.() -> Unit

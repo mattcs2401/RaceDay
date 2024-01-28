@@ -95,9 +95,7 @@ fun SummaryScreen(
                             .fillMaxSize()
                     ) {
                         items(
-                            items = state.summaries.sortedBy { summary ->
-                                summary.raceStartTime
-                            },
+                            items = state.summaries,
                             key = { it._id }
                         ) { summary ->
                             SummaryItem(

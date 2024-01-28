@@ -53,10 +53,6 @@ Other
 --> Better use of SavedStateHandle. Refer Point 2 of:
     https://www.youtube.com/watch?v=JfCivo5qJkI
 
---> Don't do Summary items for Races that are abandoned.
-
---> Something that indicates a bet has been made for a Summary item.
-
 --> Race time in the Summary is displaying incorrectly for evening/night races.
    -> Manually check data from API ?
 

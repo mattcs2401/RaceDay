@@ -26,8 +26,8 @@ class GetRunners @Inject constructor(
         val runners = iDbRepo.getRunners(raceId)
 
         emit(DataResult.success(runners))
-    }.catch { ex ->
-        emit(DataResult.failure(ex as Exception))
+    }.catch {
+        emit(DataResult.failure(it as Exception))
     }.shareIn(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1

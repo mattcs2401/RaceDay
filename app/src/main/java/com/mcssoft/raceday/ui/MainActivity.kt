@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         val entryPoints =
             EntryPointAccessors.fromApplication(this, IEntryPoints::class.java)
         schedule = entryPoints.schedule()

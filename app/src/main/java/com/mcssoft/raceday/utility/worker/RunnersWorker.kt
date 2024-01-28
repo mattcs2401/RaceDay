@@ -11,6 +11,7 @@ import com.mcssoft.raceday.data.repository.remote.IRemoteRepo
 import com.mcssoft.raceday.data.repository.remote.NetworkResponse
 import com.mcssoft.raceday.domain.dto.BaseDto2
 import com.mcssoft.raceday.domain.model.Race
+import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -42,7 +43,7 @@ class RunnersWorker(
     override suspend fun doWork(): Result {
         return try {
 //            Log.d("TAG", "[RunnersWorker.doWork] starting.")
-            // Get the list of Trainer and Jockey names.
+            // Get the list of Trainer, Jockey and Runner names.
             val trainerNames = context.resources.getStringArray(R.array.trainerNames).toList()
             val jockeyNames = context.resources.getStringArray(R.array.jockeyNames).toList()
             val runnerNames = context.resources.getStringArray(R.array.runnerNamesPrefix).toList()
@@ -69,16 +70,19 @@ class RunnersWorker(
 
                     // Insert records.
                     iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
+                    delay(TWENTY_FIVE) // TBA.
+                    // Get the current lis of Runners for the Race.
+                    val lRunners = iDbRepo.getRunners(race._id)
 
                     if (race.hasScratchings) {
-                        processForScratchings(race)
+                        processForScratchings(race, lRunners)
                     }
 
                     delay(TWENTY_FIVE) // TBA required ?
 
-                    processForTrainers(race, trainerNames)
-                    processForJockeys(race, jockeyNames)
-                    processForRunners(race, runnerNames)
+                    processForTrainers(lRunners, trainerNames)
+                    processForJockeys(lRunners, jockeyNames)
+                    processForRunnerNames(lRunners, runnerNames)
                 }
             }
             Result.success()
@@ -96,13 +100,11 @@ class RunnersWorker(
 * as scratched.
 * @param race: The Race that has associated scratchings.
 */
-    private suspend fun processForScratchings(race: Race) {
-        // The list of Runners for the Race.
-        val lRunners = iDbRepo.getRunners(race._id)
+    private suspend fun processForScratchings(race: Race, runners: List<Runner>) {
         // The list of scratchings.
         val lScratches = iDbRepo.getScratchingsForRace(race.venueMnemonic, race.raceNumber)
 
-        lRunners.forEach { runner ->
+        runners.forEach { runner ->
             lScratches.forEach { scratch ->
                 // Same name and runner number should be enough to be unique.
                 if (scratch.runnerName == runner.runnerName &&
@@ -115,44 +117,37 @@ class RunnersWorker(
         }
     }
 
-    private suspend fun processForTrainers(race: Race, trainerNames: List<String>) {
-        val runners = iDbRepo.getRunners(race._id)
-        val lRunners = runners.filter { runner ->
+    private suspend fun processForTrainers(runners: List<Runner>, trainerNames: List<String>) {
+        runners.filter { runner ->
             !runner.isScratched && runner.trainerName in (trainerNames)
-        }
-
-        if (lRunners.isNotEmpty()) {
-            for (runner in lRunners) {
+        }.also {
+            for (runner in it) {
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }
     }
 
-    private suspend fun processForJockeys(race: Race, jockeyNames: List<String>) {
-        val runners = iDbRepo.getRunners(race._id)
-        val lRunners = runners.filter { runner ->
+    private suspend fun processForJockeys(runners: List<Runner>, jockeyNames: List<String>) {
+        runners.filter { runner ->
             !runner.isScratched && runner.riderDriverName in (jockeyNames)
-        }
-
-        if (lRunners.isNotEmpty()) {
-            for (runner in lRunners) {
+        }.also {
+            for (runner in it) {
                 iDbRepo.updateRunnerChecked(runner._id, true)
             }
         }
     }
 
-    private suspend fun processForRunners(race: Race, runnerNames: List<String>) {
-        val runners = iDbRepo.getRunners(race._id)
-//        val lRunners = runners.filter { runner ->
-//            for (horse in runnerNames) {
-//                !runner.isScratched && runner.runnerName.startsWith(prefix = horse, ignoreCase = true)
-//            }
-//        }
-//
-//        if (lRunners.isNotEmpty()) {
-//            for (runner in lRunners) {
-//                iDbRepo.updateRunnerChecked(runner._id, true)
-//            }
-//        }
+    private suspend fun processForRunnerNames(runners: List<Runner>, runnerNames: List<String>) {
+        runners.filter { runner ->
+            !runner.isScratched
+        }.also {
+            for (name in runnerNames) {
+                for (runner in it) {
+                    if (runner.runnerName.startsWith(prefix = name, ignoreCase = true)) {
+                        iDbRepo.updateRunnerChecked(runner._id, true)
+                    }
+                }
+            }
+        }
     }
 }

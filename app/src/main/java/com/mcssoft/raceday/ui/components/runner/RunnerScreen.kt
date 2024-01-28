@@ -23,10 +23,10 @@ import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
 
-@Composable
 /**
  * @param state: Runner state.
  */
+@Composable
 fun RunnerScreen(
     state: RunnerState
 ) {
@@ -39,23 +39,24 @@ fun RunnerScreen(
             TopBar(
                 title = stringResource(id = R.string.label_runner),
                 backgroundColour = MaterialTheme.colors.primary,
-                actions = {}      // TBA.
+                actions = { /*TBA*/ }
             )
         }
-    ){
-        when(state.status) {
+    ) {
+        when (state.status) {
             is Status.Loading -> {
                 LoadingDialog(
                     titleText = stringResource(id = R.string.dlg_loading_runner),
                     msgText = stringResource(id = R.string.dlg_loading_msg)
                 )
             }
-            is Status.Failure -> {}    // TBA.
+            is Status.Failure -> { /*TBA*/ }
             is Status.Success -> {
                 // Runner detail.
                 val runner = state.runner
-                Box(Modifier.fillMaxSize()
-                    .background(MaterialTheme.colors.secondary)
+                Box(
+                    Modifier.fillMaxSize()
+                        .background(MaterialTheme.colors.secondary)
                 ) {
                     Column(
                         Modifier.padding(padding8dp)
@@ -79,18 +80,19 @@ fun RunnerScreen(
     }
 }
 
-@Composable
 /**
  * Build a Row with two Columns.
  * @param label: Text to display in the left hand column.
  * @param value: Value to display in the right hand column.
  */
+@Composable
 fun BuildRow(label: String, value: String) {
     Row {
         // Left column.
-        Column(Modifier
-            .padding(8.dp)
-            .weight(thirty3Percent)
+        Column(
+            Modifier
+                .padding(8.dp)
+                .weight(thirty3Percent)
         ) {
             Text(
                 label,
@@ -98,9 +100,10 @@ fun BuildRow(label: String, value: String) {
             )
         }
         // Right column.
-        Column(Modifier
-            .padding(8.dp)
-            .weight(sixty7Percent)
+        Column(
+            Modifier
+                .padding(8.dp)
+                .weight(sixty7Percent)
         ) {
             Text(
                 value,

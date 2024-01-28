@@ -21,27 +21,46 @@ class GetSummaries @Inject constructor(
     private val iDbRepo: IDbRepo,
     private val externalScope: CoroutineScope
 ) {
+    private var lTemp = listOf<Summary>()
+
     operator fun invoke(): Flow<DataResult<List<Summary>>> = flow {
         emit(DataResult.loading())
 
-        val lSummaries = iDbRepo.getSummaries()
+        lTemp = iDbRepo.getSummaries()
 
-        val currentTimeMillis = DateUtils().getCurrentTimeMillis()
+        if (lTemp.isNotEmpty()) {
+            var summaryPair = Pair(listOf<Summary>(), listOf<Summary>())
+            val lSummaries = mutableListOf<Summary>()
+            val currentTimeMillis = DateUtils().getCurrentTimeMillis()
 
-        for (summary in lSummaries) {
-            val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
+            for (summary in lTemp) {
+                val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
 
-            if (!summary.isPastRaceTime) {
-                if (currentTimeMillis > raceTime) {
-                    summary.isPastRaceTime = true
+                if (!summary.isPastRaceTime) {
+                    if (currentTimeMillis > raceTime) {
+                        summary.isPastRaceTime = true
 
-                    iDbRepo.updateSummary(summary)
+                        iDbRepo.updateSummary(summary)
+                    }
                 }
             }
+
+            summaryPair = lTemp.partition {
+                it.isPastRaceTime
+            }.also {
+                lSummaries.addAll(
+                    summaryPair.second.sortedBy { it.raceStartTime }
+                )
+                lSummaries.addAll(
+                    summaryPair.first.sortedBy { it.raceStartTime }
+                )
+            }
+            emit(DataResult.success(lSummaries.toList()))
+        } else {
+            emit(DataResult.success(lTemp)) // an empty list.
         }
-        emit(DataResult.success(lSummaries))
-    }.catch { ex ->
-        emit(DataResult.failure(ex as Exception))
+    }.catch {
+        emit(DataResult.failure(it as Exception))
     }.shareIn(
         scope = externalScope,
         started = SharingStarted.WhileSubscribed() // ,replay = 1

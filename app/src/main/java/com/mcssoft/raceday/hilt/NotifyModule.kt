@@ -24,7 +24,7 @@ object NotifyModule {
         return NotificationChannel(
             context.resources.getString(R.string.notify_channel_id),
             context.resources.getString(R.string.notify_channel_name),
-            android.app.NotificationManager.IMPORTANCE_DEFAULT
+            android.app.NotificationManager.IMPORTANCE_HIGH // DEFAULT
         ).apply {
             description = context.resources.getString(R.string.notify_channel_desc)
         }
@@ -59,7 +59,7 @@ object NotifyModule {
     ): NotificationCompat.Builder {
         val ncb = NotificationCompat.Builder(context, context.resources.getString(R.string.notify_channel_id)).also {
             it.setAutoCancel(false)
-            it.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            it.setPriority(NotificationCompat.PRIORITY_HIGH) // DEFAULT)
             it.setStyle(NotificationCompat.DecoratedCustomViewStyle())
         }
         return ncb
