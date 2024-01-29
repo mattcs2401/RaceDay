@@ -29,7 +29,6 @@ class GetSummaries @Inject constructor(
         lTemp = iDbRepo.getSummaries()
 
         if (lTemp.isNotEmpty()) {
-            var summaryPair = Pair(listOf<Summary>(), listOf<Summary>())
             val lSummaries = mutableListOf<Summary>()
             val currentTimeMillis = DateUtils().getCurrentTimeMillis()
 
@@ -45,14 +44,14 @@ class GetSummaries @Inject constructor(
                 }
             }
 
-            summaryPair = lTemp.partition {
+            lTemp.partition {
                 it.isPastRaceTime
-            }.also {
+            }.also { pair ->
                 lSummaries.addAll(
-                    summaryPair.second.sortedBy { it.raceStartTime }
+                    pair.second.sortedBy { it.raceStartTime }
                 )
                 lSummaries.addAll(
-                    summaryPair.first.sortedBy { it.raceStartTime }
+                    pair.first.sortedBy { it.raceStartTime }
                 )
             }
             emit(DataResult.success(lSummaries.toList()))

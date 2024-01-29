@@ -29,12 +29,12 @@ import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
 
-@Composable
 /**
  * @param state: Runners state.
  * @param navController: The Navigation.
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
+@Composable
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
@@ -65,14 +65,14 @@ fun RunnersScreen(
                 }
             )
         }
-    ){
+    ) {
         // Race header.
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.secondary)
         ) {
-            when(state.status) {
+            when (state.status) {
                 is Status.Loading -> {
                     LoadingDialog(
                         titleText = stringResource(id = R.string.dlg_loading_runners),
@@ -118,7 +118,6 @@ fun RunnersScreen(
                 }
                 else -> {}
             }
-
         }
     }
 }

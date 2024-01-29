@@ -67,7 +67,6 @@ class RunnersWorker(
                 if (race.raceStatus != context.resources.getString(R.string.race_status_abandoned)) {
                     // Get the Runners for a Race. Parameter raceNum as string for Url construct.
                     response = iRemoteRepo.getRaceDayRunners(date!!, code, raceNum.toString())
-
                     // Insert records.
                     iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
                     delay(TWENTY_FIVE) // TBA.

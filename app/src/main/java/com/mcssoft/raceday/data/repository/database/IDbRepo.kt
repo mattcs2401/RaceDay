@@ -31,11 +31,12 @@ interface IDbRepo {
         val meeting = meetingDto.toMeeting() // for sellCode concat.
         val meetingId = insertMeeting(meeting)
 
-        val racesWithMeetingId = racesDto.map { raceDto ->
+        racesDto.map { raceDto ->
             raceDto.raceStartTime = DateUtils().getTime(raceDto.raceStartTime)
             raceDto.toRace(meetingId, meeting.sellCode!!, meeting.venueMnemonic!!)
+        }.also { races ->
+            insertRaces(races)
         }
-        insertRaces(racesWithMeetingId)
 
         // Scratchings info.
         val lScratches = mutableListOf<Scratching>()
@@ -137,11 +138,12 @@ interface IDbRepo {
     suspend fun insertRunners(runners: List<Runner>): List<Long>
 
     @Transaction
-    suspend fun insertRunnersWithRaceId(raceId: Long, runners: List<RunnerDto>) {
-        val runnersWithRaceId = runners.map { runnerDto ->
+    suspend fun insertRunnersWithRaceId(raceId: Long, lRunners: List<RunnerDto>) {
+        lRunners.map { runnerDto ->
             runnerDto.toRunner(raceId)
+        }.also { runners ->
+            insertRunners(runners)
         }
-        insertRunners(runnersWithRaceId)
     }
 
     @Query("select * from Runner where _id = :runnerId")

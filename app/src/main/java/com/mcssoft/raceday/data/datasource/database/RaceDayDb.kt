@@ -23,5 +23,4 @@ import com.mcssoft.raceday.domain.model.Summary
 abstract class RaceDayDb : RoomDatabase() {
 
     abstract fun getRaceDayDao(): IDbRepo
-
 }
