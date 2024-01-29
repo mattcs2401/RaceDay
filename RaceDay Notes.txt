@@ -26,27 +26,27 @@ e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
 
 
 ==========
-  TO DO:
+1st TO DO:
 ==========
+--> Alarm
+    Turn off alarm if no Summaries to notify.
+    -- What if a new Summary item subsequently added ?
+
+--> Scratching
+    Scratchings to end of the list ?
+    Notes:
+    -- The list of scratchings are part of the RaceDto data and the Scratching table is populated as
+       part of the Meeting/Race setup.
+    -- The RunnerWorker then marries up Scratching details to the Runner metadata 'isScratched'
+       (if/as applicable).
+    -- Currently the Runners screen does the sort, but should try to move this out ? to . . ?
+
+------------
+Other TO DO:
+------------
 --> General
     Use Date() or equivalent instead of converting to/from millis.
 
---> Alarm
-    Turn off alarm if no Summaries to notify.
-
---> Summary
-    Races past time to end of list so next to go always on top.
-    Tech: Probably need to do as two lists then join.
-
---> Scratching
-    Scratchings to end of the list. See similar for Summaries.
-
---> Horses
-    Names starting with "Mr" or "Mister".
-
------
-Other
------
 --> Create/save a "cache" to emit into the flow when an exception occurs.
     i.e. getting data but an exception occurs so just reload existing data.
 
