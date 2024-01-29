@@ -18,22 +18,19 @@ class MainActivity : ComponentActivity() {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface IEntryPoints {
-        fun schedule(): IAlarm
-        fun cancel(): IAlarm
+        fun alarm(): IAlarm
     }
 
-    private lateinit var schedule: IAlarm
-    private lateinit var cancel: IAlarm
+    private lateinit var iAlarm: IAlarm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val entryPoints =
             EntryPointAccessors.fromApplication(this, IEntryPoints::class.java)
-        schedule = entryPoints.schedule()
-        cancel = entryPoints.cancel()
+        iAlarm = entryPoints.alarm()
 
-        schedule.scheduleAlarm()
+        iAlarm.scheduleAlarm()
 
         setContent {
             RaceDayBasicTheme {
@@ -44,6 +41,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cancel.cancelAlarm()
+        iAlarm.cancelAlarm()
     }
 }

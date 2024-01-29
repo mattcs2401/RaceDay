@@ -18,82 +18,56 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
--> Race time value in the raw data is not always correct:
-e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000
-     Should be 12:14.
-
--> Got a lot of "_state.emit(state.value)", this really necessary ??
-
-
-==========
-1st TO DO:
-==========
---> Alarm
-    Turn off alarm if no Summaries to notify.
-    -- What if a new Summary item subsequently added ?
-
---> Scratching
-    Scratchings to end of the list ?
-    Notes:
-    -- The list of scratchings are part of the RaceDto data and the Scratching table is populated as
-       part of the Meeting/Race setup.
-    -- The RunnerWorker then marries up Scratching details to the Runner metadata 'isScratched'
-       (if/as applicable).
-    -- Currently the Runners screen does the sort, but should try to move this out ? to . . ?
-
-------------
-Other TO DO:
-------------
---> General
-    Use Date() or equivalent instead of converting to/from millis.
-
---> Create/save a "cache" to emit into the flow when an exception occurs.
-    i.e. getting data but an exception occurs so just reload existing data.
-
---> Better use of SavedStateHandle. Refer Point 2 of:
-    https://www.youtube.com/watch?v=JfCivo5qJkI
-
+--> Race time value in the raw data is not always correct:
+    -> e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000. Should be 12:14.
+        -> Some sort of validation ?
 --> Race time in the Summary is displaying incorrectly for evening/night races.
-   -> Manually check data from API ?
+        -> Check/confirm ?
 
---> App refresh value where all the data is refreshed, i.e from Api ?
-   -> at a certain interval ?
-      -> coroutine worker with delay start probably good choice here
-   -> manual option ?
-   -> what about existing Summary detail
-      -> don't touch or
-      -> rebuild, how ?
-
---> Better error notification back to Splash screen.
-    -> some work done.
-
---> Better error notification from Worker back to ... ?
-
---------------
-Notifications:
---------------
-
--> New notification adds to the list of others there:
-   -> Pops up for a few seconds on initial display (heads up ?).
-   -> Don't want sound.
-
--> Need a notification actions button:
+---------------------------
+Other TO-DO or think about:
+---------------------------
+-> A notification actions button:
    -> go to ... ?
 
-[Reference]
+--> Can we optimise the Alarm any better ?
+
+--> Scratching
+    -- Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
+
+--> Date/Time
+    Use Date() or equivalent instead of converting to/from millis.
+
+--> Reload from the local database if some exception occurs on a refresh from the Api ?
+
+--> Better use of SavedStateHandle.
+    -> Refer Point 2 of: https://www.youtube.com/watch?v=JfCivo5qJkI
+
+--> App refresh value where all the data is refreshed, i.e from Api ?
+    -> at a certain interval ?
+        -> coroutine worker with delay start probably good choice here
+    -> manual option ?
+    -> what about existing Summary detail
+        -> don't touch or
+        -> rebuild, how ?
+
+--> Better error notification
+    -> back to Splash screen.
+    -> from Worker back to ... ?
+
+--> App theme.
+
+------------
+[References]
+------------
 -> https://itnext.io/android-custom-notification-in-6-mins-c2e7e2ddadab
 -> https://itnext.io/android-notification-all-in-one-8df3e1218e0e
 -> https://developer.android.com/develop/ui/views/notifications/custom-notification
 -> https://medium.com/@stevdza-san/create-a-basic-notification-in-android-b0d4fd29ad89
 
------------------------
-Other updates based on:
------------------------
 -> Lazy column lag - https://www.youtube.com/watch?v=s8h7GJTZa4E
 -> Foreground Services -  https://www.youtube.com/watch?v=YZL-_XJSClc
 -> https://stackoverflow.com/questions/22741202/how-to-use-goasync-for-broadcastreceiver
 
--------------------
-Performance Issues:
--------------------
 --> https://www.youtube.com/watch?v=EVVFhyuVV5g
+
