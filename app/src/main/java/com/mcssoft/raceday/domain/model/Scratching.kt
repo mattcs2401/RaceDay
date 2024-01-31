@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 )
 data class Scratching(
     @PrimaryKey(autoGenerate = true)
-    var _id: Long = 0L,
+    var id: Long = 0L,
 
     val bettingStatus: String,
     val runnerName: String,
