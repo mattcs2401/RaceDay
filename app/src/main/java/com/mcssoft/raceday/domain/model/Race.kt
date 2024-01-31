@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = Meeting::class,
-            parentColumns = ["_id"],
+            parentColumns = ["id"],
             childColumns = ["mtgId"],
             onDelete = ForeignKey.CASCADE
         )

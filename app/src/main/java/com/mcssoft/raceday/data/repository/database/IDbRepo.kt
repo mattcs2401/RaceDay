@@ -94,7 +94,7 @@ interface IDbRepo {
      * @param mId: The MeetingDto id.
      * @return A MeetingDto.
      */
-    @Query("select * from Meeting where _id = :mId")
+    @Query("select * from Meeting where id = :mId")
     suspend fun getMeeting(mId: Long): Meeting
 
     /**

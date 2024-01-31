@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 )
 data class Meeting(
     @PrimaryKey(autoGenerate = true)
-    var _id: Long = 0L,
+    var id: Long = 0L,
 
     val location: String, // e.g. NSW
     val meetingDate: String, // e.g. 2023-08-21

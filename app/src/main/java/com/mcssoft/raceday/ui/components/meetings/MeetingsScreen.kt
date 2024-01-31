@@ -100,13 +100,13 @@ fun MeetingsScreen(
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(
                             items = state.body,
-                            key = { it._id }
+                            key = { it.id }
                         ) { meeting ->
                             MeetingItem(
                                 meeting = meeting,
                                 onItemClick = {
                                     navController.navigate(
-                                        Screens.RacesScreen.route + "meetingId=${meeting._id}"
+                                        Screens.RacesScreen.route + "meetingId=${meeting.id}"
                                     )
                                 }
                             )
