@@ -121,10 +121,10 @@ interface IDbRepo {
     @Query("select * from race where mtgId= :mtgId")
     suspend fun getRaces(mtgId: Long): List<Race>
 
-    @Query("select * from Race where _id= :rId")
+    @Query("select * from Race where id= :rId")
     suspend fun getRace(rId: Long): Race
 
-    @Query("select _id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
+    @Query("select id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
     // </editor-fold>
 

@@ -42,7 +42,7 @@ class SetRunnerChecked @Inject constructor(
 
         if (runner.isChecked) {
             val summaryDto = SummaryDto(
-                race._id,
+                race.id,
                 runner.id,
                 race.sellCode,
                 race.venueMnemonic,
@@ -56,7 +56,7 @@ class SetRunnerChecked @Inject constructor(
             iDbRepo.insertSummary(summaryDto.toSummary())
         } else {
             // Was checked, now unchecked, so remove Summary item.
-            iDbRepo.getSummary(race._id, runner.id).let { summary ->
+            iDbRepo.getSummary(race.id, runner.id).let { summary ->
                 iDbRepo.deleteSummary(summary.id)
             }
         }

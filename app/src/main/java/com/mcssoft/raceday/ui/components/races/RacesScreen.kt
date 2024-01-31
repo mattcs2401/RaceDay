@@ -104,13 +104,13 @@ fun RacesScreen(
                     ) {
                         items(
                             items = state.races,
-                            key = { it._id  }
+                            key = { it.id  }
                         ) { race ->
                             RaceItem(
                                 race = race,
                                 onItemClick = {
                                     navController.navigate(
-                                        Screens.RunnersScreen.route + "raceId=${race._id}"
+                                        Screens.RunnersScreen.route + "raceId=${race.id}"
                                     )
                                 }
                             )

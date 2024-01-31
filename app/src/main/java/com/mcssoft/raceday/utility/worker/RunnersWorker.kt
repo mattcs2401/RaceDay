@@ -71,7 +71,7 @@ class RunnersWorker(
                     iDbRepo.insertRunnersWithRaceId(raceId, response.body.runners)
                     delay(TWENTY_FIVE) // TBA.
                     // Get the current lis of Runners for the Race.
-                    val lRunners = iDbRepo.getRunners(race._id)
+                    val lRunners = iDbRepo.getRunners(race.id)
 
                     if (race.hasScratchings) {
                         processForScratchings(race, lRunners)

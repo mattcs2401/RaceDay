@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = Race::class,
-            parentColumns = ["_id"],
+            parentColumns = ["id"],
             childColumns = ["raceId"],
             onDelete = ForeignKey.CASCADE
         )
