@@ -146,7 +146,7 @@ interface IDbRepo {
         }
     }
 
-    @Query("select * from Runner where _id = :runnerId")
+    @Query("select * from Runner where id = :runnerId")
     suspend fun getRunner(runnerId: Long): Runner
 
     /**
@@ -157,7 +157,7 @@ interface IDbRepo {
     @Query("select * from Runner where raceId= :raceId order by runnerNumber")
     suspend fun getRunners(raceId: Long): List<Runner>
 
-    @Query("update Runner set isChecked = :newValue where _id = :runnerId")
+    @Query("update Runner set isChecked = :newValue where id = :runnerId")
     suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int
 
     @Update

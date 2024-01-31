@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
 )
 data class Runner(
     @PrimaryKey(autoGenerate = true)
-    var _id: Long = 0L,
+    var id: Long = 0L,
     var raceId: Long = 0,
 
     var runnerName: String,

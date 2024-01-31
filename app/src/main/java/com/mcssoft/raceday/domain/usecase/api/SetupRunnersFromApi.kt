@@ -107,7 +107,7 @@ class SetupRunnersFromApi @Inject constructor(
         val race = iDbRepo.getRace(runner.raceId)
         val summaryDto = SummaryDto(
             race._id,
-            runner._id,
+            runner.id,
             race.sellCode,
             race.venueMnemonic,
             race.raceNumber,

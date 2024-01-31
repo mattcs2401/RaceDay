@@ -104,7 +104,7 @@ fun RunnersScreen(
                     ) {
                         items(
                             items = processScratchings(state.runners), // state.runners,
-                            key = { it._id }
+                            key = { it.id }
                         ) { runner ->
                             state.race?.let { race ->
                                 RunnerItem(

@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
+//    id("kotlin-kapt") // for arguments { arg("room.schemaLocation", "$projectDir/schemas") }
 }
 android {
     compileSdk 34
@@ -16,7 +17,16 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+//        kapt {
+//            arguments {
+//                arg("room.schemaLocation", "$projectDir/schemas")
+//            }
+//        }
     }
+//    sourceSets {
+//        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -54,7 +64,7 @@ dependencies {
      */
     def compose_ver = '1.6.0'
     implementation "androidx.compose.ui:ui:$compose_ver"
-    implementation "androidx.activity:activity-compose:1.9.0-alpha01"
+    implementation "androidx.activity:activity-compose:1.9.0-alpha02"
     implementation "androidx.compose.ui:ui-tooling:$compose_ver"
     implementation "androidx.navigation:navigation-compose:2.7.6"
     implementation "androidx.compose.material:material:$compose_ver"
