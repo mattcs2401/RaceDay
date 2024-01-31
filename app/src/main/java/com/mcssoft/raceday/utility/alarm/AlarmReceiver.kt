@@ -101,7 +101,7 @@ class AlarmReceiver : BroadcastReceiver() {
     @SuppressLint("MissingPermission") // Permission is in the manifest, but still complains.
     private fun sendNotification(context: Context, summary: Summary) {
         val bundle = Bundle().also { bndl ->
-            bndl.putLong("key_summary_id", summary._id)
+            bndl.putLong("key_summary_id", summary.id)
         }
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             action = INTENT_ACTION

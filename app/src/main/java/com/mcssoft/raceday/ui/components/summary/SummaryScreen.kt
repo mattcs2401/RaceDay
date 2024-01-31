@@ -96,7 +96,7 @@ fun SummaryScreen(
                     ) {
                         items(
                             items = state.summaries,
-                            key = { it._id }
+                            key = { it.id }
                         ) { summary ->
                             SummaryItem(
                                 summary = summary,

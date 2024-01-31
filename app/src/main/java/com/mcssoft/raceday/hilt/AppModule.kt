@@ -46,7 +46,9 @@ object AppModule {
             app,
             RaceDayDb::class.java,
             app.resources.getString(R.string.app_db_name)
-        ).build()
+        )
+            .fallbackToDestructiveMigration() // TBA.
+            .build()
     }
 
     @Singleton

@@ -197,7 +197,7 @@ interface IDbRepo {
     @Query("delete from Summary")
     suspend fun deleteSummaries(): Int
 
-    @Query("delete from Summary where _id = :id")
+    @Query("delete from Summary where id = :id")
     suspend fun deleteSummary(id: Long): Int
 
     @Update

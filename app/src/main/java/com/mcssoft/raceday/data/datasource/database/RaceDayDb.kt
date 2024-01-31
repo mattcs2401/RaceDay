@@ -17,7 +17,7 @@ import com.mcssoft.raceday.domain.model.Summary
         Runner::class,
         Summary::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class RaceDayDb : RoomDatabase() {

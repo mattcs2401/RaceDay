@@ -57,7 +57,7 @@ class SetRunnerChecked @Inject constructor(
         } else {
             // Was checked, now unchecked, so remove Summary item.
             iDbRepo.getSummary(race._id, runner._id).let { summary ->
-                iDbRepo.deleteSummary(summary._id)
+                iDbRepo.deleteSummary(summary.id)
             }
         }
     }

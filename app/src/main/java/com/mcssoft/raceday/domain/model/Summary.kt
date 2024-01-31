@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 )
 data class Summary(
     @PrimaryKey(autoGenerate = true)
-    var _id: Long = 0L,
+    var id: Long = 0L,
 
     var raceId: Long,
     var runnerId: Long,
