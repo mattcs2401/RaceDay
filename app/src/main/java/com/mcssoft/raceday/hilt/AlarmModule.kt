@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
@@ -26,8 +27,13 @@ object AlarmModule {
     @Provides
     fun provideAlarmScheduler(
         @ApplicationContext context: Context,
-        alarmManger: AlarmManager
+        alarmManger: AlarmManager,
+        coroutineScope: CoroutineScope
     ): IAlarm {
-        return AlarmImpl(context, alarmManger)
+        return AlarmImpl(
+            context,
+            alarmManger,
+            coroutineScope
+        )
     }
 }

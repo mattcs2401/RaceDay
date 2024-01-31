@@ -10,6 +10,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.theme.fiftyPercent
 
 @Composable
 fun BottomBar(
@@ -36,7 +37,7 @@ fun BottomBar(
                     Text(text = item.title)
                 },
                 selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(0.5f),
+                unselectedContentColor = Color.White.copy(fiftyPercent),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {

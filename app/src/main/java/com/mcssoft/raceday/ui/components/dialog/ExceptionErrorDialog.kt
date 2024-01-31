@@ -20,18 +20,8 @@ fun ExceptionErrorDialog(
         confirmButtonText = stringResource(id = R.string.lbl_btn_refresh),
 //            onConfirmClicked = {
 //                show.value = !show.value
-//                /** TODO - TBA what we do here ? **/
+//                /** TBA what we do here ? **/
 //            }
     )
 }
 
-// @Preview
-// @Composable
-// fun ShowErrorDialog() {
-//    CommonDialog(
-//        icon = R.drawable.ic_error_48,
-//        dialogTitle = "Dialog Title",
-//        dialogText = "An exception message here.",
-//        dismissButtonText = "Ok",
-//        onDismissClicked = { /*TODO*/ })
-// }

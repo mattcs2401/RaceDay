@@ -37,13 +37,11 @@ class AlarmReceiver : BroadcastReceiver() {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface IEntryPoints {
-        fun alarm(): IAlarm
         fun dbAccess(): IDbRepo
         fun notificationManager(): INotification
         fun notificationBuilder(): INotification
     }
 
-    private lateinit var iAlarm: IAlarm
     private lateinit var dataAccess: IDbRepo
     private lateinit var notificationManager: NotificationManagerCompat
     private lateinit var notificationBuilder: NotificationCompat.Builder
@@ -172,8 +170,6 @@ class AlarmReceiver : BroadcastReceiver() {
         notificationBuilder = entryPoints.notificationBuilder().getNotificationBuilder()
         // Database access.
         dataAccess = entryPoints.dbAccess()
-        // Alarm.
-        iAlarm = entryPoints.alarm()
     }
 }
 

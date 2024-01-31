@@ -44,11 +44,8 @@ class RunnersViewModel @Inject constructor(
      * @param event: The event type.
      */
     fun onEvent(event: RunnersEvent) {
-        when(event) {
+        when (event) {
             is RunnersEvent.Check -> {
-                // TODO - create/update Summary record.
-                // Note: Room will update the Runner database record with the isChecked status of
-                // this Runner object.
                 setRunnerChecked(event.race, event.runner)
             }
         }

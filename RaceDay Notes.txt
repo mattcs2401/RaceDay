@@ -30,8 +30,6 @@ Other TO-DO or think about:
 -> A notification actions button:
    -> go to ... ?
 
---> Can we optimise the Alarm any better ?
-
 --> Scratching
     -- Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
 
@@ -46,7 +44,7 @@ Other TO-DO or think about:
 --> App refresh value where all the data is refreshed, i.e from Api ?
     -> at a certain interval ?
         -> coroutine worker with delay start probably good choice here
-    -> manual option ?
+    -> already have manual option, but could be improved ?
     -> what about existing Summary detail
         -> don't touch or
         -> rebuild, how ?
@@ -55,7 +53,7 @@ Other TO-DO or think about:
     -> back to Splash screen.
     -> from Worker back to ... ?
 
---> App theme.
+--> App theme and screen design.
 
 ------------
 [References]

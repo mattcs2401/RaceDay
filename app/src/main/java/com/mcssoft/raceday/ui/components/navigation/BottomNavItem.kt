@@ -8,8 +8,8 @@ sealed class BottomNavItem(
     var title: String
 ) {
     data object Summary : BottomNavItem(
-        Screens.SummaryScreen.route,
-        R.drawable.ic_summary_24,
-        "Summary"
+        route = Screens.SummaryScreen.route,
+        icon = R.drawable.ic_summary_24,
+        title = "Summary"
     )
 }
