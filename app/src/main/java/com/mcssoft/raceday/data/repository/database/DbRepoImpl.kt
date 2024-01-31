@@ -20,8 +20,8 @@ class DbRepoImpl @Inject constructor(
         return dao.insertMeeting(meeting)
     }
 
-    override suspend fun getMeeting(mId: Long): Meeting {
-        return dao.getMeeting(mId)
+    override suspend fun getMeeting(meetingId: Long): Meeting {
+        return dao.getMeeting(meetingId)
     }
 
     override suspend fun getMeetings(): List<Meeting> {
@@ -42,12 +42,12 @@ class DbRepoImpl @Inject constructor(
         return dao.insertRaces(races)
     }
 
-    override suspend fun getRaces(mtgId: Long): List<Race> {
-        return dao.getRaces(mtgId)
+    override suspend fun getRaces(meetingId: Long): List<Race> {
+        return dao.getRaces(meetingId)
     }
 
-    override suspend fun getRace(rId: Long): Race {
-        return dao.getRace(rId)
+    override suspend fun getRace(raceId: Long): Race {
+        return dao.getRace(raceId)
     }
 
     override suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long {
@@ -114,8 +114,8 @@ class DbRepoImpl @Inject constructor(
         return dao.insertSummaries(summaries)
     }
 
-    override suspend fun deleteSummary(id: Long): Int {
-        return dao.deleteSummary(id)
+    override suspend fun deleteSummary(summaryId: Long): Int {
+        return dao.deleteSummary(summaryId)
     }
 
     override suspend fun deleteSummaries(): Int {

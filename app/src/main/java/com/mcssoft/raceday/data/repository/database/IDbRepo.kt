@@ -91,11 +91,11 @@ interface IDbRepo {
 
     /**
      * Get a MeetingDto based on it's row id.
-     * @param mId: The MeetingDto id.
+     * @param meetingId: The MeetingDto id.
      * @return A MeetingDto.
      */
-    @Query("select * from Meeting where id = :mId")
-    suspend fun getMeeting(mId: Long): Meeting
+    @Query("select * from Meeting where id = :meetingId")
+    suspend fun getMeeting(meetingId: Long): Meeting
 
     /**
      * Delete all from Meetings.
@@ -115,14 +115,14 @@ interface IDbRepo {
 
     /**
      * Get a listing of the Races based on their (foreign key) Meeting id.
-     * @param mtgId: The Meeting id (database row number).
+     * @param meetingId: The Meeting id (database row number).
      * @return A list of Races.
      */
-    @Query("select * from race where mtgId= :mtgId")
-    suspend fun getRaces(mtgId: Long): List<Race>
+    @Query("select * from race where mtgId = :meetingId")
+    suspend fun getRaces(meetingId: Long): List<Race>
 
-    @Query("select * from Race where id= :rId")
-    suspend fun getRace(rId: Long): Race
+    @Query("select * from Race where id = :raceId")
+    suspend fun getRace(raceId: Long): Race
 
     @Query("select id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
