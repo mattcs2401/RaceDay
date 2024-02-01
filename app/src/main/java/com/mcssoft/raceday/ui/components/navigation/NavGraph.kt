@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mcssoft.raceday.ui.components.meetings.MeetingsScreen
 import com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel
+import com.mcssoft.raceday.ui.components.preferences.PreferencesScreen
+import com.mcssoft.raceday.ui.components.preferences.PreferencesViewModel
 import com.mcssoft.raceday.ui.components.races.RacesScreen
 import com.mcssoft.raceday.ui.components.races.RacesViewModel
 import com.mcssoft.raceday.ui.components.runner.RunnerScreen
@@ -31,8 +33,9 @@ fun NavGraph() {
         startDestination = Screens.SplashScreen.route
     ) {
         // Splash screen.
-        composable(route = Screens.SplashScreen.route
-        ){
+        composable(
+            route = Screens.SplashScreen.route
+        ) {
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SplashScreen(
@@ -56,9 +59,11 @@ fun NavGraph() {
         composable(
             // As yet, haven't been able to make the meetingId param optional.
             route = Screens.RacesScreen.route + "meetingId={meetingId}",
-            arguments = listOf(navArgument("meetingId") {
-                type = NavType.LongType
-            })
+            arguments = listOf(
+                navArgument("meetingId") {
+                    type = NavType.LongType
+                }
+            )
         ) {
             val viewModel = hiltViewModel<RacesViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -72,9 +77,11 @@ fun NavGraph() {
         // Runners screen.
         composable(
             route = Screens.RunnersScreen.route + "raceId={raceId}",
-            arguments = listOf(navArgument("raceId") {
-                type = NavType.LongType
-            })
+            arguments = listOf(
+                navArgument("raceId") {
+                    type = NavType.LongType
+                }
+            )
         ) {
             val viewModel = hiltViewModel<RunnersViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -88,9 +95,11 @@ fun NavGraph() {
         // Runner screen.
         composable(
             route = Screens.RunnerScreen.route + "runnerId={runnerId}",
-            arguments = listOf(navArgument("runnerId") {
-                type = NavType.LongType
-            })
+            arguments = listOf(
+                navArgument("runnerId") {
+                    type = NavType.LongType
+                }
+            )
         ) {
             val viewModel = hiltViewModel<RunnerViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -104,7 +113,7 @@ fun NavGraph() {
         // Summary screen (selected Runner items).
         composable(
             route = Screens.SummaryScreen.route
-        ){
+        ) {
             val viewModel = hiltViewModel<SummaryViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SummaryScreen(
@@ -113,19 +122,18 @@ fun NavGraph() {
                 navController = navController
             )
         }
+
+        // Preferences screen.
+        composable(
+            route = Screens.PreferencesScreen.route
+        ) {
+            val viewModel = hiltViewModel<PreferencesViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            PreferencesScreen(
+                state = state,
+                onEvent = viewModel::onEvent,
+                navController = navController
+            )
+        }
     }
 }
-/*
-        composable(
-            route = Screen.Details.route,
-            arguments = listOf(
-                navArgument(MY_ARG) { type = NavType.StringType }
-            ),
-            deepLinks = listOf(navDeepLink { uriPattern = "$MY_URI/$MY_ARG={$MY_ARG}" })
-        ) {
-            val arguments = it.arguments
-            arguments?.getString(MY_ARG)?.let { message ->
-                DetailsScreen(message = message)
-            }
-        }
- */

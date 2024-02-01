@@ -8,15 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.theme.fiftyPercent
 
 @Composable
 fun BottomBar(
-    navController: NavController
+    navController: NavController?
 ) {
     val bottomNavItems = listOf(
+        BottomNavItem.Preferences,
         BottomNavItem.Summary
     )
 
@@ -41,9 +43,15 @@ fun BottomBar(
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route)
+                    navController?.navigate(item.route)
                 }
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun showBottomBar() {
+    BottomBar(null)
 }

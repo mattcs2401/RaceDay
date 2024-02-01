@@ -101,4 +101,8 @@
         <item>12sp</item>
 <!--        <item>20sp</item>-->
     </array>
+
+    <!-- SharedPreferences -->
+    <string name="prefs_file_name">prefs_file</string>
+
 </resources>

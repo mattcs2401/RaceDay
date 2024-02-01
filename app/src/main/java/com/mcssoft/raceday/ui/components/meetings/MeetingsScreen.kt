@@ -55,9 +55,12 @@ fun MeetingsScreen(
                 title2 = state.mtgDate,
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
-                    IconButton(onClick = {
-                        showRefreshDialog.value = true
-                    }) {
+                    IconButton(
+                        enabled = state.canRefresh,
+                        onClick = {
+                            showRefreshDialog.value = true
+                        }
+                    ) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
                             stringResource(id = R.string.lbl_icon_refresh)
@@ -117,8 +120,27 @@ fun MeetingsScreen(
             }
         }
     }
-
 }
+
+// @Preview
+// @Composable
+// fun ShowTopBar(title: String = "Meetings", title2: String = "2023-08-28") {
+//    MeetingsTopBar(
+//        title,
+//        title2,
+//        MaterialTheme.colors.primary,
+//        actions = {
+//            IconButton(
+//                onClick = {}
+//            ) {
+//                Icon(
+//                    painterResource(id = R.drawable.ic_refresh_24),
+//                    stringResource(id = R.string.lbl_icon_refresh)
+//                )
+//            }
+//        }
+//    )
+// }
 
 @Composable
 private fun ShowRefreshDialog(

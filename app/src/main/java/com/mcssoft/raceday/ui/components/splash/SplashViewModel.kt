@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val useCases: UseCases,
+    private val prefsRepo: PrefsRepo,
     private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
@@ -30,6 +32,8 @@ class SplashViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var connectivityState by mutableStateOf(ConnectivityState.initialise())
+
+    private val fromApi = mutableStateOf(prefsRepo.fromApi)
 
     init {
         viewModelScope.launch {
@@ -59,7 +63,11 @@ class SplashViewModel @Inject constructor(
                     }
                     _state.emit(state.value)
 
-                    setupBaseFromApi(date)
+                    if (fromApi.value) {
+                        setupBaseFromApi(date)
+                    } else {
+                        stateSuccess(200, "")
+                    }
                 }
             }
             is Status.Unavailable -> {
@@ -82,7 +90,9 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-                setupRunnersFromApi()
+                if (fromApi.value) {
+                    setupRunnersFromApi()
+                }
             }
         }
     }

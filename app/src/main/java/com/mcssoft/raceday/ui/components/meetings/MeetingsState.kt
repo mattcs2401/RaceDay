@@ -6,7 +6,8 @@ data class MeetingsState(
     val exception: Exception?,
     val status: Status?,
     val data: List<Meeting>?,
-    val date: String
+    val date: String,
+    var canRefresh: Boolean
 ) {
     companion object {
         // Flow initializer.
@@ -15,7 +16,8 @@ data class MeetingsState(
                 exception = null,
                 status = Status.Initialise,
                 data = null,
-                date = date
+                date = date,
+                canRefresh = true
             )
         }
     }

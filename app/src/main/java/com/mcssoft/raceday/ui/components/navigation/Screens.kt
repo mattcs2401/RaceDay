@@ -15,5 +15,5 @@ sealed class Screens(
 
     data object SummaryScreen : Screens("summary_screen")
 
-    data object SettingsScreen : Screens("settings_screen")
+    data object PreferencesScreen : Screens("preferences_screen")
 }

@@ -2,6 +2,7 @@ package com.mcssoft.raceday.ui.components.meetings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.utility.DataResult
@@ -17,13 +18,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val useCases: UseCases,
+    private val prefsRepo: PrefsRepo
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MeetingsState.initialise(DateUtils().getDateToday()))
     val state = _state.asStateFlow()
 
     init {
+        _state.update { state ->
+            state.copy(
+                canRefresh = prefsRepo.fromApi
+            )
+        }
+        viewModelScope.launch {
+            _state.emit(state.value)
+        }
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
     }
@@ -73,9 +83,7 @@ class MeetingsViewModel @Inject constructor(
                     }
             }
         }
-
     }
-
 }
 /*
 Notes:
