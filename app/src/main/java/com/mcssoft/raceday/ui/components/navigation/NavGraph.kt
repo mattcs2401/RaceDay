@@ -46,7 +46,14 @@ fun NavGraph() {
         }
 
         // Meetings screen.
-        composable(route = Screens.MeetingsScreen.route) {
+        composable(
+            route = Screens.MeetingsScreen.route + "fromApi={fromApi}",
+            arguments = listOf(
+                navArgument("fromApi") {
+                    type = NavType.BoolType
+                }
+            )
+        ) {
             val viewModel = hiltViewModel<MeetingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
@@ -67,7 +74,6 @@ fun NavGraph() {
         ) {
             val viewModel = hiltViewModel<RacesViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
-
             RacesScreen(
                 state = state,
                 navController = navController

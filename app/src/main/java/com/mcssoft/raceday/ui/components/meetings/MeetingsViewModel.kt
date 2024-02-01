@@ -1,10 +1,12 @@
 package com.mcssoft.raceday.ui.components.meetings
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
+import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,20 +21,25 @@ import javax.inject.Inject
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val useCases: UseCases,
-    private val prefsRepo: PrefsRepo
+    private val prefsRepo: PrefsRepo,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MeetingsState.initialise(DateUtils().getDateToday()))
     val state = _state.asStateFlow()
 
     init {
-        _state.update { state ->
-            state.copy(
-                canRefresh = prefsRepo.fromApi
-            )
-        }
-        viewModelScope.launch {
-            _state.emit(state.value)
+        savedStateHandle.get<Boolean>(Constants.KEY_FROM_API)?.let {
+            // 1st update the preferences, then mirror into the state.
+            prefsRepo.fromApi = it
+            _state.update { state ->
+                state.copy(
+                    canRefresh = it
+                )
+            }
+            viewModelScope.launch(Dispatchers.IO) {
+                _state.emit(state.value)
+            }
         }
         // Get a list of the Meetings that have been populated into the database.
         getMeetingsFromLocal()
@@ -81,7 +88,7 @@ class MeetingsViewModel @Inject constructor(
                             _state.emit(state.value)
                         }
                     }
-            }
+                }
         }
     }
 }

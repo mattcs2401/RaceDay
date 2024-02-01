@@ -37,7 +37,9 @@ fun PreferencesScreen(
                 actions = {
                     IconButton(onClick = {
                         // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(Screens.MeetingsScreen.route) {
+                        navController.navigate(
+                            Screens.MeetingsScreen.route + "fromApi=${state.sourceFromApi}"
+                        ) {
                             popUpTo(route = Screens.MeetingsScreen.route) {
                                 inclusive = true
                             }

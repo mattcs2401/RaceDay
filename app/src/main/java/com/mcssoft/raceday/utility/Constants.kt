@@ -25,6 +25,9 @@ object Constants {
     const val JOCKEY_MAX = 12
     const val JOCKEY_TAKE = 10
 
+    // The "key" for the parameter passed from the PreferencesScreen to the MeetingsScreen.
+    const val KEY_FROM_API: String = "fromApi"
+
     // The "key" for the parameter passed from the MeetingsScreen to the RacesScreen.
     const val KEY_MEETING_ID: String = "meetingId"
 

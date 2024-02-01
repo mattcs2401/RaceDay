@@ -35,7 +35,6 @@ class RacesViewModel @Inject constructor(
             getMeeting(mtgId)
             getRaces(mtgId)
         }
-
     }
 
     private fun getRaces(mId: Long) {
@@ -119,5 +118,4 @@ class RacesViewModel @Inject constructor(
             }
         }
     }
-
 }
