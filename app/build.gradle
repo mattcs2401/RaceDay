@@ -17,16 +17,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
-//        kapt {
-//            arguments {
-//                arg("room.schemaLocation", "$projectDir/schemas")
-//            }
-//        }
     }
-//    sourceSets {
-//        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
-//    }
     buildTypes {
         release {
             minifyEnabled false
