@@ -14,7 +14,8 @@ data class RacesState(
     val exception: Exception?,
     val status: Status?,
     val lRaces: List<Race>?,
-    val meeting: Meeting?
+    val meeting: Meeting?,
+    val fromApi: Boolean
 ) {
     companion object {
         fun initialise(): RacesState {
@@ -23,6 +24,7 @@ data class RacesState(
                 status = Status.Initialise,
                 lRaces = emptyList(),
                 meeting = null,
+                fromApi = false
             )
         }
     }

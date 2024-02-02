@@ -51,4 +51,7 @@ object Constants {
     const val THIRTY_SECONDS = (THOUSAND * THIRTY).toLong()
 
     const val FIVE_MINUTES = (THOUSAND * SIXTY * FIVE).toLong()
+
+    // Internet values.
+    const val HTTP_OK = 200
 }

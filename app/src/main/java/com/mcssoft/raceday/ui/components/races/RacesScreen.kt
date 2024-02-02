@@ -31,11 +31,11 @@ import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
 
-@Composable
 /**
  * @param state: Races state.
  * @param navController: The Navigation.
  */
+@Composable
 fun RacesScreen(
     state: RacesState,
     navController: NavController
@@ -50,11 +50,7 @@ fun RacesScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(Screens.MeetingsScreen.route) {
-                            popUpTo(route = Screens.MeetingsScreen.route) {
-                                inclusive = true
-                            }
-                        }
+                        backNavigate(navController = navController, state = state)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
@@ -121,6 +117,18 @@ fun RacesScreen(
             }
         }
     }
+}
 
+fun backNavigate(
+    navController: NavController,
+    state: RacesState
+) {
+    navController.navigate(
+        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
+    ) {
+        popUpTo(route = Screens.MeetingsScreen.route) {
+            inclusive = true
+        }
+    }
 }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.utility.Constants.HTTP_OK
 import com.mcssoft.raceday.utility.DataResult
 import com.mcssoft.raceday.utility.DateUtils
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
@@ -66,7 +67,7 @@ class SplashViewModel @Inject constructor(
                     if (fromApi.value) {
                         setupBaseFromApi(date)
                     } else {
-                        stateSuccess(200, "")
+                        stateSuccess(HTTP_OK, "")
                     }
                 }
             }

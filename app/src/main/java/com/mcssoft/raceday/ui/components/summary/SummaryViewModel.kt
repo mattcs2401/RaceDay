@@ -2,6 +2,7 @@ package com.mcssoft.raceday.ui.components.summary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
+    private val prefsRepo: PrefsRepo,
     private val useCases: UseCases
 ) : ViewModel() {
 
@@ -22,6 +24,14 @@ class SummaryViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
+        _state.update { state ->
+            state.copy(
+                fromApi = prefsRepo.fromApi
+            )
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.emit(state.value)
+        }
         getSummaries()
     }
 

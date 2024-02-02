@@ -4,14 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
@@ -34,23 +31,11 @@ fun PreferencesScreen(
             TopBar(
                 title = stringResource(id = R.string.label_settings),
                 backgroundColour = MaterialTheme.colors.primary,
-                actions = {
-                    IconButton(onClick = {
-                        // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(
-                            Screens.MeetingsScreen.route + "fromApi=${state.sourceFromApi}"
-                        ) {
-                            popUpTo(route = Screens.MeetingsScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home)
-                        )
-                    }
-                }
+                backNavIcon = R.drawable.ic_arrow_back_24,
+                onBackPressed = {
+                    backNavigate(navController, state)
+                },
+                actions = {}
             )
         }
     ) {
@@ -69,6 +54,19 @@ fun PreferencesScreen(
                     eventType = SourceFromApi
                 )
             }
+        }
+    }
+}
+
+fun backNavigate(
+    navController: NavController,
+    state: PreferencesState
+) {
+    navController.navigate(
+        Screens.MeetingsScreen.route + "fromApi=${state.sourceFromApi}"
+    ) {
+        popUpTo(route = Screens.MeetingsScreen.route) {
+            inclusive = true
         }
     }
 }

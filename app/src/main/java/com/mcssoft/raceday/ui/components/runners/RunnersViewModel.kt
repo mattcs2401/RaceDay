@@ -3,6 +3,7 @@ package com.mcssoft.raceday.ui.components.runners
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.domain.usecase.UseCases
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RunnersViewModel @Inject constructor(
     private val useCases: UseCases,
+    private val prefsRepo: PrefsRepo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -28,6 +30,14 @@ class RunnersViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
+        _state.update { state ->
+            state.copy(
+                fromApi = prefsRepo.fromApi
+            )
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.emit(state.value)
+        }
         /*
           The Runners screen expects a "raceId" (supplied in the navigation from the RacesScreen
           to the RunnersScreen).

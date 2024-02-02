@@ -3,6 +3,7 @@ package com.mcssoft.raceday.ui.components.races
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
 import com.mcssoft.raceday.utility.Constants
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RacesViewModel @Inject constructor(
     private val useCases: UseCases,
+    private val prefsRepo: PrefsRepo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -26,6 +28,14 @@ class RacesViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
+        _state.update { state ->
+            state.copy(
+                fromApi = prefsRepo.fromApi
+            )
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.emit(state.value)
+        }
         /*
           The Races screen expects a "meetingId" (supplied in the navigation from the MeetingsScreen
           to the RacesScreen).

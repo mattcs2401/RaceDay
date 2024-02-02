@@ -31,7 +31,6 @@ fun SummaryScreen(
     onEvent: (SummaryEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
-//    val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -39,27 +38,17 @@ fun SummaryScreen(
             TopBar(
                 title = stringResource(id = R.string.label_summary),
                 backgroundColour = MaterialTheme.colors.primary,
+                backNavIcon = R.drawable.ic_arrow_back_24,
+                onBackPressed = {
+                    backNavigate(navController, state)
+                },
                 actions = {
                     IconButton(onClick = {
-//                        Toast.makeText(context,"Summary refresh.", Toast.LENGTH_SHORT).show()
                         onEvent(SummaryEvent.Refresh)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
                             stringResource(id = R.string.lbl_icon_refresh)
-                        )
-                    }
-                    IconButton(onClick = {
-                        // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(Screens.MeetingsScreen.route) {
-                            popUpTo(route = Screens.MeetingsScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home)
                         )
                     }
                 }
@@ -75,7 +64,7 @@ fun SummaryScreen(
                     onDismiss = {}
                 )
             }
-            is SummaryState.Status.Failure -> { /* TBA */}
+            is SummaryState.Status.Failure -> { /* TBA */ }
             is SummaryState.Status.Success -> {
                 if (state.summaries.isEmpty()) {
                     Box(
@@ -110,6 +99,19 @@ fun SummaryScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+fun backNavigate(
+    navController: NavController,
+    state: SummaryState
+) {
+    navController.navigate(
+        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
+    ) {
+        popUpTo(route = Screens.MeetingsScreen.route) {
+            inclusive = true
         }
     }
 }

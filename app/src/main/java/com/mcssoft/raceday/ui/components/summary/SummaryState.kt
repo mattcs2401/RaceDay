@@ -7,6 +7,7 @@ data class SummaryState(
     val status: Status,
     val loading: Boolean,
     val summaries: List<Summary>,
+    val fromApi: Boolean
 
 ) {
 
@@ -18,6 +19,7 @@ data class SummaryState(
                 status = Status.Initialise,
                 loading = false,
                 summaries = emptyList(),
+                fromApi = false
             )
         }
     }

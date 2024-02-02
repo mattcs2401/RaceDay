@@ -1,6 +1,6 @@
-|----------------|
-|  RaceDayBasic  |
-|----------------|
+||===========||
+||  RaceDay  ||
+||===========||
 
 Based on the URL (example):
 https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-10-03/meetings?jurisdiction=QLD
@@ -27,19 +27,23 @@ Issues:
 ---------------------------
 Other TO-DO or think about:
 ---------------------------
+--> OnBackPressed from PreferencesScreen to simulate an explicit navigation.
+
 -> A notification actions button:
    -> go to ... ?
 
 --> Scratching
-    -- Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
+    -> Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
 
 --> Date/Time
     Use Date() or equivalent instead of converting to/from millis.
 
---> Reload from the local database if some exception occurs on a refresh from the Api ?
+--> Reload from the local database if some exception occurs:
+    -> on a refresh from the Api ?
+    -> something else ?
 
 --> Better use of SavedStateHandle.
-    -> Refer Point 2 of: https://www.youtube.com/watch?v=JfCivo5qJkI
+    -> Refer Point 2 of: https://www.youtube.com/watch?v=JfCivo5qJkI approx 4:38.
 
 --> App refresh value where all the data is refreshed, i.e from Api ?
     -> at a certain interval ?
@@ -52,12 +56,14 @@ Other TO-DO or think about:
 --> Better error notification
     -> back to Splash screen.
     -> from Worker back to ... ?
+    -> and what do we do after ?
 
 --> App theme and screen design.
 
 ------------
 [References]
 ------------
+-> https://www.youtube.com/watch?v=JfCivo5qJkI
 -> https://itnext.io/android-custom-notification-in-6-mins-c2e7e2ddadab
 -> https://itnext.io/android-notification-all-in-one-8df3e1218e0e
 -> https://developer.android.com/develop/ui/views/notifications/custom-notification

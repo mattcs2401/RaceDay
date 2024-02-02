@@ -51,12 +51,7 @@ fun RunnersScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
-                        // As yet, haven't been able to make the meetingId param optional.
-                        navController.navigate(Screens.MeetingsScreen.route) {
-                            popUpTo(route = Screens.MeetingsScreen.route) {
-                                inclusive = true
-                            }
-                        }
+                        backNavigate(navController = navController, state = state)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
@@ -137,4 +132,17 @@ fun processScratchings(runners: List<Runner>): List<Runner> {
         lTemp.addAll(pair.first)
     }
     return lTemp
+}
+
+fun backNavigate(
+    navController: NavController,
+    state: RunnersState
+) {
+    navController.navigate(
+        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
+    ) {
+        popUpTo(route = Screens.MeetingsScreen.route) {
+            inclusive = true
+        }
+    }
 }
