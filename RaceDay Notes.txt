@@ -18,11 +18,8 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
---> Race time value in the raw data is not always correct:
-    -> e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000. Should be 12:14.
-        -> Some sort of validation ?
---> Race time in the Summary is displaying incorrectly for evening/night races.
-        -> Check/confirm ?
+--> Time values not displaying properly sometimes, e.g. 02:25 instead of 12:25:
+    -> is in the data so not sure what we can do, maybe some sort of fix on the fly ?
 
 ---------------------------
 Other TO-DO or think about:
@@ -34,9 +31,6 @@ Other TO-DO or think about:
 
 --> Scratching
     -> Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
-
---> Date/Time
-    Use Date() or equivalent instead of converting to/from millis.
 
 --> Reload from the local database if some exception occurs:
     -> on a refresh from the Api ?
