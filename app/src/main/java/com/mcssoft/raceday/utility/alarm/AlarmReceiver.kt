@@ -20,19 +20,31 @@ import com.mcssoft.raceday.utility.Constants.SIXTY
 import com.mcssoft.raceday.utility.Constants.THOUSAND
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import com.mcssoft.raceday.utility.DateUtils
+import com.mcssoft.raceday.utility.notification.INotification
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-class AlarmReceiver @Inject constructor(
-    private val iDbRepo: IDbRepo,
-    private val notificationManager: NotificationManagerCompat,
-    private val notificationBuilder: NotificationCompat.Builder
-) : BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface IEntryPoints {
+        fun dbAccess(): IDbRepo
+        fun notificationManager(): INotification
+        fun notificationBuilder(): INotification
+    }
+
+    private lateinit var dataAccess: IDbRepo
+    private lateinit var notificationManager: NotificationManagerCompat
+    private lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onReceive(context: Context, intent: Intent?) {
         when (intent?.action) {
@@ -41,6 +53,9 @@ class AlarmReceiver @Inject constructor(
                     .show()
             }
         }
+        // Setup the notification and database accessors.
+        setEntryPoints(context)
+
         goAsync {
             processReceive(context)
         }
@@ -58,7 +73,7 @@ class AlarmReceiver @Inject constructor(
         val windowTime = currentTime + (THOUSAND * SIXTY * FIVE).toLong()
         // Get a list of Summaries whose race time is still in the future.
         delay(TWENTY_FIVE) // TBA ?
-        val baseNotifyList = iDbRepo.getCurrentSummaries()
+        val baseNotifyList = dataAccess.getCurrentSummaries()
         delay(TWENTY_FIVE) // TBA
         // Create a list of Summaries whose race time is within the time window.
         if (baseNotifyList.isEmpty()) {
@@ -76,7 +91,7 @@ class AlarmReceiver @Inject constructor(
         } else {
             for (summary in notifyList) {
                 summary.isNotified = true
-                iDbRepo.updateSummary(summary)
+                dataAccess.updateSummary(summary)
                 delay(TWENTY_FIVE) // TBA
                 sendNotification(context, summary)
             }
@@ -104,16 +119,12 @@ class AlarmReceiver @Inject constructor(
     }
 
     /**
-     * Utility class. Build the Notification's view from Summary details.
+     * Build the Notification's view from Summary details.
      * @param context: For system string resources.
      * @param summary: The Summary to draw data from.
      * @param pendingIntent: The intent associated with the notification.
      */
-    private fun buildView(
-        context: Context,
-        summary: Summary,
-        pendingIntent: PendingIntent
-    ): RemoteViews {
+    private fun buildView(context: Context, summary: Summary, pendingIntent: PendingIntent): RemoteViews {
         return RemoteViews(context.packageName, R.layout.layout_notification).also { rvs ->
             rvs.setTextViewText(R.id.id_sellCode, summary.sellCode)
             rvs.setTextViewText(R.id.id_venueMnemonic, summary.venueMnemonic)
@@ -126,14 +137,15 @@ class AlarmReceiver @Inject constructor(
     }
 
     /**
-     * Utility class. Check for Summaries whose race time is now in the past, and update accordingly.
-     * We want to discount these from any Summary notifications.
+     * Utility class.
+     * Check for Summaries whose race time is now in the past, and update accordingly. We want to
+     * discount these from any Summary notifications.
      * @param currentTime: The current time in millis.
      */
     private suspend fun checkSummaries(currentTime: Long) {
         var raceTime: Long
 
-        val lSummaries = iDbRepo.getSummaries()
+        val lSummaries = dataAccess.getSummaries()
 
         for (summary in lSummaries) {
             raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
@@ -141,26 +153,39 @@ class AlarmReceiver @Inject constructor(
             if (!summary.isPastRaceTime) {
                 if (currentTime > raceTime) {
                     summary.isPastRaceTime = true
-                    iDbRepo.updateSummary(summary)
+                    dataAccess.updateSummary(summary)
                 }
             }
         }
     }
 
-    private fun BroadcastReceiver.goAsync(
-        context: CoroutineContext = EmptyCoroutineContext,
-        codeBlock: suspend CoroutineScope.() -> Unit
-    ) {
-        val pendingResult = goAsync()
-        CoroutineScope(SupervisorJob()).launch(context) {
-            try {
-                codeBlock()
-            } catch (ex: Exception) {
-                Log.e("TAG", "Exception in BroadcastReceiver.goAsync: ${ex.message}")
-                throw (ex)
-            } finally {
-                pendingResult.finish()
-            }
+    /**
+     * Utility class. Setup the entry point accessors.
+     */
+    private fun setEntryPoints(context: Context) {
+        val entryPoints =
+            EntryPointAccessors.fromApplication(context, IEntryPoints::class.java)
+        // Notification.
+        notificationManager = entryPoints.notificationManager().getNotificationManager()
+        notificationBuilder = entryPoints.notificationBuilder().getNotificationBuilder()
+        // Database access.
+        dataAccess = entryPoints.dbAccess()
+    }
+}
+
+private fun BroadcastReceiver.goAsync(
+    context: CoroutineContext = EmptyCoroutineContext,
+    codeBlock: suspend CoroutineScope.() -> Unit
+) {
+    val pendingResult = goAsync()
+    CoroutineScope(SupervisorJob()).launch(context) {
+        try {
+            codeBlock()
+        } catch (ex: Exception) {
+            Log.e("TAG", "Exception in BroadcastReceiver.goAsync: ${ex.message}")
+            throw(ex)
+        } finally {
+            pendingResult.finish()
         }
     }
 }
