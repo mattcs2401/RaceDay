@@ -49,7 +49,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         when (intent?.action) {
             INTENT_ACTION -> {
-                Toast.makeText(context, "TBA - Notification clicked.", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Notification clicked.", Toast.LENGTH_SHORT)
                     .show()
             }
         }

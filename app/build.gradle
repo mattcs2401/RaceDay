@@ -4,8 +4,6 @@ plugins {
     id("kotlin-android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.plugin.serialization")
-//    id("kotlin-kapt") // for arguments { arg("room.schemaLocation", "$projectDir/schemas") }
 }
 android {
     compileSdk 34
