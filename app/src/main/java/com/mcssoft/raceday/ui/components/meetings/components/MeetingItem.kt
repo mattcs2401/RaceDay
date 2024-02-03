@@ -4,7 +4,8 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -33,10 +34,12 @@ import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
 import com.mcssoft.raceday.utility.Constants.THREE_HUNDRED
 
+@OptIn(ExperimentalFoundationApi::class) // for Long click.
 @Composable
 fun MeetingItem(
     meeting: Meeting,
     onItemClick: (Meeting) -> Unit,
+    onItemLongClick: (Meeting) -> Unit
 ) {
     val backgroundColour = /* if (meeting.abandoned) {
         MaterialTheme.colors.errorDto
@@ -57,17 +60,18 @@ fun MeetingItem(
             .padding(padding4dp)
             .animateContentSize(
                 animationSpec = tween(THREE_HUNDRED, easing = LinearOutSlowInEasing)
+            )
+            .combinedClickable(
+                enabled = true,
+                onClick = { onItemClick(meeting) },
+                onLongClick = { onItemLongClick(meeting) },
             ),
         shape = RoundedCornerShapes.small,
         backgroundColor = backgroundColour
     ) {
         // Initial display of Meeting details.
         ConstraintLayout(
-            constraintSet,
-            modifier = Modifier
-                .clickable {
-                    onItemClick(meeting)
-                }
+            constraintSet
         ) {
             meeting.sellCode?.let { code ->
                 Text(

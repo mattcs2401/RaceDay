@@ -24,6 +24,8 @@
     <string name="dlg_remove_summary_title">Remove Summary Item?</string>
     <string name="dlg_remove_summary_text">This cannot be undone.</string>
 
+    <string name="dlg_refresh_meeting_title">Refresh Meeting</string>
+    <string name="dlg_refresh_meeting_text">Reload the Meeting data from the Api?.</string>
 
     <string name="dlg_init_title">Initialising</string>
     <string name="dlg_loading_meetings">Loading Meetings</string>

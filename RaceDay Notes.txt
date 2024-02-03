@@ -18,7 +18,7 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
-
+--> Do we need all the UseCases, or could we just do some simple database calls ?
 
 ---------------------------
 Other TO-DO or think about:

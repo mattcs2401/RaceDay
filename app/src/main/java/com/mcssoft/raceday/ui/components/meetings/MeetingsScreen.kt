@@ -41,10 +41,14 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 @Composable
 fun MeetingsScreen(
     state: MeetingsState,
-    navController: NavController
+    navController: NavController,
+    onEvent: (MeetingEvent) -> Unit
 ) {
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
+//    val context = LocalContext.current
+    val showMeetingRefreshDialog = remember { mutableStateOf(false) }
+    var meetingId: Long = 0
 
     BackPressHandler(onBackPressed = {})
 
@@ -80,7 +84,17 @@ fun MeetingsScreen(
                 .padding(bottom = 64.dp) // TBA - allow for bottom bar.
         ) {
             if (showRefreshDialog.value) {
-                ShowRefreshDialog(show = showRefreshDialog, navController = navController)
+                ShowRefreshDialog(
+                    show = showRefreshDialog,
+                    navController = navController
+                )
+            }
+            if (showMeetingRefreshDialog.value) {
+                ShowMeetingRefreshDialog(
+                    show = showMeetingRefreshDialog,
+                    meetingId = meetingId,
+                    onEvent = onEvent
+                )
             }
             when (state.status) {
                 is Status.Initialise -> {}
@@ -92,7 +106,7 @@ fun MeetingsScreen(
                     )
                 }
                 is Status.Failure -> {
-                    showRefreshDialog.value = false
+                    showMeetingRefreshDialog.value = false
                     showErrorDialog.value = true
                     ShowErrorDialog(
                         show = showErrorDialog,
@@ -111,6 +125,11 @@ fun MeetingsScreen(
                                     navController.navigate(
                                         Screens.RacesScreen.route + "meetingId=${meeting.id}"
                                     )
+                                },
+                                onItemLongClick = {
+                                    meetingId = it.id
+                                    showMeetingRefreshDialog.value = true
+//                                    Toast.makeText(context, "Long click.", Toast.LENGTH_SHORT).show()
                                 }
                             )
                         }
@@ -156,6 +175,28 @@ private fun ShowRefreshDialog(
         onConfirmClicked = {
             show.value = !show.value
             navController.navigate(Screens.SplashScreen.route)
+        },
+        onDismissClicked = {
+            show.value = !show.value
+        }
+    )
+}
+
+@Composable
+fun ShowMeetingRefreshDialog(
+    show: MutableState<Boolean>,
+    meetingId: Long,
+    onEvent: (MeetingEvent) -> Unit
+) {
+    CommonDialog(
+        icon = R.drawable.ic_refresh_48,
+        dialogTitle = stringResource(id = R.string.dlg_refresh_meeting_title),
+        dialogText = stringResource(id = R.string.dlg_refresh_meeting_text),
+        confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
+        dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
+        onConfirmClicked = {
+            show.value = !show.value
+            onEvent(MeetingEvent.RefreshMeeting(meetingId))
         },
         onDismissClicked = {
             show.value = !show.value

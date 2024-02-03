@@ -45,6 +45,14 @@ class MeetingsViewModel @Inject constructor(
         getMeetingsFromLocal()
     }
 
+    fun onEvent(event: MeetingEvent) {
+        when (event) {
+            is MeetingEvent.RefreshMeeting -> {
+                // TBA.
+            }
+        }
+    }
+
     /**
      * Use case: GetMeetings.
      * Get a list of Meetings from the database.
