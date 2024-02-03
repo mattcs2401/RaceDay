@@ -2,6 +2,7 @@ package com.mcssoft.raceday.ui.components.summary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.database.DbRepoImpl
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.utility.DataResult
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
     private val prefsRepo: PrefsRepo,
-    private val useCases: UseCases
+    private val useCases: UseCases,
+    private val dbRepoImpl: DbRepoImpl
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SummaryState.initialise())
@@ -39,6 +41,9 @@ class SummaryViewModel @Inject constructor(
         when (event) {
             is SummaryEvent.Refresh -> {
                 getSummaries()
+            }
+            is SummaryEvent.Removal -> {
+                removeSummary(event.summaryId)
             }
         }
     }
@@ -84,6 +89,13 @@ class SummaryViewModel @Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    private fun removeSummary(summaryId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dbRepoImpl.deleteSummary(summaryId)
+            getSummaries()
         }
     }
 }

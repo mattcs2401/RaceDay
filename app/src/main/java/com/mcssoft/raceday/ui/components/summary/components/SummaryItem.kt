@@ -1,6 +1,7 @@
 package com.mcssoft.raceday.ui.components.summary.components
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -27,10 +28,12 @@ import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
 import com.mcssoft.raceday.utility.Constants
 
+@OptIn(ExperimentalFoundationApi::class) // for Long click.
 @Composable
 fun SummaryItem(
     summary: Summary,
-    onItemClick: (Summary) -> Unit
+    onItemClick: (Summary) -> Unit,
+    onItemLongClick: (Summary) -> Unit
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
@@ -44,18 +47,18 @@ fun SummaryItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(padding4dp),
+            .padding(padding4dp)
+        .combinedClickable(
+            enabled = true,
+            onClick = { onItemClick(summary) },
+            onLongClick = { onItemLongClick(summary) },
+        ),
         shape = RoundedCornerShapes.medium,
         elevation = elevation4dp,
         backgroundColor = backgroundColour,
         border = borderStroke
     ) {
-        ConstraintLayout(
-            constraintSet,
-            modifier = Modifier.clickable {
-                onItemClick(summary)
-            }
-        ) {
+        ConstraintLayout(constraintSet) {
             Text(
                 summary.sellCode,
                 Modifier.layoutId("idSellCode"),
@@ -99,12 +102,12 @@ fun SummaryItem(
                 fontSize = fontSize12sp,
                 style = textStyle
             )
-            var trainer = summary.trainerName
-            if (trainer.length > Constants.TRAINER_MAX) {
-                trainer = "${trainer.take(Constants.TRAINER_TAKE)}..."
+            var trainerName = summary.trainerName
+            if (trainerName.length > Constants.TRAINER_MAX) {
+                trainerName = "${trainerName.take(Constants.TRAINER_TAKE)}..."
             }
             Text(
-                "(T) $trainer",
+                "(T) $trainerName",
                 Modifier.layoutId("idTrainerName"),
                 fontSize = fontSize12sp,
                 style = textStyle

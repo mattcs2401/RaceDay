@@ -111,8 +111,7 @@ fun NavGraph() {
             val state by viewModel.state.collectAsStateWithLifecycle()
             RunnerScreen(
                 state = state,
-//                onEvent = viewModel::onEvent,
-//                navController = navController
+                navController = navController
             )
         }
 

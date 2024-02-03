@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
+import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
 import com.mcssoft.raceday.ui.theme.fontSize14sp
@@ -28,7 +30,8 @@ import com.mcssoft.raceday.ui.theme.thirty3Percent
  */
 @Composable
 fun RunnerScreen(
-    state: RunnerState
+    state: RunnerState,
+    navController: NavController,
 ) {
     val scaffoldState = rememberScaffoldState()
 //    val textStyle = TextStyle(textDecoration = TextDecoration.None)
@@ -39,7 +42,10 @@ fun RunnerScreen(
             TopBar(
                 title = stringResource(id = R.string.label_runner),
                 backgroundColour = MaterialTheme.colors.primary,
-                actions = { /*TBA*/ }
+                backNavIcon = R.drawable.ic_arrow_back_24,
+                onBackPressed = {
+                    backNavigate(navController)
+                }
             )
         }
     ) {
@@ -109,6 +115,18 @@ fun BuildRow(label: String, value: String) {
                 value,
                 fontSize = fontSize14sp
             )
+        }
+    }
+}
+
+fun backNavigate(
+    navController: NavController
+) {
+    navController.navigate(
+        Screens.SummaryScreen.route
+    ) {
+        popUpTo(route = Screens.SummaryScreen.route) {
+            inclusive = true
         }
     }
 }

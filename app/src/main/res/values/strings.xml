@@ -21,6 +21,10 @@
     <string name="dlg_refresh_title">Refresh Data</string>
     <string name="dlg_refresh_text">Delete all backing data and recreate ?</string>
 
+    <string name="dlg_remove_summary_title">Remove Summary Item?</string>
+    <string name="dlg_remove_summary_text">This cannot be undone.</string>
+
+
     <string name="dlg_init_title">Initialising</string>
     <string name="dlg_loading_meetings">Loading Meetings</string>
     <string name="dlg_loading_races">Loading Races</string>
