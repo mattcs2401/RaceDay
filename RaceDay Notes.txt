@@ -18,17 +18,11 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
---> Race time value in the raw data is not always correct:
-    -> e.g. 20/10/2023 Gatton (GTN) Race 1 raceStartTime 2023-10-20T02:14:00.000. Should be 12:14.
-        -> Some sort of validation ?
---> Race time in the Summary is displaying incorrectly for evening/night races.
-        -> Check/confirm ?
+
 
 ---------------------------
 Other TO-DO or think about:
 ---------------------------
---> OnBackPressed from PreferencesScreen to simulate an explicit navigation.
-
 -> A notification actions button:
    -> go to ... ?
 
