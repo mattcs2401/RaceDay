@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.meetings
 
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -21,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -46,9 +48,8 @@ fun MeetingsScreen(
 ) {
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
-//    val context = LocalContext.current
     val showMeetingRefreshDialog = remember { mutableStateOf(false) }
-    var meetingId: Long = 0
+//    var venueMnemonic: String = ""
 
     BackPressHandler(onBackPressed = {})
 
@@ -92,8 +93,8 @@ fun MeetingsScreen(
             if (showMeetingRefreshDialog.value) {
                 ShowMeetingRefreshDialog(
                     show = showMeetingRefreshDialog,
-                    meetingId = meetingId,
-                    onEvent = onEvent
+//                    venue = venue,
+//                    onEvent = onEvent
                 )
             }
             when (state.status) {
@@ -127,9 +128,8 @@ fun MeetingsScreen(
                                     )
                                 },
                                 onItemLongClick = {
-                                    meetingId = it.id
+//                                    venueMnemonic = it.venueMnemonic ?: ""
                                     showMeetingRefreshDialog.value = true
-//                                    Toast.makeText(context, "Long click.", Toast.LENGTH_SHORT).show()
                                 }
                             )
                         }
@@ -185,9 +185,10 @@ private fun ShowRefreshDialog(
 @Composable
 fun ShowMeetingRefreshDialog(
     show: MutableState<Boolean>,
-    meetingId: Long,
-    onEvent: (MeetingEvent) -> Unit
+//    venueMnemonic: String,
+//    onEvent: (MeetingEvent) -> Unit
 ) {
+    val context = LocalContext.current
     CommonDialog(
         icon = R.drawable.ic_refresh_48,
         dialogTitle = stringResource(id = R.string.dlg_refresh_meeting_title),
@@ -196,7 +197,8 @@ fun ShowMeetingRefreshDialog(
         dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
         onConfirmClicked = {
             show.value = !show.value
-            onEvent(MeetingEvent.RefreshMeeting(meetingId))
+            Toast.makeText(context, "Functionality not implemented yet.", Toast.LENGTH_SHORT).show()
+//            onEvent(MeetingEvent.RefreshMeeting(venueMnemonic))
         },
         onDismissClicked = {
             show.value = !show.value

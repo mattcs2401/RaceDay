@@ -44,16 +44,16 @@ Examples:
 
 For getRaceDay()
 - Meeting and basic Race values.
-#https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-09-24/meetings?jurisdiction=QLD
+#https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2024-02-04/meetings?jurisdiction=QLD
 
 For getRunners()
 - Runner values.
-#https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-09-24/meetings/R/SSC/races/1?jurisdiction=QLD
+#https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2024-02-04/meetings/R/SSC/races/1?jurisdiction=QLD
 
 Notes:
 ------
 (1) Will need to hit each Race separately to get all Runners.
 (2) There is also a URL:
-    https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2023-09-24/meetings/R/SSC/races?jurisdiction=QLD
+    https://api.beta.tab.com.au/v1/tab-info-service/racing/dates/2024-02-04/meetings/R/SSC/races?jurisdiction=QLD
     but that doesn't give Runner info.
  */

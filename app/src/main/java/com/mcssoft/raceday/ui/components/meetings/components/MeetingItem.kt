@@ -41,11 +41,7 @@ fun MeetingItem(
     onItemClick: (Meeting) -> Unit,
     onItemLongClick: (Meeting) -> Unit
 ) {
-    val backgroundColour = /* if (meeting.abandoned) {
-        MaterialTheme.colors.errorDto
-    } else {*/
-        MaterialTheme.colors.primaryVariant
-//    }
+    val backgroundColour = MaterialTheme.colors.primaryVariant
 
     var expandedState by remember { mutableStateOf(false) }
 
@@ -63,8 +59,12 @@ fun MeetingItem(
             )
             .combinedClickable(
                 enabled = true,
-                onClick = { onItemClick(meeting) },
-                onLongClick = { onItemLongClick(meeting) },
+                onClick = {
+                    onItemClick(meeting)
+                },
+                onLongClick = {
+                    onItemLongClick(meeting)
+                },
             ),
         shape = RoundedCornerShapes.small,
         backgroundColor = backgroundColour
@@ -96,12 +96,10 @@ fun MeetingItem(
                     .layoutId("idArrow")
                     .rotate(rotationState)
             ) {
-//                if (!meeting.abandoned) {
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = "Drop-Down Arrow"
                 )
-//                }
             }
         }
         if (expandedState) {

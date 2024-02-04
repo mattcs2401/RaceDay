@@ -56,7 +56,7 @@ class MeetingsViewModel @Inject constructor(
     /**
      * Use case: GetMeetings.
      * Get a list of Meetings from the database.
-     * @note Database is already populated.
+     * @note Database is already populated from the Api.
      */
     private fun getMeetingsFromLocal() {
         viewModelScope.launch(Dispatchers.IO) {
