@@ -4,8 +4,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,10 +51,10 @@ fun RaceItem(
                 },
                 onLongClick = {
                     onItemLongClick(race)
-               }
+                }
             ),
         shape = RoundedCornerShapes.medium,
-        elevation = elevation4dp
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation4dp)
     ) {
         ConstraintLayout(
             constraintSet

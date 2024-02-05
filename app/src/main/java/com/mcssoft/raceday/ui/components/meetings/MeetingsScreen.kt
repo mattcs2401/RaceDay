@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.meetings
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -10,10 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -41,15 +42,14 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
  * @param navController: The Navigation.
  */
 @Composable
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MeetingsScreen(
     state: MeetingsState,
-    navController: NavController,
-    onEvent: (MeetingEvent) -> Unit
+    navController: NavController
 ) {
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
     val showMeetingRefreshDialog = remember { mutableStateOf(false) }
-//    var venueMnemonic: String = ""
 
     BackPressHandler(onBackPressed = {})
 
@@ -58,7 +58,7 @@ fun MeetingsScreen(
             MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
                 title2 = state.mtgDate,
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 actions = {
                     IconButton(
                         enabled = state.canRefresh,
@@ -81,7 +81,7 @@ fun MeetingsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(bottom = 64.dp) // TBA - allow for bottom bar.
         ) {
             if (showRefreshDialog.value) {
@@ -92,9 +92,7 @@ fun MeetingsScreen(
             }
             if (showMeetingRefreshDialog.value) {
                 ShowMeetingRefreshDialog(
-                    show = showMeetingRefreshDialog,
-//                    venue = venue,
-//                    onEvent = onEvent
+                    show = showMeetingRefreshDialog
                 )
             }
             when (state.status) {
@@ -140,26 +138,6 @@ fun MeetingsScreen(
         }
     }
 }
-
-// @Preview
-// @Composable
-// fun ShowTopBar(title: String = "Meetings", title2: String = "2023-08-28") {
-//    MeetingsTopBar(
-//        title,
-//        title2,
-//        MaterialTheme.colors.primary,
-//        actions = {
-//            IconButton(
-//                onClick = {}
-//            ) {
-//                Icon(
-//                    painterResource(id = R.drawable.ic_refresh_24),
-//                    stringResource(id = R.string.lbl_icon_refresh)
-//                )
-//            }
-//        }
-//    )
-// }
 
 @Composable
 private fun ShowRefreshDialog(

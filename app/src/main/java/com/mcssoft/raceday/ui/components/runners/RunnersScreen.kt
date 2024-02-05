@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.runners
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -9,11 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -36,19 +36,17 @@ import com.mcssoft.raceday.ui.theme.padding64dp
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
 @Composable
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
     onEvent: (RunnersEvent) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
@@ -62,11 +60,10 @@ fun RunnersScreen(
             )
         }
     ) {
-        // Race header.
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colorScheme.secondary)
         ) {
             when (state.status) {
                 is Status.Loading -> {
@@ -87,7 +84,7 @@ fun RunnersScreen(
                         state.race?.let { race ->
                             RacesHeader(
                                 race = race,
-                                MaterialTheme.colors.background
+                                MaterialTheme.colorScheme.background
                             )
                         }
                     }

@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.races
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -9,12 +10,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +41,7 @@ import com.mcssoft.raceday.utility.DateUtils
  * @param state: Races state.
  * @param navController: The Navigation.
  */
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RacesScreen(
@@ -50,8 +51,6 @@ fun RacesScreen(
 ) {
     var raceId: Long = 0 // set by Race item onLongClick().
 
-    val scaffoldState = rememberScaffoldState()
-
     val showTimeChangeDialog = remember { mutableStateOf(false) }
 
     val timePickerState = rememberTimePickerState(
@@ -60,11 +59,10 @@ fun RacesScreen(
     )
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_races),
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
@@ -81,7 +79,7 @@ fun RacesScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colorScheme.secondary)
         ) {
             if (showTimeChangeDialog.value) {
                 TimeChangeDialog(
@@ -123,7 +121,7 @@ fun RacesScreen(
                         state.meeting?.let { meeting ->
                             MeetingHeader(
                                 meeting = meeting,
-                                MaterialTheme.colors.background
+                                MaterialTheme.colorScheme.background
                             )
                         }
                     }
