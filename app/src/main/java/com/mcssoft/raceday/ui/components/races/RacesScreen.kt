@@ -14,13 +14,18 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
+import com.mcssoft.raceday.ui.components.dialog.TimeChangeDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
@@ -30,17 +35,29 @@ import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.utility.DateUtils
 
 /**
  * @param state: Races state.
  * @param navController: The Navigation.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RacesScreen(
     state: RacesState,
-    navController: NavController
+    navController: NavController,
+    onEvent: (RacesEvent) -> Unit
 ) {
+    var raceId: Long = 0 // set by Race item onLongClick().
+
     val scaffoldState = rememberScaffoldState()
+
+    val showTimeChangeDialog = remember { mutableStateOf(false) }
+
+    val timePickerState = rememberTimePickerState(
+        // simply an initialise value (only the picker can update picker state).
+        initialHour = 12, 0, true
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -61,12 +78,30 @@ fun RacesScreen(
             )
         }
     ) {
-        // Meeting header.
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.secondary)
         ) {
+            if (showTimeChangeDialog.value) {
+                TimeChangeDialog(
+                    timeState = timePickerState,
+                    showDialog = showTimeChangeDialog.value,
+                    onDismissClicked = { showTimeChangeDialog.value = false },
+                    onConfirmClicked = {
+                        showTimeChangeDialog.value = false
+                        onEvent(
+                            RacesEvent.DateChange(
+                                raceId,
+                                DateUtils().formatHourMinutes(
+                                    timePickerState.hour,
+                                    timePickerState.minute
+                                )
+                            )
+                        )
+                    }
+                )
+            }
             when (state.status) {
                 is Loading -> {
                     LoadingDialog(
@@ -100,7 +135,7 @@ fun RacesScreen(
                     ) {
                         items(
                             items = state.races,
-                            key = { it.id  }
+                            key = { it.id }
                         ) { race ->
                             RaceItem(
                                 race = race,
@@ -108,6 +143,10 @@ fun RacesScreen(
                                     navController.navigate(
                                         Screens.RunnersScreen.route + "raceId=${race.id}"
                                     )
+                                },
+                                onItemLongClick = {
+                                    raceId = it.id
+                                    showTimeChangeDialog.value = true
                                 }
                             )
                         }
@@ -131,4 +170,3 @@ fun backNavigate(
         }
     }
 }
-

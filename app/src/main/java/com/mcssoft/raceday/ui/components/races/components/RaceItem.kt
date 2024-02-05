@@ -1,6 +1,7 @@
 package com.mcssoft.raceday.ui.components.races.components
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -24,32 +25,38 @@ import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
 
+@OptIn(ExperimentalFoundationApi::class) // for Long click.
 @Composable
 fun RaceItem(
     race: Race,
-    onItemClick: (Race) -> Unit
+    onItemClick: (Race) -> Unit,
+    onItemLongClick: (Race) -> Unit
+
 ) {
     var abandoned by remember { mutableStateOf(false) }
 
-    if(race.raceStatus == "Abandoned") {
+    if (race.raceStatus == "Abandoned") {
         abandoned = true
     }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(padding4dp),
+            .padding(padding4dp)
+            .combinedClickable(
+                enabled = true,
+                onClick = {
+                    onItemClick(race)
+                },
+                onLongClick = {
+                    onItemLongClick(race)
+               }
+            ),
         shape = RoundedCornerShapes.medium,
         elevation = elevation4dp
-        //backgroundColor = TBA
     ) {
         ConstraintLayout(
-            constraintSet,
-            modifier = Modifier.clickable {
-                if(!abandoned) {
-                    onItemClick(race)
-                }
-            }
+            constraintSet
         ) {
             Text(
                 race.raceNumber.toString(),
@@ -78,7 +85,7 @@ fun RaceItem(
                     fontSize = fontSize12sp
                 )
             }
-            if(abandoned) {
+            if (abandoned) {
                 Text(
                     race.raceStatus.uppercase(),
                     Modifier.layoutId("idAbandoned"),

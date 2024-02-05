@@ -20,6 +20,11 @@ Issues:
 =======
 --> Do we need all the UseCases, or could we just do some simple database calls ?
 
+--> Can we do our Room relationships better ?
+https://proandroiddev.com/room-database-relationships-explained-729d3c705fd9
+
+--> xxx
+
 ---------------------------
 Other TO-DO or think about:
 ---------------------------
@@ -54,9 +59,17 @@ Other TO-DO or think about:
 
 --> App theme and screen design.
 
-------------
+============
 [References]
-------------
+============
+-----------
+Material 3:
+-----------
+https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary
+
+------
+Other:
+------
 -> https://www.youtube.com/watch?v=JfCivo5qJkI
 -> https://itnext.io/android-custom-notification-in-6-mins-c2e7e2ddadab
 -> https://itnext.io/android-notification-all-in-one-8df3e1218e0e

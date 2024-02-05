@@ -3,6 +3,7 @@ package com.mcssoft.raceday.ui.components.races
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RacesViewModel @Inject constructor(
+    private val dbRepo: IDbRepo,
     private val useCases: UseCases,
     private val prefsRepo: PrefsRepo,
     savedStateHandle: SavedStateHandle
@@ -44,6 +46,16 @@ class RacesViewModel @Inject constructor(
             // Get Meeting and Races values for the screen.
             getMeeting(mtgId)
             getRaces(mtgId)
+        }
+    }
+
+    fun onEvent(event: RacesEvent) {
+        when (event) {
+            is RacesEvent.DateChange -> {
+                viewModelScope.launch {
+                    dbRepo.updateRaceTime(event.raceId, event.time)
+                }
+            }
         }
     }
 

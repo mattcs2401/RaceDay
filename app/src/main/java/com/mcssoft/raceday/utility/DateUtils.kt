@@ -118,7 +118,7 @@ class DateUtils {
      * @param hourOfDay: An hour value.
      * @param minutes: A minutes value.
      */
-    private fun formatHourMinutes(hourOfDay: Int, minutes: Int): String {
+    fun formatHourMinutes(hourOfDay: Int, minutes: Int): String {
         return if (minutes < TEN) {
             "$hourOfDay:0$minutes"
         } else {

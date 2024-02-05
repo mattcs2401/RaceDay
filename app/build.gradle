@@ -63,8 +63,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
-// TODO - convert to material3 https://developer.android.com/jetpack/compose/designsystems/material2-material3#m3_1.
-//    implementation "androidx.compose.material3:material3:1.2.0-beta02"
+    // TODO - convert to material3
+    //  https://developer.android.com/jetpack/compose/designsystems/material2-material3#m3_1.
+    implementation "androidx.compose.material3:material3:1.2.0-rc01"
 
     /* Room database. */
     def room_ver = '2.6.1'

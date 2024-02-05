@@ -53,6 +53,10 @@ class DbRepoImpl @Inject constructor(
     override suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long {
         return dao.getRaceIdByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
     }
+
+    override suspend fun updateRaceTime(raceId: Long, raceTime: String) {
+        return dao.updateRaceTime(raceId, raceTime)
+    }
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Runner related.">

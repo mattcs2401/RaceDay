@@ -126,6 +126,9 @@ interface IDbRepo {
 
     @Query("select id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
+
+    @Query("update Race set raceStartTime = :raceTime where id = :raceId")
+    suspend fun updateRaceTime(raceId: Long, raceTime: String)
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Runner related.">
