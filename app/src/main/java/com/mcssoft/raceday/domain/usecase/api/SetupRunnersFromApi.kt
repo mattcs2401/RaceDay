@@ -71,8 +71,8 @@ class SetupRunnersFromApi @Inject constructor(
                     }
                     .collect { result ->
                         when (result) {
-                            Status.Scheduled -> {}
-                            Status.Cancelled -> {}
+//                            Status.Scheduled -> {}
+//                            Status.Cancelled -> {}
                             Status.Failed -> {
                                 val ex = Exception(
                                     context.resources.getString(R.string.failure_runners_worker)

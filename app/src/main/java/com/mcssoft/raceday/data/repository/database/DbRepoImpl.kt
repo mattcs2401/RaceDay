@@ -50,8 +50,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getRace(raceId)
     }
 
-    override suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long {
-        return dao.getRaceIdByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
+    override suspend fun getRaceByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Race {
+        return dao.getRaceByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
     }
 
     override suspend fun updateRaceTime(raceId: Long, raceTime: String) {

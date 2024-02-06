@@ -124,8 +124,8 @@ interface IDbRepo {
     @Query("select * from Race where id = :raceId")
     suspend fun getRace(raceId: Long): Race
 
-    @Query("select id from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
-    suspend fun getRaceIdByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Long
+    @Query("select * from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
+    suspend fun getRaceByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Race
 
     @Query("update Race set raceStartTime = :raceTime where id = :raceId")
     suspend fun updateRaceTime(raceId: Long, raceTime: String)

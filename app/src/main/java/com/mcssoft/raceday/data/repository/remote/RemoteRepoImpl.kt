@@ -38,7 +38,11 @@ class RemoteRepoImpl @Inject constructor(
      * @param venueCode: Code for the venue.
      * @param raceNum: The Race number.
      */
-    override suspend fun getRaceDayRunners(date: String, venueCode: String, raceNum: String): NetworkResponse<BaseDto2> {
+    override suspend fun getRaceDayRunners(
+        date: String,
+        venueCode: String,
+        raceNum: String
+    ): NetworkResponse<BaseDto2> {
         return try {
             val result = api.getRunners(date, venueCode, raceNum)
             when {
