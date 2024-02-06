@@ -18,12 +18,12 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
+--> *** App Theme ***
+
 --> Do we need all the UseCases, or could we just do some simple database calls ?
 
 --> Can we do our Room relationships better ?
 https://proandroiddev.com/room-database-relationships-explained-729d3c705fd9
-
---> xxx
 
 ---------------------------
 Other TO-DO or think about:

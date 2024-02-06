@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -42,6 +43,7 @@ fun RunnerScreen(
             TopBar(
                 title = stringResource(id = R.string.label_runner),
                 backgroundColour = MaterialTheme.colors.primary,
+                titleColour = Color.White,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController)

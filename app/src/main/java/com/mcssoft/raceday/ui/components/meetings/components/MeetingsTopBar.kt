@@ -23,15 +23,25 @@ import androidx.compose.ui.unit.sp
 fun MeetingsTopBar(
     title: String,
     title2: String?,
+    titleColour: Color,
     backgroundColour: Color,
     actions: @Composable (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
         title = {
             Row(content = {
-                Text(title, modifier = Modifier.weight(weight = 2f))
+                Text(
+                    title,
+                    modifier = Modifier.weight(weight = 2f),
+                    color = titleColour
+                )
                 if (title2 != null) {
-                    Text(title2, fontSize = 12.sp, modifier = Modifier.weight(weight = 3f))
+                    Text(
+                        title2,
+                        fontSize = 12.sp,
+                        modifier = Modifier.weight(weight = 3f),
+                        color = titleColour
+                    )
                 }
             })
         },
@@ -43,5 +53,5 @@ fun MeetingsTopBar(
 @Preview
 @Composable
 fun ShowTopBar(title: String = "Meetings", title2: String = "2023-08-28") {
-    MeetingsTopBar(title, title2, MaterialTheme.colors.primary)
+    MeetingsTopBar(title, title2, Color.White, MaterialTheme.colors.primary)
 }

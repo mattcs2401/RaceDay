@@ -41,7 +41,7 @@ fun MeetingItem(
     onItemClick: (Meeting) -> Unit,
     onItemLongClick: (Meeting) -> Unit
 ) {
-    val backgroundColour = MaterialTheme.colors.primaryVariant
+    val backgroundColour = MaterialTheme.colors.primary
 
     var expandedState by remember { mutableStateOf(false) }
 

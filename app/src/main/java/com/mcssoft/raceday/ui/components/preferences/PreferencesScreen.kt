@@ -9,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
@@ -30,6 +31,7 @@ fun PreferencesScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_settings),
+                titleColour = Color.White,
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {

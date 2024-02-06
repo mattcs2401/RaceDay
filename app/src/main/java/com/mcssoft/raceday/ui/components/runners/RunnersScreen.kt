@@ -10,12 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -46,14 +47,16 @@ fun RunnersScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                titleColour = Color.White,
+                backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home)
+                            stringResource(id = R.string.lbl_icon_home),
+                            tint = Color.White
                         )
                     }
                 }
@@ -63,7 +66,7 @@ fun RunnersScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondary)
+                .background(MaterialTheme.colors.secondary)
         ) {
             when (state.status) {
                 is Status.Loading -> {
@@ -84,7 +87,7 @@ fun RunnersScreen(
                         state.race?.let { race ->
                             RacesHeader(
                                 race = race,
-                                MaterialTheme.colorScheme.background
+                                MaterialTheme.colors.background
                             )
                         }
                     }

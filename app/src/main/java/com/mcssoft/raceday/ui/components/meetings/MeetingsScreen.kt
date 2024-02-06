@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,7 +59,8 @@ fun MeetingsScreen(
             MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
                 title2 = state.mtgDate,
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                titleColour = Color.White,
+                backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(
                         enabled = state.canRefresh,
@@ -68,7 +70,8 @@ fun MeetingsScreen(
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
-                            stringResource(id = R.string.lbl_icon_refresh)
+                            stringResource(id = R.string.lbl_icon_refresh),
+                            tint = Color.White
                         )
                     }
                 }
@@ -81,7 +84,7 @@ fun MeetingsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colors.background)
                 .padding(bottom = 64.dp) // TBA - allow for bottom bar.
         ) {
             if (showRefreshDialog.value) {

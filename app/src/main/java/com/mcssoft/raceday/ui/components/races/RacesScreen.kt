@@ -10,16 +10,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -62,14 +63,16 @@ fun RacesScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_races),
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                backgroundColour = MaterialTheme.colors.primary,
+                titleColour = Color.White,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home)
+                            stringResource(id = R.string.lbl_icon_home),
+                            tint = Color.White
                         )
                     }
                 }
@@ -79,7 +82,7 @@ fun RacesScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondary)
+                .background(MaterialTheme.colors.secondary)
         ) {
             if (showTimeChangeDialog.value) {
                 TimeChangeDialog(
@@ -121,7 +124,7 @@ fun RacesScreen(
                         state.meeting?.let { meeting ->
                             MeetingHeader(
                                 meeting = meeting,
-                                MaterialTheme.colorScheme.background
+                                MaterialTheme.colors.background
                             )
                         }
                     }

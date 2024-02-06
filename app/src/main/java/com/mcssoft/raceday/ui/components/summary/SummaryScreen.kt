@@ -19,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -45,6 +46,7 @@ fun SummaryScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_summary),
+                titleColour = Color.White,
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
@@ -56,7 +58,8 @@ fun SummaryScreen(
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
-                            stringResource(id = R.string.lbl_icon_refresh)
+                            stringResource(id = R.string.lbl_icon_refresh),
+                            tint = Color.White
                         )
                     }
                 }

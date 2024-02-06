@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun TopBar(
     title: String,
+    titleColour: Color,
     backgroundColour: Color,
     onBackPressed: () -> Unit = {},
     backNavIcon: Int? = null,
@@ -31,7 +32,10 @@ fun TopBar(
         title = {
             Row(
                 content = {
-                    Text(title)
+                    Text(
+                        text = title,
+                        color = titleColour
+                    )
                 }
             )
         },
@@ -41,7 +45,8 @@ fun TopBar(
                 IconButton(onClick = onBackPressed) {
                     Icon(
                         painterResource(backNavIcon),
-                        backNavIcon.toString()
+                        backNavIcon.toString(),
+                        tint = titleColour
                     )
                 }
             }
@@ -53,5 +58,5 @@ fun TopBar(
 @Preview
 @Composable
 fun ShowTopBar(title: String = "Meetings") {
-    TopBar(title, MaterialTheme.colors.primary)
+    TopBar(title, Color.White, MaterialTheme.colors.primary)
 }
