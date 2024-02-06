@@ -8,26 +8,47 @@ import androidx.compose.ui.graphics.Color
 
 val colourPrimary = Color(0xFF6200EE)
 val colourPrimaryVariant = Color(0xFF3700B3)
+val colourSecondary: Color = Color(0xFF03DAC6)
+val colourSecondaryVariant: Color = Color(0xFF018786)
+val colourBackground: Color = Color.White
+val colourSurface: Color = Color.White
+val colourError: Color = Color(0xFFB00020)
+val colourOnPrimary: Color = Color.White
+val colourOnSecondary: Color = Color.Black
+val colourOnBackground: Color = Color.Black
+val colourOnSurface: Color = Color.Black
+val colourOnError: Color = Color.White
 
+/*
+fun lightColors(
+    primary: Color = Color(0xFF6200EE),
+    primaryVariant: Color = Color(0xFF3700B3),
+    secondary: Color = Color(0xFF03DAC6),
+    secondaryVariant: Color = Color(0xFF018786),
+    background: Color = Color.White,
+    surface: Color = Color.White,
+    error: Color = Color(0xFFB00020),
+    onPrimary: Color = Color.White,
+    onSecondary: Color = Color.Black,
+    onBackground: Color = Color.Black,
+    onSurface: Color = Color.Black,
+    onError: Color = Color.White
+): Colors
+ */
+/*
 
-
-val Purple200 = Color(0xFFBB86FC)
-val Teal200 = Color(0xFF03DAC5)
-
-// Copied.
-val Blue300 = Color(0xFF64B5F6)
-val Blue400 = Color(0xFF42A5F5)
-val Blue500 = Color(0xFF2196F3)
-val Blue600 = Color(0xFF1E88E5)
-val Blue700 = Color(0xFF1976D2)
-val Blue800 = Color(0xFF1565C0)
-
-val Teal300 = Color(0xFF1AC6FF)
-
-val Grey1 = Color(0xFFF2F2F2)
-
-val Black1 = Color(0xFF222222)
-val Black2 = Color(0xFF000000)
-
-val RedErrorDark = Color(0xFFB00020)
-val RedErrorLight = Color(0xFFEF5350)
+fun darkColors(
+    primary: Color = Color(0xFFBB86FC),
+    primaryVariant: Color = Color(0xFF3700B3),
+    secondary: Color = Color(0xFF03DAC6),
+    secondaryVariant: Color = secondary,
+    background: Color = Color(0xFF121212),
+    surface: Color = Color(0xFF121212),
+    error: Color = Color(0xFFCF6679),
+    onPrimary: Color = Color.Black,
+    onSecondary: Color = Color.Black,
+    onBackground: Color = Color.White,
+    onSurface: Color = Color.White,
+    onError: Color = Color.Black
+): Colors
+ */
