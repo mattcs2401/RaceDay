@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
 import com.mcssoft.raceday.domain.usecase.UseCases
+import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import com.mcssoft.raceday.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -95,6 +97,7 @@ class SummaryViewModel @Inject constructor(
     private fun removeSummary(summaryId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             iDbRepo.deleteSummary(summaryId)
+            delay(TWENTY_FIVE) // TBA.
             getSummaries()
         }
     }

@@ -2,8 +2,6 @@ package com.mcssoft.raceday.domain.usecase
 
 import com.mcssoft.raceday.domain.usecase.api.SetupBaseFromApi
 import com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi
-import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
-import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
 import com.mcssoft.raceday.domain.usecase.races.GetRace
 import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunner
@@ -18,12 +16,6 @@ data class UseCases(
 
     // Get and save the base set of data from the Api (Meetings and Races).
     val setupRunnersFromApi: SetupRunnersFromApi,
-
-    // Get a list of Meetings from the database.
-    val getMeetings: GetMeetings,
-
-    // Get a single Meeting from the database.
-    val getMeeting: GetMeeting,
 
     // Get a list of the Races from the database.
     val getRaces: GetRaces,

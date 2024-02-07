@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,7 +44,10 @@ fun RunnersScreen(
     navController: NavController,
     onEvent: (RunnersEvent) -> Unit
 ) {
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),
@@ -76,7 +80,10 @@ fun RunnersScreen(
                         onDismiss = {}
                     )
                 }
-                is Status.Failure -> { /* TBA */ }
+
+                is Status.Failure -> { /* TBA */
+                }
+
                 is Status.Success -> {
                     // Race header row.
                     Row(
@@ -112,6 +119,7 @@ fun RunnersScreen(
                         }
                     }
                 }
+
                 else -> {}
             }
         }

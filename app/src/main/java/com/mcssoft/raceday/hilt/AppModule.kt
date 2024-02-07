@@ -13,8 +13,6 @@ import com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.domain.usecase.api.SetupBaseFromApi
 import com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi
-import com.mcssoft.raceday.domain.usecase.meetings.GetMeeting
-import com.mcssoft.raceday.domain.usecase.meetings.GetMeetings
 import com.mcssoft.raceday.domain.usecase.races.GetRace
 import com.mcssoft.raceday.domain.usecase.races.GetRaces
 import com.mcssoft.raceday.domain.usecase.runners.GetRunner
@@ -114,8 +112,6 @@ object AppModule {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local, context),
             setupRunnersFromApi = SetupRunnersFromApi(local, context),
-            getMeeting = GetMeeting(local, scope),
-            getMeetings = GetMeetings(local, scope),
             getRaces = GetRaces(local, scope),
             getRace = GetRace(local, scope),
             getRunners = GetRunners(local, scope),

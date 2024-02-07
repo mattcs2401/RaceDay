@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.CommonDialog
-import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
@@ -99,14 +98,6 @@ fun MeetingsScreen(
                 )
             }
             when (state.status) {
-                is Status.Initialise -> {}
-                is Status.Loading -> {
-                    LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_meetings),
-                        msgText = stringResource(id = R.string.dlg_loading_msg),
-                        onDismiss = {}
-                    )
-                }
                 is Status.Failure -> {
                     showMeetingRefreshDialog.value = false
                     showErrorDialog.value = true

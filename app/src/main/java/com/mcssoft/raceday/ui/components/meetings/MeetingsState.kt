@@ -17,14 +17,13 @@ data class MeetingsState(
                 status = Status.Initialise,
                 data = null,
                 date = date,
-                canRefresh = true
+                canRefresh = false
             )
         }
     }
 
     sealed class Status {
         data object Initialise : Status()
-        data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
     }
