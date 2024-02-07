@@ -1,6 +1,5 @@
 package com.mcssoft.raceday.ui.components.races
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -41,7 +40,6 @@ import com.mcssoft.raceday.utility.DateUtils
  * @param state: Races state.
  * @param navController: The Navigation.
  */
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RacesScreen(

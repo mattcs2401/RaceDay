@@ -18,9 +18,7 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
 =======
 Issues:
 =======
---> *** App Theme ***
-
---> Do we need all the UseCases, or could we just do some simple database calls ?
+--> *** App Theme / Colours / etc ***
 
 --> Can we do our Room relationships better ?
 https://proandroiddev.com/room-database-relationships-explained-729d3c705fd9
@@ -33,9 +31,6 @@ Other TO-DO or think about:
 
 --> Scratching
     -> Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
-
---> Date/Time
-    Use Date() or equivalent instead of converting to/from millis.
 
 --> Reload from the local database if some exception occurs:
     -> on a refresh from the Api ?
@@ -81,4 +76,7 @@ Other:
 -> https://stackoverflow.com/questions/22741202/how-to-use-goasync-for-broadcastreceiver
 
 --> https://www.youtube.com/watch?v=EVVFhyuVV5g
+
+--> https://proandroiddev.com/room-database-relationships-explained-729d3c705fd9
+
 

@@ -1,6 +1,5 @@
 package com.mcssoft.raceday.ui.components.meetings
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -43,7 +42,6 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
  * @param navController: The Navigation.
  */
 @Composable
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MeetingsScreen(
     state: MeetingsState,
     navController: NavController

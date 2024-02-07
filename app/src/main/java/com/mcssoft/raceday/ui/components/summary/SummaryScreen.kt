@@ -38,7 +38,7 @@ fun SummaryScreen(
     onEvent: (SummaryEvent) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
-    val showRemvlDialog = remember { mutableStateOf(false) }
+    val showRemoveDialog = remember { mutableStateOf(false) }
     var summaryId: Long = 0
 
     Scaffold(
@@ -66,9 +66,9 @@ fun SummaryScreen(
             )
         }
     ) {
-        if (showRemvlDialog.value) {
+        if (showRemoveDialog.value) {
             ShowRemoveDialog(
-                show = showRemvlDialog,
+                show = showRemoveDialog,
                 summaryId = summaryId,
                 onEvent = onEvent
             )
@@ -117,7 +117,7 @@ fun SummaryScreen(
                             },
                             onItemLongClick = {
                                 summaryId = it.id
-                                showRemvlDialog.value = true
+                                showRemoveDialog.value = true
                             }
                         )
                     }

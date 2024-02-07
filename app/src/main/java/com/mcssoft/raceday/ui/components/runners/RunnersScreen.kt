@@ -1,6 +1,5 @@
 package com.mcssoft.raceday.ui.components.runners
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -11,10 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,7 +37,6 @@ import com.mcssoft.raceday.ui.theme.padding64dp
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
 @Composable
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun RunnersScreen(
     state: RunnersState,
     navController: NavController,
