@@ -5,17 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
-import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
 import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
-import com.mcssoft.raceday.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RacesViewModel @Inject constructor(
     private val dbRepo: IDbRepo,
-    private val useCases: UseCases,
     private val prefsRepo: PrefsRepo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -63,53 +59,48 @@ class RacesViewModel @Inject constructor(
 
     private fun getRaces(mId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getRaces(mId)
-                .catch { exception ->
-                    emit(DataResult.failure(exception as Exception))
+            try {
+                val races = dbRepo.getRaces(mId)
+                delay(TWENTY_FIVE)
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Success,
+                        lRaces = races
+                    )
                 }
-                .collect { result ->
-                    when {
-                        result.loading -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = null,
-                                    status = Status.Loading
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                        result.failed -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = result.exception,
-                                    status = Status.Failure
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                        result.successful -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = null,
-                                    status = Status.Success,
-                                    lRaces = result.data
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                    }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Failure
+                    )
+                }
+                _state.emit(state.value)
             }
+
         }
     }
 
     private fun getMeeting(mId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val meeting = dbRepo.getMeeting(mId)
-            delay(TWENTY_FIVE)
-            _state.update { state ->
-                state.copy(
-                    meeting = meeting
-                )
+            try {
+                val meeting = dbRepo.getMeeting(mId)
+                delay(TWENTY_FIVE)
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Success,
+                        meeting = meeting
+                    )
+                }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Failure,
+                        meeting = null
+                    )
+                }
+                _state.emit(state.value)
             }
         }
     }

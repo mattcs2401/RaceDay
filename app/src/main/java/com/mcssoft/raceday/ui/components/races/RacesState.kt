@@ -31,7 +31,6 @@ data class RacesState(
 
     sealed class Status {
         data object Initialise : Status()
-        data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
     }

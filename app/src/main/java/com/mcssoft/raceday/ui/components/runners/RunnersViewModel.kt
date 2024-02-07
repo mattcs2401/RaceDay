@@ -3,25 +3,27 @@ package com.mcssoft.raceday.ui.components.runners
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.domain.dto.SummaryDto
+import com.mcssoft.raceday.domain.dto.toSummary
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
-import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.utility.Constants
-import com.mcssoft.raceday.utility.DataResult
+import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RunnersViewModel @Inject constructor(
-    private val useCases: UseCases,
+    private val iDbRepo: IDbRepo,
     private val prefsRepo: PrefsRepo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -67,35 +69,24 @@ class RunnersViewModel @Inject constructor(
      */
     private fun setRunnerChecked(race: Race, runner: Runner) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.setRunnerChecked(race, runner)
-                .catch { exception ->
-                    // Note 1 below.
-                    emit(DataResult.failure(exception as Exception))
+            try {
+                updateRunnerForChecked(race, runner)
+                delay(TWENTY_FIVE)
+                _state.update { state ->
+                    state.copy(
+                        exception = null,
+                        status = Status.Success
+                    )
                 }
-                .collect { result ->
-                    when {
-                        result.failed -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = result.exception,
-                                    status = Status.Failure,
-                                    loading = false
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                        result.successful -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = null,
-                                    status = Status.Success,
-                                    loading = false,
-                                    checked = result.data.toBoolean()
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                    }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        exception = ex,
+                        status = Status.Failure
+                    )
+                }
+                _state.emit(state.value)
             }
         }
     }
@@ -106,46 +97,26 @@ class RunnersViewModel @Inject constructor(
      */
     private fun getRunners(raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getRunners(raceId)
-                .catch { exception ->
-                    emit(DataResult.failure(exception as Exception))
+            try {
+                val runners = iDbRepo.getRunners(raceId)
+                delay(TWENTY_FIVE)
+                _state.update { state ->
+                    state.copy(
+                        exception = null,
+                        status = Status.Success,
+                        lRunners = runners
+                    )
                 }
-                .collect { result ->
-                    when {
-                        result.loading -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = null,
-                                    status = Status.Loading,
-                                    loading = true
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                        result.failed -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = result.exception,
-                                    status = Status.Failure,
-                                    loading = false
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                        result.successful -> {
-                            _state.update { state ->
-                                state.copy(
-                                    exception = null,
-                                    status = Status.Success,
-                                    loading = false,
-                                    lRunners = result.data
-                                )
-                            }
-                            _state.emit(state.value)
-                        }
-                    }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        exception = ex,
+                        status = Status.Failure
+                    )
+                }
+                _state.emit(state.value)
             }
-
         }
     }
 
@@ -155,43 +126,51 @@ class RunnersViewModel @Inject constructor(
      */
     private fun getRace(raceId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getRace(raceId).collect { result ->
-                when {
-                    result.loading -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Loading,
-                                loading = true
-                            )
-                        }
-                        _state.emit(state.value)
-                    }
-                    result.failed -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = result.exception,
-                                status = Status.Failure,
-                                loading = false
-                            )
-                        }
-                        _state.emit(state.value)
-                    }
-                    result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                status = Status.Success,
-                                loading = false,
-                                race = result.data
-                            )
-                        }
-                        _state.emit(state.value)
-                    }
+            try {
+                val race = iDbRepo.getRace(raceId)
+                delay(TWENTY_FIVE)
+                _state.update { state ->
+                    state.copy(
+                        exception = null,
+                        status = Status.Success,
+                        race = race
+                    )
                 }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        exception = ex,
+                        status = Status.Failure
+                    )
+                }
+                _state.emit(state.value)
             }
         }
     }
 
+    private suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
+        iDbRepo.updateRunner(runner)
 
+        if (runner.isChecked) {
+            val summaryDto = SummaryDto(
+                race.id,
+                runner.id,
+                race.sellCode,
+                race.venueMnemonic,
+                race.raceNumber,
+                race.raceStartTime,
+                runner.runnerNumber,
+                runner.runnerName,
+                runner.riderDriverName,
+                runner.trainerName
+            )
+            iDbRepo.insertSummary(summaryDto.toSummary())
+        } else {
+            // Was checked, now unchecked, so remove Summary item.
+            iDbRepo.getSummary(race.id, runner.id).let { summary ->
+                iDbRepo.deleteSummary(summary.id)
+            }
+        }
+    }
 }

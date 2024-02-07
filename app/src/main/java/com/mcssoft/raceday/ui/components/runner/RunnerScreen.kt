@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
@@ -52,12 +51,6 @@ fun RunnerScreen(
         }
     ) {
         when (state.status) {
-            is Status.Loading -> {
-                LoadingDialog(
-                    titleText = stringResource(id = R.string.dlg_loading_runner),
-                    msgText = stringResource(id = R.string.dlg_loading_msg)
-                )
-            }
             is Status.Failure -> { /*TBA*/ }
             is Status.Success -> {
                 // Runner detail.

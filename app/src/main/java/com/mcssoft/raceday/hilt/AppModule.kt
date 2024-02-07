@@ -13,12 +13,6 @@ import com.mcssoft.raceday.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.raceday.domain.usecase.UseCases
 import com.mcssoft.raceday.domain.usecase.api.SetupBaseFromApi
 import com.mcssoft.raceday.domain.usecase.api.SetupRunnersFromApi
-import com.mcssoft.raceday.domain.usecase.races.GetRace
-import com.mcssoft.raceday.domain.usecase.races.GetRaces
-import com.mcssoft.raceday.domain.usecase.runners.GetRunner
-import com.mcssoft.raceday.domain.usecase.runners.GetRunners
-import com.mcssoft.raceday.domain.usecase.runners.SetRunnerChecked
-import com.mcssoft.raceday.domain.usecase.summary.GetSummaries
 import com.mcssoft.raceday.utility.network.ConnectivityObserver
 import com.mcssoft.raceday.utility.network.IConnectivityObserver
 import dagger.Module
@@ -111,13 +105,7 @@ object AppModule {
     ): UseCases {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local, context),
-            setupRunnersFromApi = SetupRunnersFromApi(local, context),
-            getRaces = GetRaces(local, scope),
-            getRace = GetRace(local, scope),
-            getRunners = GetRunners(local, scope),
-            getRunner = GetRunner(local, scope),
-            setRunnerChecked = SetRunnerChecked(local, scope),
-            getSummaries = GetSummaries(local, scope)
+            setupRunnersFromApi = SetupRunnersFromApi(local, context)
         )
     }
 }

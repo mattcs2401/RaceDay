@@ -26,12 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.dialog.TimeChangeDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
-import com.mcssoft.raceday.ui.components.races.RacesState.Status.Loading
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
@@ -108,13 +106,6 @@ fun RacesScreen(
                 )
             }
             when (state.status) {
-                is Loading -> {
-                    LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_races),
-                        msgText = stringResource(id = R.string.dlg_loading_msg),
-                        onDismiss = {}
-                    )
-                }
                 is Failure -> {
                     // TBA.
                 }
