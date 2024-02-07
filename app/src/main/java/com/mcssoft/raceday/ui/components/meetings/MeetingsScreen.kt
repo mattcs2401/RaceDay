@@ -12,9 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -53,7 +54,10 @@ fun MeetingsScreen(
 
     BackPressHandler(onBackPressed = {})
 
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
@@ -106,6 +110,7 @@ fun MeetingsScreen(
                         state.exception
                     )
                 }
+
                 is Status.Success -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(
@@ -127,6 +132,7 @@ fun MeetingsScreen(
                         }
                     }
                 }
+
                 else -> {} // ??
             }
         }

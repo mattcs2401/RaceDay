@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.components.summary.SummaryState.Status
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
+import com.mcssoft.raceday.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -49,14 +51,41 @@ class SummaryViewModel @Inject constructor(
 
     private fun getSummaries() {
         viewModelScope.launch(Dispatchers.IO) {
+            var lSummaries: MutableList<Summary>? = null
             try {
-                val summaries = iDbRepo.getSummaries()
+                iDbRepo.getSummaries()
+                    .toMutableList()
+                    .also { summaries ->
+                        if (summaries.isNotEmpty()) {
+                            lSummaries = mutableListOf()
+                            val currentTimeMillis = DateUtils().getCurrentTimeMillis()
+                            for (summary in summaries) {
+                                val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
+                                if (!summary.isPastRaceTime) {
+                                    if (currentTimeMillis > raceTime) {
+                                        summary.isPastRaceTime = true
+                                        iDbRepo.updateSummary(summary)
+                                    }
+                                }
+                            }
+                            summaries.partition {
+                                it.isPastRaceTime
+                            }.also { pair ->
+                                lSummaries!!.addAll(
+                                    pair.second.sortedBy { it.raceStartTime }
+                                )
+                                lSummaries!!.addAll(
+                                    pair.first.sortedBy { it.raceStartTime }
+                                )
+                            }
+                        }
+                    }
                 delay(TWENTY_FIVE)
                 _state.update { state ->
                     state.copy(
                         exception = null,
                         status = Status.Success,
-                        summaries = summaries
+                        summaries = lSummaries ?: emptyList()
                     )
                 }
                 _state.emit(state.value)

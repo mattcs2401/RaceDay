@@ -161,15 +161,10 @@ interface IDbRepo {
     suspend fun getRunners(raceId: Long): List<Runner>
 
     @Query("update Runner set isChecked = :newValue where id = :runnerId")
-    suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int
+    suspend fun updateRunnerAsChecked(runnerId: Long, newValue: Boolean): Int
 
-    @Update
-    suspend fun updateRunnerAsScratched(runner: Runner) {
-        updateRunner(runner)
-    }
-
-    @Update
-    suspend fun updateRunner(runner: Runner)
+    @Query("update Runner set isScratched = :newValue where id = :runnerId")
+    suspend fun updateRunnerAsScratched(runnerId: Long, newValue: Boolean): Int
 
     @Query("select * from Runner where isScratched = 0 and isChecked = 0 and raceId = :raceId")
     suspend fun getRunnersNotScratched(raceId: Long): List<Runner>
@@ -208,7 +203,7 @@ interface IDbRepo {
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Scratching related.">
-    @Insert // (onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertScratchings(scratchings: List<Scratching>): List<Long>
 
     @Query("delete from Scratching")

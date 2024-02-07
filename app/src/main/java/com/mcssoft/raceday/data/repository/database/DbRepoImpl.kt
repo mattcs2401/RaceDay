@@ -72,20 +72,16 @@ class DbRepoImpl @Inject constructor(
         return dao.getRunners(raceId)
     }
 
-    override suspend fun updateRunner(runner: Runner) {
-        dao.updateRunner(runner)
-    }
-
-    override suspend fun updateRunnerAsScratched(runner: Runner) {
-        dao.updateRunnerAsScratched(runner)
+    override suspend fun updateRunnerAsScratched(runnerId: Long, newValue: Boolean): Int {
+        return dao.updateRunnerAsScratched(runnerId, newValue)
     }
 
     override suspend fun getRunnersNotScratched(raceId: Long): List<Runner> {
         return dao.getRunnersNotScratched(raceId)
     }
 
-    override suspend fun updateRunnerChecked(runnerId: Long, newValue: Boolean): Int {
-        return dao.updateRunnerChecked(runnerId, newValue)
+    override suspend fun updateRunnerAsChecked(runnerId: Long, newValue: Boolean): Int {
+        return dao.updateRunnerAsChecked(runnerId, newValue)
     }
 
     override suspend fun getCheckedRunners(): List<Runner> {

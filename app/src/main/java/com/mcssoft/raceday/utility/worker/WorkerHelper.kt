@@ -58,8 +58,7 @@ class WorkerHelper(
                 if (scratch.runnerName == runner.runnerName &&
                     scratch.runnerNumber == runner.runnerNumber
                 ) {
-                    runner.isScratched = true
-                    iDbRepo.updateRunnerAsScratched(runner)
+                    iDbRepo.updateRunnerAsScratched(runner.id, true)
                 }
             }
         }
@@ -70,7 +69,7 @@ class WorkerHelper(
             !runner.isScratched && runner.trainerName in (trainerNames)
         }.also {
             for (runner in it) {
-                iDbRepo.updateRunnerChecked(runner.id, true)
+                iDbRepo.updateRunnerAsChecked(runner.id, true)
             }
         }
     }
@@ -80,7 +79,7 @@ class WorkerHelper(
             !runner.isScratched && runner.riderDriverName in (jockeyNames)
         }.also {
             for (runner in it) {
-                iDbRepo.updateRunnerChecked(runner.id, true)
+                iDbRepo.updateRunnerAsChecked(runner.id, true)
             }
         }
     }
@@ -92,7 +91,7 @@ class WorkerHelper(
             for (name in runnerNames) {
                 for (runner in it) {
                     if (runner.runnerName.startsWith(prefix = name, ignoreCase = true)) {
-                        iDbRepo.updateRunnerChecked(runner.id, true)
+                        iDbRepo.updateRunnerAsChecked(runner.id, true)
                     }
                 }
             }

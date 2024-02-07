@@ -100,8 +100,7 @@ object AppModule {
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        context: Context,
-        scope: CoroutineScope
+        context: Context
     ): UseCases {
         return UseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local, context),

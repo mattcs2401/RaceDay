@@ -150,9 +150,12 @@ class RunnersViewModel @Inject constructor(
     }
 
     private suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
-        iDbRepo.updateRunner(runner)
+        // Update the isChecked value for the Runner.
+        // Note: could be going from false -> true, or, true -> false.
+        iDbRepo.updateRunnerAsChecked(runner.id, runner.isChecked)
 
         if (runner.isChecked) {
+            // Create the associated Summary record.
             val summaryDto = SummaryDto(
                 race.id,
                 runner.id,
