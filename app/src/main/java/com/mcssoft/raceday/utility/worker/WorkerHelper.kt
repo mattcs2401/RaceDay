@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @param race: The Race associated with the Runners.
  */
 class WorkerHelper(
-    context: Context,
+    private val context: Context,
     private val iDbRepo: IDbRepo,
     private val race: Race
 ) {

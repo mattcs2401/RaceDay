@@ -44,7 +44,11 @@ class RemoteRepoImpl @Inject constructor(
         raceNum: String
     ): NetworkResponse<BaseDto2> {
         return try {
-            val result = api.getRunners(date, venueCode, raceNum)
+            val result = api.getRunners(
+                date,
+                venueCode,
+                raceNum
+            )
             when {
                 result.isSuccessful -> {
                     NetworkResponse.success(result)

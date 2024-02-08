@@ -46,8 +46,7 @@ class RunnersViewModel @Inject constructor(
          */
         savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { raceId ->
             // Get Race and Runner values for the screen.
-            getRace(raceId)
-            getRunners(raceId)
+            getRaceWithRunners(raceId)
         }
     }
 
@@ -63,6 +62,36 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
+    private fun getRaceWithRunners(raceId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = iDbRepo.getRaceWithRunners(raceId)
+
+                val race = result.keys.elementAt(0) // the keys are a Set with only one value.
+                val runners = result.getValue(race)
+
+                delay(TWENTY_FIVE) // TBA
+
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Success,
+                        race = race,
+                        lRunners = runners
+                    )
+                }
+                _state.emit(state.value)
+            } catch(ex: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        status = Status.Failure
+                    )
+                }
+                _state.emit(state.value)
+            }
+
+        }
+    }
+
     /**
      * Set the metadata 'checked' on the Runner object.
      * @param runner: The Runner.
@@ -70,7 +99,7 @@ class RunnersViewModel @Inject constructor(
     private fun setRunnerChecked(race: Race, runner: Runner) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                updateRunnerForChecked(race, runner)
+                updateRunnerChecked(race, runner)
                 delay(TWENTY_FIVE)
                 _state.update { state ->
                     state.copy(
@@ -91,72 +120,14 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Get the Runners associated with a Race from the database.
-     * @param raceId: The Race id (_id value).
-     */
-    private fun getRunners(raceId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val runners = iDbRepo.getRunners(raceId)
-                delay(TWENTY_FIVE)
-                _state.update { state ->
-                    state.copy(
-                        exception = null,
-                        status = Status.Success,
-                        lRunners = runners
-                    )
-                }
-                _state.emit(state.value)
-            } catch(ex: Exception) {
-                _state.update { state ->
-                    state.copy(
-                        exception = ex,
-                        status = Status.Failure
-                    )
-                }
-                _state.emit(state.value)
-            }
-        }
-    }
-
-    /**
-     * Get the Race object from the database.
-     * @param raceId: The Race id (_id value).
-     */
-    private fun getRace(raceId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val race = iDbRepo.getRace(raceId)
-                delay(TWENTY_FIVE)
-                _state.update { state ->
-                    state.copy(
-                        exception = null,
-                        status = Status.Success,
-                        race = race
-                    )
-                }
-                _state.emit(state.value)
-            } catch(ex: Exception) {
-                _state.update { state ->
-                    state.copy(
-                        exception = ex,
-                        status = Status.Failure
-                    )
-                }
-                _state.emit(state.value)
-            }
-        }
-    }
-
-    private suspend fun updateRunnerForChecked(race: Race, runner: Runner) {
+    private suspend fun updateRunnerChecked(race: Race, runner: Runner) {
         // Update the isChecked value for the Runner.
         // Note: could be going from false -> true, or, true -> false.
         iDbRepo.updateRunnerAsChecked(runner.id, runner.isChecked)
 
         if (runner.isChecked) {
             // Create the associated Summary record.
-            val summaryDto = SummaryDto(
+            SummaryDto(
                 race.id,
                 runner.id,
                 race.sellCode,
@@ -168,7 +139,10 @@ class RunnersViewModel @Inject constructor(
                 runner.riderDriverName,
                 runner.trainerName
             )
-            iDbRepo.insertSummary(summaryDto.toSummary())
+            .toSummary()
+            .let { summary ->
+                iDbRepo.insertSummary(summary)
+            }
         } else {
             // Was checked, now unchecked, so remove Summary item.
             iDbRepo.getSummary(race.id, runner.id).let { summary ->

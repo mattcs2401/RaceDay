@@ -10,5 +10,9 @@ interface IRemoteRepo {
 
     suspend fun getRaceDay(date: String): NetworkResponse<MeetingInfo>
 
-    suspend fun getRaceDayRunners(date: String, venueCode: String, raceNum: String): NetworkResponse<RunnerInfo>
+    suspend fun getRaceDayRunners(
+        date: String,
+        venueCode: String,
+        raceNum: String
+    ): NetworkResponse<RunnerInfo>
 }

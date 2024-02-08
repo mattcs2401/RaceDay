@@ -64,7 +64,7 @@ interface IDbRepo {
         deleteSummaries()
     }
 
-    // <editor-fold default state="collapsed" desc="Region: MeetingDto related.">
+    // <editor-fold default state="collapsed" desc="Region: Meeting related.">
     data class MeetingSubset(
         val meetingDate: String,
         val venueMnemonic: String,
@@ -90,18 +90,14 @@ interface IDbRepo {
     suspend fun getMeetings(): List<Meeting>
 
     /**
-     * Get a MeetingDto based on it's row id.
-     * @param meetingId: The MeetingDto id.
-     * @return A MeetingDto.
-     */
-    @Query("select * from Meeting where id = :meetingId")
-    suspend fun getMeeting(meetingId: Long): Meeting
-
-    /**
      * Delete all from Meetings.
      */
     @Query("delete from Meeting")
     suspend fun deleteMeetings(): Int // CASCADE should take care of Races/Runners etc.
+
+    @Transaction
+    @Query("select * from Meeting join Race on Meeting.id = Race.mtgId and Meeting.id = :meetingId")
+    suspend fun getMeetingWithRaces(meetingId: Long): Map<Meeting, List<Race>>
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Race related.">
@@ -113,14 +109,6 @@ interface IDbRepo {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRaces(races: List<Race>): List<Long>
 
-    /**
-     * Get a listing of the Races based on their (foreign key) Meeting id.
-     * @param meetingId: The Meeting id (database row number).
-     * @return A list of Races.
-     */
-    @Query("select * from race where mtgId = :meetingId")
-    suspend fun getRaces(meetingId: Long): List<Race>
-
     @Query("select * from Race where id = :raceId")
     suspend fun getRace(raceId: Long): Race
 
@@ -129,6 +117,10 @@ interface IDbRepo {
 
     @Query("update Race set raceStartTime = :raceTime where id = :raceId")
     suspend fun updateRaceTime(raceId: Long, raceTime: String)
+
+    @Transaction
+    @Query("select * from Race join Runner on Race.id = Runner.raceId and Race.id = :raceId")
+    suspend fun getRaceWithRunners(raceId: Long): Map<Race, List<Runner>>
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Runner related.">

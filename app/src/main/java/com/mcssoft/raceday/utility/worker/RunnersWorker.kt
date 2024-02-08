@@ -19,15 +19,16 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
 
 /**
- * Class to insert the Runners associated with a Race, and get Trainers associated with the Runners.
+ * Class to insert the Runners associated with a Race.
  * @param context: App context for EntryPoint.
- * @param workerParams:
+ * @param workerParams: Input data for meeting date, code and number of Races.
  */
 class RunnersWorker(
     private val context: Context,
     workerParams: WorkerParameters,
 ) : CoroutineWorker(context, workerParams) {
 
+    // <editor-fold default state="collapsed" desc="Entry points.">
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface IEntryPoint {
@@ -38,24 +39,26 @@ class RunnersWorker(
         EntryPointAccessors.fromApplication(context, IEntryPoint::class.java)
     private val iDbRepo = entryPoints.getDbRepo()
     private val iRemoteRepo = entryPoints.getRemoteRepo()
+    // </editor-fold>
 
     override suspend fun doWork(): Result {
         return try {
             var race: Race
             var response: NetworkResponse<BaseDto2> // response from Api.
 
-            val date = inputData.getString(context.resources.getString(R.string.key_meeting_date))
-            val code = inputData.getString(context.resources.getString(R.string.key_meeting_code))
-            val races = inputData.getString(context.resources.getString(R.string.key_num_races))
+            val meetingDate = inputData.getString(context.resources.getString(R.string.key_meeting_date))
+            val meetingCode = inputData.getString(context.resources.getString(R.string.key_meeting_code)) // venue mnemonic.
+            val numRaces = inputData.getString(context.resources.getString(R.string.key_num_races))
 
-            for (raceNum in 1..(races?.toInt() ?: -1)) {
+            for (raceNum in 1..(numRaces?.toInt() ?: -1)) {
                 // Get the Race. Need Race info to get Scratchings.
-                race = iDbRepo.getRaceByVenueCodeAndRaceNo(code!!, raceNum)
+                race = iDbRepo.getRaceByVenueCodeAndRaceNo(meetingCode!!, raceNum)
 
                 // If the Race is already Abandoned, don't waste resources getting Runner detail.
                 if (race.raceStatus != context.resources.getString(R.string.race_status_abandoned)) {
+
                     // Get the Runners for a Race. Parameter raceNum as string for Url construct.
-                    response = iRemoteRepo.getRaceDayRunners(date!!, code, raceNum.toString())
+                    response = iRemoteRepo.getRaceDayRunners(meetingDate!!, meetingCode, raceNum.toString())
 
                     // Insert records.
                     iDbRepo.insertRunnersWithRaceId(race.id, response.body.runners)

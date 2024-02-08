@@ -20,10 +20,6 @@ class DbRepoImpl @Inject constructor(
         return dao.insertMeeting(meeting)
     }
 
-    override suspend fun getMeeting(meetingId: Long): Meeting {
-        return dao.getMeeting(meetingId)
-    }
-
     override suspend fun getMeetings(): List<Meeting> {
         return dao.getMeetings()
     }
@@ -37,13 +33,13 @@ class DbRepoImpl @Inject constructor(
     }
     // </editor-fold>
 
+    override suspend fun getMeetingWithRaces(meetingId: Long): Map<Meeting, List<Race>> {
+        return dao.getMeetingWithRaces(meetingId)
+    }
+
     // <editor-fold default state="collapsed" desc="Region: Race related.">
     override suspend fun insertRaces(races: List<Race>): List<Long> {
         return dao.insertRaces(races)
-    }
-
-    override suspend fun getRaces(meetingId: Long): List<Race> {
-        return dao.getRaces(meetingId)
     }
 
     override suspend fun getRace(raceId: Long): Race {
@@ -56,6 +52,10 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun updateRaceTime(raceId: Long, raceTime: String) {
         return dao.updateRaceTime(raceId, raceTime)
+    }
+
+    override suspend fun getRaceWithRunners(raceId: Long): Map<Race, List<Runner>> {
+        return dao.getRaceWithRunners(raceId)
     }
     // </editor-fold>
 

@@ -63,8 +63,7 @@ class MeetingsViewModel @Inject constructor(
                 val meetings = iDbRepo.getMeetings().sortedBy { meeting ->
                     meeting.sellCode
                 }
-                delay(TWENTY_FIVE)
-
+                delay(TWENTY_FIVE) // TBA.
                 _state.update { state ->
                     state.copy(
                         exception = null,
