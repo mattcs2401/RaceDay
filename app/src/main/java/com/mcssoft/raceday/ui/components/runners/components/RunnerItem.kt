@@ -25,7 +25,7 @@ import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.runners.RunnersEvent
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize10sp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
@@ -63,7 +63,7 @@ fun RunnerItem(
         modifier = Modifier
            .fillMaxWidth()
            .padding(padding4dp),
-      shape = RoundedCornerShapes.medium,
+      shape = AppShapes.medium,
       elevation = elevation4dp
     ) {
         ConstraintLayout(

@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.height16dp
 import com.mcssoft.raceday.ui.theme.padding16dp
 import com.mcssoft.raceday.ui.theme.width16dp
@@ -41,7 +41,7 @@ fun TimeChangeDialog(
             )
         ) {
             Card(
-                shape = RoundedCornerShapes.medium
+                shape = AppShapes.medium
             ) {
                 Column(
                     modifier = Modifier

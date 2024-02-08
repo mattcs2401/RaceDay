@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.layoutId
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.raceday.domain.model.Meeting
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
@@ -66,7 +66,7 @@ fun MeetingItem(
                     onItemLongClick(meeting)
                 },
             ),
-        shape = RoundedCornerShapes.small,
+        shape = AppShapes.small,
         backgroundColor = backgroundColour
     ) {
         // Initial display of Meeting details.

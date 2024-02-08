@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.meetings
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -10,11 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.CommonDialog
@@ -36,11 +35,13 @@ import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
+import com.mcssoft.raceday.ui.theme.padding64dp
 
 /**
  * @param state: Meetings state.
  * @param navController: The Navigation.
  */
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MeetingsScreen(
     state: MeetingsState,
@@ -52,16 +53,13 @@ fun MeetingsScreen(
 
     BackPressHandler(onBackPressed = {})
 
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
                 title2 = state.mtgDate,
                 titleColour = Color.White,
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 actions = {
                     IconButton(
                         enabled = state.canRefresh,
@@ -85,8 +83,8 @@ fun MeetingsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-                .padding(bottom = 64.dp) // TBA - allow for bottom bar.
+                .background(MaterialTheme.colorScheme.background)
+                .padding(bottom = padding64dp) // TBA - allow for bottom bar.
         ) {
             if (showRefreshDialog.value) {
                 ShowRefreshDialog(
@@ -160,9 +158,7 @@ private fun ShowRefreshDialog(
 
 @Composable
 fun ShowMeetingRefreshDialog(
-    show: MutableState<Boolean>,
-//    venueMnemonic: String,
-//    onEvent: (MeetingEvent) -> Unit
+    show: MutableState<Boolean>
 ) {
     val context = LocalContext.current
     CommonDialog(

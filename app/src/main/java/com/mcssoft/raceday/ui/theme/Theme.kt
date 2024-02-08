@@ -2,27 +2,25 @@ package com.mcssoft.raceday.ui.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
 // Reference: https://m2.material.io/design/color/applying-color-to-ui.html#top-and-bottom-app-bars
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
 //    primary = Purple200,
 //    primaryVariant = colourPrimaryVariant,
 //    secondary = Teal200
 )
 
 @SuppressLint("ConflictingOnColor")
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
     primary = colourPrimary,
-    primaryVariant = colourPrimaryVariant,
     onPrimary = colourOnPrimary,
     secondary = colourSecondary,
-    secondaryVariant = colourSecondaryVariant,
     onSecondary = colourOnSecondary,
     error = colourError,
     onError = colourOnError,
@@ -44,9 +42,9 @@ fun RaceDayBasicTheme(
     }
     CompositionLocalProvider {
         MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = RoundedCornerShapes,
+            colorScheme = colors,
+            typography = AppTypography,
+            shapes = AppShapes,
             content = content
         )
     }

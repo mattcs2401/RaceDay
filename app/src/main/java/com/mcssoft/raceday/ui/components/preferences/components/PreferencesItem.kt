@@ -21,7 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize16sp
@@ -49,7 +49,7 @@ fun PreferencesItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(padding4dp),
-        shape = RoundedCornerShapes.medium,
+        shape = AppShapes.medium,
         elevation = elevation4dp,
         border = BorderStroke(2.dp, Color.Blue)
     ) {

@@ -53,9 +53,9 @@ dependencies {
      */
     def compose_ver = '1.6.0'
     implementation "androidx.compose.ui:ui:$compose_ver"
-    implementation "androidx.activity:activity-compose:1.9.0-alpha02"
+    implementation "androidx.activity:activity-compose:1.9.0-alpha03"
     implementation "androidx.compose.ui:ui-tooling:$compose_ver"
-    implementation "androidx.navigation:navigation-compose:2.7.6"
+    implementation "androidx.navigation:navigation-compose:2.7.7"
     implementation "androidx.compose.material:material:$compose_ver"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ver"
     implementation "androidx.compose.foundation:foundation:$compose_ver"
@@ -63,9 +63,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.7.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
-    // TODO - convert to material3
-    //  https://developer.android.com/jetpack/compose/designsystems/material2-material3#m3_1.
-    implementation "androidx.compose.material3:material3:1.2.0-rc01"
+    implementation "androidx.compose.material3:material3:1.2.0"
 
     /* Room database. */
     def room_ver = '2.6.1'

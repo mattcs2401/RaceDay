@@ -42,8 +42,6 @@ class RacesViewModel @Inject constructor(
          */
         savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mtgId ->
             // Get Meeting and Races values for the screen.
-//            getMeeting(mtgId)
-//            getRaces(mtgId)
             getMeetingWithRaces(mtgId)
         }
     }
@@ -58,12 +56,14 @@ class RacesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Get the Meeting and associated Races.
+     * @param mId: The Meeting id.
+     * @note: Room lets you return a structure of e.g. Map<Meeting, List<Race>>, but the Key is
+     *        anonymous, it is actually the Meeting object. Not sure if there's any performance
+     *        overhead there.
+     */
     private fun getMeetingWithRaces(mId: Long) {
-        /*
-        Note: Room lets yo return a structure of e.g. Map<Meeting, List<Race>>, but the Key is
-              anonymous, it is actually the Meeting object. Not sure if there's any performance
-              overhead there.
-         */
         // TODO - trim down the Meeting values returned by the query, we don't need all of them for
         //        the header info.
         viewModelScope.launch(Dispatchers.IO) {

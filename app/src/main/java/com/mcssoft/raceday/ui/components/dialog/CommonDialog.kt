@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.eightyPercent
 import com.mcssoft.raceday.ui.theme.height16dp
 import com.mcssoft.raceday.ui.theme.padding16dp
@@ -61,7 +61,7 @@ fun CommonDialog(
         )
     ) {
         Card(
-            shape = RoundedCornerShapes.medium
+            shape = AppShapes.medium
         ) {
             // A single columns with 3 Rows and Spacers in between.
             Column(

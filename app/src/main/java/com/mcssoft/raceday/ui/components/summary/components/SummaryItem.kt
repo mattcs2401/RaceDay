@@ -16,7 +16,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Summary
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.borderStroke
 import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
@@ -53,7 +53,7 @@ fun SummaryItem(
             onClick = { onItemClick(summary) },
             onLongClick = { onItemLongClick(summary) },
         ),
-        shape = RoundedCornerShapes.medium,
+        shape = AppShapes.medium,
         elevation = elevation4dp,
         backgroundColor = backgroundColour,
         border = borderStroke

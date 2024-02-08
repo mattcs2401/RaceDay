@@ -12,7 +12,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
-import com.mcssoft.raceday.ui.theme.RoundedCornerShapes
+import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 
 /**
@@ -37,7 +37,7 @@ fun LoadingDialog(
         )
     ) {
         Card(
-            shape = RoundedCornerShapes.small
+            shape = AppShapes.small
         ) {
             ConstraintLayout(
                 constraintSet

@@ -1,5 +1,6 @@
 package com.mcssoft.raceday.ui.components.summary
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,12 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -28,26 +28,26 @@ import com.mcssoft.raceday.ui.components.dialog.CommonDialog
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
+import com.mcssoft.raceday.ui.components.summary.SummaryState.Status
 import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
-import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.padding56dp
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SummaryScreen(
     state: SummaryState,
     navController: NavController,
     onEvent: (SummaryEvent) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
     val showRemoveDialog = remember { mutableStateOf(false) }
     var summaryId: Long = 0
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_summary),
                 titleColour = Color.White,
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController, state)
@@ -75,21 +75,22 @@ fun SummaryScreen(
         }
     }
     when (state.status) {
-        is SummaryState.Status.Initialise -> {}
-        is SummaryState.Status.Loading -> {
+        is Status.Initialise -> {}
+        is Status.Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_summaries),
                 msgText = stringResource(id = R.string.dlg_loading_msg),
                 onDismiss = {}
             )
         }
-        is SummaryState.Status.Failure -> { /* TBA */ }
-        is SummaryState.Status.Success -> {
+        is Status.Failure -> { /* TBA */ }
+        is Status.Success -> {
             if (state.summaries.isEmpty()) {
                 Box(
                     Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
+                        .padding(top = padding56dp) // experimentation.
                 ) {
                     Text(
                         stringResource(id = R.string.nothing_to_show),
@@ -101,13 +102,12 @@ fun SummaryScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = padding64dp)
+                        .padding(top = padding56dp)
                 ) {
                     items(
                         items = state.summaries,
                         key = { it.id }
                     ) { summary ->
-//                            val context = LocalContext.current
                         SummaryItem(
                             summary = summary,
                             onItemClick = {
