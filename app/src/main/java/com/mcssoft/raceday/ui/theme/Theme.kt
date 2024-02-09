@@ -2,7 +2,10 @@ package com.mcssoft.raceday.ui.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -28,6 +31,22 @@ private val LightColorPalette = lightColorScheme(
     onBackground = colourOnBackground,
     surface = colourSurface,
     onSurface = colourOnSurface,
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+val lightTopAppBarColours = TopAppBarColors(
+    containerColor = lightColorScheme().primary,
+    titleContentColor = lightColorScheme().onPrimary,
+    scrolledContainerColor = lightColorScheme().surface, // TBA
+    navigationIconContentColor = lightColorScheme().surface, // TBA
+    actionIconContentColor = lightColorScheme().surface // TBA
+)
+
+val lightCardColours = CardColors(
+    containerColor = lightColorScheme().primary,
+    contentColor = lightColorScheme().onPrimary,
+    disabledContainerColor = lightColorScheme().surface, // TBA
+    disabledContentColor = lightColorScheme().onSurface // TBA
 )
 
 @Composable

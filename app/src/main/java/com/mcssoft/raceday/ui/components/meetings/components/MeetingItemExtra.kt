@@ -2,11 +2,10 @@ package com.mcssoft.raceday.ui.components.meetings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.raceday.domain.model.Meeting
@@ -14,6 +13,7 @@ import com.mcssoft.raceday.ui.theme.fontSize10sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
+import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.utility.Constants
 
 /**
@@ -29,7 +29,7 @@ fun MeetingItemExtra(
     ConstraintLayout(
         constraintSet,
         modifier = Modifier
-            .padding(top = 48.dp) // simply to give room for the top row.
+            .padding(top = padding8dp) // simply to give room for the top row.
             .clickable {
                 onItemClick(meeting)
             },

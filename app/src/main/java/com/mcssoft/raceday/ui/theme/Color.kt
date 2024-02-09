@@ -6,9 +6,9 @@ import androidx.compose.ui.graphics.Color
 
 // Project defaults.
 val colourPrimary = Color(0xFF6200EE)
-val colourPrimaryVariant = Color(0xFF3700B3) // not in M3 ?
+// val colourPrimaryVariant = Color(0xFF3700B3) // not in M3 ?
 val colourSecondary: Color = Color(0xFF03DAC6)
-val colourSecondaryVariant: Color = Color(0xFF018786) // not in M3 ?
+// val colourSecondaryVariant: Color = Color(0xFF018786) // not in M3 ?
 val colourBackground: Color = Color.White
 val colourSurface: Color = Color.White
 val colourError: Color = Color(0xFFB00020)

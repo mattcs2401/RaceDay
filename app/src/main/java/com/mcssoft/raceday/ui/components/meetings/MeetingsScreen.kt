@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,12 +36,15 @@ import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.padding8dp
 
 /**
  * @param state: Meetings state.
  * @param navController: The Navigation.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MeetingsScreen(
@@ -58,8 +62,6 @@ fun MeetingsScreen(
             MeetingsTopBar(
                 title = stringResource(id = R.string.label_meetings),
                 title2 = state.mtgDate,
-                titleColour = Color.White,
-                backgroundColour = MaterialTheme.colorScheme.primary,
                 actions = {
                     IconButton(
                         enabled = state.canRefresh,
@@ -73,30 +75,33 @@ fun MeetingsScreen(
                             tint = Color.White
                         )
                     }
-                }
+                },
+                colours = lightTopAppBarColours
             )
         },
         bottomBar = {
             BottomBar(navController = navController)
         }
     ) {
+        if (showRefreshDialog.value) {
+            ShowRefreshDialog(
+                show = showRefreshDialog,
+                navController = navController
+            )
+        }
+        if (showMeetingRefreshDialog.value) {
+            ShowMeetingRefreshDialog(
+                show = showMeetingRefreshDialog
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(bottom = padding64dp) // TBA - allow for bottom bar.
+                .padding(
+                    top = padding8dp,
+                    bottom = padding64dp)
         ) {
-            if (showRefreshDialog.value) {
-                ShowRefreshDialog(
-                    show = showRefreshDialog,
-                    navController = navController
-                )
-            }
-            if (showMeetingRefreshDialog.value) {
-                ShowMeetingRefreshDialog(
-                    show = showMeetingRefreshDialog
-                )
-            }
             when (state.status) {
                 is Status.Failure -> {
                     showMeetingRefreshDialog.value = false
@@ -106,7 +111,6 @@ fun MeetingsScreen(
                         state.exception
                     )
                 }
-
                 is Status.Success -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(
@@ -128,7 +132,6 @@ fun MeetingsScreen(
                         }
                     }
                 }
-
                 else -> {} // ??
             }
         }

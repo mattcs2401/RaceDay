@@ -29,6 +29,9 @@ interface IDbRepo {
     suspend fun insertMeetingAndRaces(meetingDto: MeetingDto, racesDto: List<RaceDto>) {
         // Meeting and Race info.
         val meeting = meetingDto.toMeeting() // for sellCode concat.
+        // Set the "Meeting time" as the start of the first Race.
+        meeting.meetingTime = DateUtils().getTime(racesDto[0].raceStartTime)
+
         val meetingId = insertMeeting(meeting)
 
         racesDto.map { raceDto ->

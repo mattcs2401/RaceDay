@@ -21,7 +21,7 @@ data class Meeting(
 
     val location: String, // e.g. NSW
     val meetingDate: String, // e.g. 2023-08-21
-    val meetingTime: String?, // TBA - from 1st Race time ?
+    var meetingTime: String?, // TBA - from 1st Race time ?
     val meetingName: String, // e.g. SCONE
     val displayName: String?, // e.g. TBA
     val prizeMoney: String?, // e.g. $xxx

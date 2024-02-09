@@ -8,13 +8,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +27,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.raceday.domain.model.Meeting
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.fontSize12sp
+import com.mcssoft.raceday.ui.theme.lightCardColours
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
@@ -41,8 +41,6 @@ fun MeetingItem(
     onItemClick: (Meeting) -> Unit,
     onItemLongClick: (Meeting) -> Unit
 ) {
-    val backgroundColour = MaterialTheme.colors.primary
-
     var expandedState by remember { mutableStateOf(false) }
 
     val rotationState by animateFloatAsState(
@@ -67,11 +65,12 @@ fun MeetingItem(
                 },
             ),
         shape = AppShapes.small,
-        backgroundColor = backgroundColour
+        colors = lightCardColours
     ) {
         // Initial display of Meeting details.
         ConstraintLayout(
-            constraintSet
+            constraintSet,
+            modifier = Modifier.fillMaxWidth(1f)
         ) {
             meeting.sellCode?.let { code ->
                 Text(
@@ -86,6 +85,11 @@ fun MeetingItem(
             Text(
                 "(${meeting.venueMnemonic})",
                 Modifier.layoutId("idVenueMnemonic"),
+                fontSize = fontSize12sp
+            )
+            Text(
+                "${meeting.meetingTime}",
+                Modifier.layoutId("idTime"),
                 fontSize = fontSize12sp
             )
             IconButton(
@@ -110,19 +114,19 @@ fun MeetingItem(
 }
 
 private val constraintSet = ConstraintSet {
-    val idMLoc = createRefFor("idSellCode")
+    val idSellCode = createRefFor("idSellCode")
     val idVenueName = createRefFor("idVenueName")
     val idVenueMnemonic = createRefFor("idVenueMnemonic")
     val idTime = createRefFor("idTime")
     val idArrow = createRefFor("idArrow")
 
-    constrain(idMLoc) {
+    constrain(idSellCode) {
         top.linkTo(parent.top, margin = margin16dp)
         start.linkTo(parent.start, margin = margin16dp)
     }
     constrain(idVenueName) {
-        start.linkTo(idMLoc.end, margin = margin16dp)
-        top.linkTo(idMLoc.top, margin = margin0dp)
+        start.linkTo(idSellCode.end, margin = margin16dp)
+        top.linkTo(idSellCode.top, margin = margin0dp)
     }
     constrain(idVenueMnemonic) {
         start.linkTo(idVenueName.end, margin = margin8dp)
