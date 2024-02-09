@@ -1,59 +1,64 @@
 package com.mcssoft.raceday.ui.components.navigation
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.theme.lightIconButtonColours
-import com.mcssoft.raceday.ui.theme.width32dp
 
 @Composable
 fun BottomBar(
-    navController: NavController?
+    navController: NavController,
+    displayLabels: Boolean
 ) {
-    BottomAppBar(
-        containerColor = MaterialTheme.colorScheme.secondary,
-        contentColor = Color.White,
-        actions = {
-            Spacer(modifier = Modifier.width(width32dp))
-            IconButton(
-                onClick = {
-                    navController?.navigate(Screens.PreferencesScreen.route)
-                 },
-                colors = lightIconButtonColours
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.ic_settings_24),
-                    contentDescription = "Settings"
-                )
-            }
-            Spacer(modifier = Modifier.width(width32dp))
-            IconButton(
-                onClick = {
-                    navController?.navigate(Screens.SummaryScreen.route)
-                },
-                colors = lightIconButtonColours
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.ic_summary_24),
-                    contentDescription = "Summary"
-                )
-            }
-        }
+// Reference:
+// https://itnext.io/navigation-bar-bottom-app-bar-in-jetpack-compose-with-material-3-c57ae317bd00
+
+    val bottomNavItems = listOf(
+        BottomNavItem.Settings,
+        BottomNavItem.Summary
     )
+
+    val selectedItem by remember { mutableIntStateOf(0) }
+
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.secondary,
+        ) {
+            bottomNavItems.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = selectedItem == index,
+                    onClick = { navController.navigate(item.route) },
+                    label = {
+                        if(displayLabels) {
+                            Text(
+                                text = item.title,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
+                    },
+                    icon = {
+                        Icon(
+                            painterResource(id = item.icon),
+                            contentDescription = "${item.title} Icon",
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors()
+                    // TODO - bring NavigationBarItemColors into the Theme colours.
+                )
+            }
+    }
 }
 
-@Preview
-@Composable
-fun showBottomBar() {
-    BottomBar(null)
-}
+//@Preview
+//@Composable
+//fun showBottomBar() {
+//    BottomBar(null)
+//}

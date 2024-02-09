@@ -1,15 +1,15 @@
 package com.mcssoft.raceday.ui.components.runner
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +21,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
 import com.mcssoft.raceday.ui.theme.fontSize14sp
+import com.mcssoft.raceday.ui.theme.padding32dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
@@ -28,20 +29,17 @@ import com.mcssoft.raceday.ui.theme.thirty3Percent
 /**
  * @param state: Runner state.
  */
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RunnerScreen(
     state: RunnerState,
     navController: NavController,
 ) {
-    val scaffoldState = rememberScaffoldState()
-//    val textStyle = TextStyle(textDecoration = TextDecoration.None)
-
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runner),
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 titleColour = Color.White,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
@@ -57,7 +55,8 @@ fun RunnerScreen(
                 val runner = state.runner
                 Box(
                     Modifier.fillMaxSize()
-                        .background(MaterialTheme.colors.secondary)
+                        .background(MaterialTheme.colorScheme.secondary)
+                        .padding(top = padding32dp)
                 ) {
                     Column(
                         Modifier.padding(padding8dp)

@@ -1,12 +1,13 @@
 package com.mcssoft.raceday.ui.components.preferences
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,22 +18,22 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent.EventType.SourceFromApi
 import com.mcssoft.raceday.ui.components.preferences.components.PreferencesItem
+import com.mcssoft.raceday.ui.theme.padding64dp
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PreferencesScreen(
     state: PreferencesState,
     navController: NavController,
     onEvent: (PreferencesEvent) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_settings),
                 titleColour = Color.White,
-                backgroundColour = MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colorScheme.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController, state)
@@ -45,6 +46,7 @@ fun PreferencesScreen(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
+                .padding(top = padding64dp)
         ) {
             Column {
                 PreferencesItem(

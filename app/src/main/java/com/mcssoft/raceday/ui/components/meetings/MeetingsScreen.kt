@@ -80,7 +80,10 @@ fun MeetingsScreen(
             )
         },
         bottomBar = {
-            BottomBar(navController = navController)
+            BottomBar(
+                navController = navController,
+                displayLabels = false
+            )
         }
     ) {
         if (showRefreshDialog.value) {

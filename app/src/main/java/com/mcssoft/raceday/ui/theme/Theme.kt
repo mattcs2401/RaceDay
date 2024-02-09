@@ -58,6 +58,16 @@ val lightIconButtonColours = IconButtonColors(
     disabledContentColor = lightColorScheme().onSurface
 )
 
+//val lightNavigationBarItemColors = NavigationBarItemColors (
+//    selectedIconColor = ,
+//    selectedTextColor = ,
+//    selectedIndicatorColor = ,
+//    unselectedIconColor = ,
+//    unselectedTextColor = ,
+//    disabledIconColor = ,
+//    disabledTextColor =
+//)
+
 @Composable
 fun RaceDayBasicTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
