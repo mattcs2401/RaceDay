@@ -21,7 +21,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
 import com.mcssoft.raceday.ui.theme.fontSize14sp
-import com.mcssoft.raceday.ui.theme.padding32dp
+import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
@@ -56,7 +56,7 @@ fun RunnerScreen(
                 Box(
                     Modifier.fillMaxSize()
                         .background(MaterialTheme.colorScheme.secondary)
-                        .padding(top = padding32dp)
+                        .padding(top = padding64dp)
                 ) {
                     Column(
                         Modifier.padding(padding8dp)
