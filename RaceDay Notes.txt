@@ -64,6 +64,9 @@ https://developer.android.com/reference/kotlin/androidx/compose/material3/packag
 ------
 Other:
 ------
+
+--> https://developer.android.com/jetpack/compose/designsystems/material2-material3#m2_8
+
 -> https://www.youtube.com/watch?v=JfCivo5qJkI
 -> https://itnext.io/android-custom-notification-in-6-mins-c2e7e2ddadab
 -> https://itnext.io/android-notification-all-in-one-8df3e1218e0e

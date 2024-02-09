@@ -8,20 +8,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.height16dp
 import com.mcssoft.raceday.ui.theme.padding16dp
+import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.width16dp
 
 @Composable
@@ -46,8 +51,26 @@ fun TimeChangeDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-//                    .background(backgroundColour)
                 ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = padding16dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = LocalContext.current.resources
+                                .getString(R.string.dlg_change_start_time),
+                            modifier = Modifier.padding(
+                                top = padding8dp,
+                                bottom = padding8dp
+                            ),
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
                     Spacer(
                         modifier = Modifier
                             .height(height16dp)
@@ -58,7 +81,6 @@ fun TimeChangeDialog(
                             .fillMaxWidth()
                             .padding(start = padding16dp),
                         verticalAlignment = Alignment.CenterVertically
-                        // horizontalArrangement = Arrangement.Start
                     ) {
                         TimePicker(state = timeState)
                     }

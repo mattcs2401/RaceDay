@@ -37,6 +37,8 @@
     <string name="dlg_error_title">An Error Occurred</string>
     <string name="dlg_error_msg_unknown">An unknown error occurred</string>
 
+    <string name="dlg_change_start_time">Change Race Start Time</string>
+
     <!-- TopBar labels. -->
     <string name="label_meetings">Meetings</string>
     <string name="label_races">Races</string>

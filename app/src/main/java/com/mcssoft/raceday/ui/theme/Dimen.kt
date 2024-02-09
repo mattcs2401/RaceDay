@@ -17,6 +17,8 @@ val fontSize10sp = 10.sp
 val fontSize12sp = 12.sp
 val fontSize14sp = 14.sp
 val fontSize16sp = 16.sp
+val fontSize24sp = 24.sp
+
 
 val margin0dp = 0.dp
 val margin4dp = 4.dp
