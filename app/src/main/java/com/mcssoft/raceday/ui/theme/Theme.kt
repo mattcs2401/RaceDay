@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.Color
 
 // Reference: https://m2.material.io/design/color/applying-color-to-ui.html#top-and-bottom-app-bars
 
@@ -47,6 +49,13 @@ val lightCardColours = CardColors(
     contentColor = lightColorScheme().onPrimary,
     disabledContainerColor = lightColorScheme().surface, // TBA
     disabledContentColor = lightColorScheme().onSurface // TBA
+)
+
+val lightIconButtonColours = IconButtonColors(
+    containerColor = lightColorScheme().secondary,
+    contentColor = Color.White,
+    disabledContainerColor = lightColorScheme().surface,
+    disabledContentColor = lightColorScheme().onSurface
 )
 
 @Composable

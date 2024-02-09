@@ -1,53 +1,55 @@
 package com.mcssoft.raceday.ui.components.navigation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.ui.theme.fiftyPercent
+import com.mcssoft.raceday.ui.theme.lightIconButtonColours
+import com.mcssoft.raceday.ui.theme.width32dp
 
 @Composable
 fun BottomBar(
     navController: NavController?
 ) {
-    val bottomNavItems = listOf(
-        BottomNavItem.Preferences,
-        BottomNavItem.Summary
-    )
-
-    BottomNavigation(
-        backgroundColor = colorResource(id = R.color.colourPrimary),
-        contentColor = Color.White
-    ) {
-        bottomNavItems.forEach { item ->
-            val currentRoute = item.route
-            BottomNavigationItem(
-                icon = {
-                    Icon(
-                        painterResource(id = item.icon),
-                        contentDescription = item.title
-                    )
-                },
-                label = {
-                    Text(text = item.title)
-                },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(fiftyPercent),
-                alwaysShowLabel = true,
-                selected = currentRoute == item.route,
+    BottomAppBar(
+        containerColor = MaterialTheme.colorScheme.secondary,
+        contentColor = Color.White,
+        actions = {
+            Spacer(modifier = Modifier.width(width32dp))
+            IconButton(
                 onClick = {
-                    navController?.navigate(item.route)
-                }
-            )
+                    navController?.navigate(Screens.PreferencesScreen.route)
+                 },
+                colors = lightIconButtonColours
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.ic_settings_24),
+                    contentDescription = "Settings"
+                )
+            }
+            Spacer(modifier = Modifier.width(width32dp))
+            IconButton(
+                onClick = {
+                    navController?.navigate(Screens.SummaryScreen.route)
+                },
+                colors = lightIconButtonColours
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.ic_summary_24),
+                    contentDescription = "Summary"
+                )
+            }
         }
-    }
+    )
 }
 
 @Preview

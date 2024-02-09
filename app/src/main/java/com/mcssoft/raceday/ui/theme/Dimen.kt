@@ -41,6 +41,7 @@ val width2dp = 2.dp
 val width4dp = 4.dp
 val width8dp = 8.dp
 val width16dp = 16.dp
+val width32dp = 32.dp
 
 const val twentyPercent = 0.2f
 const val thirtyPercent = 0.3f

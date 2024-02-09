@@ -3,16 +3,16 @@ package com.mcssoft.raceday.ui.components.preferences.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Switch
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -22,14 +22,11 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent
 import com.mcssoft.raceday.ui.theme.AppShapes
-import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize16sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.padding4dp
-
-// Note: This is done all with Material3.
 
 @Composable
 fun PreferencesItem(
@@ -50,11 +47,14 @@ fun PreferencesItem(
             .fillMaxWidth()
             .padding(padding4dp),
         shape = AppShapes.medium,
-        elevation = elevation4dp,
-        border = BorderStroke(2.dp, Color.Blue)
+        border = BorderStroke(
+            width = 2.dp,
+            color = MaterialTheme.colorScheme.primary
+        )
     ) {
         ConstraintLayout(
-            constraintSet
+            constraintSet,
+            modifier = Modifier.fillMaxWidth(1f)
         ) {
             Text(
                 text = title,
