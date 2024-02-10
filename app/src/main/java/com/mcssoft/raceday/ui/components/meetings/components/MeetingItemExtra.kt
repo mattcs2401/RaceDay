@@ -72,8 +72,8 @@ private val constraintSet = ConstraintSet {
     val idRailPos = createRefFor("idRailPos")
 
     constrain(idRacesNo) {
-        start.linkTo(parent.start, margin = margin16dp)
         top.linkTo(parent.top, margin = margin0dp)
+        start.linkTo(parent.start, margin = margin16dp)
         bottom.linkTo(parent.bottom, margin = margin16dp)
     }
     constrain(idWeatherCond) {

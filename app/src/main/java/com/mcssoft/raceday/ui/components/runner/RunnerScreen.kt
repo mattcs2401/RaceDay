@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -21,6 +21,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
 import com.mcssoft.raceday.ui.theme.fontSize14sp
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
@@ -29,6 +30,7 @@ import com.mcssoft.raceday.ui.theme.thirty3Percent
 /**
  * @param state: Runner state.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RunnerScreen(
@@ -39,12 +41,12 @@ fun RunnerScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runner),
-                backgroundColour = MaterialTheme.colorScheme.primary,
-                titleColour = Color.White,
+                colours = lightTopAppBarColours,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController)
-                }
+                },
+
             )
         }
     ) {

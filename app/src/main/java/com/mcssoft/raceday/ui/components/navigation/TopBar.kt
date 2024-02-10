@@ -6,9 +6,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 
 /**
@@ -22,10 +22,9 @@ import androidx.compose.ui.res.painterResource
 @Composable
 fun TopBar(
     title: String,
-    titleColour: Color,
-    backgroundColour: Color,
-    onBackPressed: () -> Unit = {},
+    colours: TopAppBarColors,
     backNavIcon: Int? = null,
+    onBackPressed: () -> Unit = {},
     actions: @Composable (RowScope.() -> Unit) = {}
 ) {
     TopAppBar(
@@ -33,24 +32,22 @@ fun TopBar(
             Row(
                 content = {
                     Text(
-                        text = title,
-                        color = titleColour
+                        text = title
                     )
                 }
             )
         },
-        backgroundColor = backgroundColour,
         navigationIcon = {
             if (onBackPressed != {} && backNavIcon != null) {
                 IconButton(onClick = onBackPressed) {
                     Icon(
                         painterResource(backNavIcon),
-                        backNavIcon.toString(),
-                        tint = titleColour
+                        backNavIcon.toString()
                     )
                 }
             }
         },
+        colors = colours,
         actions = actions
     )
 }

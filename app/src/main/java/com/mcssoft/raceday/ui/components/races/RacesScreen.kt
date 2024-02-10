@@ -33,7 +33,7 @@ import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
-import com.mcssoft.raceday.ui.theme.padding56dp
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.utility.DateUtils
 
@@ -62,8 +62,7 @@ fun RacesScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_races),
-                backgroundColour = MaterialTheme.colorScheme.primary,
-                titleColour = Color.White,
+                colours  = lightTopAppBarColours,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
@@ -81,7 +80,8 @@ fun RacesScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = padding56dp)
+                .padding(
+                    top = padding64dp)
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
             if (showTimeChangeDialog.value) {

@@ -42,7 +42,7 @@ fun RaceItem(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(1f)
             .padding(padding4dp)
             .combinedClickable(
                 enabled = true,

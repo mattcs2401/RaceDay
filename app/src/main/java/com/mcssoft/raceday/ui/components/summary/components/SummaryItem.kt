@@ -4,23 +4,21 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
-import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.borderStroke
-import com.mcssoft.raceday.ui.theme.elevation4dp
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize14sp
+import com.mcssoft.raceday.ui.theme.lightCardColours
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp
@@ -37,12 +35,12 @@ fun SummaryItem(
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
-    // TODO - refine these colours.
-    val backgroundColour = if (summary.isPastRaceTime) {
-        colorResource(id = R.color.colourAccent)
-    } else {
-        colorResource(id = R.color.colourAccentComp)
-    }
+//    // TODO - refine these colours.
+//    val backgroundColour = if (summary.isPastRaceTime) {
+//        colorResource(id = R.color.colourAccent)
+//    } else {
+//        colorResource(id = R.color.colourAccentComp)
+//    }
 
     Card(
         modifier = Modifier
@@ -54,11 +52,13 @@ fun SummaryItem(
             onLongClick = { onItemLongClick(summary) },
         ),
         shape = AppShapes.medium,
-        elevation = elevation4dp,
-        backgroundColor = backgroundColour,
+        colors = lightCardColours,
         border = borderStroke
     ) {
-        ConstraintLayout(constraintSet) {
+        ConstraintLayout(
+            constraintSet,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
                 summary.sellCode,
                 Modifier.layoutId("idSellCode"),

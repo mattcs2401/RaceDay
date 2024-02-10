@@ -4,12 +4,13 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +33,6 @@ import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin48dp
-import com.mcssoft.raceday.ui.theme.margin4dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
 import com.mcssoft.raceday.utility.Constants
@@ -59,21 +59,24 @@ fun RunnerItem(
         textStyle = TextStyle(textDecoration = TextDecoration.LineThrough)
     }
 
+    val modifier: Modifier = Modifier
+
     Card(
-        modifier = Modifier
+        modifier
            .fillMaxWidth()
            .padding(padding4dp),
-      shape = AppShapes.medium,
-      elevation = elevation4dp
+        shape = AppShapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation4dp)
     ) {
         ConstraintLayout(
             constraintSet,
-            if(!scratched) {
-                Modifier.clickable { onItemClick(runner) }
-            } else {
-                Modifier.clickable(enabled = false, onClick = {})
-            }
+            modifier.fillMaxWidth()
         ) {
+            if(!scratched) {
+                modifier.clickable { onItemClick(runner) }
+            } else {
+                modifier.clickable(enabled = false, onClick = {})
+            }
             Text(
                 runner.runnerNumber.toString(),
                 Modifier.layoutId("idRunnerNo"),
@@ -98,12 +101,12 @@ fun RunnerItem(
                 fontSize = fontSize10sp
             )
             if(!runner.isScratched) {
-                var riderDriver = runner.riderDriverName
-                if(riderDriver.length > Constants.JOCKEY_MAX) {
-                    riderDriver = "${riderDriver.take(Constants.JOCKEY_TAKE)}..."
+                var riderDriverName = runner.riderDriverName
+                if(riderDriverName.length > Constants.JOCKEY_MAX) {
+                    riderDriverName = "${riderDriverName.take(Constants.JOCKEY_TAKE)}..."
                 }
                 Text(
-                    riderDriver,//runner.riderDriverName,
+                    riderDriverName,
                     Modifier.layoutId("idRider"),
                     fontSize = fontSize10sp
                 )
@@ -143,33 +146,33 @@ private val constraintSet = ConstraintSet {
     val idLastFive = createRefFor("idLastFive")
     val idRunnerName = createRefFor("idRunnerName")
     val idBarrier = createRefFor("idBarrier")
-    val idTrainerName = createRefFor("idTrainerName")
+//    val idTrainerName = createRefFor("idTrainerName")
     val idRider = createRefFor("idRider")
     val idArrow = createRefFor("idArrow")
 
     constrain(idRunnerNo) {
-        top.linkTo(parent.top, margin = margin16dp)
-        start.linkTo(parent.start, margin = margin8dp)
-        bottom.linkTo(parent.bottom, margin = margin16dp)
+        top.linkTo(parent.top, margin = margin8dp)
+        start.linkTo(parent.start, margin = margin16dp)
+        bottom.linkTo(parent.bottom, margin = margin8dp)
     }
     constrain(idLastFive) {
         top.linkTo(idRunnerNo.top, margin = margin0dp)
-        start.linkTo(idRunnerNo.end, margin = margin4dp)
+        start.linkTo(idRunnerNo.end, margin = margin16dp)
     }
     constrain(idRunnerName) {
         top.linkTo(idLastFive.top, margin = margin0dp)
-        start.linkTo(idLastFive.end, margin = margin4dp)
+        start.linkTo(idLastFive.end, margin = margin8dp)
     }
     constrain(idBarrier) {
         top.linkTo(idRunnerName.top, margin = margin0dp)
-        start.linkTo(idRunnerName.end, margin = margin4dp)
+        start.linkTo(idRunnerName.end, margin = margin8dp)
     }
-    constrain(idTrainerName) {
-        top.linkTo(idBarrier.top, margin = margin0dp)
-        start.linkTo(idBarrier.end, margin = margin4dp)
-    }
+//    constrain(idTrainerName) {
+//        top.linkTo(idBarrier.top, margin = margin0dp)
+//        start.linkTo(idBarrier.end, margin = margin4dp)
+//    }
     constrain(idRider) {
-        top.linkTo(idTrainerName.top, margin = margin0dp)
+        top.linkTo(idBarrier.top, margin = margin0dp)
         end.linkTo(parent.end, margin = margin48dp)
     }
     constrain(idArrow) {

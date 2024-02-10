@@ -1,9 +1,10 @@
 package com.mcssoft.raceday.ui.components.runners.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +22,7 @@ import com.mcssoft.raceday.ui.theme.fontSize10sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
-import com.mcssoft.raceday.ui.theme.padding32dp
+import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.utility.Constants
 
 @Composable
@@ -37,7 +38,8 @@ fun RunnerItemExtra(
     ConstraintLayout(
         constraintSet,
         modifier = Modifier
-            .padding(top = padding32dp) // simply to give room for the top row.
+            .fillMaxWidth()
+            .padding(top = padding8dp) // simply to give room for the top row.
     ) {
         Text(
        "(${runner.tcdwIndicators})",
@@ -88,9 +90,9 @@ private val constraintSet = ConstraintSet {
     val idCheckBox = createRefFor("idCheckBox")
 
     constrain(idTcdwIndicators) {
-        top.linkTo(parent.top, margin = margin16dp)
+        top.linkTo(parent.top, margin = margin0dp)
         start.linkTo(parent.start, margin = margin16dp)
-        bottom.linkTo(parent.bottom, margin = margin16dp)
+//        bottom.linkTo(parent.bottom, margin = margin16dp)
     }
     constrain(idTrainerName) {
         top.linkTo(idTcdwIndicators.top, margin = margin0dp)

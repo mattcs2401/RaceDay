@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +30,7 @@ import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
 import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
 import com.mcssoft.raceday.ui.theme.height64dp
-import com.mcssoft.raceday.ui.theme.padding56dp
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 
 /**
@@ -37,6 +38,7 @@ import com.mcssoft.raceday.ui.theme.padding64dp
  * @param navController: The Navigation.
  * @param onEvent: Call up to RunnersEvent in ViewModel.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RunnersScreen(
@@ -48,8 +50,7 @@ fun RunnersScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_runners),
-                titleColour = Color.White,
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                colours = lightTopAppBarColours,
                 actions = {
                     IconButton(onClick = {
                         backNavigate(navController = navController, state = state)
@@ -67,7 +68,8 @@ fun RunnersScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = padding56dp) // experimentation.
+                .padding(
+                    top = padding64dp)
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
             when (state.status) {

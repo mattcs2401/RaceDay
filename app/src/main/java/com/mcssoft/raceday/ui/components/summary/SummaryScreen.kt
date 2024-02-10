@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +30,10 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.summary.SummaryState.Status
 import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
-import com.mcssoft.raceday.ui.theme.padding56dp
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
+import com.mcssoft.raceday.ui.theme.padding64dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SummaryScreen(
@@ -46,8 +48,7 @@ fun SummaryScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_summary),
-                titleColour = Color.White,
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                colours = lightTopAppBarColours,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController, state)
@@ -83,14 +84,16 @@ fun SummaryScreen(
                 onDismiss = {}
             )
         }
-        is Status.Failure -> { /* TBA */ }
+        is Status.Failure -> {}
         is Status.Success -> {
             if (state.summaries.isEmpty()) {
                 Box(
                     Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .padding(top = padding56dp) // experimentation.
+                        .padding(
+                            top = padding64dp
+                        )
                 ) {
                     Text(
                         stringResource(id = R.string.nothing_to_show),
@@ -102,7 +105,7 @@ fun SummaryScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = padding56dp)
+                        .padding(top = padding64dp)
                 ) {
                     items(
                         items = state.summaries,

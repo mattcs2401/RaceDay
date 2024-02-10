@@ -6,11 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
@@ -18,8 +17,10 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent.EventType.SourceFromApi
 import com.mcssoft.raceday.ui.components.preferences.components.PreferencesItem
+import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PreferencesScreen(
@@ -32,8 +33,7 @@ fun PreferencesScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_settings),
-                titleColour = Color.White,
-                backgroundColour = MaterialTheme.colorScheme.primary,
+                colours = lightTopAppBarColours,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     backNavigate(navController, state)
@@ -46,7 +46,8 @@ fun PreferencesScreen(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(top = padding64dp)
+                .padding(
+                    top = padding64dp)
         ) {
             Column {
                 PreferencesItem(
