@@ -15,9 +15,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -25,13 +26,12 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
-import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
 import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
 import com.mcssoft.raceday.ui.theme.height64dp
-import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.topappbar.lightRunnersTopAppBarColours
 
 /**
  * @param state: Runners state.
@@ -48,17 +48,25 @@ fun RunnersScreen(
 ) {
     Scaffold(
         topBar = {
-            TopBar(
-                title = stringResource(id = R.string.label_runners),
-                colours = lightTopAppBarColours,
+            TopAppBar(
+                title = {
+                    Row(content = {
+                        Text(
+                            stringResource(id = R.string.label_runners),
+                            modifier = Modifier.weight(weight = 2f),
+                        )
+                    })
+                },
+                colors = lightRunnersTopAppBarColours,
                 actions = {
-                    IconButton(onClick = {
-                        backNavigate(navController = navController, state = state)
-                    }) {
+                    IconButton(
+                        onClick = {
+                            backNavigate(navController = navController, state = state)
+                        })
+                    {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home),
-                            tint = Color.White
+                            stringResource(id = R.string.lbl_icon_home)
                         )
                     }
                 }

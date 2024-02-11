@@ -15,26 +15,26 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.TimeChangeDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
-import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
-import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.topappbar.lightRaceTopAppBarColours
 import com.mcssoft.raceday.utility.DateUtils
 
 /**
@@ -54,23 +54,34 @@ fun RacesScreen(
     val showTimeChangeDialog = remember { mutableStateOf(false) }
 
     val timePickerState = rememberTimePickerState(
-        // simply an initialise value (only the picker can update picker state).
+        // Simply an initialiser value (only the picker can update the picker state).
         initialHour = 12, 0, true
     )
 
     Scaffold(
         topBar = {
-            TopBar(
-                title = stringResource(id = R.string.label_races),
-                colours  = lightTopAppBarColours,
+            TopAppBar(
+                title = {
+                    Row(content = {
+                        Text(
+                            stringResource(id = R.string.label_races),
+                            modifier = Modifier.weight(weight = 2f),
+                        )
+                    })
+                },
+                colors  = lightRaceTopAppBarColours,
                 actions = {
-                    IconButton(onClick = {
-                        backNavigate(navController = navController, state = state)
-                    }) {
+                    IconButton(
+                        onClick = {
+                            backNavigate(
+                                state = state,
+                                navController = navController
+                            )
+                        })
+                    {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
-                            stringResource(id = R.string.lbl_icon_home),
-                            tint = Color.White
+                            stringResource(id = R.string.lbl_icon_home)
                         )
                     }
                 }
@@ -81,8 +92,9 @@ fun RacesScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = padding64dp)
-                .background(MaterialTheme.colorScheme.secondary)
+                    top = padding64dp
+                )
+                .background(MaterialTheme.colorScheme.background)
         ) {
             if (showTimeChangeDialog.value) {
                 TimeChangeDialog(

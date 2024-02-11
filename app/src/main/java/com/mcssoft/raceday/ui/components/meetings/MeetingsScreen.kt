@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -24,21 +27,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.CommonDialog
 import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
-import com.mcssoft.raceday.ui.components.meetings.components.MeetingsTopBar
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
-import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
+import com.mcssoft.raceday.ui.theme.topappbar.lightMeetingTopAppBarColours
 
 /**
  * @param state: Meetings state.
@@ -59,9 +61,20 @@ fun MeetingsScreen(
 
     Scaffold(
         topBar = {
-            MeetingsTopBar(
-                title = stringResource(id = R.string.label_meetings),
-                title2 = state.mtgDate,
+            TopAppBar(
+                title = {
+                    Row(content = {
+                        Text(
+                            stringResource(id = R.string.label_meetings),
+                            modifier = Modifier.weight(weight = 2f),
+                        )
+                        Text(
+                            state.mtgDate,
+                            fontSize = 12.sp,
+                            modifier = Modifier.weight(weight = 3f),
+                        )
+                    })
+                },
                 actions = {
                     IconButton(
                         enabled = state.canRefresh,
@@ -71,12 +84,11 @@ fun MeetingsScreen(
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
-                            stringResource(id = R.string.lbl_icon_refresh),
-                            tint = Color.White
+                            stringResource(id = R.string.lbl_icon_refresh)
                         )
                     }
                 },
-                colours = lightTopAppBarColours
+                colors = lightMeetingTopAppBarColours
             )
         },
         bottomBar = {

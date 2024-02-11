@@ -1,48 +1,80 @@
 package com.mcssoft.raceday.ui.theme
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.CardColors
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
-// Reference: https://m2.material.io/design/color/applying-color-to-ui.html#top-and-bottom-app-bars
-
 private val DarkColorPalette = darkColorScheme(
-//    primary = Purple200,
-//    primaryVariant = colourPrimaryVariant,
-//    secondary = Teal200
+    primary = dark_primary,
+    onPrimary = dark_onPrimary,
+    primaryContainer = dark_primaryContainer,
+    onPrimaryContainer = dark_onPrimaryContainer,
+    secondary = dark_secondary,
+    onSecondary = dark_onSecondary,
+    secondaryContainer = dark_secondaryContainer,
+    onSecondaryContainer = dark_onSecondaryContainer,
+    tertiary = dark_tertiary,
+    onTertiary = dark_onTertiary,
+    tertiaryContainer = dark_tertiaryContainer,
+    onTertiaryContainer = dark_onTertiaryContainer,
+    error = dark_error,
+    errorContainer = dark_errorContainer,
+    onError = dark_onError,
+    onErrorContainer = dark_onErrorContainer,
+    background = dark_background,
+    onBackground = dark_onBackground,
+    surface = dark_surface,
+    onSurface = dark_onSurface,
+    surfaceVariant = dark_surfaceVariant,
+    onSurfaceVariant = dark_onSurfaceVariant,
+    outline = dark_outline,
+    inverseOnSurface = dark_inverseOnSurface,
+    inverseSurface = dark_inverseSurface,
+    inversePrimary = dark_inversePrimary,
+    surfaceTint = dark_surfaceTint,
+    outlineVariant = dark_outlineVariant,
+    scrim = dark_scrim,
 )
 
-@SuppressLint("ConflictingOnColor")
+//@SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColorScheme(
-    primary = colourPrimary,
-    onPrimary = colourOnPrimary,
-    secondary = colourSecondary,
-    onSecondary = colourOnSecondary,
-    error = colourError,
-    onError = colourOnError,
-    background = colourBackground,
-    onBackground = colourOnBackground,
-    surface = colourSurface,
-    onSurface = colourOnSurface,
+    primary = primary,
+    onPrimary = onPrimary,
+    primaryContainer = primaryContainer,
+    onPrimaryContainer = onPrimaryContainer,
+    secondary = secondary,
+    onSecondary = onSecondary,
+    secondaryContainer = secondaryContainer,
+    onSecondaryContainer = onSecondaryContainer,
+    tertiary = tertiary,
+    onTertiary = onTertiary,
+    tertiaryContainer = tertiaryContainer,
+    onTertiaryContainer = onTertiaryContainer,
+    error = error,
+    errorContainer = errorContainer,
+    onError = onError,
+    onErrorContainer = onErrorContainer,
+    background = background,
+    onBackground = onBackground,
+    surface = surface,
+    onSurface = onSurface,
+    surfaceVariant = surfaceVariant,
+    onSurfaceVariant = onSurfaceVariant,
+    outline = outline,
+    inverseOnSurface = inverseOnSurface,
+    inverseSurface = inverseSurface,
+    inversePrimary = inversePrimary,
+    surfaceTint = surfaceTint,
+    outlineVariant = outlineVariant,
+    scrim = scrim,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
-val lightTopAppBarColours = TopAppBarColors(
-    containerColor = lightColorScheme().primary,
-    titleContentColor = lightColorScheme().onPrimary,
-    scrolledContainerColor = lightColorScheme().surface, // TBA
-    navigationIconContentColor = lightColorScheme().surface, // TBA
-    actionIconContentColor = lightColorScheme().surface // TBA
-)
 
 val lightCardColours = CardColors(
     containerColor = lightColorScheme().primary,
@@ -69,7 +101,7 @@ val lightIconButtonColours = IconButtonColors(
 //)
 
 @Composable
-fun RaceDayBasicTheme(
+fun RaceDayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

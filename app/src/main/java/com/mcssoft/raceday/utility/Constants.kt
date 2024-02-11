@@ -1,5 +1,7 @@
 package com.mcssoft.raceday.utility
 
+import androidx.compose.ui.graphics.Color
+
 object Constants {
     // Basics (used in calculations).
     const val FIVE = 5
@@ -54,4 +56,7 @@ object Constants {
 
     // Internet values.
     const val HTTP_OK = 200
+
+    // Colour.
+    val NO_COLOUR = Color(0)
 }

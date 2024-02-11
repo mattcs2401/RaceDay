@@ -14,12 +14,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RaceDayBasicTheme"
+        android:theme="@style/Theme.RaceDayTheme"
         tools:targetApi="34">
         <activity
             android:name="com.mcssoft.raceday.ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.RaceDayBasicTheme"
+            android:theme="@style/Theme.RaceDayTheme"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

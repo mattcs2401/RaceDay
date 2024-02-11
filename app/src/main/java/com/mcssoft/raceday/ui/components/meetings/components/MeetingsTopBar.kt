@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeetingsTopBar(
+fun MeetingsTopAppBar(
     title: String,
     title2: String?,
     colours: TopAppBarColors,

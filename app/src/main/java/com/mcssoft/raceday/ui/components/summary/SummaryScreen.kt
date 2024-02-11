@@ -2,6 +2,7 @@ package com.mcssoft.raceday.ui.components.summary
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,13 +14,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -27,11 +28,10 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.CommonDialog
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
-import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.summary.SummaryState.Status
 import com.mcssoft.raceday.ui.components.summary.components.SummaryItem
-import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.topappbar.lightSummaryTopAppBarColours
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -46,21 +46,37 @@ fun SummaryScreen(
 
     Scaffold(
         topBar = {
-            TopBar(
-                title = stringResource(id = R.string.label_summary),
-                colours = lightTopAppBarColours,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    backNavigate(navController, state)
+            TopAppBar(
+                title = {
+                    Row(content = {
+                        Text(
+                            stringResource(id = R.string.label_summary),
+                            modifier = Modifier.weight(weight = 2f),
+                        )
+                    })
+                },
+                colors = lightSummaryTopAppBarColours,
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            backNavigate(navController, state)
+                        }
+                    ) {
+                        Icon(
+                            painterResource( id = R.drawable.ic_arrow_back_24 ),
+                            stringResource(id = R.string.label_runner)
+                        )
+                    }
                 },
                 actions = {
-                    IconButton(onClick = {
-                        onEvent(SummaryEvent.Refresh)
-                    }) {
+                    IconButton(
+                        onClick = {
+                            onEvent(SummaryEvent.Refresh)
+                        }
+                    ){
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
-                            stringResource(id = R.string.lbl_icon_refresh),
-                            tint = Color.White
+                            stringResource(id = R.string.lbl_icon_refresh)
                         )
                     }
                 }

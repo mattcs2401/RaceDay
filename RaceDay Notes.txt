@@ -64,8 +64,12 @@ https://developer.android.com/reference/kotlin/androidx/compose/material3/packag
 ------
 Other:
 ------
-
+*** Material 3 ***
+--> https://m3.material.io/theme-builder#/custom
 --> https://developer.android.com/jetpack/compose/designsystems/material2-material3#m2_8
+--> https://github.com/google/material-design-icons
+--> https://m2.material.io/design/color/applying-color-to-ui.html#top-and-bottom-app-bars
+
 
 -> https://www.youtube.com/watch?v=JfCivo5qJkI
 -> https://itnext.io/android-custom-notification-in-6-mins-c2e7e2ddadab

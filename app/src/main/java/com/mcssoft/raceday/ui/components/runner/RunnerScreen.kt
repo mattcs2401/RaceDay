@@ -8,24 +8,27 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screens
-import com.mcssoft.raceday.ui.components.navigation.TopBar
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
 import com.mcssoft.raceday.ui.theme.fontSize14sp
-import com.mcssoft.raceday.ui.theme.lightTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
+import com.mcssoft.raceday.ui.theme.topappbar.lightRunnerTopAppBarColours
 
 /**
  * @param state: Runner state.
@@ -39,14 +42,29 @@ fun RunnerScreen(
 ) {
     Scaffold(
         topBar = {
-            TopBar(
-                title = stringResource(id = R.string.label_runner),
-                colours = lightTopAppBarColours,
-                backNavIcon = R.drawable.ic_arrow_back_24,
-                onBackPressed = {
-                    backNavigate(navController)
+            TopAppBar(
+                title = {
+                    Row(content = {
+                        Text(
+                            stringResource(id = R.string.label_runner),
+                            modifier = Modifier.weight(weight = 2f),
+                        )
+                    })
                 },
-
+                colors = lightRunnerTopAppBarColours,
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            backNavigate(navController)
+                        }
+                    ) {
+                        Icon(
+                            painterResource( id = R.drawable.ic_arrow_back_24 ),
+                            stringResource(id = R.string.label_runner)
+                        )
+                    }
+                },
+                actions = {}
             )
         }
     ) {

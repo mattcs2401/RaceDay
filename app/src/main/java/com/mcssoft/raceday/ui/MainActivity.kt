@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mcssoft.raceday.ui.components.navigation.NavGraph
-import com.mcssoft.raceday.ui.theme.RaceDayBasicTheme
+import com.mcssoft.raceday.ui.theme.RaceDayTheme
 import com.mcssoft.raceday.utility.alarm.IAlarm
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         iAlarm.scheduleAlarm()
 
         setContent {
-            RaceDayBasicTheme {
+            RaceDayTheme {
                 NavGraph()
             }
         }
