@@ -38,9 +38,9 @@ import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightMeetingTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
-import com.mcssoft.raceday.ui.theme.topappbar.lightMeetingTopAppBarColours
 
 /**
  * @param state: Meetings state.

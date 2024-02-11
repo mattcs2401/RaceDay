@@ -26,8 +26,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.raceday.domain.model.Meeting
 import com.mcssoft.raceday.ui.theme.AppShapes
+import com.mcssoft.raceday.ui.theme.components.card.lightMeetingCardColours
 import com.mcssoft.raceday.ui.theme.fontSize12sp
-import com.mcssoft.raceday.ui.theme.lightCardColours
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
@@ -45,7 +45,7 @@ fun MeetingItem(
 
     val rotationState by animateFloatAsState(
         targetValue = if (expandedState) 180f else 0f,
-        label = ""
+        label = "Expand"
     )
 
     Card(
@@ -53,7 +53,10 @@ fun MeetingItem(
             .fillMaxWidth()
             .padding(padding4dp)
             .animateContentSize(
-                animationSpec = tween(THREE_HUNDRED, easing = LinearOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = THREE_HUNDRED,
+                    easing = LinearOutSlowInEasing
+                )
             )
             .combinedClickable(
                 enabled = true,
@@ -65,12 +68,12 @@ fun MeetingItem(
                 },
             ),
         shape = AppShapes.small,
-        colors = lightCardColours
+        colors = lightMeetingCardColours
     ) {
         // Initial display of Meeting details.
         ConstraintLayout(
             constraintSet,
-            modifier = Modifier.fillMaxWidth(1f)
+            modifier = Modifier.fillMaxWidth()
         ) {
             meeting.sellCode?.let { code ->
                 Text(

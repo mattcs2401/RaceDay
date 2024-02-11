@@ -28,7 +28,7 @@ import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
-import com.mcssoft.raceday.ui.theme.topappbar.lightRunnerTopAppBarColours
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRunnerTopAppBarColours
 
 /**
  * @param state: Runner state.

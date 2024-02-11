@@ -34,7 +34,7 @@ import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.topappbar.lightRaceTopAppBarColours
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRaceTopAppBarColours
 import com.mcssoft.raceday.utility.DateUtils
 
 /**

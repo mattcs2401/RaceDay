@@ -16,9 +16,9 @@ import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.borderStroke
+import com.mcssoft.raceday.ui.theme.components.card.lightCardColours
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize14sp
-import com.mcssoft.raceday.ui.theme.lightCardColours
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp

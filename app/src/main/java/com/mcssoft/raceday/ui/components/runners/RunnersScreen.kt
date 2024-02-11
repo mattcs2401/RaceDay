@@ -29,9 +29,9 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
 import com.mcssoft.raceday.ui.components.runners.components.RunnerItem
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRunnersTopAppBarColours
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.topappbar.lightRunnersTopAppBarColours
 
 /**
  * @param state: Runners state.
@@ -61,7 +61,10 @@ fun RunnersScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            backNavigate(navController = navController, state = state)
+                            backNavigate(
+                                state = state,
+                                navController = navController
+                            )
                         })
                     {
                         Icon(

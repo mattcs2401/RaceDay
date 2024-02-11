@@ -23,7 +23,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent.EventType.SourceFromApi
 import com.mcssoft.raceday.ui.components.preferences.components.PreferencesItem
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.topappbar.lightPreferencesTopAppBarColours
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightPreferencesTopAppBarColours
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

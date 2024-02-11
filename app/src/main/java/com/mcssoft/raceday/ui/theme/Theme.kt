@@ -1,14 +1,11 @@
 package com.mcssoft.raceday.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColorScheme(
     primary = dark_primary,
@@ -74,31 +71,6 @@ private val LightColorPalette = lightColorScheme(
     outlineVariant = outlineVariant,
     scrim = scrim,
 )
-
-
-val lightCardColours = CardColors(
-    containerColor = lightColorScheme().primary,
-    contentColor = lightColorScheme().onPrimary,
-    disabledContainerColor = lightColorScheme().surface, // TBA
-    disabledContentColor = lightColorScheme().onSurface // TBA
-)
-
-val lightIconButtonColours = IconButtonColors(
-    containerColor = lightColorScheme().secondary,
-    contentColor = Color.White,
-    disabledContainerColor = lightColorScheme().surface,
-    disabledContentColor = lightColorScheme().onSurface
-)
-
-//val lightNavigationBarItemColors = NavigationBarItemColors (
-//    selectedIconColor = ,
-//    selectedTextColor = ,
-//    selectedIndicatorColor = ,
-//    unselectedIconColor = ,
-//    unselectedTextColor = ,
-//    disabledIconColor = ,
-//    disabledTextColor =
-//)
 
 @Composable
 fun RaceDayTheme(
