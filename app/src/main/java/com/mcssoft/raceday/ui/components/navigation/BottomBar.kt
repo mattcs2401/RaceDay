@@ -23,8 +23,8 @@ fun BottomBar(
 // https://itnext.io/navigation-bar-bottom-app-bar-in-jetpack-compose-with-material-3-c57ae317bd00
 
     val bottomNavItems = listOf(
-        BottomNavItem.Settings,
-        BottomNavItem.Summary
+        BottomNavItems.Settings,
+        BottomNavItems.Summary
     )
 
     val selectedItem by remember { mutableIntStateOf(0) }

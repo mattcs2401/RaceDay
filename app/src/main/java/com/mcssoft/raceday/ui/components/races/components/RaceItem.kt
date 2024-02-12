@@ -5,7 +5,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,7 +18,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.ui.theme.AppShapes
-import com.mcssoft.raceday.ui.theme.elevation4dp
+import com.mcssoft.raceday.ui.theme.components.card.lightRaceCardColours
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
@@ -54,7 +53,8 @@ fun RaceItem(
                 }
             ),
         shape = AppShapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = elevation4dp)
+        colors = lightRaceCardColours,
+//        elevation = CardDefaults.cardElevation(defaultElevation = elevation4dp)
     ) {
         ConstraintLayout(
             constraintSet

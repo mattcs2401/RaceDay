@@ -51,13 +51,14 @@ class SummaryViewModel @Inject constructor(
 
     private fun getSummaries() {
         viewModelScope.launch(Dispatchers.IO) {
-            var lSummaries: MutableList<Summary>? = null
+//            val lSummaries = mutableListOf<Summary>()
+            val pSummaries = mutableListOf<Summary>()
+            val cSummaries = mutableListOf<Summary>()
             try {
                 iDbRepo.getSummaries()
                     .toMutableList()
                     .also { summaries ->
                         if (summaries.isNotEmpty()) {
-                            lSummaries = mutableListOf()
                             val currentTimeMillis = DateUtils().getCurrentTimeMillis()
                             for (summary in summaries) {
                                 val raceTime = DateUtils().getCurrentTimeMillis(summary.raceStartTime)
@@ -71,11 +72,11 @@ class SummaryViewModel @Inject constructor(
                             summaries.partition {
                                 it.isPastRaceTime
                             }.also { pair ->
-                                lSummaries!!.addAll(
-                                    pair.second.sortedBy { it.raceStartTime }
-                                )
-                                lSummaries!!.addAll(
+                                pSummaries.addAll(
                                     pair.first.sortedBy { it.raceStartTime }
+                                )
+                                cSummaries.addAll(
+                                    pair.second.sortedBy { it.raceStartTime }
                                 )
                             }
                         }
@@ -85,7 +86,8 @@ class SummaryViewModel @Inject constructor(
                     state.copy(
                         exception = null,
                         status = Status.Success,
-                        summaries = lSummaries ?: emptyList()
+                        cSummaries = cSummaries,
+                        pSummaries = pSummaries
                     )
                 }
                 _state.emit(state.value)

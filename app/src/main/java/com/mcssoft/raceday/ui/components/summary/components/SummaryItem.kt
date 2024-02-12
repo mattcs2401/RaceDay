@@ -16,7 +16,8 @@ import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.borderStroke
-import com.mcssoft.raceday.ui.theme.components.card.lightCardColours
+import com.mcssoft.raceday.ui.theme.components.card.lightSummaryCurrentCardColours
+import com.mcssoft.raceday.ui.theme.components.card.lightSummaryPreviousCardColours
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize14sp
 import com.mcssoft.raceday.ui.theme.margin0dp
@@ -35,12 +36,12 @@ fun SummaryItem(
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
-//    // TODO - refine these colours.
-//    val backgroundColour = if (summary.isPastRaceTime) {
-//        colorResource(id = R.color.colourAccent)
-//    } else {
-//        colorResource(id = R.color.colourAccentComp)
-//    }
+    // TODO - refine these colours.
+    val summaryItemCardColours = if (summary.isPastRaceTime) {
+        lightSummaryPreviousCardColours
+    } else {
+        lightSummaryCurrentCardColours
+    }
 
     Card(
         modifier = Modifier
@@ -52,7 +53,7 @@ fun SummaryItem(
             onLongClick = { onItemLongClick(summary) },
         ),
         shape = AppShapes.medium,
-        colors = lightCardColours,
+        colors = summaryItemCardColours,
         border = borderStroke
     ) {
         ConstraintLayout(

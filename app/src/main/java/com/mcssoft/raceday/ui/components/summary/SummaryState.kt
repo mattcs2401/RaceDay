@@ -6,7 +6,8 @@ data class SummaryState(
     val exception: Exception?,
     val status: Status,
     val loading: Boolean,
-    val summaries: List<Summary>,
+    val cSummaries: List<Summary>, // current Summaries, i.e. those not past race time.
+    val pSummaries: List<Summary>, // previous Summaries, i.e. those past race time.
     val fromApi: Boolean
 
 ) {
@@ -18,7 +19,8 @@ data class SummaryState(
                 exception = null,
                 status = Status.Initialise,
                 loading = false,
-                summaries = emptyList(),
+                cSummaries = emptyList(),
+                pSummaries = emptyList(),
                 fromApi = false
             )
         }
