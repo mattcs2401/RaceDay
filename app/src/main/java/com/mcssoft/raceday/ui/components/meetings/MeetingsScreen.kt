@@ -39,6 +39,7 @@ import com.mcssoft.raceday.ui.components.meetings.components.MeetingItem
 import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightMeetingTopAppBarColours
+import com.mcssoft.raceday.ui.theme.components.iconbutton.lightMeetingIconButtonColours
 import com.mcssoft.raceday.ui.theme.padding64dp
 
 /**
@@ -79,7 +80,8 @@ fun MeetingsScreen(
                         enabled = state.canRefresh,
                         onClick = {
                             showRefreshDialog.value = true
-                        }
+                        },
+                        colors = lightMeetingIconButtonColours
                     ) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),

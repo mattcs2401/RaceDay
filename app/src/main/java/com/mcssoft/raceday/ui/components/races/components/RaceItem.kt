@@ -31,7 +31,6 @@ fun RaceItem(
     race: Race,
     onItemClick: (Race) -> Unit,
     onItemLongClick: (Race) -> Unit
-
 ) {
     var abandoned by remember { mutableStateOf(false) }
 
@@ -46,54 +45,63 @@ fun RaceItem(
             .combinedClickable(
                 enabled = true,
                 onClick = {
-                    onItemClick(race)
+                    if(!abandoned) { onItemClick(race) }
                 },
                 onLongClick = {
-                    onItemLongClick(race)
+                    if(!abandoned) { onItemLongClick(race) }
                 }
             ),
         shape = AppShapes.medium,
         colors = lightRaceCardColours,
-//        elevation = CardDefaults.cardElevation(defaultElevation = elevation4dp)
+        // TODO -abandoned colours.
     ) {
-        ConstraintLayout(
-            constraintSet
-        ) {
+        Layout(race, abandoned)
+    }
+}
+
+@Composable
+private fun Layout(
+    race: Race,
+    abandoned: Boolean
+) {
+    ConstraintLayout(
+        constraintSet,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            race.raceNumber.toString(),
+            Modifier.layoutId("idRaceNo"),
+            fontSize = fontSize12sp
+        )
+        Text(
+            race.raceName,
+            Modifier.layoutId("idRaceName"),
+            fontSize = fontSize12sp
+        )
+        Text(
+            "Time: ${race.raceStartTime}",
+            Modifier.layoutId("idRaceTime"),
+            fontSize = fontSize12sp
+        )
+        Text(
+            "Dist: ${race.raceDistance}m",
+            Modifier.layoutId("idRaceDist"),
+            fontSize = fontSize12sp
+        )
+        race.raceClassConditions?.let { rcc ->
             Text(
-                race.raceNumber.toString(),
-                Modifier.layoutId("idRaceNo"),
+                "CC: $rcc",
+                Modifier.layoutId("idRaceClassCond"),
                 fontSize = fontSize12sp
             )
+        }
+        if (abandoned) {
             Text(
-                race.raceName,
-                Modifier.layoutId("idRaceName"),
-                fontSize = fontSize12sp
+                race.raceStatus.uppercase(),
+                Modifier.layoutId("idAbandoned"),
+                fontSize = fontSize12sp,
+                color = Color.Red
             )
-            Text(
-                "Time: ${race.raceStartTime}",
-                Modifier.layoutId("idRaceTime"),
-                fontSize = fontSize12sp
-            )
-            Text(
-                "Dist: ${race.raceDistance}m",
-                Modifier.layoutId("idRaceDist"),
-                fontSize = fontSize12sp
-            )
-            race.raceClassConditions?.let { rcc ->
-                Text(
-                    "CC: $rcc",
-                    Modifier.layoutId("idRaceClassCond"),
-                    fontSize = fontSize12sp
-                )
-            }
-            if (abandoned) {
-                Text(
-                    race.raceStatus.uppercase(),
-                    Modifier.layoutId("idAbandoned"),
-                    fontSize = fontSize12sp,
-                    color = Color.Red
-                )
-            }
         }
     }
 }
@@ -104,8 +112,8 @@ private val constraintSet = ConstraintSet {
     val idRaceName = createRefFor("idRaceName")
     val idRaceTime = createRefFor("idRaceTime")
     val idRaceDist = createRefFor("idRaceDist")
-    val idAbandoned = createRefFor("idAbandoned")
     val idRaceClassCond = createRefFor("idRaceClassCond")
+    val idAbandoned = createRefFor("idAbandoned")
 
     constrain(idRaceNo) {
         top.linkTo(parent.top, margin = margin16dp)
@@ -129,7 +137,7 @@ private val constraintSet = ConstraintSet {
         start.linkTo(idRaceDist.end, margin = margin8dp)
     }
     constrain(idAbandoned) {
-        top.linkTo(idRaceDist.top, margin = margin0dp)
+        top.linkTo(idRaceClassCond.top, margin = margin0dp)
         end.linkTo(parent.absoluteRight, margin = margin8dp)
     }
 }

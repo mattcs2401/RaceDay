@@ -4,7 +4,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.mcssoft.raceday.ui.theme.components.navbar.lightBottomNavBarColours
 
 @Composable
 fun BottomBar(
@@ -30,7 +30,8 @@ fun BottomBar(
     val selectedItem by remember { mutableIntStateOf(0) }
 
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.secondary,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         ) {
             bottomNavItems.forEachIndexed { index, item ->
                 NavigationBarItem(
@@ -50,8 +51,7 @@ fun BottomBar(
                             contentDescription = "${item.title} Icon",
                         )
                     },
-                    colors = NavigationBarItemDefaults.colors()
-                    // TODO - bring NavigationBarItemColors into the Theme colours.
+                    colors = lightBottomNavBarColours
                 )
             }
     }
