@@ -40,7 +40,6 @@ import com.mcssoft.raceday.ui.components.navigation.BottomBar
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightMeetingTopAppBarColours
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.padding8dp
 
 /**
  * @param state: Meetings state.
@@ -114,8 +113,8 @@ fun MeetingsScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(
-                    top = padding8dp,
-                    bottom = padding64dp)
+                    top = padding64dp, // allow for the top app bar.
+                    bottom = padding64dp) // allow for the bottom nav bar.
         ) {
             when (state.status) {
                 is Status.Failure -> {

@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,7 +64,8 @@ fun SummaryScreen(
     onEvent: (SummaryEvent) -> Unit
 ) {
     val showRemoveDialog = remember { mutableStateOf(false) }
-    var summaryId: Long = 0
+
+    val summaryId = remember { mutableLongStateOf(0L) }
 
     val success = remember { mutableStateOf(false) }
 
@@ -138,15 +140,20 @@ fun SummaryScreen(
                     0 -> {
                         TabContentCurrent(
                             success = success,
-                            state = state,
-                            navController = navController
+                            state.cSummaries,
+                            navController = navController,
+                            showRemoveDialog = showRemoveDialog,
+                            summaryId = summaryId
                         )
                     }
                     1 -> {
                         TabContentPrevious(
                             success = success,
-                            state = state,
-                            navController = navController
+                            state.pSummaries,
+                            navController = navController,
+                            showRemoveDialog = showRemoveDialog,
+                            summaryId = summaryId
+
                         )
                     }
                 }
@@ -156,7 +163,7 @@ fun SummaryScreen(
     if (showRemoveDialog.value) {
         ShowRemoveDialog(
             show = showRemoveDialog,
-            summaryId = summaryId,
+            summaryId = summaryId.longValue,
             onEvent = onEvent
         )
     }
@@ -179,20 +186,24 @@ fun SummaryScreen(
 @Composable
 fun TabContentCurrent(
     success: MutableState<Boolean>,
-    state: SummaryState,
-    navController: NavController
+    summaries: List<Summary>,
+    navController: NavController,
+    showRemoveDialog: MutableState<Boolean>,
+    summaryId: MutableState<Long>
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         if(success.value) {
-            if (state.cSummaries.isEmpty()) {
+            if (summaries.isEmpty()) {
                 NoSummaries()
             } else {
                 ShowCurrentSummaries(
-                    state.cSummaries,
-                    navController
+                    summaries,
+                    navController,
+                    showRemoveDialog,
+                    summaryId
                 )
             }
         }
@@ -202,20 +213,24 @@ fun TabContentCurrent(
 @Composable
 fun TabContentPrevious(
     success: MutableState<Boolean>,
-    state: SummaryState,
-    navController: NavController
+    summaries: List<Summary>,
+    navController: NavController,
+    showRemoveDialog: MutableState<Boolean>,
+    summaryId: MutableState<Long>
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         if(success.value) {
-            if (state.pSummaries.isEmpty()) {
+            if (summaries.isEmpty()) {
                 NoSummaries()
             } else {
                 ShowPreviousSummaries(
-                    state.pSummaries,
-                    navController
+                    summaries,
+                    navController,
+                    showRemoveDialog,
+                    summaryId
                 )
             }
         }
@@ -223,10 +238,11 @@ fun TabContentPrevious(
 }
 
 @Composable
-fun ShowCurrentSummaries(
+private fun ShowCurrentSummaries(
     summaries: List<Summary>,
     navController: NavController,
-//    onItemLongClick: (Long) -> Unit
+    showRemoveDialog: MutableState<Boolean>,
+    summaryId: MutableState<Long>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -245,8 +261,8 @@ fun ShowCurrentSummaries(
                     )
                 },
                 onItemLongClick = {
-//                    onItemLongClick(it.id)
-//                    showRemoveDialog.value = true
+                    showRemoveDialog.value = true
+                    summaryId.value = it.id
                 }
             )
         }
@@ -254,10 +270,11 @@ fun ShowCurrentSummaries(
 }
 
 @Composable
-fun ShowPreviousSummaries(
+private fun ShowPreviousSummaries(
     summaries: List<Summary>,
     navController: NavController,
-//    onItemLongClick: (Long) -> Unit
+    showRemoveDialog: MutableState<Boolean>,
+    summaryId: MutableState<Long>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -276,8 +293,8 @@ fun ShowPreviousSummaries(
                     )
                 },
                 onItemLongClick = {
-//                    onItemLongClick(it.id)
-//                    showRemoveDialog.value = true
+                    showRemoveDialog.value = true
+                    summaryId.value = it.id
                 }
             )
         }
@@ -286,7 +303,7 @@ fun ShowPreviousSummaries(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PagerTabRow(
+private fun PagerTabRow(
     selectedIndex: State<Int>,
     modifier: Modifier,
     pagerItems: List<PagerItems>,
@@ -320,7 +337,7 @@ fun PagerTabRow(
     }
 }
 @Composable
-fun NoSummaries() {
+private fun NoSummaries() {
     Box(
         Modifier
             .fillMaxWidth()
@@ -336,7 +353,7 @@ fun NoSummaries() {
     }
 }
 
-fun backNavigate(
+private fun backNavigate(
     navController: NavController,
     state: SummaryState
 ) {
@@ -350,7 +367,7 @@ fun backNavigate(
 }
 
 @Composable
-fun ShowRemoveDialog(
+private fun ShowRemoveDialog(
     show: MutableState<Boolean>,
     summaryId: Long,
     onEvent: (SummaryEvent) -> Unit
