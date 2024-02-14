@@ -34,6 +34,7 @@ class MeetingsViewModel @Inject constructor(
             prefsRepo.fromApi = it
             _state.update { state ->
                 state.copy(
+                    status = Status.Initialise,
                     canRefresh = it
                 )
             }

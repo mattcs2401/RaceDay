@@ -6,7 +6,7 @@ import com.mcssoft.raceday.domain.model.Runner
 data class RunnersState(
     val exception: Exception?,
     val status: Status,
-    val lRunners: List<Runner>?,
+    val runners: List<Runner>?,
     val race: Race?,
     var raceId: Long,
     val checked: Boolean,
@@ -18,7 +18,7 @@ data class RunnersState(
             return RunnersState(
                 exception = null,
                 status = Status.Initialise,
-                lRunners = emptyList(),
+                runners = emptyList(),
                 race = null,
                 raceId = 0,
                 checked = false,
@@ -34,6 +34,4 @@ data class RunnersState(
         data object Failure : Status()
     }
 
-    val runners: List<Runner>
-        get() = lRunners ?: emptyList()
 }

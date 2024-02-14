@@ -46,6 +46,10 @@ class DbRepoImpl @Inject constructor(
         return dao.getRace(raceId)
     }
 
+    override suspend fun getRaces(meetingId: Long): List<Race> {
+        return dao.getRaces(meetingId)
+    }
+
     override suspend fun getRaceByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Race {
         return dao.getRaceByVenueCodeAndRaceNo(venueMnemonic, raceNumber)
     }
@@ -102,6 +106,10 @@ class DbRepoImpl @Inject constructor(
         return dao.getSummaries()
     }
 
+    override suspend fun getSummaries(raceId: Long): List<Summary> {
+        return dao.getSummaries(raceId)
+    }
+
     override suspend fun getCurrentSummaries(): List<Summary> {
         return dao.getCurrentSummaries()
     }
@@ -124,6 +132,10 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun updateSummary(summary: Summary): Int {
         return dao.updateSummary(summary)
+    }
+
+    override suspend fun updateSummaryTime(summaryId: Long, time: String) {
+        return dao.updateSummaryTime(summaryId, time)
     }
     // </editor-fold>
 

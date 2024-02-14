@@ -34,6 +34,7 @@ class RunnersViewModel @Inject constructor(
     init {
         _state.update { state ->
             state.copy(
+                status = Status.Initialise,
                 fromApi = prefsRepo.fromApi
             )
         }
@@ -67,7 +68,8 @@ class RunnersViewModel @Inject constructor(
             try {
                 val result = iDbRepo.getRaceWithRunners(raceId)
 
-                val race = result.keys.elementAt(0) // the keys are a Set with only one value.
+                // The keys are a Set with only one value (the Race object itself).
+                val race = result.keys.elementAt(0)
                 val runners = result.getValue(race)
 
                 delay(TWENTY_FIVE) // TBA
@@ -76,7 +78,7 @@ class RunnersViewModel @Inject constructor(
                     state.copy(
                         status = Status.Success,
                         race = race,
-                        lRunners = runners
+                        runners = runners
                     )
                 }
                 _state.emit(state.value)

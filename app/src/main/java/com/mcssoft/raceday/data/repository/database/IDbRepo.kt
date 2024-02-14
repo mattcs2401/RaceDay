@@ -115,6 +115,9 @@ interface IDbRepo {
     @Query("select * from Race where id = :raceId")
     suspend fun getRace(raceId: Long): Race
 
+    @Query("select * from Race where id = :meetingId")
+    suspend fun getRaces(meetingId: Long): List<Race>
+
     @Query("select * from race where venueMnemonic = :venueMnemonic and raceNumber = :raceNumber")
     suspend fun getRaceByVenueCodeAndRaceNo(venueMnemonic: String, raceNumber: Int): Race
 
@@ -178,6 +181,9 @@ interface IDbRepo {
     @Query("select * from Summary")
     suspend fun getSummaries(): List<Summary>
 
+    @Query("select * from Summary where raceId = :raceId")
+    suspend fun getSummaries(raceId: Long): List<Summary>
+
     @Query("select * from Summary where isPastRaceTime = 0 and isNotified = 0")
     suspend fun getCurrentSummaries(): List<Summary>
 
@@ -195,6 +201,9 @@ interface IDbRepo {
 
     @Update
     suspend fun updateSummary(summary: Summary): Int
+
+    @Query("update Summary set raceStartTime = :time where id = :summaryId")
+    suspend fun updateSummaryTime(summaryId: Long, time: String)
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Scratching related.">

@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Runner
+import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
@@ -83,11 +84,18 @@ fun RunnersScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = padding64dp)
+                    top = padding64dp
+                )
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
             when (state.status) {
-                is Status.Initialise -> {}
+                is Status.Initialise -> {
+                    LoadingDialog(
+                        titleText = stringResource(id = R.string.dlg_init_title),
+                        msgText = "Loading Runners ...",
+                        onDismiss = {}
+                    )
+                }
                 is Status.Failure -> {}
                 is Status.Success -> { success.value = true }
             }
@@ -106,6 +114,7 @@ private fun OnSuccess(
     Header(state)
     Body(state, onEvent)
 }
+
 @Composable
 private fun Body(
     state: RunnersState,
@@ -117,7 +126,7 @@ private fun Body(
             .padding(top = padding64dp)
     ) {
         items(
-            items = processScratchings(state.runners), // state.runners,
+            items = processScratchings(state.runners!!),
             key = { it.id }
         ) { runner ->
             state.race?.let { race ->

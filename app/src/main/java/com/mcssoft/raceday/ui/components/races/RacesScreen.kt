@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.dialog.TimeChangeDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
@@ -103,7 +104,13 @@ fun RacesScreen(
                 .background(MaterialTheme.colorScheme.surface)//background)
         ) {
             when (state.status) {
-                is Initialise -> {}
+                is Initialise -> {
+                    LoadingDialog(
+                        titleText = stringResource(id = R.string.dlg_init_title),
+                        msgText = "Loading Races ...",
+                        onDismiss = {}
+                    )
+                }
                 is Failure -> {}
                 is Success -> { success.value = true }
                 else -> {}

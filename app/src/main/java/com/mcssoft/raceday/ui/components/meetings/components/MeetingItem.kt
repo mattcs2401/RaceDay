@@ -32,6 +32,7 @@ import com.mcssoft.raceday.ui.theme.margin0dp
 import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
+import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.THREE_HUNDRED
 
 @OptIn(ExperimentalFoundationApi::class) // for Long click.
@@ -81,8 +82,12 @@ fun MeetingItem(
                     Modifier.layoutId("idSellCode")
                 )
             }
+            var name = meeting.meetingName
+            if (name.length > Constants.MEETING_NAME_MAX) {
+                name = "${name.take(Constants.MEETING_NAME_TAKE)} ..."
+            }
             Text(
-                meeting.meetingName,
+                name,
                 Modifier.layoutId("idVenueName")
             )
             Text(
@@ -137,7 +142,7 @@ private val constraintSet = ConstraintSet {
     }
     constrain(idTime) {
         top.linkTo(idVenueName.top, margin = margin0dp)
-        end.linkTo(idArrow.start, margin = margin16dp)
+        end.linkTo(idArrow.start, margin = margin8dp)
     }
     constrain(idArrow) {
         end.linkTo(parent.absoluteRight)

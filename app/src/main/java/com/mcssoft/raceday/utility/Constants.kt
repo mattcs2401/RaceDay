@@ -15,6 +15,10 @@ object Constants {
     // For long strings, e.g. Race names, just take 1st 30 characters.
     const val TAKE = 30
 
+    // Max length of Meeting name. For values > than this, then RAIL_TAKE.
+    const val MEETING_NAME_MAX = 18
+    const val MEETING_NAME_TAKE = 16
+
     // Max length of rail position details. For values > than this, then RAIL_TAKE.
     const val RAIL_MAX = 16
     const val RAIL_TAKE = 12

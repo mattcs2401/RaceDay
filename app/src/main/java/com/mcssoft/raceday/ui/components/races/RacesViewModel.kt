@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
 import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
@@ -30,6 +31,7 @@ class RacesViewModel @Inject constructor(
     init {
         _state.update { state ->
             state.copy(
+                status = Status.Initialise,
                 fromApi = prefsRepo.fromApi
             )
         }
@@ -49,8 +51,26 @@ class RacesViewModel @Inject constructor(
     fun onEvent(event: RacesEvent) {
         when (event) {
             is RacesEvent.DateChange -> {
+                var summaries: MutableList<Summary>
+
                 viewModelScope.launch {
                     iDbRepo.updateRaceTime(event.raceId, event.time)
+                    delay(TWENTY_FIVE) // TBA
+
+                    summaries = iDbRepo.getSummaries(event.raceId).toMutableList()
+
+                    if (summaries.isNotEmpty()) {
+                        summaries.forEach {
+                            it.raceStartTime = event.time
+                            iDbRepo.updateSummaryTime(it.id, event.time)
+                        }
+                        delay(TWENTY_FIVE) // TBA
+                    }
+
+                    // Note: This also basically forces a recomposition of the Races screen.
+                    state.value.meeting?.id?.let { id ->
+                        getMeetingWithRaces(id)
+                    }
                 }
             }
         }
