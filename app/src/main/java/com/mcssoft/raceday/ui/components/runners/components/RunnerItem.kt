@@ -50,13 +50,13 @@ fun RunnerItem(
         targetValue = if (expandedState) 180f else 0f, label = ""
     )
 
-    var scratched by remember { mutableStateOf(false) }
-
     var textStyle = TextStyle(textDecoration = TextDecoration.None)
 
-    if(runner.isScratched) {
-        scratched = true
-        textStyle = TextStyle(textDecoration = TextDecoration.LineThrough)
+    val scratched by remember { mutableStateOf(false) }.also {
+        if(runner.isScratched) {
+            it.value = true
+            textStyle = TextStyle(textDecoration = TextDecoration.LineThrough)
+        }
     }
 
     val modifier: Modifier = Modifier

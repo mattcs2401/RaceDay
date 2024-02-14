@@ -4,6 +4,15 @@ import androidx.compose.ui.graphics.Color
 
 // Reference: https://developer.android.com/reference/kotlin/androidx/compose/material/Colors
 
+// Other colours.
+val blue500 = 0xFF2196F3
+val cyan500 = 0xFF00BCD4
+val indigo500 = 0xFF3F51B5
+
+val teal500primary = 0xFF009688
+val teal500dark = 0xFF00675B
+val teal500light = 0xFF52C7B8
+
 // Project defaults.
 val primary = Color(0xFF6750A4)
 val onPrimary = Color(0xFFFFFFFF)

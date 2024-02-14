@@ -39,8 +39,9 @@ fun PreferencesItem(
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
-    var isChecked by remember { mutableStateOf(false) }
-    isChecked = settingsState
+    var isChecked by remember { mutableStateOf(false) } .also {
+        it.value = settingsState
+    }
 
     Card(
         modifier = Modifier

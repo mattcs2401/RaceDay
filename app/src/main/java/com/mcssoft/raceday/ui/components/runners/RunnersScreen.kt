@@ -103,7 +103,8 @@ fun RunnersScreen(
                         state.race?.let { race ->
                             RacesHeader(
                                 race = race,
-                                MaterialTheme.colorScheme.background
+                                backgroundColour = MaterialTheme.colorScheme.surface,
+                                borderColour = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

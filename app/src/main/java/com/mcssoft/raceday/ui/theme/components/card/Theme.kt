@@ -30,6 +30,13 @@ val lightRaceCardColours = CardColors(
     disabledContentColor = NO_COLOUR // TBA
 )
 
+val lightRaceAbandonedCardColours = CardColors(
+    containerColor = lightColorScheme().errorContainer,
+    contentColor = lightColorScheme().onErrorContainer,
+    disabledContainerColor = NO_COLOUR, // TBA
+    disabledContentColor = NO_COLOUR // TBA
+)
+
 val lightRunnersCardColours = CardColors(
     containerColor = lightColorScheme().primary,
     contentColor = lightColorScheme().onPrimary,

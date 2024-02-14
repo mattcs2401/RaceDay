@@ -10,14 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
+import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Race
 import com.mcssoft.raceday.ui.theme.AppShapes
+import com.mcssoft.raceday.ui.theme.components.card.lightRaceAbandonedCardColours
 import com.mcssoft.raceday.ui.theme.components.card.lightRaceCardColours
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.margin0dp
@@ -32,10 +34,10 @@ fun RaceItem(
     onItemClick: (Race) -> Unit,
     onItemLongClick: (Race) -> Unit
 ) {
-    var abandoned by remember { mutableStateOf(false) }
-
-    if (race.raceStatus == "Abandoned") {
-        abandoned = true
+    val abandoned by remember { mutableStateOf(false) }.also {
+        if (race.raceStatus == LocalContext.current.resources.getString(R.string.abandoned)) {
+            it.value = true
+        }
     }
 
     Card(
@@ -52,8 +54,14 @@ fun RaceItem(
                 }
             ),
         shape = AppShapes.medium,
-        colors = lightRaceCardColours,
-        // TODO -abandoned colours.
+        colors = if(abandoned) {
+            lightRaceAbandonedCardColours
+        } else {
+               lightRaceCardColours
+        },
+//        border = if(abandoned) {
+//            BorderStroke(width = width2dp, color = MaterialTheme.colorScheme.error)
+//        }
     ) {
         Layout(race, abandoned)
     }

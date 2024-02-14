@@ -23,22 +23,23 @@ import com.mcssoft.raceday.ui.theme.width2dp
 /**
  * Meeting summary information at the top of the list of Races for that Meeting.
  * @param meeting: The Meeting.
- * @param bkgColour: The background colour.
+ * @param backgroundColour: The background colour.
  *
  * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
  */
 @Composable
 fun MeetingHeader(
     meeting: Meeting,
-    bkgColour: Color
+    backgroundColour: Color,
+    borderColour: Color
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(bkgColour)
+            .background(backgroundColour)
             .border(
                 width = width2dp,
-                color = Color.Blue
+                color = borderColour
             )
     ) {
         ConstraintLayout(

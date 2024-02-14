@@ -32,9 +32,9 @@ import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRaceTopAppBarColours
 import com.mcssoft.raceday.ui.theme.height64dp
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRaceTopAppBarColours
 import com.mcssoft.raceday.utility.DateUtils
 
 /**
@@ -94,7 +94,7 @@ fun RacesScreen(
                 .padding(
                     top = padding64dp
                 )
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.surface)//background)
         ) {
             if (showTimeChangeDialog.value) {
                 TimeChangeDialog(
@@ -129,7 +129,8 @@ fun RacesScreen(
                         state.meeting?.let { meeting ->
                             MeetingHeader(
                                 meeting = meeting,
-                                MaterialTheme.colorScheme.background
+                                backgroundColour = MaterialTheme.colorScheme.surface,
+                                borderColour = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

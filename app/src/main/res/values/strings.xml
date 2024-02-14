@@ -68,6 +68,7 @@
     <string name="failure_runners_worker">Observe runnerWorker failure.</string>
     <string name="toast_runners_for">Runners for: </string>
     <string name="nothing_to_show">Nothing to show yet.</string>
+    <string name="abandoned">Abandoned</string>
 
     <!-- Notifications. -->
     <string name="notify_channel_id">notify_channel_id</string>

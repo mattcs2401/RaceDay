@@ -22,22 +22,23 @@ import com.mcssoft.raceday.utility.Constants
 class RacesHeader /**
  * Race summary information at the top of the list of Runners for that Race.
  * @param race: The Race.
- * @param bkgColour: The background colour.
+ * @param backgroundColour: The background colour.
  *
  * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
  */
 @Composable
 fun RacesHeader(
     race: Race,
-    bkgColour: Color
+    backgroundColour: Color,
+    borderColour: Color
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(bkgColour)
+            .background(backgroundColour)
             .border(
                 width = width2dp,
-                color = Color.Blue
+                color = borderColour
             )
     ) {
         ConstraintLayout(
@@ -45,21 +46,18 @@ fun RacesHeader(
         ) {
             Text(
                 race.raceNumber.toString(),
-                Modifier.layoutId("idRaceNo"),
-                //fontSize = fontSize16sp
+                Modifier.layoutId("idRaceNo")
             )
             val name = race.raceName
             if(name.length > Constants.TAKE) {
                 Text(
                     name.take(Constants.TAKE) + " ...",
-                    Modifier.layoutId("idRaceName"),
-                    //fontSize = fontSize16sp
+                    Modifier.layoutId("idRaceName")
                 )
             } else {
                 Text(
                     name,
-                    Modifier.layoutId("idRaceName"),
-                    //fontSize = fontSize16sp
+                    Modifier.layoutId("idRaceName")
                 )
             }
         Text(
