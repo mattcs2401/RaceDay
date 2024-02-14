@@ -41,6 +41,7 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightMeetingTopAppBarColours
 import com.mcssoft.raceday.ui.theme.components.iconbutton.lightMeetingIconButtonColours
 import com.mcssoft.raceday.ui.theme.padding64dp
+import com.mcssoft.raceday.ui.theme.padding8dp
 
 /**
  * @param state: Meetings state.
@@ -56,6 +57,8 @@ fun MeetingsScreen(
     val showRefreshDialog = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
     val showMeetingRefreshDialog = remember { mutableStateOf(false) }
+    val success = remember { mutableStateOf(true) }
+    val failure = remember { mutableStateOf(false) }
 
     BackPressHandler(onBackPressed = {})
 
@@ -99,6 +102,21 @@ fun MeetingsScreen(
             )
         }
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(
+                    top = padding64dp, // allow for the top app bar.
+                    bottom = padding64dp // allow for the bottom nav bar.
+                )
+        ) {
+            when (state.status) {
+                is Status.Failure -> { failure.value = true }
+                is Status.Success -> { success.value = true }
+                else -> {}
+            }
+        }
         if (showRefreshDialog.value) {
             ShowRefreshDialog(
                 show = showRefreshDialog,
@@ -110,46 +128,51 @@ fun MeetingsScreen(
                 show = showMeetingRefreshDialog
             )
         }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(
-                    top = padding64dp, // allow for the top app bar.
-                    bottom = padding64dp) // allow for the bottom nav bar.
-        ) {
-            when (state.status) {
-                is Status.Failure -> {
-                    showMeetingRefreshDialog.value = false
-                    showErrorDialog.value = true
-                    ShowErrorDialog(
-                        show = showErrorDialog,
-                        state.exception
+        if(failure.value) {
+            showMeetingRefreshDialog.value = false
+            showErrorDialog.value = true
+            ShowErrorDialog(
+                show = showErrorDialog,
+                state.exception
+            )
+        }
+        if(success.value) {
+            OnSuccess(
+                state = state,
+                navController = navController,
+                showMeetingRefresh = showMeetingRefreshDialog
+            )
+        }
+    }
+}
+
+@Composable
+private fun OnSuccess(
+    state: MeetingsState,
+    navController: NavController,
+    showMeetingRefresh: MutableState<Boolean>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = padding8dp)
+    ) {
+        items(
+            items = state.body,
+            key = { it.id }
+        ) { meeting ->
+            MeetingItem(
+                meeting = meeting,
+                onItemClick = {
+                    navController.navigate(
+                        Screens.RacesScreen.route + "meetingId=${meeting.id}"
                     )
-                }
-                is Status.Success -> {
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(
-                            items = state.body,
-                            key = { it.id }
-                        ) { meeting ->
-                            MeetingItem(
-                                meeting = meeting,
-                                onItemClick = {
-                                    navController.navigate(
-                                        Screens.RacesScreen.route + "meetingId=${meeting.id}"
-                                    )
-                                },
-                                onItemLongClick = {
+                },
+                onItemLongClick = {
 //                                    venueMnemonic = it.venueMnemonic ?: ""
-                                    showMeetingRefreshDialog.value = true
-                                }
-                            )
-                        }
-                    }
+                    showMeetingRefresh.value = true
                 }
-                else -> {} // ??
-            }
+            )
         }
     }
 }

@@ -15,20 +15,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
+import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
+import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRunnerTopAppBarColours
 import com.mcssoft.raceday.ui.theme.fontSize14sp
 import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.padding8dp
 import com.mcssoft.raceday.ui.theme.sixty7Percent
 import com.mcssoft.raceday.ui.theme.thirty3Percent
-import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightRunnerTopAppBarColours
 
 /**
  * @param state: Runner state.
@@ -40,6 +43,9 @@ fun RunnerScreen(
     state: RunnerState,
     navController: NavController,
 ) {
+    val success = remember { mutableStateOf(true) }
+    val failure = remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,33 +75,40 @@ fun RunnerScreen(
         }
     ) {
         when (state.status) {
-            is Status.Failure -> { /*TBA*/ }
-            is Status.Success -> {
-                // Runner detail.
-                val runner = state.runner
-                Box(
-                    Modifier.fillMaxSize()
-                        .background(MaterialTheme.colorScheme.secondary)
-                        .padding(top = padding64dp)
-                ) {
-                    Column(
-                        Modifier.padding(padding8dp)
-                    ) {
-                        BuildRow(label = "Number:", value = "${runner!!.runnerNumber}")
-                        BuildRow(label = "Name:", value = runner.runnerName)
-                        BuildRow(label = "Barrier:", value = "${runner.barrierNumber}")
-                        BuildRow(label = "TCDW:", value = runner.tcdwIndicators)
-                        BuildRow(label = "L5S:", value = runner.last5Starts)
-                        BuildRow(label = "Jockey:", value = runner.riderDriverName)
-                        BuildRow(label = "Jockey Name:", value = runner.riderDriverFullName)
-                        BuildRow(label = "Trainer:", value = runner.trainerName)
-                        BuildRow(label = "Trainer Name:", value = runner.trainerFullName)
-                        BuildRow(label = "Form:", value = "${runner.dfsFormRating}")
-                        BuildRow(label = "Weight:", value = "${runner.handicapWeight}")
-                    }
-                }
+            is Status.Initialise -> {}
+            is Status.Failure -> { failure.value = true }
+            is Status.Success -> { success.value = true }
+        }
+        if (success.value) {
+            state.runner?.let {
+                OnSuccess(runner = it)
             }
-            else -> {}
+        }
+    }
+}
+
+@Composable
+private fun OnSuccess(runner: Runner) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary)
+            .padding(top = padding64dp)
+    ) {
+        Column(
+            Modifier.padding(padding8dp)
+        ) {
+            BuildRow(label = "Number:", value = "${runner.runnerNumber}")
+            BuildRow(label = "Name:", value = runner.runnerName)
+            BuildRow(label = "Barrier:", value = "${runner.barrierNumber}")
+            BuildRow(label = "TCDW:", value = runner.tcdwIndicators)
+            BuildRow(label = "L5S:", value = runner.last5Starts)
+            BuildRow(label = "Jockey:", value = runner.riderDriverName)
+            BuildRow(label = "Jockey Name:", value = runner.riderDriverFullName)
+            BuildRow(label = "Trainer:", value = runner.trainerName)
+            BuildRow(label = "Trainer Name:", value = runner.trainerFullName)
+            BuildRow(label = "Form:", value = "${runner.dfsFormRating}")
+            BuildRow(label = "Weight:", value = "${runner.handicapWeight}")
         }
     }
 }

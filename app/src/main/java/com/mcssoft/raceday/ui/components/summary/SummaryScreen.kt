@@ -373,7 +373,7 @@ private fun ShowRemoveDialog(
     onEvent: (SummaryEvent) -> Unit
 ) {
     CommonDialog(
-        icon = R.drawable.ic_summary_48,
+        icon = R.drawable.ic_error_48,
         dialogTitle = stringResource(id = R.string.dlg_remove_summary_title),
         dialogText = stringResource(id = R.string.dlg_remove_summary_text),
         confirmButtonText = stringResource(id = R.string.lbl_btn_ok),

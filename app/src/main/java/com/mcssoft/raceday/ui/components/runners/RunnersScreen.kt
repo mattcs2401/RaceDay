@@ -18,13 +18,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
 import com.mcssoft.raceday.domain.model.Runner
-import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
 import com.mcssoft.raceday.ui.components.runners.components.RacesHeader
@@ -46,6 +47,8 @@ fun RunnersScreen(
     navController: NavController,
     onEvent: (RunnersEvent) -> Unit
 ) {
+    val success = remember { mutableStateOf(true) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -85,55 +88,66 @@ fun RunnersScreen(
         ) {
             when (state.status) {
                 is Status.Initialise -> {}
-                is Status.Loading -> {
-                    LoadingDialog(
-                        titleText = stringResource(id = R.string.dlg_loading_runners),
-                        msgText = stringResource(id = R.string.dlg_loading_msg),
-                        onDismiss = {}
-                    )
-                }
-                is Status.Failure -> { /* TBA */ }
-                is Status.Success -> {
-                    // Race header row.
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(height64dp)
-                    ) {
-                        state.race?.let { race ->
-                            RacesHeader(
-                                race = race,
-                                backgroundColour = MaterialTheme.colorScheme.surface,
-                                borderColour = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
-                    // Runners listing.
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = padding64dp)
-                    ) {
-                        items(
-                            items = processScratchings(state.runners), // state.runners,
-                            key = { it.id }
-                        ) { runner ->
-                            state.race?.let { race ->
-                                RunnerItem(
-                                    race = race,
-                                    runner = runner,
-                                    onEvent = onEvent,
-                                    onItemClick = { }
-                                )
-                            }
-                        }
-                    }
-                }
+                is Status.Failure -> {}
+                is Status.Success -> { success.value = true }
+            }
+            if (success.value) {
+                OnSuccess(state, onEvent)
             }
         }
     }
 }
 
+@Composable
+private fun OnSuccess(
+    state: RunnersState,
+    onEvent: (RunnersEvent) -> Unit
+) {
+    Header(state)
+    Body(state, onEvent)
+}
+@Composable
+private fun Body(
+    state: RunnersState,
+    onEvent: (RunnersEvent) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = padding64dp)
+    ) {
+        items(
+            items = processScratchings(state.runners), // state.runners,
+            key = { it.id }
+        ) { runner ->
+            state.race?.let { race ->
+                RunnerItem(
+                    race = race,
+                    runner = runner,
+                    onEvent = onEvent,
+                    onItemClick = { }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun Header(state: RunnersState) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height64dp)
+    ) {
+        state.race?.let { race ->
+            RacesHeader(
+                race = race,
+                backgroundColour = MaterialTheme.colorScheme.surface,
+                borderColour = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}
 /**
  * Sort the list of Runners so that those who are scratched are at the end of the listing.
  * @param runners: The list of Runners returned in the state.

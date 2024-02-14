@@ -19,6 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableLongState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,6 +32,7 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.dialog.TimeChangeDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Failure
+import com.mcssoft.raceday.ui.components.races.RacesState.Status.Initialise
 import com.mcssoft.raceday.ui.components.races.RacesState.Status.Success
 import com.mcssoft.raceday.ui.components.races.components.MeetingHeader
 import com.mcssoft.raceday.ui.components.races.components.RaceItem
@@ -49,7 +53,7 @@ fun RacesScreen(
     navController: NavController,
     onEvent: (RacesEvent) -> Unit
 ) {
-    var raceId: Long = 0 // set by Race item onLongClick().
+    val raceId = remember { mutableLongStateOf(0L) } // set by Race item onLongClick().
 
     val showTimeChangeDialog = remember { mutableStateOf(false) }
 
@@ -57,6 +61,8 @@ fun RacesScreen(
         // Simply an initialiser value (only the picker can update the picker state).
         initialHour = 12, 0, true
     )
+
+    val success = remember { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -96,6 +102,12 @@ fun RacesScreen(
                 )
                 .background(MaterialTheme.colorScheme.surface)//background)
         ) {
+            when (state.status) {
+                is Initialise -> {}
+                is Failure -> {}
+                is Success -> { success.value = true }
+                else -> {}
+            }
             if (showTimeChangeDialog.value) {
                 TimeChangeDialog(
                     timeState = timePickerState,
@@ -105,7 +117,7 @@ fun RacesScreen(
                         showTimeChangeDialog.value = false
                         onEvent(
                             RacesEvent.DateChange(
-                                raceId,
+                                raceId.longValue,
                                 DateUtils().formatHourMinutes(
                                     timePickerState.hour,
                                     timePickerState.minute
@@ -115,52 +127,79 @@ fun RacesScreen(
                     }
                 )
             }
-            when (state.status) {
-                is Failure -> {
-                    // TBA.
-                }
-                is Success -> {
-                    // Meeting details header.
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(height64dp)
-                    ) {
-                        state.meeting?.let { meeting ->
-                            MeetingHeader(
-                                meeting = meeting,
-                                backgroundColour = MaterialTheme.colorScheme.surface,
-                                borderColour = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
-                    // Races listing.
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = padding64dp)
-                    ) {
-                        items(
-                            items = state.races,
-                            key = { it.id }
-                        ) { race ->
-                            RaceItem(
-                                race = race,
-                                onItemClick = {
-                                    navController.navigate(
-                                        Screens.RunnersScreen.route + "raceId=${race.id}"
-                                    )
-                                },
-                                onItemLongClick = {
-                                    raceId = it.id
-                                    showTimeChangeDialog.value = true
-                                }
-                            )
-                        }
-                    }
-                }
-                else -> {}
+            if (success.value) {
+                OnSuccess(
+                    state,
+                    navController,
+                    raceId,
+                    showTimeChangeDialog
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun OnSuccess(
+    state: RacesState,
+    navController: NavController,
+    raceId: MutableLongState,
+    showTimeChange: MutableState<Boolean>
+) {
+    Header(state)
+    Body(
+        state,
+        navController,
+        raceId,
+        showTimeChange
+    )
+}
+
+@Composable
+private fun Body(
+    state: RacesState,
+    navController: NavController,
+    raceId: MutableLongState,
+    showTimeChange: MutableState<Boolean>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = padding64dp)
+    ) {
+        items(
+            items = state.races,
+            key = { it.id }
+        ) { race ->
+            RaceItem(
+                race = race,
+                onItemClick = {
+                    navController.navigate(
+                        Screens.RunnersScreen.route + "raceId=${race.id}"
+                    )
+                },
+                onItemLongClick = {
+                    raceId.longValue = it.id
+                    showTimeChange.value = true
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun Header(state: RacesState) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height64dp)
+    ) {
+        state.meeting?.let { meeting ->
+            MeetingHeader(
+                meeting = meeting,
+                backgroundColour = MaterialTheme.colorScheme.surface,
+                borderColour = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }

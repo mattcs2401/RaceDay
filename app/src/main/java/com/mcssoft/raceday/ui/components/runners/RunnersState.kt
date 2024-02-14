@@ -6,7 +6,6 @@ import com.mcssoft.raceday.domain.model.Runner
 data class RunnersState(
     val exception: Exception?,
     val status: Status,
-    val loading: Boolean,
     val lRunners: List<Runner>?,
     val race: Race?,
     var raceId: Long,
@@ -19,7 +18,6 @@ data class RunnersState(
             return RunnersState(
                 exception = null,
                 status = Status.Initialise,
-                loading = false,
                 lRunners = emptyList(),
                 race = null,
                 raceId = 0,
@@ -32,7 +30,6 @@ data class RunnersState(
 
     sealed class Status {
         data object Initialise : Status()
-        data object Loading : Status()
         data object Success : Status()
         data object Failure : Status()
     }
