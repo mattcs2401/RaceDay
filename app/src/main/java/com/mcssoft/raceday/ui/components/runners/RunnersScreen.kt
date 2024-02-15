@@ -167,8 +167,8 @@ fun processScratchings(runners: List<Runner>): List<Runner> {
     runners.partition { runner ->
         runner.isScratched
     }.also { pair ->
-        lTemp.addAll(pair.second)
-        lTemp.addAll(pair.first)
+        lTemp.addAll(pair.second.sortedBy { it.runnerNumber })
+        lTemp.addAll(pair.first.sortedBy { it.runnerNumber })
     }
     return lTemp
 }
