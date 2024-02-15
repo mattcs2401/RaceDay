@@ -20,9 +20,6 @@ Issues:
 =======
 --> *** App Theme / Colours / etc ***
 
---> Sort order in Runners not updating properly.
-    -> Related to a Runner being checked ?
-
 ---------------------------
 Other TO-DO or think about:
 ---------------------------
@@ -34,9 +31,6 @@ Other TO-DO or think about:
 
 -> A notification actions button:
    -> go to ... ?
-
---> Scratching
-    -> Currently the Runners screen does the sort, but should we try to move this out ? to ... ?
 
 --> Reload from the local database if some exception occurs:
     -> on a refresh from the Api ?

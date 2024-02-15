@@ -70,7 +70,9 @@ class RunnersViewModel @Inject constructor(
 
                 // The keys are a Set with only one value (the Race object itself).
                 val race = result.keys.elementAt(0)
-                val runners = result.getValue(race)
+                var runners = result.getValue(race)
+
+                runners = processScratchings(runners)
 
                 delay(TWENTY_FIVE) // TBA
 
@@ -78,7 +80,7 @@ class RunnersViewModel @Inject constructor(
                     state.copy(
                         status = Status.Success,
                         race = race,
-                        runners = runners
+                        lRunners = runners
                     )
                 }
                 _state.emit(state.value)
@@ -92,6 +94,22 @@ class RunnersViewModel @Inject constructor(
             }
 
         }
+    }
+
+    /**
+     * Return a list of Runners where scratchings are at the bottom of the list.
+     * @param runners: The list to be processed.
+     * @return A list of Runners sorted with scratchings at the end.
+     */
+    private fun processScratchings(runners: List<Runner>): List<Runner> {
+        val lTemp = mutableListOf<Runner>()
+        runners.partition { runner ->
+            runner.isScratched
+        }.also { pair ->
+            lTemp.addAll(pair.second.sortedBy { it.runnerNumber })
+            lTemp.addAll(pair.first.sortedBy { it.runnerNumber })
+        }
+        return lTemp
     }
 
     /**

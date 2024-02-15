@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.domain.model.Runner
 import com.mcssoft.raceday.ui.components.dialog.LoadingDialog
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.runners.RunnersState.Status
@@ -126,7 +125,7 @@ private fun Body(
             .padding(top = padding64dp)
     ) {
         items(
-            items = processScratchings(state.runners!!),
+            items = state.runners,
             key = { it.id }
         ) { runner ->
             state.race?.let { race ->
@@ -156,21 +155,6 @@ private fun Header(state: RunnersState) {
             )
         }
     }
-}
-/**
- * Sort the list of Runners so that those who are scratched are at the end of the listing.
- * @param runners: The list of Runners returned in the state.
- * @return The modified list.
- */
-fun processScratchings(runners: List<Runner>): List<Runner> {
-    val lTemp = mutableListOf<Runner>()
-    runners.partition { runner ->
-        runner.isScratched
-    }.also { pair ->
-        lTemp.addAll(pair.second.sortedBy { it.runnerNumber })
-        lTemp.addAll(pair.first.sortedBy { it.runnerNumber })
-    }
-    return lTemp
 }
 
 fun backNavigate(
