@@ -4,6 +4,7 @@ plugins {
     id("kotlin-android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+//    id("org.jetbrains.kotlin.plugin.serialization")
 }
 android {
     compileSdk 34
@@ -93,6 +94,9 @@ dependencies {
     implementation "androidx.datastore:datastore:$datastore_ver"
     implementation "androidx.datastore:datastore-preferences:$datastore_ver"
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2'
+
+    /* Serialisation. */
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
     /* WorkManager with coroutines. */
     implementation "androidx.work:work-runtime-ktx:2.9.0"

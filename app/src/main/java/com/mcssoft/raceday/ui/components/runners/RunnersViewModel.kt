@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import com.mcssoft.raceday.domain.dto.SummaryDto
 import com.mcssoft.raceday.domain.dto.toSummary
 import com.mcssoft.raceday.domain.model.Race

@@ -112,6 +112,6 @@
     </array>
 
     <!-- SharedPreferences -->
-    <string name="prefs_file_name">prefs_file</string>
+    <string name="app_prefs_file_name">app_prefs_file</string>
 
 </resources>

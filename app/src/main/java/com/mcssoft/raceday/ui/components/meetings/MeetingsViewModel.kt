@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import com.mcssoft.raceday.ui.components.meetings.MeetingsState.Status
 import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE

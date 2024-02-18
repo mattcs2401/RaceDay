@@ -2,7 +2,7 @@ package com.mcssoft.raceday.ui.components.preferences
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

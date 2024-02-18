@@ -3,7 +3,7 @@ package com.mcssoft.raceday.ui.components.summary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
-import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.components.summary.SummaryState.Status
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE

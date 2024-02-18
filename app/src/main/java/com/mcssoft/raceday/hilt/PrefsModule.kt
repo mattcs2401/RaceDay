@@ -3,7 +3,7 @@ package com.mcssoft.raceday.hilt
 import android.content.Context
 import android.content.SharedPreferences
 import com.mcssoft.raceday.R
-import com.mcssoft.raceday.data.repository.preferences.PrefsRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +18,7 @@ object PrefsModule {
     @Provides
     fun provideSharedPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(
-            context.resources.getString(R.string.prefs_file_name),
+            context.resources.getString(R.string.app_prefs_file_name),
             Context.MODE_PRIVATE
         )
     }
