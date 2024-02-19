@@ -22,8 +22,8 @@ import com.mcssoft.raceday.R
 import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.components.preferences.PreferencesEvent.EventType.SourceFromApi
 import com.mcssoft.raceday.ui.components.preferences.components.PreferencesItem
-import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightPreferencesTopAppBarColours
+import com.mcssoft.raceday.ui.theme.padding64dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -33,7 +33,6 @@ fun PreferencesScreen(
     navController: NavController,
     onEvent: (PreferencesEvent) -> Unit
 ) {
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,7 +47,7 @@ fun PreferencesScreen(
                 colors = lightPreferencesTopAppBarColours,
                 navigationIcon = {
                     IconButton(
-                        onClick = { backNavigate(navController, state) }
+                        onClick = { backNavigate(navController) }
                     ) {
                         Icon(
                             painterResource( id = R.drawable.ic_arrow_back_24 ),
@@ -83,11 +82,10 @@ fun PreferencesScreen(
 }
 
 fun backNavigate(
-    navController: NavController,
-    state: PreferencesState
+    navController: NavController
 ) {
     navController.navigate(
-        Screens.MeetingsScreen.route + "fromApi=${state.sourceFromApi}"
+        Screens.MeetingsScreen.route //+ "fromApi=${state.sourceFromApi}"
     ) {
         popUpTo(route = Screens.MeetingsScreen.route) {
             inclusive = true

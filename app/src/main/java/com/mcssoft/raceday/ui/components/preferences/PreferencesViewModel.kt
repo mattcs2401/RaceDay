@@ -37,9 +37,7 @@ class PreferencesViewModel @Inject constructor(
                     is PreferencesEvent.EventType.SourceFromApi -> {
                         prefsRepo.fromApi = event.checked
                         _state.update { state ->
-                            state.copy(
-                                sourceFromApi = prefsRepo.fromApi
-                            )
+                            state.copy(sourceFromApi = prefsRepo.fromApi)
                         }
                         viewModelScope.launch(Dispatchers.IO) {
                             _state.emit(state.value)

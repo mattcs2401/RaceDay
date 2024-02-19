@@ -27,14 +27,6 @@ class SummaryViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        _state.update { state ->
-            state.copy(
-                fromApi = prefsRepo.fromApi
-            )
-        }
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.emit(state.value)
-        }
         getSummaries()
     }
 
@@ -46,12 +38,14 @@ class SummaryViewModel @Inject constructor(
             is SummaryEvent.Removal -> {
                 removeSummary(event.summaryId)
             }
+            is SummaryEvent.SaveRunnerId -> {
+                prefsRepo.runnerId = event.runnerId
+            }
         }
     }
 
     private fun getSummaries() {
         viewModelScope.launch(Dispatchers.IO) {
-//            val lSummaries = mutableListOf<Summary>()
             val pSummaries = mutableListOf<Summary>()
             val cSummaries = mutableListOf<Summary>()
             try {

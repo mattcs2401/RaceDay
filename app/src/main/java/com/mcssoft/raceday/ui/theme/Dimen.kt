@@ -34,6 +34,7 @@ val padding32dp = 32.dp
 val padding48dp = 48.dp
 val padding56dp = 56.dp
 val padding64dp = 64.dp
+val padding128dp = 128.dp
 
 val stroke2dp = 2.dp
 

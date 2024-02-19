@@ -7,9 +7,7 @@ data class SummaryState(
     val status: Status,
     val loading: Boolean,
     val cSummaries: List<Summary>, // current Summaries, i.e. those not past race time.
-    val pSummaries: List<Summary>, // previous Summaries, i.e. those past race time.
-    val fromApi: Boolean
-
+    val pSummaries: List<Summary>  // previous Summaries, i.e. those past race time.
 ) {
 
     companion object {
@@ -20,8 +18,7 @@ data class SummaryState(
                 status = Status.Initialise,
                 loading = false,
                 cSummaries = emptyList(),
-                pSummaries = emptyList(),
-                fromApi = false
+                pSummaries = emptyList()
             )
         }
     }

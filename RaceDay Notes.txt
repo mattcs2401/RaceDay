@@ -15,14 +15,19 @@ e.g. {"error":{"details":[{"path":"query.jurisdiction","message":"should be NSW,
    404 - Not found.
    General network timeouts?
 
-=======
-Issues:
-=======
+=============
+Issues/Ideas:
+=============
 --> *** App Theme / Colours / etc ***
+
+--> A change in Race time is updating Summary items with the new time, but, the Current or Previous
+    is not being checked with respect to the new time
 
 ---------------------------
 Other TO-DO or think about:
 ---------------------------
+--> Manual Start/Stop option on the Alarm ? (help save battery ?)
+
 --> Some sort of bet placed indicator on the Summary item ? (isWagered flag on Summary item).
 
 --> Ability to refresh just for a particular Race.

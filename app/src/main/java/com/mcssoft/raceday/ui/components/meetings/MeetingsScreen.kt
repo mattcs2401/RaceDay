@@ -8,7 +8,7 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,7 +42,6 @@ import com.mcssoft.raceday.ui.components.navigation.Screens
 import com.mcssoft.raceday.ui.theme.components.card.topappbar.lightMeetingTopAppBarColours
 import com.mcssoft.raceday.ui.theme.components.iconbutton.lightMeetingIconButtonColours
 import com.mcssoft.raceday.ui.theme.padding64dp
-import com.mcssoft.raceday.ui.theme.padding8dp
 
 /**
  * @param state: Meetings state.
@@ -53,6 +52,7 @@ import com.mcssoft.raceday.ui.theme.padding8dp
 @Composable
 fun MeetingsScreen(
     state: MeetingsState,
+    onEvent: (MeetingEvent) -> Unit,
     navController: NavController
 ) {
     val showRefreshDialog = remember { mutableStateOf(false) }
@@ -105,12 +105,9 @@ fun MeetingsScreen(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(
-                    top = padding64dp, // allow for the top app bar.
-                    bottom = padding64dp // allow for the bottom nav bar.
-                )
+                .padding(bottom = padding64dp) // allow for the bottom nav bar.
         ) {
             when (state.status) {
                 is Status.Initialise -> {
@@ -147,6 +144,7 @@ fun MeetingsScreen(
         if(success.value) {
             OnSuccess(
                 state = state,
+                onEvent = onEvent,
                 navController = navController,
                 showMeetingRefresh = showMeetingRefreshDialog
             )
@@ -157,13 +155,14 @@ fun MeetingsScreen(
 @Composable
 private fun OnSuccess(
     state: MeetingsState,
+    onEvent: (MeetingEvent) -> Unit,
     navController: NavController,
     showMeetingRefresh: MutableState<Boolean>
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = padding8dp)
+            .fillMaxWidth()
+            .padding(top = padding64dp) // allow for the top app bar.
     ) {
         items(
             items = state.body,
@@ -172,12 +171,12 @@ private fun OnSuccess(
             MeetingItem(
                 meeting = meeting,
                 onItemClick = {
+                    onEvent(MeetingEvent.SaveMeetingId(meeting.id))
                     navController.navigate(
-                        Screens.RacesScreen.route + "meetingId=${meeting.id}"
+                        Screens.RacesScreen.route
                     )
                 },
                 onItemLongClick = {
-//                                    venueMnemonic = it.venueMnemonic ?: ""
                     showMeetingRefresh.value = true
                 }
             )

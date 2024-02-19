@@ -34,8 +34,6 @@ class SplashViewModel @Inject constructor(
 
     private var connectivityState by mutableStateOf(ConnectivityState.initialise())
 
-    private val fromApi = mutableStateOf(prefsRepo.fromApi)
-
     init {
         viewModelScope.launch {
             connectivityObserver.observe()
@@ -64,7 +62,7 @@ class SplashViewModel @Inject constructor(
                     }
                     _state.emit(state.value)
 
-                    if (fromApi.value) {
+                    if (prefsRepo.fromApi) {
                         setupBaseFromApi(date)
                     } else {
                         stateSuccess(HTTP_OK, "")
@@ -91,9 +89,10 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-                if (fromApi.value) {
-                    setupRunnersFromApi()
-                }
+                setupRunnersFromApi()
+            }
+            is SplashEvent.SetFromApi -> {
+                prefsRepo.fromApi = event.value
             }
         }
     }

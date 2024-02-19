@@ -63,13 +63,8 @@ fun RunnersScreen(
                 colors = lightRunnersTopAppBarColours,
                 actions = {
                     IconButton(
-                        onClick = {
-                            backNavigate(
-                                state = state,
-                                navController = navController
-                            )
-                        })
-                    {
+                        onClick = { backNavigate(navController = navController) }
+                    ) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
                             stringResource(id = R.string.lbl_icon_home)
@@ -158,12 +153,9 @@ private fun Header(state: RunnersState) {
 }
 
 fun backNavigate(
-    navController: NavController,
-    state: RunnersState
+    navController: NavController
 ) {
-    navController.navigate(
-        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
-    ) {
+    navController.navigate(Screens.MeetingsScreen.route) {
         popUpTo(route = Screens.MeetingsScreen.route) {
             inclusive = true
         }

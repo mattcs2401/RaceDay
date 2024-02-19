@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.mcssoft.raceday.ui.components.meetings.MeetingsScreen
 import com.mcssoft.raceday.ui.components.meetings.MeetingsViewModel
 import com.mcssoft.raceday.ui.components.preferences.PreferencesScreen
@@ -33,9 +31,7 @@ fun NavGraph() {
         startDestination = Screens.SplashScreen.route
     ) {
         // Splash screen.
-        composable(
-            route = Screens.SplashScreen.route
-        ) {
+        composable(route = Screens.SplashScreen.route) {
             val viewModel = hiltViewModel<SplashViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SplashScreen(
@@ -46,32 +42,18 @@ fun NavGraph() {
         }
 
         // Meetings screen.
-        composable(
-            route = Screens.MeetingsScreen.route + "fromApi={fromApi}",
-            arguments = listOf(
-                navArgument("fromApi") {
-                    type = NavType.BoolType
-                }
-            )
-        ) {
+        composable(route = Screens.MeetingsScreen.route) {
             val viewModel = hiltViewModel<MeetingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             MeetingsScreen(
                 state = state,
+                onEvent = viewModel::onEvent,
                 navController = navController
             )
         }
 
         // Races screen.
-        composable(
-            // As yet, haven't been able to make the meetingId param optional.
-            route = Screens.RacesScreen.route + "meetingId={meetingId}",
-            arguments = listOf(
-                navArgument("meetingId") {
-                    type = NavType.LongType
-                }
-            )
-        ) {
+        composable(route = Screens.RacesScreen.route) {
             val viewModel = hiltViewModel<RacesViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             RacesScreen(
@@ -82,14 +64,7 @@ fun NavGraph() {
         }
 
         // Runners screen.
-        composable(
-            route = Screens.RunnersScreen.route + "raceId={raceId}",
-            arguments = listOf(
-                navArgument("raceId") {
-                    type = NavType.LongType
-                }
-            )
-        ) {
+        composable(route = Screens.RunnersScreen.route) {
             val viewModel = hiltViewModel<RunnersViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             RunnersScreen(
@@ -100,14 +75,7 @@ fun NavGraph() {
         }
 
         // Runner screen.
-        composable(
-            route = Screens.RunnerScreen.route + "runnerId={runnerId}",
-            arguments = listOf(
-                navArgument("runnerId") {
-                    type = NavType.LongType
-                }
-            )
-        ) {
+        composable(route = Screens.RunnerScreen.route) {
             val viewModel = hiltViewModel<RunnerViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             RunnerScreen(
@@ -117,9 +85,7 @@ fun NavGraph() {
         }
 
         // Summary screen (selected Runner items).
-        composable(
-            route = Screens.SummaryScreen.route
-        ) {
+        composable(route = Screens.SummaryScreen.route) {
             val viewModel = hiltViewModel<SummaryViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SummaryScreen(
@@ -130,9 +96,7 @@ fun NavGraph() {
         }
 
         // Preferences screen.
-        composable(
-            route = Screens.PreferencesScreen.route
-        ) {
+        composable(route = Screens.PreferencesScreen.route) {
             val viewModel = hiltViewModel<PreferencesViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             PreferencesScreen(

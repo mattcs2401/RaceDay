@@ -1,11 +1,10 @@
 package com.mcssoft.raceday.ui.components.runner
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
+import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import com.mcssoft.raceday.ui.components.runner.RunnerState.Status
-import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,17 +18,14 @@ import javax.inject.Inject
 @HiltViewModel
 class RunnerViewModel @Inject constructor(
     private val iDbRepo: IDbRepo,
-    savedStateHandle: SavedStateHandle
+    prefsRepo: PrefsRepo
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RunnerState.initialise())
     val state = _state.asStateFlow()
 
     init {
-        savedStateHandle.get<Long>(Constants.KEY_RUNNER_ID)?.let { runnerId ->
-            // Get Race and Runner values for the screen.
-            getRunner(runnerId)
-        }
+        getRunner(prefsRepo.runnerId)
     }
 
     /**

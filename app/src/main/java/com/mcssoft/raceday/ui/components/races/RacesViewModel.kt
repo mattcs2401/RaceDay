@@ -1,13 +1,11 @@
 package com.mcssoft.raceday.ui.components.races
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.raceday.data.repository.database.IDbRepo
 import com.mcssoft.raceday.data.repository.preferences.app.PrefsRepo
 import com.mcssoft.raceday.domain.model.Summary
 import com.mcssoft.raceday.ui.components.races.RacesState.Status
-import com.mcssoft.raceday.utility.Constants
 import com.mcssoft.raceday.utility.Constants.TWENTY_FIVE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RacesViewModel @Inject constructor(
     private val iDbRepo: IDbRepo,
-    private val prefsRepo: PrefsRepo,
-    savedStateHandle: SavedStateHandle
+    private val prefsRepo: PrefsRepo
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RacesState.initialise())
@@ -38,14 +35,7 @@ class RacesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _state.emit(state.value)
         }
-        /*
-          The Races screen expects a "meetingId" (supplied in the navigation from the MeetingsScreen
-          to the RacesScreen).
-         */
-        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mtgId ->
-            // Get Meeting and Races values for the screen.
-            getMeetingWithRaces(mtgId)
-        }
+        getMeetingWithRaces(prefsRepo.meetingId)
     }
 
     fun onEvent(event: RacesEvent) {
@@ -72,6 +62,9 @@ class RacesViewModel @Inject constructor(
                         getMeetingWithRaces(id)
                     }
                 }
+            }
+            is RacesEvent.SaveRaceId -> {
+                prefsRepo.raceId = event.raceId
             }
         }
     }

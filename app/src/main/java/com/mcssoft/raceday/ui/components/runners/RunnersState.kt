@@ -9,8 +9,7 @@ data class RunnersState(
     val lRunners: List<Runner>?,
     val race: Race?,
     var raceId: Long,
-    val checked: Boolean,
-    val fromApi: Boolean
+    val checked: Boolean
 ) {
 
     companion object {
@@ -21,8 +20,7 @@ data class RunnersState(
                 lRunners = emptyList(),
                 race = null,
                 raceId = 0,
-                checked = false,
-                fromApi = false
+                checked = false
             )
         }
 

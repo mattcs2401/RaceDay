@@ -63,11 +63,10 @@ fun SplashScreen(
                         )
                     }
                     is SplashState.Status.Success -> {
+                        onEvent(SplashEvent.SetFromApi(false))
                         LaunchedEffect(key1 = true) {
-                            navController.navigate(
-                                // Coming from the SplashScreen we have downloaded from the Api.
-                                Screens.MeetingsScreen.route + "fromApi=${false}"
-                            )
+                            // Coming from the SplashScreen we have downloaded from the Api.
+                            navController.navigate(Screens.MeetingsScreen.route)
                         }
                         onEvent(SplashEvent.SetRunners)
                     }

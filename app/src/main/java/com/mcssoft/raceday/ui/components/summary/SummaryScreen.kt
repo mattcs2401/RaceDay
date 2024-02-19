@@ -94,7 +94,7 @@ fun SummaryScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            backNavigate(navController, state)
+                            backNavigate(navController)
                         }
                     ) {
                         Icon(
@@ -141,6 +141,7 @@ fun SummaryScreen(
                         TabContentCurrent(
                             success = success,
                             state.cSummaries,
+                            onEvent = onEvent,
                             navController = navController,
                             showRemoveDialog = showRemoveDialog,
                             summaryId = summaryId
@@ -150,6 +151,7 @@ fun SummaryScreen(
                         TabContentPrevious(
                             success = success,
                             state.pSummaries,
+                            onEvent = onEvent,
                             navController = navController,
                             showRemoveDialog = showRemoveDialog,
                             summaryId = summaryId
@@ -187,6 +189,7 @@ fun SummaryScreen(
 fun TabContentCurrent(
     success: MutableState<Boolean>,
     summaries: List<Summary>,
+    onEvent: (SummaryEvent) -> Unit,
     navController: NavController,
     showRemoveDialog: MutableState<Boolean>,
     summaryId: MutableState<Long>
@@ -201,6 +204,7 @@ fun TabContentCurrent(
             } else {
                 ShowCurrentSummaries(
                     summaries,
+                    onEvent,
                     navController,
                     showRemoveDialog,
                     summaryId
@@ -214,6 +218,7 @@ fun TabContentCurrent(
 fun TabContentPrevious(
     success: MutableState<Boolean>,
     summaries: List<Summary>,
+    onEvent: (SummaryEvent) -> Unit,
     navController: NavController,
     showRemoveDialog: MutableState<Boolean>,
     summaryId: MutableState<Long>
@@ -228,6 +233,7 @@ fun TabContentPrevious(
             } else {
                 ShowPreviousSummaries(
                     summaries,
+                    onEvent,
                     navController,
                     showRemoveDialog,
                     summaryId
@@ -240,6 +246,7 @@ fun TabContentPrevious(
 @Composable
 private fun ShowCurrentSummaries(
     summaries: List<Summary>,
+    onEvent: (SummaryEvent) -> Unit,
     navController: NavController,
     showRemoveDialog: MutableState<Boolean>,
     summaryId: MutableState<Long>
@@ -256,9 +263,8 @@ private fun ShowCurrentSummaries(
             SummaryItem(
                 summary = summary,
                 onItemClick = {
-                    navController.navigate(
-                        Screens.RunnerScreen.route + "runnerId=${summary.runnerId}"
-                    )
+                    onEvent(SummaryEvent.SaveRunnerId(it.runnerId))
+                    navController.navigate(Screens.RunnerScreen.route)
                 },
                 onItemLongClick = {
                     showRemoveDialog.value = true
@@ -272,6 +278,7 @@ private fun ShowCurrentSummaries(
 @Composable
 private fun ShowPreviousSummaries(
     summaries: List<Summary>,
+    onEvent: (SummaryEvent) -> Unit,
     navController: NavController,
     showRemoveDialog: MutableState<Boolean>,
     summaryId: MutableState<Long>
@@ -288,9 +295,8 @@ private fun ShowPreviousSummaries(
             SummaryItem(
                 summary = summary,
                 onItemClick = {
-                    navController.navigate(
-                        Screens.RunnerScreen.route + "runnerId=${summary.runnerId}"
-                    )
+                    onEvent(SummaryEvent.SaveRunnerId(it.runnerId))
+                    navController.navigate(Screens.RunnerScreen.route)
                 },
                 onItemLongClick = {
                     showRemoveDialog.value = true
@@ -354,12 +360,9 @@ private fun NoSummaries() {
 }
 
 private fun backNavigate(
-    navController: NavController,
-    state: SummaryState
+    navController: NavController
 ) {
-    navController.navigate(
-        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
-    ) {
+    navController.navigate(Screens.MeetingsScreen.route) {
         popUpTo(route = Screens.MeetingsScreen.route) {
             inclusive = true
         }

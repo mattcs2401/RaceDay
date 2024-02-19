@@ -7,4 +7,10 @@ sealed class MeetingEvent {
      * @param venueMnemonic: The code for the venue.
      */
     data class RefreshMeeting(val venueMnemonic: String) : MeetingEvent()
+
+    /**
+     * Save the currently selected Meeting's id to the cache.
+     * @param meetingId: The id of the selected Meeting.
+     */
+    data class SaveMeetingId(val meetingId: Long) : MeetingEvent()
 }

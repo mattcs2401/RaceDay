@@ -79,13 +79,8 @@ fun RacesScreen(
                 colors  = lightRaceTopAppBarColours,
                 actions = {
                     IconButton(
-                        onClick = {
-                            backNavigate(
-                                state = state,
-                                navController = navController
-                            )
-                        })
-                    {
+                        onClick = { backNavigate(navController = navController) }
+                    ) {
                         Icon(
                             painterResource(id = R.drawable.ic_home_24),
                             stringResource(id = R.string.lbl_icon_home)
@@ -139,7 +134,8 @@ fun RacesScreen(
                     state,
                     navController,
                     raceId,
-                    showTimeChangeDialog
+                    showTimeChangeDialog,
+                    onEvent = onEvent
                 )
             }
         }
@@ -151,14 +147,16 @@ private fun OnSuccess(
     state: RacesState,
     navController: NavController,
     raceId: MutableLongState,
-    showTimeChange: MutableState<Boolean>
+    showTimeChange: MutableState<Boolean>,
+    onEvent: (RacesEvent) -> Unit
 ) {
     Header(state)
     Body(
         state,
         navController,
         raceId,
-        showTimeChange
+        showTimeChange,
+        onEvent
     )
 }
 
@@ -167,7 +165,8 @@ private fun Body(
     state: RacesState,
     navController: NavController,
     raceId: MutableLongState,
-    showTimeChange: MutableState<Boolean>
+    showTimeChange: MutableState<Boolean>,
+    onEvent: (RacesEvent) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -181,8 +180,9 @@ private fun Body(
             RaceItem(
                 race = race,
                 onItemClick = {
+                    onEvent(RacesEvent.SaveRaceId(it.id))
                     navController.navigate(
-                        Screens.RunnersScreen.route + "raceId=${race.id}"
+                        Screens.RunnersScreen.route
                     )
                 },
                 onItemLongClick = {
@@ -212,12 +212,9 @@ private fun Header(state: RacesState) {
 }
 
 fun backNavigate(
-    navController: NavController,
-    state: RacesState
+    navController: NavController
 ) {
-    navController.navigate(
-        Screens.MeetingsScreen.route + "fromApi=${state.fromApi}"
-    ) {
+    navController.navigate(Screens.MeetingsScreen.route) {
         popUpTo(route = Screens.MeetingsScreen.route) {
             inclusive = true
         }
