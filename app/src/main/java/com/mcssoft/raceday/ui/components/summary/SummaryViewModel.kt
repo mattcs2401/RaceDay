@@ -61,6 +61,13 @@ class SummaryViewModel @Inject constructor(
                                         summary.isPastRaceTime = true
                                         iDbRepo.updateSummary(summary)
                                     }
+                                } else {
+                                    // A change was made to the Race start time by the TimePicker
+                                    // which doesn't update the isPastRaceTime.
+                                    if (currentTimeMillis < raceTime) {
+                                        summary.isPastRaceTime = false
+                                        iDbRepo.updateSummary(summary)
+                                    }
                                 }
                             }
                             summaries.partition {

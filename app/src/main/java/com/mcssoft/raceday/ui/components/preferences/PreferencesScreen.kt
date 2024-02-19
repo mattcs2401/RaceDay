@@ -63,9 +63,7 @@ fun PreferencesScreen(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(
-                    top = padding64dp
-                )
+                .padding(top = padding64dp)
         ) {
             Column {
                 PreferencesItem(

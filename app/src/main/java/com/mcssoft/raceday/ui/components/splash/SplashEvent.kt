@@ -6,7 +6,5 @@ sealed class SplashEvent {
 
     data class Error(val activity: Activity): SplashEvent()
 
-    data class SetFromApi(val value: Boolean): SplashEvent()
-
     data object SetRunners: SplashEvent()
 }

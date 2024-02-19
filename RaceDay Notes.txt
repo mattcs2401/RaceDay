@@ -20,9 +20,6 @@ Issues/Ideas:
 =============
 --> *** App Theme / Colours / etc ***
 
---> A change in Race time is updating Summary items with the new time, but, the Current or Previous
-    is not being checked with respect to the new time
-
 ---------------------------
 Other TO-DO or think about:
 ---------------------------

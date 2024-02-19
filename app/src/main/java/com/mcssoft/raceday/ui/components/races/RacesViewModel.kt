@@ -56,7 +56,6 @@ class RacesViewModel @Inject constructor(
                         }
                         delay(TWENTY_FIVE) // TBA
                     }
-
                     // Note: This also basically forces a recomposition of the Races screen.
                     state.value.meeting?.id?.let { id ->
                         getMeetingWithRaces(id)

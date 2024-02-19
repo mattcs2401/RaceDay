@@ -35,6 +35,7 @@ class SplashViewModel @Inject constructor(
     private var connectivityState by mutableStateOf(ConnectivityState.initialise())
 
     init {
+        Log.d("TAG", "Init SplashViewModel: prefsRepo.FromApi=${prefsRepo.fromApi}")
         viewModelScope.launch {
             connectivityObserver.observe()
                 .catch { exception ->
@@ -89,10 +90,11 @@ class SplashViewModel @Inject constructor(
             is SplashEvent.SetRunners -> {
                 // Moving from the SplashScreen to the MeetingsScreen (and setup Runners in the
                 // background).
-                setupRunnersFromApi()
-            }
-            is SplashEvent.SetFromApi -> {
-                prefsRepo.fromApi = event.value
+                if (prefsRepo.fromApi) {
+                    setupRunnersFromApi()
+                }
+                // Disable load from Api unless explicitly done through the Preferences.
+                prefsRepo.fromApi = false
             }
         }
     }
@@ -156,6 +158,19 @@ class SplashViewModel @Inject constructor(
     }
 
     // <editor-fold default state="collapsed" desc="Region: Utility methods">
+
+    private fun stateSuccess(code: Int, msg: String) {
+        _state.update {
+            it.copy(
+                exception = null,
+                response = code,
+                status = SplashState.Status.Success,
+                loading = false,
+                loadingMsg = msg
+            )
+        }
+    }
+
     private fun stateLoading(msg: String) {
         _state.update {
             it.copy(
@@ -174,18 +189,6 @@ class SplashViewModel @Inject constructor(
                 status = SplashState.Status.Error,
                 loading = false,
                 loadingMsg = "An error occurred."
-            )
-        }
-    }
-
-    private fun stateSuccess(code: Int, msg: String) {
-        _state.update {
-            it.copy(
-                exception = null,
-                response = code,
-                status = SplashState.Status.Success,
-                loading = false,
-                loadingMsg = msg
             )
         }
     }
