@@ -137,6 +137,7 @@ class DbRepoImpl @Inject constructor(
     override suspend fun updateSummaryTime(summaryId: Long, time: String) {
         return dao.updateSummaryTime(summaryId, time)
     }
+
     // </editor-fold>
 
     // <editor-fold default state="collapsed" desc="Region: Scratching related.">

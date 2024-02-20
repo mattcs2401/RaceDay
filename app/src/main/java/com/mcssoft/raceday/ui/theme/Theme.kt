@@ -77,14 +77,14 @@ fun RaceDayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+//    val colors = if (darkTheme) {
+//        DarkColorPalette
+//    } else {
+//        LightColorPalette
+//    }
     CompositionLocalProvider {
         MaterialTheme(
-            colorScheme = colors,
+            colorScheme = LightColorPalette, //colors,
             typography = AppTypography,
             shapes = AppShapes,
             content = content

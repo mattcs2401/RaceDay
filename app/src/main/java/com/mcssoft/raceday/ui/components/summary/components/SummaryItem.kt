@@ -5,15 +5,23 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.mcssoft.raceday.domain.model.Summary
+import com.mcssoft.raceday.ui.components.summary.SummaryEvent
 import com.mcssoft.raceday.ui.theme.AppShapes
 import com.mcssoft.raceday.ui.theme.borderStroke
 import com.mcssoft.raceday.ui.theme.components.card.lightSummaryCurrentCardColours
@@ -21,10 +29,10 @@ import com.mcssoft.raceday.ui.theme.components.card.lightSummaryPreviousCardColo
 import com.mcssoft.raceday.ui.theme.fontSize12sp
 import com.mcssoft.raceday.ui.theme.fontSize14sp
 import com.mcssoft.raceday.ui.theme.margin0dp
-import com.mcssoft.raceday.ui.theme.margin16dp
 import com.mcssoft.raceday.ui.theme.margin4dp
 import com.mcssoft.raceday.ui.theme.margin8dp
 import com.mcssoft.raceday.ui.theme.padding4dp
+import com.mcssoft.raceday.ui.theme.padding64dp
 import com.mcssoft.raceday.utility.Constants
 
 @OptIn(ExperimentalFoundationApi::class) // for Long click.
@@ -32,12 +40,17 @@ import com.mcssoft.raceday.utility.Constants
 fun SummaryItem(
     summary: Summary,
     onItemClick: (Summary) -> Unit,
-    onItemLongClick: (Summary) -> Unit
+    onItemLongClick: (Summary) -> Unit,
+    onEvent: (SummaryEvent) -> Unit // basically for isWagered checkbox.
 ) {
     val textStyle = TextStyle(textDecoration = TextDecoration.None)
 
+    val isPastRaceTime by remember { mutableStateOf(summary.isPastRaceTime) }
+
+    var isChecked by remember { mutableStateOf(summary.isWagered) }
+
     // TODO - refine these colours.
-    val summaryItemCardColours = if (summary.isPastRaceTime) {
+    val summaryItemCardColours = if (isPastRaceTime) {
         lightSummaryPreviousCardColours
     } else {
         lightSummaryCurrentCardColours
@@ -113,6 +126,20 @@ fun SummaryItem(
                 fontSize = fontSize12sp,
                 style = textStyle
             )
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = { checked ->
+                    isChecked = checked
+                    summary.isWagered = isChecked
+                    onEvent(SummaryEvent.Check(summary))
+                },
+                Modifier.layoutId("idCheckBox"),
+                enabled = !isPastRaceTime,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color.Magenta,
+                    uncheckedColor = Color.Gray
+                )
+            )
         }
     }
 }
@@ -126,6 +153,7 @@ private val constraintSet = ConstraintSet {
     val idVenueMnemonic = createRefFor("idVenueMnemonic")
     val idRiderDriverName = createRefFor("idRiderDriverName")
     val idTrainerName = createRefFor("idTrainerName")
+    val idCheckBox = createRefFor("idCheckBox")
 
     constrain(idSellCode) {
         top.linkTo(parent.top, margin = margin8dp)
@@ -145,7 +173,7 @@ private val constraintSet = ConstraintSet {
     }
     constrain(idRaceStartTime) {
         top.linkTo(idRunnerName.top, margin = margin0dp)
-        end.linkTo(parent.absoluteRight, margin = margin16dp)
+        end.linkTo(parent.absoluteRight, margin = padding64dp)
     }
     // 2nd row.
     constrain(idVenueMnemonic) {
@@ -160,5 +188,9 @@ private val constraintSet = ConstraintSet {
     constrain(idTrainerName) {
         top.linkTo(idRiderDriverName.top, margin0dp)
         start.linkTo(idRiderDriverName.end, margin8dp)
+    }
+    constrain(idCheckBox) {
+        top.linkTo(parent.top, margin = margin0dp)
+        end.linkTo(parent.absoluteRight, margin = margin8dp)
     }
 }

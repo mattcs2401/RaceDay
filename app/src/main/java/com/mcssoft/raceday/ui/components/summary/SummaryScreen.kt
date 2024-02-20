@@ -269,7 +269,8 @@ private fun ShowCurrentSummaries(
                 onItemLongClick = {
                     showRemoveDialog.value = true
                     summaryId.value = it.id
-                }
+                },
+                onEvent = onEvent
             )
         }
     }
@@ -301,7 +302,8 @@ private fun ShowPreviousSummaries(
                 onItemLongClick = {
                     showRemoveDialog.value = true
                     summaryId.value = it.id
-                }
+                },
+                onEvent = onEvent
             )
         }
     }

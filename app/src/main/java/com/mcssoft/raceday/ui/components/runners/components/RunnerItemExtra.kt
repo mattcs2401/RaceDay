@@ -31,7 +31,6 @@ fun RunnerItemExtra(
     runner: Runner,
     onEvent: (RunnersEvent) -> Unit,
 ){
-
     var isChecked by remember { mutableStateOf(false) }
     isChecked = runner.isChecked
 

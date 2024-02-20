@@ -38,9 +38,6 @@ Other TO-DO or think about:
     -> on a refresh from the Api ?
     -> something else ?
 
---> Better use of SavedStateHandle.
-    -> Refer Point 2 of: https://www.youtube.com/watch?v=JfCivo5qJkI approx 4:38.
-
 --> App refresh value where all the data is refreshed, i.e from Api ?
     -> at a certain interval ?
         -> coroutine worker with delay start probably good choice here

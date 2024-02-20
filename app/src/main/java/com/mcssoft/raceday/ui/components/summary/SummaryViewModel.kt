@@ -41,6 +41,9 @@ class SummaryViewModel @Inject constructor(
             is SummaryEvent.SaveRunnerId -> {
                 prefsRepo.runnerId = event.runnerId
             }
+            is SummaryEvent.Check -> {
+                setChecked(event.summary)
+            }
         }
     }
 
@@ -107,6 +110,14 @@ class SummaryViewModel @Inject constructor(
     private fun removeSummary(summaryId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             iDbRepo.deleteSummary(summaryId)
+            delay(TWENTY_FIVE) // TBA.
+            getSummaries()
+        }
+    }
+
+    private fun setChecked(summary: Summary) {
+        viewModelScope.launch(Dispatchers.IO) {
+            iDbRepo.updateSummary(summary)
             delay(TWENTY_FIVE) // TBA.
             getSummaries()
         }
